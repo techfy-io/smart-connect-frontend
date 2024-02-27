@@ -1,9 +1,9 @@
 import './App.css';
-
+import Login from './Components/Authorization/Login';
 function App() {
   return (
-    <div className="App">
-     setup is ready now 
+    <div>
+<Login/>
     </div>
   );
 }
