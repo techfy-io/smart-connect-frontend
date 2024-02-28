@@ -1,0 +1,78 @@
+// Dashboard.scss
+
+.dashboard {
+  display: flex;
+  height: 100vh;
+}
+
+.sider {
+  width: 200px;
+  background-color: #f0f2f5;
+  padding: 20px;
+
+  .logo-image {
+    width: 150px;
+    height: auto;
+  }
+
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .menu-item {
+      padding: 10px 0;
+      cursor: pointer;
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+}
+
+.content {
+  flex: 1;
+  
+  .content-header {
+    flex: 100%;
+    height: 50px;
+    background-color: #1e4e7c;
+    .content-header-headings{
+      padding: 10px;
+      color: white;
+    }
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td {
+      border: 1px solid #e8e8e8;
+      padding: 20px;
+      text-align: center; // Center align text
+    }
+  
+    th {
+      background-color: #f0f2f5;
+    }
+  
+  
+    tbody tr:hover {
+      background-color: #e6f7ff; // Hover row background color
+    }
+  
+    .action-button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      color: #1890ff;
+      text-decoration: underline;
+  
+      &:hover {
+        color: #40a9ff;
+      }
+    }
+  }
+  
+}

@@ -43,7 +43,7 @@ const Login = () => {
                 <form className="login-form">
                   <Input id="loginUsername" className="form-input" placeholder="Enter your email or username" required />
                   <Input.Password id="loginPassword" className="form-input" placeholder="Password" required />
-                  <Link to=''>
+                  <Link to='/dashboard'>
                     <Button type="primary" htmlType="submit" className="form-button">
                       Continue
                     </Button>
@@ -60,7 +60,7 @@ const Login = () => {
                   <Input id="Company" className="form-input" placeholder="Company" />
                   <Input.Password id="signupPassword" className="form-input" placeholder="Password" />
                   <Input.Password id="confirmPassword" className="form-input" placeholder="Confirm Password" />
-                  <Link to=''>
+                  <Link to='/dashboard'>
                     <Button type="primary" htmlType="submit" className="form-button">
                       Sign up
                     </Button>
