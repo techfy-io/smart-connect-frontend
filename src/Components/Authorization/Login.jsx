@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Layout, Card, Button, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import logo from "../../Inspect/logo.png";
+import Smartlogo from "../../Inspect/Smart-logo.png";
+
 import './Login.scss'
 const { Content } = Layout;
 
@@ -17,7 +19,7 @@ const Login = () => {
       <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card className="custom-card">
           <div className='custom-title'>
-            <img src={logo} className='logo' alt="" />
+            <img src={Smartlogo} className='logo' alt="" />
           </div>
           <div className='tab-container'>
             <button type='primary'
@@ -33,8 +35,6 @@ const Login = () => {
               Sign up
             </button>
           </div>
-
-
           <div className="tab-content">
             {activeForm === 'login' ? (
               <>
