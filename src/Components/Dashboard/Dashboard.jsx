@@ -125,9 +125,9 @@ function Dashboard() {
       <div className="content">
         <div className='content-header'>
           {
-            UserType ==="SuperAdmin" ? (
+            UserType === "SuperAdmin" ? (
               <h2 className='content-header-headings'>Companies </h2>
-            ) :(
+            ) : (
               <h2 className='content-header-headings'>Jhone Elix </h2>
             )
           }
@@ -185,7 +185,7 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {companiesData.map(company => (
+                {userData.map(company => (
                   <tr key={company.key}>
                     <td>{company.companyName}</td>
                     <td>{company.email}</td>
