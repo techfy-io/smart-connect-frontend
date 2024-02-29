@@ -33,12 +33,13 @@
 
 .content {
   flex: 1;
-  
+
   .content-header {
     flex: 100%;
     height: 70px;
-    background-color:#100739;
-    .content-header-headings{
+    background-color: #100739;
+
+    .content-header-headings {
       padding: 20px;
       color: white;
     }
@@ -47,33 +48,52 @@
   .table {
     width: 100%;
     border-collapse: collapse;
-    th, td {
+
+    th,
+    td {
       border: 1px solid #e8e8e8;
       padding: 20px;
       text-align: center; // Center align text
     }
-  
+
     th {
       background-color: #f0f2f5;
     }
-  
-  
+
+
     tbody tr:hover {
       background-color: #e6f7ff; // Hover row background color
     }
-  
-    .Delete-button {
-      font-size: 20px;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      color: green;
-      text-decoration: underline;
-  
-      &:hover {
-        color: #40a9ff;
+
+    .Actions-btns {
+      .Delete-button {
+        font-size: 20px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        color: rgb(236, 13, 13);
+        text-decoration: underline;
+
+        &:hover {
+          color: #40a9ff;
+        }
+      }
+
+      .Edit-button {
+        font-size: 20px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        color: rgb(25, 172, 192);
+        text-decoration: underline;
+        margin-left: 20px;
+
+        &:hover {
+          color: #40a9ff;
+        }
       }
     }
+
   }
-  
+
 }
