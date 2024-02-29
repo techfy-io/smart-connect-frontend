@@ -1,7 +1,8 @@
 import React from 'react';
-import { DashboardOutlined, UserOutlined, SettingOutlined, TeamOutlined } from '@ant-design/icons';
+import { DashboardOutlined, UserOutlined, SettingOutlined, TeamOutlined,DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
 import logo from "../../Inspect/logo.png";
+import Smartlogo from "../../Inspect/Smart-logo.png"
 const companiesData = [
   {
     key: '1',
@@ -78,18 +79,18 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="sider">
-        <img className='logo-image' src={logo} alt="" srcset="" />
+        <img className='logo-image' src={Smartlogo} alt="" srcset="" />
         <ul className="menu">
-          <li className="menu-item"><DashboardOutlined/> Dashboard</li>
+          {/* <li className="menu-item"><DashboardOutlined/> Dashboard</li> */}
           <li className="menu-item"><TeamOutlined /> Companies</li>
-          <li className="menu-item"><UserOutlined/>  Super Admin</li>
-          <li className="menu-item"><SettingOutlined/>  Settings</li>
-          <li className="menu-item"><UserOutlined/> Users</li>
+          {/* <li className="menu-item"><UserOutlined/>  Super Admin</li> */}
+          <li className="menu-item"><SettingOutlined />  Settings</li>
+          {/* <li className="menu-item"><UserOutlined/> Users</li> */}
         </ul>
       </div>
       <div className="content">
         <div className='content-header'>
-          <h2 className='content-header-headings'>Super Admins</h2>
+          <h2 className='content-header-headings'>Companies </h2>
         </div>
         <table className="table">
           <thead>
@@ -104,7 +105,7 @@ function Dashboard() {
               <tr key={company.key}>
                 <td>{company.companyName}</td>
                 <td>{company.email}</td>
-                <td><button className="action-button" onClick={() => alert(`Action clicked by ${company.key}`)}>Edit Company</button></td>
+                <td><button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined/></button></td>
               </tr>
             ))}
           </tbody>
