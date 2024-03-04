@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { DashboardOutlined, UserOutlined, SettingOutlined, TeamOutlined, DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import {  UserOutlined, SettingOutlined, TeamOutlined, DeleteOutlined, EditOutlined ,LeftOutlined,RightOutlined} from '@ant-design/icons';
+import { message } from 'antd';
+
 import './Dashboard.scss';
 import Smartlogo from "../../Inspect/Smart-logo.png"
 
@@ -101,10 +103,14 @@ const userData = [
 ];
 
 function Dashboard() {
-  const [UserType, SetUserType] = useState("SuperAdmin")
+  const [UserType, SetUserType] = useState("User")
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  const toggleSidebar = () => {
+    setIsSidebarCollapsed(!isSidebarCollapsed);
+  };
   return (
-    <div className="dashboard">
+    <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
       <div className="sider">
         <img className='logo-image' src={Smartlogo} alt="" srcset="" />
         {
@@ -121,6 +127,7 @@ function Dashboard() {
             </ul>
           )
         }
+                <button className="collabs-button" onClick={toggleSidebar}> {isSidebarCollapsed ? <RightOutlined/> : <LeftOutlined/>}     </button>
       </div>
       <div className="content">
         <div className='content-header'>
@@ -133,26 +140,7 @@ function Dashboard() {
           }
 
         </div>
-        {/* compnies table for super Admin */}
-        <div className='User-type'>
-          <label htmlFor="SuperAdmin">Super Admin</label>
-          <input
-            id="SuperAdmin"
-            name="userType"
-            value="SuperAdmin"
-            type="radio"
-            onChange={(e) => SetUserType(e.target.value)}
-          />
 
-          <label htmlFor="User">User</label>
-          <input
-            id="User"
-            name="userType"
-            value="User"
-            type="radio"
-            onChange={(e) => SetUserType(e.target.value)}
-          />
-        </div>
         {
           UserType === "SuperAdmin" ? (
             <table className="table">
