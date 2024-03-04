@@ -5,7 +5,7 @@ $baseFontSize: 16px;
 
 .main-layout {
     background-color: #ffff;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     text-align: center;
 
@@ -83,6 +83,7 @@ $baseFontSize: 16px;
         background: #FFF;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-top:4%;
+        margin-bottom: 2%;
     }
 
     .custom-title {
