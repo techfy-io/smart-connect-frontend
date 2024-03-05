@@ -122,7 +122,7 @@ function Dashboard() {
       try {
         const accessToken = localStorage.getItem('accessToken');
         const UserType = "";
-        if (UserType === "super admin") {
+        if (UserType === "superadmin") {
           setUserType("SuperAdmin");
           const response = await axios.get(
             'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/companies/',
@@ -210,15 +210,23 @@ function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {companiesData.map(company => (
-                  <tr key={company}>
-                    <td>{company.company}</td>
-                    <td>{company.email}</td>
-                    <td className='Actions-btns'>
-                      <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
-                    </td>
-                  </tr>
-                ))}
+                {companiesData.length > 0 ? (
+                  companiesData.map(company => (
+                    <tr key={company}>
+                      <td>{company.company}</td>
+                      <td>{company.email}</td>
+                      <td className='Actions-btns'>
+                        <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
+                      </td>
+                    </tr>
+                  ))
+                ) :
+                  (
+                    <tr>
+                      <td colSpan="3">No Company found</td>
+                    </tr>
+                  )
+                }
               </tbody>
             </table>
           ) : (
@@ -231,21 +239,21 @@ function Dashboard() {
                 </tr>
               </thead>
               {userData.length > 0 ? (
-  userData.map(user => (
-    <tr key={user.key}>
-      <td>{user.name}</td>
-      <td>{user.email}</td>
-      <td className='Actions-btns'>
-        <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
-        <button className="Edit-button" onClick={() => alert(`Action clicked by ${user.key}`)}><EditOutlined /></button>
-      </td>
-    </tr>
-  ))
-) : (
-  <tr>
-    <td colSpan="3">No users found</td>
-  </tr>
-)}
+                userData.map(user => (
+                  <tr key={user.key}>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td className='Actions-btns'>
+                      <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
+                      <button className="Edit-button" onClick={() => alert(`Action clicked by ${user.key}`)}><EditOutlined /></button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="3">No users found</td>
+                </tr>
+              )}
 
             </table>
           )
