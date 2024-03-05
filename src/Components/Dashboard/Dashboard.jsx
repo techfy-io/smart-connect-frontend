@@ -151,7 +151,9 @@ function Dashboard() {
               }
             }
           );
+          console.log(userResponse.data);
           setUserData(userResponse.data);
+
           setUserType("User");
         }
       } catch (error) {
@@ -228,18 +230,23 @@ function Dashboard() {
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                {userData.map(company => (
-                  <tr key={company.key}>
-                    <td>{company.name}</td>
-                    <td>{company.email}</td>
-                    <td className='Actions-btns'>
-                      <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
-                      <button className="Edit-button" onClick={() => alert(`Action clicked by ${company.key}`)}><EditOutlined /></button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              {userData.length > 0 ? (
+  userData.map(user => (
+    <tr key={user.key}>
+      <td>{user.name}</td>
+      <td>{user.email}</td>
+      <td className='Actions-btns'>
+        <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
+        <button className="Edit-button" onClick={() => alert(`Action clicked by ${user.key}`)}><EditOutlined /></button>
+      </td>
+    </tr>
+  ))
+) : (
+  <tr>
+    <td colSpan="3">No users found</td>
+  </tr>
+)}
+
             </table>
           )
         }

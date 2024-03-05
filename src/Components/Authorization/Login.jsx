@@ -35,33 +35,20 @@ const Login = () => {
       setLoading(false);
     }
     else {
-      fetch('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/login/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(loginPayload),
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        message.success("Login Successfully");
-        localStorage.setItem('accessToken', data.access);
-        setLoading(false);
-        navigate("./dashboard");
-      })
-      .catch(error => {
-        setLoading(false);
-        console.error('There was a problem with the fetch operation:', error);
-        message.error(error.message);
-      });
+      axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/login/', loginPayload)
+        .then(resp => {
+          console.log(resp)
+          message.success("Login Successfully");
+          localStorage.setItem('accessToken', resp.data.access);
+          setLoading(false);
+          navigate("./dashboard")
+        })
+        .catch(error => {
+          setLoading(false);
+          console.log(error)
+          message.error(error.response.data.detail)
+        })
     }
-    
   };
   const registerUser = () => {
     setLoading(true);
