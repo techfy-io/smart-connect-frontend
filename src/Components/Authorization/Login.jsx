@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Card, Button, Input, message } from 'antd';
+import { Layout, Card, Button, Input, message, Spin } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../../Inspect/logo.png";
 import Smartlogo from "../../Inspect/Smart-logo.png";
@@ -10,7 +10,7 @@ const { Content } = Layout;
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -25,29 +25,36 @@ const Login = () => {
   };
 
   const loginUser = () => {
+    setLoading(true);
     const loginPayload = {
       email: email,
       password: password
     };
     if (!loginPayload.email || !loginPayload.password) {
       message.error("Please enter your email and password");
+      setLoading(false);
     }
     else {
       axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/login/', loginPayload)
         .then(resp => {
           console.log(resp)
-          message.success("Login successful");
+          message.success("Login Successfully");
           localStorage.setItem('accessToken', resp.data.access);
+          setLoading(false);
           navigate("./dashboard")
         })
         .catch(error => {
+          setLoading(false);
           console.log(error)
+          message.error(error.response.data.detail)
         })
     }
   };
   const registerUser = () => {
+    setLoading(true);
     if (!firstName || !lastName || !company || !phone || !registerEmail || !registerPassword) {
       message.error("Please fill in all fields");
+      setLoading(false);
       return;
     }
 
@@ -64,6 +71,7 @@ const Login = () => {
       .then(resp => {
         console.log(resp)
         message.success("Registration successful");
+        setLoading(false)
         setTimeout(() => {
           handleTabChange('login')
         }, 3000);
@@ -71,6 +79,8 @@ const Login = () => {
       .catch(error => {
         console.log(error)
         message.error("Registration error");
+        setLoading(false)
+
       });
   };
 
@@ -105,7 +115,7 @@ const Login = () => {
                   <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
                   {/* <Link to='/dashboard'> */}
                   <Button type="primary" className="form-button" onClick={loginUser}>
-                    Continue
+                    {loading ? <Spin /> : "Continue"}
                   </Button>
                   {/* </Link> */}
                 </form>
@@ -125,7 +135,7 @@ const Login = () => {
                   {/* <Input.Password id="confirmPassword" className="form-input" placeholder="Confirm Password" /> */}
                   {/* <Link to='/dashboard'> */}
                   <Button type="primary" className="form-button" onClick={registerUser}>
-                    Sign up
+                  {loading ? <Spin /> : "Sign up"}
                   </Button>
                   {/* </Link> */}
                 </form>
