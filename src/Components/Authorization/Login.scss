@@ -83,8 +83,8 @@ $baseFontSize: 16px;
     }
 
     .custom-card {
-        width: 27.25rem;
-        height: 100%;
+        // width: 27.25rem;
+        // height: 100%;
         border-radius: 1.5rem;
         background: #FFF;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -103,19 +103,6 @@ $baseFontSize: 16px;
         .logo {
             width: 240.506px;
             height: 150.167px;
-        }
-
-        @media only screen and (max-width:768px) {
-            .flownyxlogo {
-                width: 20%;
-                height: 50px;
-            }
-
-            .flownyx {
-                width: 80%;
-                height: 25px;
-            }
-
         }
     }
 
