@@ -121,8 +121,9 @@ function Dashboard() {
     const fetchData = async () => {
       try {
         const accessToken = localStorage.getItem('accessToken');
-        const UserType = "";
-        if (UserType === "superadmin") {
+        const Userinfo = localStorage.getItem('userinfo');
+        console.log(Userinfo);
+        if (Userinfo === "true") {
           setUserType("SuperAdmin");
           const response = await axios.get(
             'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/companies/',
@@ -136,9 +137,11 @@ function Dashboard() {
               }
             }
           );
-
+  
           setCompaniesData(response.data);
+          console.log("I'm super admin");
         } else {
+          setUserType("User");
           const userResponse = await axios.get(
             'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/',
             {
@@ -151,10 +154,9 @@ function Dashboard() {
               }
             }
           );
-          console.log(userResponse.data);
-          setUserData(userResponse.data);
-
-          setUserType("User");
+          console.log(userResponse.data?.results);
+          setUserData(userResponse.data.results);
+          console.log("I'm simple user");
         }
       } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -162,11 +164,10 @@ function Dashboard() {
         message.error('Failed to load list');
       }
     };
-
+  
     fetchData();
   }, []);
-
-
+  
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
       <div className="sider">
@@ -241,7 +242,7 @@ function Dashboard() {
               {userData.length > 0 ? (
                 userData.map(user => (
                   <tr key={user.key}>
-                    <td>{user.name}</td>
+                    <td>{user.first_name + "  " + user.last_name}</td>
                     <td>{user.email}</td>
                     <td className='Actions-btns'>
                       <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>

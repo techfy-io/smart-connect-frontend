@@ -3,11 +3,16 @@
 
 $baseFontSize: 16px;
 
+* {
+    margin: 0;
+    padding: 0;
+}
+
 .main-layout {
-    background-color: #ffff;
-    height: 100%;
+    background-color: #24ACDC;
     width: 100%;
     text-align: center;
+    background-size: cover;
 
     .content {
         display: flex;
@@ -59,7 +64,7 @@ $baseFontSize: 16px;
         }
 
         &:hover {
-            cursor:pointer; 
+            cursor: pointer;
         }
 
 
@@ -72,18 +77,19 @@ $baseFontSize: 16px;
                 background: #24ACDC;
                 color: white;
             }
-            
+
         }
 
     }
 
     .custom-card {
         width: 27.25rem;
+        height: 100%;
         border-radius: 1.5rem;
         background: #FFF;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-top:4%;
-        margin-bottom: 2%;
+        margin-top: 4%;
+        margin-bottom: 5%;
     }
 
     .custom-title {
@@ -170,6 +176,30 @@ $baseFontSize: 16px;
         display: flex;
         flex-direction: column;
         align-items: center;
+
+        .signup-form-names-fields {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+
+            #signupLastName {
+                margin-left: 5px;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .signup-form-names-fields {
+                width: 90%;
+            }
+
+            .form-input {
+                width: 90%;
+            }
+
+            #signupLastName {
+                margin-left: 5px;
+            }
+        }
     }
 
     .form-label {
@@ -179,7 +209,7 @@ $baseFontSize: 16px;
 
     .form-input {
         display: flex;
-        width: 24.25rem;
+        width: 100%;
         height: 3rem;
         padding: 0 0.875rem;
         align-items: center;
