@@ -3,6 +3,7 @@ import { Layout, Card, Button, Input, message, Spin } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from "../../Inspect/logo.png";
 import Smartlogo from "../../Inspect/Smart-logo.png";
+import InputMask from "react-input-mask";
 
 import './Login.scss'
 import axios from 'axios';
@@ -86,69 +87,77 @@ const Login = () => {
   };
 
   return (
-  
-      <div className='main-layout'>
-        <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Card className="custom-card">
-            <div className='custom-title'>
-              <img src={Smartlogo} className='logo' alt="" />
-            </div>
-            <div className='tab-container'>
-              <button type='primary'
-                className={activeForm === 'login' ? 'button-style active-button-style' : 'button-style'}
-                onClick={() => handleTabChange('login')}
-              >
-                Login
-              </button>
-              <button type='primary'
-                className={activeForm === 'signup' ? 'button-style active-button-style' : 'button-style'}
-                onClick={() => handleTabChange('signup')}
-              >
-                Sign up
-              </button>
-            </div>
-            <div className="tab-content">
-              {activeForm === 'login' ? (
-                <>
-                  <h1 className="section-title">Welcome</h1>
-                  <p className='section-pera'>Sign in to continue</p>
-                  <form className="login-form">
-                    <Input id="loginemail" className="form-input" placeholder="Enter your email or username" onChange={(e) => setEmail(e.target.value)} required />
-                    <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-                    {/* <Link to='/dashboard'> */}
-                    <Button type="primary" className="form-button" onClick={loginUser}>
-                      {loading ? <Spin /> : "Continue"}
-                    </Button>
-                    {/* </Link> */}
-                  </form>
-                </>
-              ) : (
-                <>
-                  <p className="section-title">Create Account</p>
-                  <p className='section-pera'>Sign up to get started!</p>
-                  <form className="signup-form">
-                    <div className='signup-form-names-fields'>
-                      <Input type="text" id="signupFirstName" className="form-input" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} />
-                      <Input type="text" id="signupLastName" className="form-input" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} />
-                    </div>
-                    <Input id="Company" className="form-input" placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
-                    <Input id="Phone" className="form-input" placeholder="Phone" onChange={(e) => setPhone(e.target.value)} />
+
+    <div className='main-layout'>
+      <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Card className="custom-card">
+          <div className='custom-title'>
+            <img src={Smartlogo} className='logo' alt="" />
+          </div>
+          <div className='tab-container'>
+            <button type='primary'
+              className={activeForm === 'login' ? 'button-style active-button-style' : 'button-style'}
+              onClick={() => handleTabChange('login')}
+            >
+              Login
+            </button>
+            <button type='primary'
+              className={activeForm === 'signup' ? 'button-style active-button-style' : 'button-style'}
+              onClick={() => handleTabChange('signup')}
+            >
+              Sign up
+            </button>
+          </div>
+          <div className="tab-content">
+            {activeForm === 'login' ? (
+              <>
+                <h1 className="section-title">Welcome</h1>
+                <p className='section-pera'>Sign in to continue</p>
+                <form className="login-form">
+                  <Input id="loginemail" className="form-input" placeholder="Enter your email or username" onChange={(e) => setEmail(e.target.value)} required />
+                  <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
+                  {/* <Link to='/dashboard'> */}
+                  <Button type="primary" className="form-button" onClick={loginUser}>
+                    {loading ? <Spin /> : "Continue"}
+                  </Button>
+                  {/* </Link> */}
+                </form>
+              </>
+            ) : (
+              <>
+                <p className="section-title">Create Account</p>
+                <p className='section-pera'>Sign up to get started!</p>
+                <form className="signup-form">
+                  <div className='signup-form-names-fields'>
+                    <Input type="text" id="signupFirstName" className="form-input" placeholder="First Name" onChange={(e) => setFirstName(e.target.value)} />
+                    <Input type="text" id="signupLastName" className="form-input" placeholder="Last Name" onChange={(e) => setLastName(e.target.value)} />
+                  </div>
+                  <div className='signup-form-names-fields'>
                     <Input type="email" id="signupEmail" className="form-input" onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Your email" />
-                    {/* <Input id="signupUsername" className="form-input" placeholder="Your username" /> */}
-                    <Input.Password id="signupPassword" className="form-input" onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Password" />
-                    {/* <Input.Password id="confirmPassword" className="form-input" placeholder="Confirm Password" /> */}
-                    {/* <Link to='/dashboard'> */}
-                    <Button type="primary" className="form-button" onClick={registerUser}>
-                      {loading ? <Spin /> : "Sign up"}
-                    </Button>
-                    {/* </Link> */}
-                  </form>
-                </>
-              )}
-            </div>
-          </Card>
-        </Content>
-      </div>
+                    <InputMask
+                      id="Phone" className="form-input"
+                      style={{ width: "95%", marginLeft: "5px", height: "2.8rem", borderRadius: "8px", border: "0.0625rem solid #B0E1F2", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
+                      mask="(999) 999-9999" // Define the mask format for a US phone number
+                      maskChar=""
+                      placeholder="(123) 345-6789"
+                      onChange={(e) => setPhone(e.target.value)}
+                    >
+                    </InputMask>
+                  </div>
+                  {/* <div className='signup-form-names-fields'> */}
+                  <Input id="Company" className="form-input" placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
+                  <Input.Password id="signupPassword" className="form-input" onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Password" />
+                  {/* </div> */}
+                  <Button type="primary" className="form-button" onClick={registerUser}>
+                    {loading ? <Spin /> : "Sign up"}
+                  </Button>
+                </form>
+              </>
+            )}
+          </div>
+        </Card>
+      </Content>
+    </div>
   )
 }
 
