@@ -1,0 +1,87 @@
+/* UserProfile.scss */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+.user-profile {
+  text-align: center;
+}
+
+.user-image {
+  width: 30%;
+  height: 10%;
+}
+
+.user-details {
+  padding: 10px;
+}
+
+.username {
+  margin: 0px 0px 0.35em;
+  font-size: 24px;
+  font-weight: 600;
+  font-family: Raleway;
+  line-height: 1.167;
+  // padding: 10px;
+
+}
+
+.email {
+  margin: 0px;
+  font-family: Raleway;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.43;
+  color: rgb(80, 80, 80);
+}
+
+.company {
+  margin: 0px;
+  font-family: Raleway;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(2, 2, 76);
+}
+
+.download-btn {
+  width: 10rem;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: 0px;
+  border: 0px;
+  margin: 0px;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  text-transform: none;
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  min-width: 64px;
+  // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  color: rgb(255, 255, 255);
+  box-shadow: none;
+  background: #FF8000;
+  padding: 13px 22px;
+  border-radius: 25px
+}
+
+.download-btn:hover {
+  background: #FF8000
+}
+
+.QR-user-details {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.custom-spin .ant-spin-dot {
+  color: #ffffff; /* Set the color to white */
+}

@@ -11,6 +11,7 @@ $baseFontSize: 16px;
 .main-layout {
     background-color: #24ACDC;
     width: 100%;
+    height: 100vh;
     text-align: center;
     background-size: cover;
 
@@ -24,8 +25,8 @@ $baseFontSize: 16px;
         display: flex;
         margin: 0 auto;
         align-items: center;
-        width: 388px;
-        height: 68px;
+        // width: 360px;
+        height: 48px;
         padding: 12px;
         align-items: center;
         gap: 8px;
@@ -43,7 +44,7 @@ $baseFontSize: 16px;
 
     .button-style {
         display: flex;
-        width: 172px;
+        width: 160px;
         height: 44px;
         font-size: 1rem;
         border-radius: 10px;
@@ -83,13 +84,12 @@ $baseFontSize: 16px;
     }
 
     .custom-card {
-        // width: 27.25rem;
-        // height: 100%;
+        width: 26.25rem;
+        height: 100%;
         border-radius: 1.5rem;
         background: #FFF;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-top: 4%;
-        margin-bottom: 8%;
     }
 
     .custom-title {
@@ -101,8 +101,8 @@ $baseFontSize: 16px;
         flex-shrink: 0;
 
         .logo {
-            width: 240.506px;
-            height: 150.167px;
+            width: 190.506px;
+            height: 70.167px;
         }
     }
 
@@ -110,7 +110,7 @@ $baseFontSize: 16px;
 
 
     .custom-tabs {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         text-align: center;
 
         .ant-tabs-nav {
@@ -144,7 +144,7 @@ $baseFontSize: 16px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        margin-top: 1.5rem;
+        margin-top: 0.5rem;
     }
 
     .section-pera {
@@ -154,8 +154,7 @@ $baseFontSize: 16px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
-        margin-top: 0;
-        margin-bottom: 1.875rem;
+        margin-bottom: 1.5rem;
     }
 
     .login-form,
@@ -189,22 +188,17 @@ $baseFontSize: 16px;
         }
     }
 
-    .form-label {
-        margin-bottom: 0.5rem;
-        color: #000;
-    }
-
     .form-input {
         display: flex;
         width: 100%;
-        height: 3rem;
+        height: 2.8rem;
         padding: 0 0.875rem;
         align-items: center;
         gap: 0.5rem;
         border-radius: 0.625rem;
         border: 0.0625rem solid #B0E1F2;
         background: #E0F3FA;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1rem;
     }
 
     .form-button {
