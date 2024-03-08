@@ -10,6 +10,14 @@
   height: 10%;
 }
 
+.gradient-box {
+  margin: 0 auto;
+  height: 300px;
+  width: 35%;
+  background: rgb(255, 236, 106);
+  background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
+}
+
 .user-details {
   padding: 10px;
 }
@@ -82,6 +90,8 @@
   margin-top: 15px;
   margin-bottom: 20px;
 }
+
 .custom-spin .ant-spin-dot {
-  color: #ffffff; /* Set the color to white */
+  color: #ffffff;
+  /* Set the color to white */
 }
