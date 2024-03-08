@@ -49,12 +49,17 @@ const UserProfile = () => {
             .catch(error => {
                 console.log("error", error);
                 message.error("Failed to download");
+                setLoading(false)
+
             });
     }
 
     return (
         <div className="user-profile">
-            <img src={Smartlogo} alt="User" className="user-image" />
+            {/* <img src={Smartlogo} alt="User" className="user-image" /> */}
+            <div className='gradient-box'>
+
+            </div>
             <div className="user-details">
                 <p className="username">{userData?.first_name + "  " + userData?.last_name}</p>
                 <p className="email">{userData.email}</p>
