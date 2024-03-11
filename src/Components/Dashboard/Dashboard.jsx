@@ -6,7 +6,7 @@ import './Dashboard.scss';
 import Smartlogo from "../../Inspect/Smart-logo.png"
 import AddUser from './AddUser';
 import UpdateUser from './UpdateUser';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 function Dashboard() {
@@ -139,7 +139,10 @@ function Dashboard() {
           ) : (
             <ul className='menu'>
               <li className='menu-item'><UserOutlined /> Users</li>
-              <li className='menu-item'><SettingOutlined /> Settings</li>
+              <Link to='/usersetting' style={{textDecoration:"none"}}>
+              <li className='menu-item' ><SettingOutlined /> Settings</li>
+              </Link>
+
             </ul>
           )
         }
