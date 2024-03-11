@@ -31,6 +31,7 @@ function App() {
           <>
             <Route path="/" element={<Login />} />
             <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/userprofile/:userId" element={<UserProfile />} />
           </>
         )}
       </Routes>
