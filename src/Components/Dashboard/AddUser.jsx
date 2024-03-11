@@ -6,13 +6,14 @@ import InputMask from "react-input-mask";
 const AddUser = ({ isModalVisible, modalHideShow }) => {
     const [form] = Form.useForm(); // Creating form instance
     const onFinish = (values) => {
-        const { firstname, lastname, email, phone } = values;
+        const { firstname, lastname, email, phone, company } = values;
         const accessToken = localStorage.getItem('accessToken');
         const AddUserPayload = {
             first_name: firstname,
             last_name: lastname,
             phone_number: phone,
-            email: email
+            email: email,
+            company: company
         };
 
         axios.post(
@@ -29,7 +30,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                 message.success("User Added Successfully");
                 setTimeout(() => {
                     window.location.reload();
-                },200)
+                }, 2000)
             })
             .catch(error => {
                 console.log("error", error);
@@ -42,7 +43,6 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
     };
     return (
         <Modal
-            style={{ marginTop: "50px" }}
             title="Add User"
             visible={isModalVisible}
             onCancel={handleCancel}
@@ -99,6 +99,18 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     ]}
                 >
                     <Input />
+                    </Form.Item>
+                <Form.Item
+                    label="company*"
+                    name="company"
+                    rules={[
+                        {
+                            required: true,
+                            message: 'Please enter an company',
+                        }
+                    ]}
+                >
+                    <Input />
                 </Form.Item>
                 <Form.Item
                     label="Phone*"
@@ -115,7 +127,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     ]}
                 >
                     <InputMask
-                        style={{ width: "100%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9",paddingLeft: "8px",color:"black", transition: "border-color 0.3s",}}
+                        style={{ width: "100%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
                         mask="(999) 999-9999" // Define the mask format for a US phone number
                         maskChar=""
                         placeholder="(123) 345-6789"

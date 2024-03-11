@@ -12,8 +12,8 @@
 
 .gradient-box {
   margin: 0 auto;
-  height: 300px;
-  width: 35%;
+  height: 240px;
+  width: 552px;
   background: rgb(255, 236, 106);
   background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
 }
@@ -51,7 +51,7 @@
 }
 
 .download-btn {
-  width: 10rem;
+  width: 162px;
   display: inline-flex;
   -webkit-box-align: center;
   align-items: center;
@@ -70,7 +70,7 @@
   text-decoration: none;
   text-transform: none;
   font-family: Raleway;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9375rem;
   line-height: 1.75;
   min-width: 64px;
@@ -87,8 +87,13 @@
 }
 
 .QR-user-details {
-  margin-top: 15px;
+  margin: 0 auto;
+
+  margin-top: 5px;
   margin-bottom: 20px;
+  .qr-code{
+    width: 230px;
+  }
 }
 
 .custom-spin .ant-spin-dot {

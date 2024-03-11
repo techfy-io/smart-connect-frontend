@@ -38,9 +38,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             .then(response => {
                 console.log("response", response);
                 message.success("User Update Successfully");
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 200)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000)
             })
             .catch(error => {
                 console.log("error", error);
@@ -64,7 +64,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         Cancel
                     </Button>,
                     <Button key="add" type="primary" onClick={() => form.submit()}>
-                        Add
+                        Update
                     </Button>,
                 ]}
         >
