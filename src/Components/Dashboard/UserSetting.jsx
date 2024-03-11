@@ -57,7 +57,7 @@ const UserSetting = () => {
                 <h2 className='setting-heading'>Setting</h2>
                 <div className='setting-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                        Profile
+                        Profile Setting
                     </button>
                 </div>
                 <div className="setting-tab-content">

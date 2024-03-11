@@ -39,11 +39,13 @@ function App() {
       axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/login/', loginPayload)
         .then(resp => {
           console.log("responce", resp)
-          message.success("Login Successfully");
           localStorage.setItem('accessToken', resp.data.access);
           localStorage.setItem('userinfo', resp.data?.is_superuser)
           setLoading(false);
-          navigate("./dashboard")
+          setTimeout(() => {
+            window.location.reload()
+            message.success("Login Successfully");
+          }, 1000);
         })
         .catch(error => {
           setLoading(false);
@@ -76,7 +78,7 @@ function App() {
         setLoading(false)
         setTimeout(() => {
           handleTabChange('login')
-        }, 3000);
+        }, 2000);
       })
       .catch(error => {
         console.log(error)
