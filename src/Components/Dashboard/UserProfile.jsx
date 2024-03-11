@@ -1,47 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfile.scss';
 import { DownloadOutlined } from '@ant-design/icons';
-import { useLocation } from 'react-router-dom';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
 import { Spin, message } from 'antd';
+import { useParams } from 'react-router-dom';
 
 const UserProfile = () => {
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
-    const location = useLocation();
-    const [userid, setUserId] = useState('');
+    const accessToken = localStorage.getItem('accessToken');
+    const { userId } = useParams(); // Extract userId from the URL
+
     useEffect(() => {
-        setpageloading(true)
-        const fetchUserData = async () => {
-            const userId = location.state?.userid;
-            setUserId(userId)
-            if (userId) {
+        console.log(userId)
+        if (userId) {
+            setpageloading(true);
+            const fetchUserData = async () => {
                 try {
-                    const accessToken = localStorage.getItem('accessToken');
                     const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`
                         }
                     });
                     setUserData(response.data);
-                    setpageloading(false)
+                    setpageloading(false);
                 } catch (error) {
                     console.error("Failed to fetch user data:", error);
                     message.error("Failed to fetch user data:", error);
-                    setpageloading(false)
+                    setpageloading(false);
                 }
-            }
-        };
+            };
 
-        fetchUserData();
-    }, [location]);
+            fetchUserData();
+        }
+    }, [userId]);
 
     const formatUserData = () => {
-        if (userid) {
-            // return `Name: ${userData.first_name} ${userData.last_name}, Email: ${userData.email}, Phone Number: ${userData.phone_number}, Company: ${userData.company}`;
-            return `https://api.smartconnect.cards/api/usercontacts/${userid}/`
+        if (userData) {
+            // Format user data here
+            return `Name: ${userData.first_name} ${userData.last_name}, Email: ${userData.email}, Phone Number: ${userData.phone_number}, Company: ${userData.company}`;
         }
         return '';
     };
@@ -52,7 +51,6 @@ const UserProfile = () => {
         }
 
         setLoading(true);
-        const accessToken = localStorage.getItem('accessToken');
         axios.get(`https://api.smartconnect.cards/api/contacts/${userData.id}/vcf/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
@@ -117,7 +115,6 @@ const UserProfile = () => {
                     </>
                 )
             }
-
         </div>
     );
 };
