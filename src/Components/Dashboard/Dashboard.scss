@@ -58,8 +58,8 @@
   flex: 1;
 
   .content-header {
-    display: flex;
-    justify-content: space-between;
+    // display: flex;
+    // justify-content: space-between;
     flex: 100%;
     height: 70px;
     background-color:#1ba0b7;
@@ -69,6 +69,8 @@
       color: white;
     }
     .AddUser-action{
+      text-align: right;
+      margin-right: 30px;
       padding: 20px;
       .Add-user-btn{
         background-color: #FF8000;

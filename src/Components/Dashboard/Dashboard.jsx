@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, SettingOutlined, TeamOutlined, DeleteOutlined, EditOutlined, LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, TeamOutlined, DeleteOutlined, EditOutlined, LeftOutlined, RightOutlined, LogoutOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -125,8 +125,12 @@ function Dashboard() {
   // getuserprofile
   const GetUserProfile = (id) => {
     navigate(`/userprofile/${id}`);
-}
-
+  }
+  const Logoutuser = () => {
+    localStorage.removeItem("accessToken");
+    message.success("User logout")
+    window.location.reload();
+  }
 
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
@@ -137,14 +141,15 @@ function Dashboard() {
             <ul className="menu">
               <li className="menu-item"><TeamOutlined /> Companies</li>
               <li className="menu-item"><SettingOutlined /> Settings</li>
+              <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> logout</li>
             </ul>
           ) : (
             <ul className='menu'>
               <li className='menu-item'><UserOutlined /> Users</li>
-              <Link to='/usersetting' style={{textDecoration:"none"}}>
-              <li className='menu-item' ><SettingOutlined /> Settings</li>
+              <Link to='/usersetting' style={{ textDecoration: "none" }}>
+                <li className='menu-item' ><SettingOutlined style={{ color: "black" }} /> Settings</li>
               </Link>
-
+              <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> logout</li>
             </ul>
           )
         }
@@ -158,7 +163,7 @@ function Dashboard() {
             userType === "SuperAdmin" ? (
               <h2 className='content-header-headings'>Companies</h2>
             ) : (
-              <h2 className='content-header-headings'>John Elix</h2>
+              <></>
             )
           }
           {
