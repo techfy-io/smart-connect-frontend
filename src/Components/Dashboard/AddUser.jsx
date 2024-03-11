@@ -17,7 +17,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
         };
 
         axios.post(
-            'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/',
+            'https://api.smartconnect.cards/api/usercontacts/',
             AddUserPayload,
             {
                 headers: {

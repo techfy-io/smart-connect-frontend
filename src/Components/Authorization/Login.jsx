@@ -36,7 +36,7 @@ function App() {
       setLoading(false);
     }
     else {
-      axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/login/', loginPayload)
+      axios.post('https://api.smartconnect.cards/api/login/', loginPayload)
         .then(resp => {
           console.log("responce", resp)
           localStorage.setItem('accessToken', resp.data.access);
