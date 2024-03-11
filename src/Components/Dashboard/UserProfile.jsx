@@ -19,11 +19,7 @@ const UserProfile = () => {
             setpageloading(true);
             const fetchUserData = async () => {
                 try {
-                    const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`, {
-                        headers: {
-                            Authorization: `Bearer ${accessToken}`
-                        }
-                    });
+                    const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`);
                     setUserData(response.data);
                     setpageloading(false);
                 } catch (error) {
