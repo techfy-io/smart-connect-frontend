@@ -71,7 +71,7 @@ function App() {
       password: registerPassword,
       is_active: "true",
     };
-    axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/register/', registerPayload)
+    axios.post('https://api.smartconnect.cards/api/register/', registerPayload)
       .then(resp => {
         console.log(resp)
         message.success("Registration successful");
