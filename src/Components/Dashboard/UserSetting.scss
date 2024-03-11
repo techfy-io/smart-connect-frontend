@@ -1,0 +1,156 @@
+// Settings.scss
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+.setting-main-layout {
+    height: 100vh;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#1ba0b7; 
+
+    .setting-custom-card {
+        width: 30rem;
+        border-radius: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        background-color: #ffffff; // Added background color
+
+        .setting-heading {
+            color: #1e2226;
+            font-family: 'Raleway', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 2rem; // Adjusted margin
+        }
+
+        .setting-tab-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            height: 64px;
+            padding: 12px;
+            gap: 8px;
+            border-radius: 14px;
+            background: #e0f3fa;
+            margin-bottom: 1.25rem;
+
+            @media only screen and (max-width: 768px) {
+                width: 85%;
+                height: 10%;
+            }
+        }
+
+        .button-style {
+            display: flex;
+            width: 260px;
+            height: 44px;
+            font-size: 1rem;
+            border-radius: 10px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+            background: transparent;
+            border: none;
+            color: #000;
+            font-weight: bolder;
+
+            &.active-button-style {
+                background: #24acdc;
+                color: white;
+            }
+
+            @media only screen and (max-width: 768px) {
+                width: 45%;
+                margin: 0 auto;
+                text-align: center;
+
+                &.active-button-style {
+                    background: #24acdc;
+                    color: white;
+                }
+            }
+        }
+
+        .setting-tab-content {
+            // text-align: center;
+            width: 100%;
+            max-width: 24.25rem;
+
+            .setting-profile-form,
+            .setting-signup-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+
+                .input-container {
+                    display: flex;
+                    width: 100%;
+                    gap: 8px;
+                }
+
+                .setting-form-input {
+                    display: flex;
+                    width: 100%;
+                    height: 44px;
+                    padding: 0 0.875rem;
+                    align-items: center;
+                    gap: 0.5rem;
+                    border-radius: 0.625rem;
+                    border: 0.0625rem solid #b0e1f2;
+                    background: #e0f3fa;
+                    margin-bottom: 1.25rem;
+                }
+
+                .setting-form-button {
+                    display: flex;
+                    width: 90%;
+                    height: 3rem;
+                    padding: 0.625rem 0.875rem;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 0.5rem;
+                    border: none;
+                    border-radius: 0.625rem;
+                    background: #ffb011;
+                    color: #1f2128;
+                    text-align: center;
+                    font-family: 'Raleway', sans-serif;
+                    font-size: 1rem;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: normal;
+                }
+
+                p {
+                    text-align: center;
+                    color: #000000;
+                }
+
+                @media only screen and (max-width: 768px) {
+                    .setting-main-layout {
+                        width: 100%;
+                    }
+
+                    .setting-custom-card {
+                        width: 90%;
+                    }
+
+                    .setting-form-input,
+                    .setting-form-button {
+                        width: 90%;
+                    }
+                }
+            }
+        }
+
+
+    }
+}

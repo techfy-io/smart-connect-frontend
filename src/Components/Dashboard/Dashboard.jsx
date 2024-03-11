@@ -123,8 +123,8 @@ function Dashboard() {
   };
 
   // getuserprofile
-  const GetUserProfile = (user) => {
-    navigate('/userprofile', { state: { userinfo: user } })
+  const GetUserProfile = (id) => {
+    navigate('/userprofile', { state: { userid: id } })
   }
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
@@ -156,11 +156,16 @@ function Dashboard() {
               <h2 className='content-header-headings'>John Elix</h2>
             )
           }
-          <div className='AddUser-action'>
-            <Button className='Add-user-btn' onClick={modalHideShow}>
-              Add User
-            </Button>
-          </div>
+          {
+            userType === "User" && (
+              <div className='AddUser-action'>
+                <Button className='Add-user-btn' onClick={modalHideShow}>
+                  Add User
+                </Button>
+              </div>
+            )
+          }
+
         </div>
         {
           userType === "SuperAdmin" ? (
@@ -222,7 +227,7 @@ function Dashboard() {
                       {userData.length > 0 ? (
                         userData.map(user => (
                           <tr key={user.key}>
-                            <td onClick={() => GetUserProfile(user)}>{user.first_name + "  " + user.last_name}</td>
+                            <td onClick={() => GetUserProfile(user.id)}>{user.first_name + "  " + user.last_name}</td>
                             <td>{user.email}</td>
                             <td className='Actions-btns'>
                               <button className="Delete-button" onClick={() => deleteUser(user.id)}>

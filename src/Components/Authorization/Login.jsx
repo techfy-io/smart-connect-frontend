@@ -9,7 +9,7 @@ import './Login.scss'
 import axios from 'axios';
 const { Content } = Layout;
 
-const Login = () => {
+function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
@@ -87,13 +87,13 @@ const Login = () => {
   };
 
   return (
-
-    <div className='main-layout'>
+    <Layout className='main-layout' style={{ width: '100%', height: '100vh' }}>
       <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Card className="custom-card">
+        <Card className="custom-card" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <div className='custom-title'>
-            <img src={Smartlogo} className='logo' alt="" />
+            <img src={Smartlogo} className='Smart-connect-logo' alt="" />
           </div>
+
           <div className='tab-container'>
             <button type='primary'
               className={activeForm === 'login' ? 'button-style active-button-style' : 'button-style'}
@@ -108,6 +108,8 @@ const Login = () => {
               Sign up
             </button>
           </div>
+
+
           <div className="tab-content">
             {activeForm === 'login' ? (
               <>
@@ -120,7 +122,6 @@ const Login = () => {
                   <Button type="primary" className="form-button" onClick={loginUser}>
                     {loading ? <Spin /> : "Continue"}
                   </Button>
-                  {/* </Link> */}
                 </form>
               </>
             ) : (
@@ -157,8 +158,8 @@ const Login = () => {
           </div>
         </Card>
       </Content>
-    </div>
-  )
+    </Layout>
+  );
 }
 
-export default Login
+export default App;
