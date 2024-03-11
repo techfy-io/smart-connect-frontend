@@ -45,7 +45,7 @@ const UserSetting = () => {
             message.success("Settings updated successfully!");
         } catch (error) {
             console.log("Error:", error);
-            message.error("failed to update user settings")
+            // message.error("failed to update user settings")
         } finally {
             setLoading(false);
         }
@@ -70,30 +70,65 @@ const UserSetting = () => {
                             remember: true,
                         }}
                     >
-                        <Form.Item
-                            name="first_name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your first name!',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="First Name" />
-                        </Form.Item>
-                        <Form.Item
-                            name="last_name"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your last name!',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Last Name" />
-                        </Form.Item>
+                        <div style={{ display: "flex" }}>
+                            <Form.Item
+
+                                name="first_name"
+                                label="First name"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your first name!',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="First Name" />
+                            </Form.Item>
+                            <Form.Item
+                                style={{ marginLeft: "15px" }}
+
+                                name="last_name"
+                                label="Last name"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your last name!',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Last Name" />
+                            </Form.Item>
+                        </div>
+                        <div style={{ display: "flex" }}>
+                            <Form.Item
+                                name="mobile"
+                                label="Phone"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your phone number!',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Phone" />
+                            </Form.Item>
+                            <Form.Item
+                                style={{ marginLeft: "15px" }}
+                                name="company"
+                                label="Company"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your company!',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Company" />
+                            </Form.Item>
+                        </div>
                         <Form.Item
                             name="email"
+                            label="Email"
                             rules={[
                                 {
                                     required: true,
@@ -104,28 +139,7 @@ const UserSetting = () => {
                         >
                             <Input placeholder="Email" />
                         </Form.Item>
-                        <Form.Item
-                            name="mobile"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your phone number!',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Phone" />
-                        </Form.Item>
-                        <Form.Item
-                            name="company"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please input your company!',
-                                },
-                            ]}
-                        >
-                            <Input placeholder="Company" />
-                        </Form.Item>
+
                         <Form.Item>
                             <Button type="primary" htmlType="submit" className="setting-form-button" onClick={handleSubmit} loading={loading}>
                                 Save
