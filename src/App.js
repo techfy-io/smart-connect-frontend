@@ -24,7 +24,7 @@ function App() {
           <>
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/userprofile/:userId" element={<UserProfile />} />
             <Route path="/usersetting" element={<UserSetting />} />
           </>
         ) : (

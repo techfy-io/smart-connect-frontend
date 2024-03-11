@@ -124,8 +124,10 @@ function Dashboard() {
 
   // getuserprofile
   const GetUserProfile = (id) => {
-    navigate('/userprofile', { state: { userid: id } })
-  }
+    navigate(`/userprofile/${id}`);
+}
+
+
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
       <div className="sider">
