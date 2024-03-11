@@ -46,7 +46,7 @@ function Dashboard() {
         if (userToken === "true") {
           setUserType("SuperAdmin");
           const response = await axios.get(
-            'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/companies/',
+            'https://api.smartconnect.cards/api/companies/',
             {
               params: {
                 limit: 10,
@@ -64,7 +64,7 @@ function Dashboard() {
         } else {
           setUserType("User");
           const userResponse = await axios.get(
-            'http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/',
+            'https://api.smartconnect.cards/api/usercontacts/',
             {
               params: {
                 limit: 10,
@@ -98,7 +98,7 @@ function Dashboard() {
         console.log(id);
         const accessToken = localStorage.getItem('accessToken');
         axios.delete(
-          `http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${id}`,
+          `https://api.smartconnect.cards/api/usercontacts/${id}`,
           {
             headers: {
               'Authorization': `Bearer ${accessToken}`

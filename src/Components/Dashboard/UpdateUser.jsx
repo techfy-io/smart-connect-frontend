@@ -27,7 +27,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         };
 
         axios.put(
-            `http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${user.id}/`,
+            `https://api.smartconnect.cards/api/usercontacts/${user.id}/`,
             UpdareUserPayload,
             {
                 headers: {

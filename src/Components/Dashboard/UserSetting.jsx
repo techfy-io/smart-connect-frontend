@@ -12,7 +12,7 @@ const UserSetting = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        axios.get('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/user/settings/', {
+        axios.get('https://api.smartconnect.cards/api/user/settings/', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -37,7 +37,7 @@ const UserSetting = () => {
     const handleSubmit = async (values) => {
         setLoading(true);
         try {
-            await axios.put('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/user/settings/', values, {
+            await axios.put('https://api.smartconnect.cards/api/user/settings/', values, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }

@@ -20,7 +20,7 @@ const UserProfile = () => {
             if (userId) {
                 try {
                     const accessToken = localStorage.getItem('accessToken');
-                    const response = await axios.get(`http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${userId}/`, {
+                    const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`, {
                         headers: {
                             Authorization: `Bearer ${accessToken}`
                         }
@@ -41,7 +41,7 @@ const UserProfile = () => {
     const formatUserData = () => {
         if (userid) {
             // return `Name: ${userData.first_name} ${userData.last_name}, Email: ${userData.email}, Phone Number: ${userData.phone_number}, Company: ${userData.company}`;
-            return `http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${userid}/`
+            return `https://api.smartconnect.cards/api/usercontacts/${userid}/`
         }
         return '';
     };
@@ -53,7 +53,7 @@ const UserProfile = () => {
 
         setLoading(true);
         const accessToken = localStorage.getItem('accessToken');
-        axios.get(`http://smart-connect.eu-west-3.elasticbeanstalk.com/api/contacts/${userData.id}/vcf/`, {
+        axios.get(`https://api.smartconnect.cards/api/contacts/${userData.id}/vcf/`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             },
