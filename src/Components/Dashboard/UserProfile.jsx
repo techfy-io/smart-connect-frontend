@@ -5,6 +5,7 @@ import QRCode from 'react-qr-code';
 import axios from 'axios';
 import { Spin, message } from 'antd';
 import { useParams } from 'react-router-dom';
+import Smartlogo from "../../Inspect/Smart-logo.png";
 
 const UserProfile = () => {
     const [loading, setLoading] = useState(false);
@@ -89,7 +90,7 @@ const UserProfile = () => {
                         </div>
                         <div className="user-details">
                             <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                            <p className="email">{userData?.email}</p>
+                            <a className="email" href={`mailto:${userData?.email}`}>{userData?.email}</a>
                             <p className="company">{userData?.company}</p>
                         </div>
                         <button className="download-btn" onClick={downloadUserData}>
@@ -101,12 +102,15 @@ const UserProfile = () => {
                                 : (
                                     <>
                                         <DownloadOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
-                                        Download
+                                        Contact info
                                     </>
                                 )}
                         </button>
                         <div className='QR-user-details'>
                             <QRCode value={formatUserData()} className='qr-code' />
+                        </div>
+                        <div className='smart-connect-profile-logo'>
+                            <img src={Smartlogo} alt="" />
                         </div>
                     </>
                 )
