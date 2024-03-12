@@ -33,7 +33,6 @@ const UserSetting = () => {
     }, [form, accessToken]);
 
     const handleSubmit = async (values) => {
-        console.log("Submitted values:", values); // Log the values object
         setLoading(true);
         let isSuccess = false;
         try {
