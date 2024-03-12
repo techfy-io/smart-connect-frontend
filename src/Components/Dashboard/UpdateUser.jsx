@@ -38,6 +38,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             .then(response => {
                 console.log("response", response);
                 message.success("User Update Successfully");
+                UpdatemodalHideShow();
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
