@@ -15,7 +15,7 @@ const ForgetPassword = () => {
         setLoading(true);
         try {
             await axios.post('https://api.smartconnect.cards/api/forgot-password/', values);
-            message.success("Email sent successfully!");
+            message.success("Email sent successfully");
         } catch (error) {
             console.log("Error:", error);
             message.error("Failed to forget password");
