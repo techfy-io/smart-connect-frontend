@@ -8,7 +8,7 @@ const { Header } = Layout;
 const UserSetting = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-    const [formChanged, setFormChanged] = useState(false); // State to track form changes
+    const [formChanged, setFormChanged] = useState(false);
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
@@ -25,7 +25,6 @@ const UserSetting = () => {
                     company: data.company,
                     mobile: data.mobile,
                     email: data.email,
-
                 });
             })
             .catch(error => {
@@ -33,33 +32,56 @@ const UserSetting = () => {
             });
     }, [form, accessToken]);
 
-
     const handleSubmit = async (values) => {
+        console.log("Submitted values:", values); // Log the values object
         setLoading(true);
+        let isSuccess = false;
         try {
             await axios.put('https://api.smartconnect.cards/api/user/settings/', values, {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
                 }
             });
-            message.success("Settings updated successfully!");
+            isSuccess = true;
         } catch (error) {
             console.log("Error:", error);
-            // message.error("failed to update user settings")
         } finally {
             setLoading(false);
-            setFormChanged(false);
-
+            if (isSuccess) {
+                message.success("Settings updated successfully!");
+            } else {
+                message.error("Failed to update user settings");
+            }
         }
     };
+
+    // const Submitdata = (values) => {
+    //     axios.put('https://api.smartconnect.cards/api/user/settings/', values
+    //         , {
+    //             headers: {
+    //                 'Authorization': `Bearer ${accessToken}`
+    //             }
+    //         })
+    //         .then(response => {
+    //             console.log("response", response)
+    //             message.success("Settings updated successfully!");
+    //         })
+    //         .catch(error => {
+    //             console.log("error", error)
+    //             message.error("Failed to update user settings");
+    //         })
+    // }
+
+
+
     const handleValuesChange = () => {
-        setFormChanged(true); // Set formChanged state to true when form values change
+        setFormChanged(true);
     };
 
     return (
         <div className='setting-main-layout'>
             <div className='setting-custom-card'>
-                {/* <h2 className='setting-heading'>Setting</h2> */}
                 <div className='setting-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
                         Profile Setting
@@ -78,7 +100,6 @@ const UserSetting = () => {
                     >
                         <div style={{ display: "flex" }}>
                             <Form.Item
-
                                 name="first_name"
                                 label="First name"
                                 rules={[
@@ -92,7 +113,6 @@ const UserSetting = () => {
                             </Form.Item>
                             <Form.Item
                                 style={{ marginLeft: "15px" }}
-
                                 name="last_name"
                                 label="Last name"
                                 rules={[
@@ -107,19 +127,6 @@ const UserSetting = () => {
                         </div>
                         <div style={{ display: "flex" }}>
                             <Form.Item
-                                name="mobile"
-                                label="Phone"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please input your phone number!',
-                                    },
-                                ]}
-                            >
-                                <Input placeholder="Phone" />
-                            </Form.Item>
-                            <Form.Item
-                                style={{ marginLeft: "15px" }}
                                 name="company"
                                 label="Company"
                                 rules={[
@@ -130,6 +137,19 @@ const UserSetting = () => {
                                 ]}
                             >
                                 <Input placeholder="Company" />
+                            </Form.Item>
+                            <Form.Item
+                                style={{ marginLeft: "15px" }}
+                                name="mobile"
+                                label="Phone"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your phone number!',
+                                    },
+                                ]}
+                            >
+                                <Input placeholder="Phone" />
                             </Form.Item>
                         </div>
                         <Form.Item
@@ -145,13 +165,13 @@ const UserSetting = () => {
                         >
                             <Input placeholder="Email" />
                         </Form.Item>
-
                         <Form.Item>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 className={formChanged ? "setting-form-enable-button" : "setting-form-disable-button"}
-                                onClick={handleSubmit}
+                                // className={"setting-form-enable-button"}
+                                // onClick={Submitdata}
                                 loading={loading}
                                 disabled={!formChanged}
                             >
