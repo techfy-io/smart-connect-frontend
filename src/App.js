@@ -31,7 +31,6 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             {/* <Route path="/userprofile/:userId" element={<UserProfile />} /> */}
             <Route path="/usersetting" element={<UserSetting />} />
-            <Route path="/forgetpassword" element={<ForgetPassword />} />
           </>
         ) : (
           <>
@@ -42,6 +41,7 @@ function App() {
         {/* Common routes accessible in both states */}
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/userprofile/:userId" element={<UserProfile />} />
+        <Route path="/forgetpassword" element={<ForgetPassword />} />
       </Routes>
     </Router>
   );
