@@ -29,7 +29,7 @@ function App() {
             {/* Routes accessible only when logged in */}
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/userprofile/:userId" element={<UserProfile />} />
+            {/* <Route path="/userprofile/:userId" element={<UserProfile />} /> */}
             <Route path="/usersetting" element={<UserSetting />} />
             <Route path="/forgetpassword" element={<ForgetPassword />} />
           </>
