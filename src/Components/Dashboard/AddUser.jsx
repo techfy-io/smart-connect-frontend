@@ -28,6 +28,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
             .then(response => {
                 console.log("response", response);
                 message.success("User Added Successfully");
+                modalHideShow();
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000)
@@ -35,6 +36,8 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
             .catch(error => {
                 console.log("error", error);
                 message.error("Failed to add user")
+                modalHideShow();
+
             });
     };
     const handleCancel = () => {
