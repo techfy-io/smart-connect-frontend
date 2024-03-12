@@ -37,11 +37,11 @@ function App() {
           <>
             {/* Routes accessible only when logged out */}
             <Route path="/" element={<Login />} />
-            <Route path="/userprofile/:userId" element={<UserProfile />} />
           </>
         )}
         {/* Common routes accessible in both states */}
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/userprofile/:userId" element={<UserProfile />} />
       </Routes>
     </Router>
   );
