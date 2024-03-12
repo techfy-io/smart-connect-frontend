@@ -7,7 +7,7 @@ import Smartlogo from "../../Inspect/Smart-logo.png"
 import AddUser from './AddUser';
 import UpdateUser from './UpdateUser';
 import { Link, useNavigate } from 'react-router-dom';
-
+import CompanyLogo from '../../Inspect/CompanyLogo.png'
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -161,7 +161,8 @@ function Dashboard() {
         <div className='content-header'>
           {
             userType === "SuperAdmin" ? (
-              <h2 className='content-header-headings'>Companies</h2>
+              // <h2 className='content-header-headings'> Companies</h2>
+              <img className='content-header-logo' src={CompanyLogo} alt="" />
             ) : (
               <></>
             )
@@ -182,7 +183,7 @@ function Dashboard() {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Companies</th>
+                  <th>Company Name</th>
                   {/* <th>Email</th> */}
                   <th>Action</th>
                 </tr>

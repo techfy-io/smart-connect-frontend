@@ -122,7 +122,7 @@ function App() {
                   <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
                   {/* <Link to='/dashboard'> */}
                   <Button type="primary" className="form-button" onClick={loginUser}>
-                    {loading ? <Spin /> : "Continue"}
+                    {loading ? <Spin /> : "Login"}
                   </Button>
                 </form>
               </>

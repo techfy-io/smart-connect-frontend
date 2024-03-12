@@ -26,7 +26,7 @@
   margin: 0px 0px 0.35em;
   font-size: 24px;
   font-weight: 600;
-  font-family: Raleway;
+  font-family: sans-serif;
   line-height: 1.167;
   // padding: 10px;
 
@@ -34,24 +34,26 @@
 
 .email {
   margin: 0px;
-  font-family: Raleway;
-  font-weight: 400;
+  font-family: sans-serif;
+  font-weight: 500;
   font-size: 0.875rem;
   line-height: 1.43;
-  color: rgb(80, 80, 80);
+  color: rgb(2, 2, 76);
+  text-decoration: none;
 }
+
 
 .company {
   margin: 0px;
-  font-family: Raleway;
-  font-weight: 400;
+  font-family: sans-serif;
+  font-weight: 500;
   font-size: 1rem;
   line-height: 1.5;
   color: rgb(2, 2, 76);
 }
 
 .download-btn {
-  width: 162px;
+  width: 172px;
   display: inline-flex;
   -webkit-box-align: center;
   align-items: center;
@@ -89,10 +91,20 @@
 .QR-user-details {
   margin: 0 auto;
 
-  margin-top: 5px;
-  margin-bottom: 20px;
-  .qr-code{
+  // margin-top: 5px;
+  // margin-bottom: 20px;
+
+  .qr-code {
     width: 230px;
+  }
+}
+
+.smart-connect-profile-logo {
+  margin: 0 auto;
+
+  img {
+    width: 260.506px;
+    height: 85.167px;
   }
 }
 

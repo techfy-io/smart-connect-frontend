@@ -8,7 +8,7 @@ const { Header } = Layout;
 const UserSetting = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-
+    const [formChanged, setFormChanged] = useState(false); // State to track form changes
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
@@ -48,13 +48,18 @@ const UserSetting = () => {
             // message.error("failed to update user settings")
         } finally {
             setLoading(false);
+            setFormChanged(false);
+
         }
+    };
+    const handleValuesChange = () => {
+        setFormChanged(true); // Set formChanged state to true when form values change
     };
 
     return (
         <div className='setting-main-layout'>
             <div className='setting-custom-card'>
-                <h2 className='setting-heading'>Setting</h2>
+                {/* <h2 className='setting-heading'>Setting</h2> */}
                 <div className='setting-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
                         Profile Setting
@@ -69,6 +74,7 @@ const UserSetting = () => {
                         initialValues={{
                             remember: true,
                         }}
+                        onChange={handleValuesChange}
                     >
                         <div style={{ display: "flex" }}>
                             <Form.Item
@@ -141,7 +147,14 @@ const UserSetting = () => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" className="setting-form-button" onClick={handleSubmit} loading={loading}>
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                className={formChanged ? "setting-form-enable-button" : "setting-form-disable-button"}
+                                onClick={handleSubmit}
+                                loading={loading}
+                                disabled={!formChanged}
+                            >
                                 Save
                             </Button>
                         </Form.Item>
