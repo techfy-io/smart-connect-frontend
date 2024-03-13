@@ -36,13 +36,13 @@ const ForgetPassword = () => {
                     <Form
                         form={form}
                         name="ForgetPassword-profile-form"
-                        onFinish={handleSubmit}
+                        // onFinish={handleSubmit}
                         layout="vertical"
                         initialValues={{
                             remember: true,
                         }}
                     >
-                        <div>
+                        <div className='section-para-container'>
                             <p className='section-para'>Enter the email address you used when joining, and we’ll send
                                 reset instructions to reset your password.</p>
                         </div>
