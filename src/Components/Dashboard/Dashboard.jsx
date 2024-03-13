@@ -118,7 +118,7 @@ function Dashboard() {
   }
 
   const getCompanyUsers = (company) => {
-    navigate('/companyuser' ,{state:{company}})
+    navigate('/companyuser', { state: { company } })
   }
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
@@ -127,8 +127,17 @@ function Dashboard() {
         <div className='content-header'>
           {
             userType === "SuperAdmin" ? (
-              // <h2 className='content-header-headings'> Companies</h2>
-              <img className='content-header-logo' src={CompanyLogo} alt="" />
+              <>
+                <div style={{display:"flex", justifyContent:"space-between"}}>
+                  <img className='content-header-logo' src={CompanyLogo} alt="" />
+                  <div className='AddUser-action'>
+                  <Button className='Add-user-btn'>
+                      Add Company
+                    </Button>
+                  </div>
+                    
+                </div>
+              </>
             ) : (
               <></>
             )
@@ -166,7 +175,7 @@ function Dashboard() {
                         companiesData.length > 0 ? (
                           companiesData.map((company, key) => (
                             <tr key={key}>
-                              <td onClick={()=>getCompanyUsers(company)}>{company.company}</td>
+                              <td onClick={() => getCompanyUsers(company)}>{company.company}</td>
                               {/* <td>{company.email}</td> */}
                               <td className='Actions-btns'>
                                 <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
