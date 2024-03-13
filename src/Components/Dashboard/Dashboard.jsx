@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, SettingOutlined, TeamOutlined, DeleteOutlined, EditOutlined, LeftOutlined, RightOutlined, LogoutOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
-import Smartlogo from "../../Inspect/Smart-logo.png"
 import AddUser from './AddUser';
 import UpdateUser from './UpdateUser';
 import { Link, useNavigate } from 'react-router-dom';
 import CompanyLogo from '../../Inspect/CompanyLogo.png'
-
+import Sidebar from '../Common/Sidebar';
 function Dashboard() {
   const navigate = useNavigate();
-  const [userType, setUserType] = useState("User");
+  const [userType, setUserType] = useState("");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
@@ -19,12 +18,6 @@ function Dashboard() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
-
-
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(!isSidebarCollapsed);
-  };
-
   const modalHideShow = () => {
     setIsModalVisible(prev => !prev);
   };
@@ -42,7 +35,6 @@ function Dashboard() {
       try {
         const accessToken = localStorage.getItem('accessToken');
         const userToken = localStorage.getItem('userinfo');
-
         if (userToken === "true") {
           setUserType("SuperAdmin");
           const response = await axios.get(
@@ -60,7 +52,6 @@ function Dashboard() {
 
           setCompaniesData(response.data);
           setLoading(false);
-          console.log("I'm super admin");
         } else {
           setUserType("User");
           const userResponse = await axios.get(
@@ -78,7 +69,6 @@ function Dashboard() {
           console.log(userResponse.data?.results);
           setUserData(userResponse.data.results);
           setLoading(false);
-          console.log("I'm a simple user");
         }
       } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -126,37 +116,13 @@ function Dashboard() {
   const GetUserProfile = (id) => {
     navigate(`/userprofile/${id}`);
   }
-  const Logoutuser = () => {
-    localStorage.removeItem("accessToken");
-    message.success("User logout")
-    window.location.reload();
-  }
 
+  const getCompanyUsers = (company) => {
+    navigate('/companyuser' ,{state:{company}})
+  }
   return (
     <div className={`dashboard ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-      <div className="sider">
-        <img className='logo-image' src={Smartlogo} alt="" />
-        {
-          userType === "SuperAdmin" ? (
-            <ul className="menu">
-              <li className="menu-item"><TeamOutlined /> Companies</li>
-              <li className="menu-item"><SettingOutlined /> Settings</li>
-              <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> logout</li>
-            </ul>
-          ) : (
-            <ul className='menu'>
-              <li className='menu-item'><UserOutlined /> Users</li>
-              <Link to='/usersetting' style={{ textDecoration: "none" }}>
-                <li className='menu-item' ><SettingOutlined style={{ color: "black" }} /> Settings</li>
-              </Link>
-              <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> logout</li>
-            </ul>
-          )
-        }
-        <button className="collabs-button" onClick={toggleSidebar}>
-          {isSidebarCollapsed ? <RightOutlined /> : <LeftOutlined />}
-        </button>
-      </div>
+      <Sidebar />
       <div className="content">
         <div className='content-header'>
           {
@@ -198,9 +164,9 @@ function Dashboard() {
                     <>
                       {
                         companiesData.length > 0 ? (
-                          companiesData.map(company => (
-                            <tr key={company}>
-                              <td>{company.company}</td>
+                          companiesData.map((company, key) => (
+                            <tr key={key}>
+                              <td onClick={()=>getCompanyUsers(company)}>{company.company}</td>
                               {/* <td>{company.email}</td> */}
                               <td className='Actions-btns'>
                                 <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
@@ -236,8 +202,8 @@ function Dashboard() {
                   ) : (
                     <>
                       {userData.length > 0 ? (
-                        userData.map(user => (
-                          <tr key={user.key}>
+                        userData.map((user, key) => (
+                          <tr key={key}>
                             <td onClick={() => GetUserProfile(user.id)}>{user.first_name + "  " + user.last_name}</td>
                             <td>{user.email}</td>
                             <td className='Actions-btns'>

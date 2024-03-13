@@ -2,58 +2,7 @@
   display: flex;
   height: 100vh;
 
-  &.collapsed .sider {
-    width: 140px; // Adjust width when collapsed
-  }
 }
-
-.sider {
-  position: relative; /* Position the button relative to the sidebar */
-
-  width: 200px;
-  background-color: #f0f2f5;
-  padding: 15px;
-  transition: width 0.3s ease; // Add transition for smooth animation
-
-  .logo-image {
-    margin-top: 2%;
-    width: 150px;
-    height: auto;
-  }
-
-  .menu {
-    list-style: none;
-    padding: 0;
-    margin-top: 15%;
-
-    .menu-item {
-      padding: 10px 0;
-      cursor: pointer;
-
-      &:hover {
-        color: #FF8000;
-      }
-    }
-  }
-
-  .collabs-button {
-    position: absolute; /* Position the button absolutely */
-    bottom: 0; /* Adjust top position */
-    right: 0; /* Align button to the right */
-    padding: 10px;
-    cursor: pointer;
-    background-color: #FF8000;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-}
-
-
 .content {
   flex: 1;
 
@@ -62,22 +11,25 @@
     // justify-content: space-between;
     flex: 100%;
     height: 70px;
-    background-color:#1ba0b7;
+    background-color: #1ba0b7;
 
     .content-header-headings {
       padding: 20px;
       color: white;
     }
-    .content-header-logo{
+
+    .content-header-logo {
       height: 50px;
       width: 60px;
       padding: 10px;
     }
-    .AddUser-action{
+
+    .AddUser-action {
       text-align: right;
       margin-right: 30px;
       padding: 20px;
-      .Add-user-btn{
+
+      .Add-user-btn {
         background-color: #FF8000;
         border: none;
         color: white;
@@ -96,10 +48,11 @@
       text-align: center; // Center align text
     }
 
-    td{
+    td {
       cursor: pointer;
 
     }
+
     th {
       color: #100739;
       background-color: #f0f2f5;

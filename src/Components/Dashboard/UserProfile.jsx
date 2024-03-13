@@ -36,7 +36,6 @@ const UserProfile = () => {
 
     const formatUserData = () => {
         if (userId) {
-            // Format user data here
             return `https://app.smartconnect.cards/userprofile/${userId}/`;
         }
         return '';

@@ -57,7 +57,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         <Modal
             style={{ marginTop: "50px" }}
             title="UpdateUser"
-            visible={openEditModal}
+            open={openEditModal}
             onCancel={handleCancel}
             footer={
                 [

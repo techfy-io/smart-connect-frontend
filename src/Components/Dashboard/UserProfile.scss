@@ -98,15 +98,17 @@
     width: 200px;
   }
 }
-
 .smart-connect-profile-logo {
   margin: 0 auto;
-
+margin-bottom: 20px;
   img {
-    width: 260.506px;
-    height: 85.167px;
+      width: 160.506px;
+      height: 55.167px;
+      border-radius: 50%; /* Adding border radius to make it circular */
+      box-shadow: 0px 0px 5px   rgba(255, 183, 48, 0.355); /* Adding a subtle shadow */
   }
 }
+
 
 .custom-spin .ant-spin-dot {
   color: #ffffff;
