@@ -110,8 +110,6 @@ function App() {
               Sign up
             </button>
           </div>
-
-
           <div className="tab-content">
             {activeForm === 'login' ? (
               <>
@@ -120,7 +118,7 @@ function App() {
                 <form className="login-form">
                   <Input id="loginemail" className="form-input" placeholder="Enter your email or username" onChange={(e) => setEmail(e.target.value)} required />
                   <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-                  {/* <Link to='/dashboard'> */}
+                  <Link className='forget-password-link' to={'/forgetpassword'}>Forgot password?</Link>
                   <Button type="primary" className="form-button" onClick={loginUser}>
                     {loading ? <Spin /> : "Login"}
                   </Button>

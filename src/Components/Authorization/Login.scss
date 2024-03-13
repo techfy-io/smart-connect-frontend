@@ -59,7 +59,7 @@ $baseFontSize: 16px;
         }
 
         &:hover {
-            cursor:pointer; 
+            cursor: pointer;
         }
 
 
@@ -72,7 +72,7 @@ $baseFontSize: 16px;
                 background: #24ACDC;
                 color: white;
             }
-            
+
         }
 
     }
@@ -162,7 +162,6 @@ $baseFontSize: 16px;
     .signup-form {
         display: flex;
         flex-direction: column;
-        align-items: center;
 
         .signup-form-names-fields {
             display: flex;
@@ -172,7 +171,13 @@ $baseFontSize: 16px;
             #signupLastName {
                 margin-left: 5px;
             }
-        }}
+        }
+    }
+
+    .forget-password-link {
+        text-align: end;
+        padding: 5px;
+    }
 
     .form-label {
         margin-bottom: 0.5rem;
