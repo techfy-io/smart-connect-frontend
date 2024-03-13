@@ -55,25 +55,6 @@ const UserSetting = () => {
         }
     };
 
-    // const Submitdata = (values) => {
-    //     axios.put('https://api.smartconnect.cards/api/user/settings/', values
-    //         , {
-    //             headers: {
-    //                 'Authorization': `Bearer ${accessToken}`
-    //             }
-    //         })
-    //         .then(response => {
-    //             console.log("response", response)
-    //             message.success("Settings updated successfully!");
-    //         })
-    //         .catch(error => {
-    //             console.log("error", error)
-    //             message.error("Failed to update user settings");
-    //         })
-    // }
-
-
-
     const handleValuesChange = () => {
         setFormChanged(true);
     };

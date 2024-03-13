@@ -6,6 +6,7 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import UserProfile from './Components/Dashboard/UserProfile';
 import UserSetting from './Components/Dashboard/UserSetting';
 import ForgetPassword from './Components/Authorization/ForgetPassword';
+import CompanyUsers from './Components/SuperAdmin/CompanyUsers';
 
 function App() {
   // Check if the user is logged in by reading from local storage
@@ -29,8 +30,8 @@ function App() {
             {/* Routes accessible only when logged in */}
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            {/* <Route path="/userprofile/:userId" element={<UserProfile />} /> */}
             <Route path="/usersetting" element={<UserSetting />} />
+            <Route path="/companyuser" element ={<CompanyUsers/>} />
           </>
         ) : (
           <>

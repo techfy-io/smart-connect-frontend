@@ -47,7 +47,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
     return (
         <Modal
             title="Add User"
-            visible={isModalVisible}
+            open={isModalVisible}
             onCancel={handleCancel}
             footer={[
                 <Button key="cancel" onClick={handleCancel}>

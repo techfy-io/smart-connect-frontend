@@ -50,7 +50,7 @@ function App() {
         .catch(error => {
           setLoading(false);
           console.log(error)
-          message.error(error.response?.data?.detail)
+          message.error(error?.response?.data?.detail)
         })
     }
   };
@@ -81,8 +81,8 @@ function App() {
         }, 2000);
       })
       .catch(error => {
-        console.log(error)
-        message.error("Registration error");
+        console.log(error?.response?.data?.email)
+        message.error(error?.response?.data?.email)
         setLoading(false)
 
       });
