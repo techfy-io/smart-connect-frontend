@@ -19,10 +19,12 @@ const Sidebar = () => {
     }
     useState(() => {
         const userToken = localStorage.getItem('userinfo');
-        if (userToken=="true"){
+        if (userToken == "true") {
             setUserType("SuperAdmin")
         }
-        console.log("adiom",usertype)
+        else(
+            setUserType("User")
+        )
     }, [])
     return (
         <div className='sidebar-container'>
@@ -31,10 +33,10 @@ const Sidebar = () => {
                 {usertype == "SuperAdmin" ? (
                     <ul className="menu">
                         <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
-                        <li className="menu-item"><SettingOutlined /> Settings</li>
+                        {/* <li className="menu-item"><SettingOutlined /> Settings</li> */}
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>
-                ) :  (
+                ) : (
                     <ul className='menu'>
                         <li className='menu-item' onClick={() => navigate('/')}><UserOutlined /> Users</li>
                         <Link to='/usersetting' style={{ textDecoration: "none" }}>
