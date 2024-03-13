@@ -18,9 +18,9 @@ const CompanyUsers = () => {
             <div className='compnayusers-content'>
                 <div className='content-header'>
                     <img className='content-header-logo' src={CompanyLogo} alt="" />
-                    <div className='company-actions'>
+                    {/* <div className='company-actions'>
                         <Button type='primary' className='Add-company-btn'>Add Company</Button>
-                    </div>
+                    </div> */}
                 </div>
                 <table className="table">
                     <thead>
