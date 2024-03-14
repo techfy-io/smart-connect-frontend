@@ -128,30 +128,20 @@ function Dashboard() {
           {
             userType === "SuperAdmin" ? (
               <>
-                <div style={{display:"flex", justifyContent:"space-between"}}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <img className='content-header-logo' src={CompanyLogo} alt="" />
                   <div className='AddUser-action'>
-                  <Button className='Add-user-btn'>
+                    <Button className='Add-user-btn'>
                       Add Company
                     </Button>
                   </div>
-                    
                 </div>
               </>
             ) : (
-              <></>
+              <>
+              </>
             )
           }
-          {
-            userType === "User" && (
-              <div className='AddUser-action'>
-                <Button className='Add-user-btn' onClick={modalHideShow}>
-                  Add User
-                </Button>
-              </div>
-            )
-          }
-
         </div>
         {
           userType === "SuperAdmin" ? (
