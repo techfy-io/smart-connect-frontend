@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, Form, Input, message , Upload } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
-import {InstagramOutlined, LinkedinOutlined, FacebookOutlined } from '@ant-design/icons';
+import {InstagramOutlined, LinkedinOutlined, FacebookOutlined ,UploadOutlined} from '@ant-design/icons';
 const AddUser = ({ isModalVisible, modalHideShow }) => {
     const [form] = Form.useForm(); // Creating form instance
     const onFinish = (values) => {
@@ -64,6 +64,20 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                 layout="vertical"
                 onFinish={onFinish} // Callback function when form is submitted
             >
+                {/* Profile Picture Upload */}
+                <Form.Item label="Profile Picture">
+                    <Upload beforeUpload={() => false} listType="picture">
+                        <Button  icon={<UploadOutlined style={{fontSize:"20px" , color:"#40a9ff"}}/>}>Upload</Button>
+                    </Upload>
+                </Form.Item>
+
+                {/* Cover Picture Upload */}
+                <Form.Item label="Cover Picture">
+                    <Upload beforeUpload={() => false} listType="picture">
+                    <Button  icon={<UploadOutlined style={{fontSize:"20px" , color:"#40a9ff"}}/>}>Upload</Button>
+                    </Upload>
+                </Form.Item>
+
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Form.Item
                         label="First Name*"
