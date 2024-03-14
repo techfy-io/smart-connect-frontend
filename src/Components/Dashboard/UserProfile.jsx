@@ -43,9 +43,6 @@ const UserProfile = () => {
 
         setLoading(true);
         axios.get(`https://api.smartconnect.cards/api/contacts/${userData.id}/vcf/`, {
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            },
             responseType: 'blob'
         })
             .then(response => {
@@ -91,7 +88,8 @@ const UserProfile = () => {
                             <div className='gradient-box'></div>
                             <div className="user-details">
                                 <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                                <a className="email" href={`mailto:${userData?.email}`}>{userData?.email}</a>
+                                <p className="email" >Bio Graphy</p>
+                                <a className="email" href={`mailto:${userData?.email}`}>Job Title</a>
                                 <p className="company">{userData?.company}</p>
                             </div>
                             <div className='profile-actions-buttuns'>
