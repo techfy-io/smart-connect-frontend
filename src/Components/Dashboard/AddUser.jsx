@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Input, message } from 'antd';
+import { Button, Modal, Form, Input, message , Upload } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
-
+import {InstagramOutlined, LinkedinOutlined, FacebookOutlined } from '@ant-design/icons';
 const AddUser = ({ isModalVisible, modalHideShow }) => {
     const [form] = Form.useForm(); // Creating form instance
     const onFinish = (values) => {
@@ -140,21 +140,21 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <Form.Item
-                        label="Facebook"
+                        label={<>Facebook <FacebookOutlined style={{fontSize:"20px", color:"#3b5998",marginLeft:"5px"}}/></>}
                         name="facebook"
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
-                        label="Instagram"
+                        label={<>Instagram <InstagramOutlined style={{fontSize:"20px", color:"#e4405f",marginLeft:"5px"}}/></>}
                         name="instagram"
                     >
                         <Input />
                     </Form.Item>
                 </div>
                 <Form.Item
-                    label="Linkedin"
-                    name="linkedin"
+                        label={<>Linkedin <LinkedinOutlined style={{fontSize:"20px", color:"#0e76a8",marginLeft:"5px"}}/></>}
+                        name="linkedin"
                 >
                     <Input />
                 </Form.Item>
