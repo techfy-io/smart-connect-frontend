@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -165,9 +165,10 @@ function Dashboard() {
                         companiesData.length > 0 ? (
                           companiesData.map((company, key) => (
                             <tr key={key}>
-                              <td onClick={() => getCompanyUsers(company)}>{company.company}</td>
+                              <td >{company.company}</td>
                               {/* <td>{company.email}</td> */}
                               <td className='Actions-btns'>
+                                <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                                 <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
                               </td>
                             </tr>
@@ -203,9 +204,10 @@ function Dashboard() {
                       {userData.length > 0 ? (
                         userData.map((user, key) => (
                           <tr key={key}>
-                            <td onClick={() => GetUserProfile(user.id)}>{user.first_name + "  " + user.last_name}</td>
+                            <td>{user.first_name + "  " + user.last_name}</td>
                             <td>{user.email}</td>
                             <td className='Actions-btns'>
+                              <button  className='view-eye-btn' onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
                               <button className="Delete-button" onClick={() => deleteUser(user.id)}>
                                 <DeleteOutlined />
                               </button>
