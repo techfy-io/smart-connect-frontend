@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfile.scss';
-import { DownloadOutlined } from '@ant-design/icons';
+import { DownloadOutlined, MenuOutlined, FacebookOutlined, InstagramOutlined, LinkedinOutlined, RetweetOutlined } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
 import { Spin, message } from 'antd';
@@ -11,40 +11,35 @@ const UserProfile = () => {
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const accessToken = localStorage.getItem('accessToken');
-    const { userId } = useParams(); // Extract userId from the URL
+    const { userId } = useParams();
 
     useEffect(() => {
-        console.log(userId)
         if (userId) {
-            setpageloading(true);
-            const fetchUserData = async () => {
-                try {
-                    const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`);
-                    setUserData(response.data);
-                    setpageloading(false);
-                } catch (error) {
-                    console.error("Failed to fetch user data:", error);
-                    message.error("Failed to fetch user data:", error);
-                    setpageloading(false);
-                }
-            };
-
             fetchUserData();
         }
     }, [userId]);
 
-    const formatUserData = () => {
-        if (userId) {
-            return `https://app.smartconnect.cards/userprofile/${userId}/`;
+    const fetchUserData = async () => {
+        try {
+            setpageloading(true);
+            const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`);
+            setUserData(response.data);
+            setpageloading(false);
+        } catch (error) {
+            console.error("Failed to fetch user data:", error);
+            message.error("Failed to fetch user data:", error);
+            setpageloading(false);
         }
-        return '';
+    };
+
+    const formatUserData = () => {
+        return userId ? `https://app.smartconnect.cards/userprofile/${userId}/` : '';
     };
 
     const downloadUserData = () => {
-        if (!userData) {
-            return;
-        }
+        if (!userData) return;
 
         setLoading(true);
         axios.get(`https://api.smartconnect.cards/api/contacts/${userData.id}/vcf/`, {
@@ -76,44 +71,58 @@ const UserProfile = () => {
 
     return (
         <div className="user-profile">
-            {
-                pageloading ? (
-                    <>
+            <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
+            </div>
+            <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                <div className='QR-user-details'>
+                    <QRCode value={formatUserData()} className='qr-code' />
+                </div> <br />
+                <p className='qr-code-para'>Show QRCode to share your profile</p>
+            </div>
+            <div className='user-profile-content'>
+                {
+                    pageloading ? (
                         <div style={{ margin: "0 auto", marginTop: "10%" }}>
                             <Spin size='large' />
                         </div>
-                    </>
-                ) : (
-                    <>
-                        <div className='gradient-box'>
-                        </div>
-                        <div className="user-details">
-                            <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                            <a className="email" href={`mailto:${userData?.email}`}>{userData?.email}</a>
-                            <p className="company">{userData?.company}</p>
-                        </div>
-                        <button className="download-btn" onClick={downloadUserData}>
-                            {loading ? (
-                                <>
+                    ) : (
+                        <>
+                            <div className='gradient-box'></div>
+                            <div className="user-details">
+                                <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
+                                <a className="email" href={`mailto:${userData?.email}`}>{userData?.email}</a>
+                                <p className="company">{userData?.company}</p>
+                            </div>
+                            <div className='profile-actions-buttuns'>
+                            <button className="download-btn" onClick={downloadUserData}>
+                                {loading ? (
                                     <Spin style={{ color: "#ffffff" }} className="custom-spin" />
-                                </>
-                            )
-                                : (
+                                ) : (
                                     <>
                                         <DownloadOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
                                         Contact info
                                     </>
                                 )}
-                        </button>
-                        <div className='QR-user-details'>
-                            <QRCode value={formatUserData()} className='qr-code' />
-                        </div>
-                        <div className='smart-connect-profile-logo'>
-                            <img src={Smartlogo} alt="" />
-                        </div>
-                    </>
-                )
-            }
+                            </button>
+                            <button className='Exchange-btn'>
+                                <RetweetOutlined style={{fontSize:"24px", marginRight: '8px'}} /> Exchange
+                            </button>
+                            </div>
+
+                            <div className="social-icons">
+                                <p className='social-icons-para'>I'm helping you</p>
+                                <FacebookOutlined className="icon facebook-icon" />
+                                <InstagramOutlined className="icon instagram-icon" />
+                                <LinkedinOutlined className="icon linkedin-icon" />
+                            </div>
+                            <div className='smart-connect-profile-logo'>
+                                <img src={Smartlogo} alt="" />
+                            </div>
+                        </>
+                    )
+                }
+            </div>
         </div>
     );
 };

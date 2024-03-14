@@ -1,115 +1,248 @@
-/* UserProfile.scss */
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
 .user-profile {
-  text-align: center;
-}
-
-.user-image {
-  width: 30%;
-  height: 10%;
-}
-
-.gradient-box {
-  margin: 0 auto;
-  height: 240px;
-  width: 552px;
-  background: rgb(255, 236, 106);
-  background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
-}
-
-.user-details {
-  padding: 10px;
-}
-
-.username {
-  margin: 0px 0px 0.35em;
-  font-size: 24px;
-  font-weight: 600;
-  font-family: sans-serif;
-  line-height: 1.167;
-  // padding: 10px;
-
-}
-
-.email {
-  margin: 0px;
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  line-height: 1.43;
-  color: rgb(2, 2, 76);
-  text-decoration: none;
-}
-
-
-.company {
-  margin: 0px;
-  font-family: sans-serif;
-  font-weight: 500;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: rgb(2, 2, 76);
-}
-
-.download-btn {
-  width: 172px;
-  display: inline-flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
   position: relative;
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  outline: 0px;
-  border: 0px;
-  margin: 0px;
-  cursor: pointer;
-  user-select: none;
-  vertical-align: middle;
-  appearance: none;
-  text-decoration: none;
-  text-transform: none;
-  font-family: Raleway;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  line-height: 1.75;
-  min-width: 64px;
-  // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  color: rgb(255, 255, 255);
-  box-shadow: none;
-  background: #FF8000;
-  padding: 13px 22px;
-  border-radius: 25px
-}
 
-.download-btn:hover {
-  background: #FF8000
-}
-
-.QR-user-details {
-  margin: 0 auto;
-
-  // margin-top: 5px;
-  // margin-bottom: 20px;
-
-  .qr-code {
-    width: 200px;
+  .burger-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1001;
   }
-}
-.smart-connect-profile-logo {
-  margin: 0 auto;
-margin-bottom: 20px;
-  img {
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: -100%; // Initially hidden off-screen
+    height: 100%;
+    width: 300px;
+    max-width: 80%; // Adjust as needed
+    background-color: #f0f2f5;
+    transition: right 0.3s ease;
+    z-index: 1000;
+
+    &.open {
+      right: 0;
+    }
+
+    .sidebar-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .QR-user-details {
+      margin: 0 auto;
+      background-color: #ffffff;
+      margin-top: 20%;
+      border-radius: 50%;
+      text-align: center;
+      width: 90%;
+
+      // height: 40%;
+      .qr-code {
+        width: 60%;
+        padding: 10px;
+      }
+    }
+
+    .qr-code-para {
+      // padding: 20px;
+      text-align: center;
+      font-family: Raleway;
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 1.43;
+    }
+  }
+
+  .user-profile-content {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    padding-top: 20px; // Adjust as needed
+  }
+
+  .user-image {
+    width: 30%;
+    height: 10%;
+  }
+
+  .gradient-box {
+    margin: 0 auto;
+    height: 240px;
+    width: 35%;
+    background: rgb(255, 236, 106);
+    background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
+
+    @media (max-width: 768px) {
+      width: 70%;
+    }
+  }
+
+
+
+  .user-details {
+    padding: 10px;
+  }
+
+  .username {
+    margin: 0 0 0.35em;
+    font-size: 24px;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    line-height: 1.167;
+  }
+
+  .email {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    color: rgb(2, 2, 76);
+    text-decoration: none;
+  }
+
+  .company {
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgb(2, 2, 76);
+  }
+
+  .profile-actions-buttuns {
+// margin: 0 auto;
+    .download-btn {
+      width: 172px;
+      display: inline-flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      text-transform: none;
+      font-family: Raleway;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      min-width: 64px;
+      // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: rgb(255, 255, 255);
+      box-shadow: none;
+      background: #FF8000;
+      padding: 13px 22px;
+      border-radius: 25px
+    }
+
+    .Exchange-btn {
+      margin-left: 40px;
+      width: 172px;
+      display: inline-flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      position: relative;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      outline: 0px;
+      border: 0px;
+      margin: 0px;
+      cursor: pointer;
+      user-select: none;
+      vertical-align: middle;
+      appearance: none;
+      text-decoration: none;
+      text-transform: none;
+      font-family: Raleway;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      line-height: 1.75;
+      min-width: 64px;
+      // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      color: #1B1232;
+      box-shadow: none;
+      background: #EBECF0;
+      padding: 13px 22px;
+      border-radius: 25px
+    }
+
+    .download-btn:hover {
+      background: #FF8000;
+    }
+  }
+
+
+  .smart-connect-profile-logo {
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    img {
       width: 160.506px;
       height: 55.167px;
-      border-radius: 50%; /* Adding border radius to make it circular */
-      box-shadow: 0px 0px 5px   rgba(255, 183, 48, 0.355); /* Adding a subtle shadow */
+      border-radius: 50%;
+      box-shadow: 0px 0px 5px rgba(255, 183, 48, 0.355);
+    }
   }
-}
+
+  .social-icons {
+    padding: 20px;
+
+    .social-icons-para {
+      padding: 5px;
+      text-align: center;
+      font-family: Raleway;
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 1.43;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        color: #1890ff; // Change color on hover
+      }
+    }
+
+    .facebook-icon {
+      color: #3b5998; // Facebook blue color
+    }
+
+    .instagram-icon {
+      color: #e4405f; // Instagram red color
+    }
+
+    .linkedin-icon {
+      color: #0e76a8; // LinkedIn blue color
+    }
+  }
 
 
-.custom-spin .ant-spin-dot {
-  color: #ffffff;
+  .custom-spin .ant-spin-dot {
+    color: #ffffff;
+  }
 }
