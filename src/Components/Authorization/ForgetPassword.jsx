@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message } from 'antd';
 import axios from 'axios';
-import './ResetPassword.scss';
+import './ForgetPassword.scss';
 
 const { Header } = Layout;
 
-const ResetPassword = () => {
+const ForgetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [accessToken, setToken] = useState();
@@ -36,7 +36,7 @@ const ResetPassword = () => {
                     <Form
                         form={form}
                         name="ResetPassword-profile-form"
-                        // onFinish={handleSubmit}
+                        onFinish={handleSubmit}
                         layout="vertical"
                         initialValues={{
                             remember: true,
@@ -76,4 +76,4 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default ForgetPassword;

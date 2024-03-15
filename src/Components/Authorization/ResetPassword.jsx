@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message } from 'antd';
 import axios from 'axios';
-import './ForgetPassword.scss';
+import './ResetPassword.scss';
+import { useParams } from 'react-router-dom'; // Import useParams
 
 const { Header } = Layout;
 
-const ForgetPassword = () => {
+const ResetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [accessToken, setToken] = useState();
+
+    // Use useParams to get parameters from URL
+    const { token, uid } = useParams();
 
     const handleSubmit = async (values) => {
         setToken(localStorage.getItem('accessToken'));
         setLoading(true);
         try {
-            await axios.post('https://api.smartconnect.cards/api/forgot-password/', values);
+            await axios.post('https://api.smartconnect.cards/api/reset-password/', { ...values, uid, token });
             message.success("Email sent successfully");
         } catch (error) {
             console.log("Error:", error);
@@ -24,12 +28,13 @@ const ForgetPassword = () => {
         }
     };
 
+
     return (
         <div className='ForgetPassword-main-layout'>
             <div className='ForgetPassword-custom-card'>
                 <div className='ForgetPassword-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                    Reset Password
+                        Reset Password
                     </button>
                 </div>
                 <div className="ForgetPassword-tab-content">
@@ -88,4 +93,4 @@ const ForgetPassword = () => {
     );
 };
 
-export default ForgetPassword;
+export default ResetPassword;
