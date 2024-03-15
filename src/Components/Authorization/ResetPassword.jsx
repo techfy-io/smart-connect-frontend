@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message } from 'antd';
 import axios from 'axios';
-import './ResetPassword.scss';
+import './ForgetPassword.scss';
 
 const { Header } = Layout;
 
-const ResetPassword = () => {
+const ForgetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [accessToken, setToken] = useState();
@@ -18,24 +18,24 @@ const ResetPassword = () => {
             message.success("Email sent successfully");
         } catch (error) {
             console.log("Error:", error);
-            message.error("Failed to Reset password");
+            message.error("Failed to forget password");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className='ResetPassword-main-layout'>
-            <div className='ResetPassword-custom-card'>
-                <div className='ResetPassword-tab-container'>
+        <div className='ForgetPassword-main-layout'>
+            <div className='ForgetPassword-custom-card'>
+                <div className='ForgetPassword-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                        Forgot Password
+                    Reset Password
                     </button>
                 </div>
-                <div className="ResetPassword-tab-content">
+                <div className="ForgetPassword-tab-content">
                     <Form
                         form={form}
-                        name="ResetPassword-profile-form"
+                        name="ForgetPassword-profile-form"
                         // onFinish={handleSubmit}
                         layout="vertical"
                         initialValues={{
@@ -43,27 +43,39 @@ const ResetPassword = () => {
                         }}
                     >
                         <div className='section-para-container'>
-                            <p className='section-para'>Enter the email address you used when joining, and we’ll send
-                                reset instructions to reset your password.</p>
+                            {/* <p className='section-para'>Enter your new password.</p> */}
                         </div>
                         <Form.Item
-                            name="email"
-                            label="Email"
+                            name="new_password"
+                            label="New Password"
                             rules={[
                                 {
                                     required: true,
-                                    type: 'email',
-                                    message: 'Please input a valid email!',
+                                    type: 'text',
+                                    message: 'Please input your new password',
                                 },
                             ]}
                         >
-                            <Input placeholder="Email" />
+                            <Input placeholder="new password" />
+                        </Form.Item>
+                        <Form.Item
+                            name="Confirm_password"
+                            label="Confirm Password"
+                            rules={[
+                                {
+                                    required: true,
+                                    type: 'text',
+                                    message: 'Please confirm your password',
+                                },
+                            ]}
+                        >
+                            <Input placeholder="confirm password" />
                         </Form.Item>
                         <Form.Item>
                             <Button
                                 type="primary"
                                 htmlType="submit"
-                                className="ResetPassword-form-enable-button"
+                                className="ForgetPassword-form-enable-button"
                                 loading={loading}
                             >
                                 Save
@@ -76,4 +88,4 @@ const ResetPassword = () => {
     );
 };
 
-export default ResetPassword;
+export default ForgetPassword;
