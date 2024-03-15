@@ -110,7 +110,7 @@ const UserProfile = () => {
                             </div>
 
                             <div className="social-icons">
-                                <p className='social-icons-para'>I'm helping you</p>
+                                <p className='social-icons-para'>Connect on social</p>
                                 <i className="fa fa-facebook icon facebook-icon"></i>
                                 <i className="fa fa-instagram  icon instagram-icon "></i>
                                 <i className="fa fa-linkedin icon linkedin-icon"></i>
