@@ -107,3 +107,12 @@
   }
 
 }
+/* Define custom scrollbar styles */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Adjust the width as needed */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2); /* Adjust scrollbar thumb color */
+  border-radius: 5px; /* Adjust border radius to match your design */
+}

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Input, message , Upload } from 'antd';
+import { Button, Modal, Form, Input, message, Upload } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
-import {InstagramOutlined, LinkedinOutlined, FacebookOutlined ,UploadOutlined} from '@ant-design/icons';
+import { InstagramOutlined, LinkedinOutlined, FacebookOutlined, UploadOutlined } from '@ant-design/icons';
+import './Dashboard.scss';
 const AddUser = ({ isModalVisible, modalHideShow }) => {
     const [form] = Form.useForm(); // Creating form instance
     const onFinish = (values) => {
@@ -44,6 +45,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
         modalHideShow();
         form.resetFields();
     };
+
     return (
         <Modal
             title="Add User"
@@ -59,172 +61,173 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                 </Button>,
             ]}
         >
-            <Form
-                form={form} // Binding form instance to the form component
-                layout="vertical"
-                onFinish={onFinish} // Callback function when form is submitted
-            >
-                {/* Profile Picture Upload */}
-                <Form.Item label="Profile Picture">
-                    <Upload beforeUpload={() => false} listType="picture">
-                        <Button  icon={<UploadOutlined style={{fontSize:"20px" , color:"#40a9ff"}}/>}>Upload</Button>
-                    </Upload>
-                </Form.Item>
+            <div className='custom-scrollbar' style={{ overflowX: 'auto', height: '450px' }}>
+                <Form
+                    form={form} // Binding form instance to the form component
+                    layout="vertical"
+                    onFinish={onFinish} // Callback function when form is submitted
+                >
+                    {/* Profile Picture Upload */}
+                    <Form.Item label="Profile Picture">
+                        <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                        </Upload>
+                    </Form.Item>
 
-                {/* Cover Picture Upload */}
-                <Form.Item label="Cover Picture">
-                    <Upload beforeUpload={() => false} listType="picture">
-                    <Button  icon={<UploadOutlined style={{fontSize:"20px" , color:"#40a9ff"}}/>}>Upload</Button>
-                    </Upload>
-                </Form.Item>
-
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                        label="First Name*"
-                        name="firstname"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter a first name',
-                            },
-                        ]}
-                    >
-                        <Input />
+                    {/* Cover Picture Upload */}
+                    <Form.Item label="Cover Picture">
+                        <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                        </Upload>
                     </Form.Item>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label="First Name*"
+                            name="firstname"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter a first name',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Last Name*"
+                            name="lastname"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter a last name',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label="Company*"
+                            name="company"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter an company',
+                                }
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Job Title"
+                            name="job_title"
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label="Zip Code"
+                            name="zip_code"
+                        >
+                            <Input maxLength={5} />
+                        </Form.Item>
+                        <Form.Item
+                            label="Postal Address"
+                            name="postal_address"
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label="Country"
+                            name="country"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="City"
+                            name="city"
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label={<>Facebook <FacebookOutlined style={{ fontSize: "20px", color: "#3b5998", marginLeft: "5px" }} /></>}
+                            name="facebook"
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label={<>Instagram <InstagramOutlined style={{ fontSize: "20px", color: "#e4405f", marginLeft: "5px" }} /></>}
+                            name="instagram"
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
                     <Form.Item
-                        label="Last Name*"
-                        name="lastname"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter a last name',
-                            },
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                        label="Company*"
-                        name="company"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please enter an company',
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Job Title"
-                        name="job_title"
-                    >
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                        label="Zip Code"
-                        name="zip_code"
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Postal Address"
-                        name="postal_address"
-                    >
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                        label="Country"
-                        name="country"
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="City"
-                        name="city"
-                    >
-                        <Input />
-                    </Form.Item>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                        label={<>Facebook <FacebookOutlined style={{fontSize:"20px", color:"#3b5998",marginLeft:"5px"}}/></>}
-                        name="facebook"
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label={<>Instagram <InstagramOutlined style={{fontSize:"20px", color:"#e4405f",marginLeft:"5px"}}/></>}
-                        name="instagram"
-                    >
-                        <Input />
-                    </Form.Item>
-                </div>
-                <Form.Item
-                        label={<>Linkedin <LinkedinOutlined style={{fontSize:"20px", color:"#0e76a8",marginLeft:"5px"}}/></>}
+                        label={<>Linkedin <LinkedinOutlined style={{ fontSize: "20px", color: "#0e76a8", marginLeft: "5px" }} /></>}
                         name="linkedin"
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Email*"
-                    name="email"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter an email',
-                        },
-                        {
-                            type: 'email',
-                            message: 'Invalid email format',
-                        },
-                    ]}
-                >
-                    <Input />
-                </Form.Item>
-                <Form.Item
-                    label="Phone*"
-                    name="phone"
-                    rules={[
-                        {
-                            required: true,
-                            message: 'Please enter a phone number',
-                        },
-                        {
-                            pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                            message: 'Invalid phone number format',
-                        },
-                    ]}
-                >
-                    <InputMask
-                        style={{
-                            width: "95%",
-                            height: "30px",
-                            borderRadius: "5px",
-                            border: "1px solid #d9d9d9",
-                            paddingLeft: "8px",
-                            color: "black",
-                            transition: "border-color 0.3s",
-                        }}
-                        mask="+33 9 99 99 99 99"
-                        maskChar=""
-                        placeholder="+33 6 79 95 91 92"
                     >
-                    </InputMask>
-                </Form.Item>
-                <Form.Item
-                    label="Biography"
-                    name="biography"
-                >
-                    <Input />
-                </Form.Item>
-            </Form>
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Email*"
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter an email',
+                            },
+                            {
+                                type: 'email',
+                                message: 'Invalid email format',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item
+                        label="Phone*"
+                        name="phone"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter a phone number',
+                            },
+                            {
+                                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                message: 'Invalid phone number format',
+                            },
+                        ]}
+                    >
+                        <InputMask
+                            style={{
+                                width: "95%",
+                                height: "30px",
+                                borderRadius: "5px",
+                                border: "1px solid #d9d9d9",
+                                paddingLeft: "8px",
+                                color: "black",
+                                transition: "border-color 0.3s",
+                            }}
+                            mask="+33 9 99 99 99 99"
+                            maskChar=""
+                            placeholder="+33 6 79 95 91 92"
+                        >
+                        </InputMask>
+                    </Form.Item>
+                    <Form.Item
+                        label="Biography"
+                        name="biography"
+                    >
+                        <Input />
+                    </Form.Item>
+                </Form>
+            </div>
         </Modal >
     );
 };
