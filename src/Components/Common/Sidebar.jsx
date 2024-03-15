@@ -27,7 +27,7 @@ const Sidebar = () => {
         )
     }, [])
     return (
-        <div className='sidebar-container'>
+        <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             <div className="sider">
                 <img className='logo-image' src={Smartlogo} alt="" />
                 {usertype == "SuperAdmin" ? (
