@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { DeleteOutlined } from '@ant-design/icons';
-import { Spin, Button, Modal } from 'antd';
+import { DeleteOutlined , UserOutlined,EyeOutlined } from '@ant-design/icons';
+import { Spin, Button, Modal ,Avatar} from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
@@ -16,12 +16,19 @@ const CompanyUsers = () => {
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
+    const GetUserProfile = (id) => {
+        navigate(`/userprofile/${id}`);
+      }
     return (
         <div className='companyusers-container'>
             <Sidebar />
             <div className='compnayusers-content'>
                 <div className='content-header'>
-                    <img className='content-header-logo' src={CompanyLogo} alt="" />
+                    {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+                    <div className='content-header-logo'>
+                        {/* < Avatar style={{color:"white" , fontSize:"34px" , padding:"10px"}}/> */}
+                        {<Avatar icon={<UserOutlined  />} style={{padding:"25px"}}/>}
+                    </div>
                     <div className='company-actions'>
                         <Button type='primary' className='Add-company-btn' onClick={modalHideShow}>Add User</Button>
                     </div>
@@ -29,7 +36,7 @@ const CompanyUsers = () => {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>User Name</th>
+                            <th>User Name </th>
                             <th>Email</th>
                             <th>Action</th>
                         </tr>
@@ -40,6 +47,7 @@ const CompanyUsers = () => {
                                 <td >{user.first_name + "" + user.last_name}</td>
                                 <td >{user.email}</td>
                                 <td className='Actions-btns'>
+                                <button className="view-eye-btn" onClick={() =>GetUserProfile(user.id)}><EyeOutlined /></button>
                                     <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
                                 </td>
                             </tr>

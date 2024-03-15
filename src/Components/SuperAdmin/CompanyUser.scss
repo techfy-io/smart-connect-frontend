@@ -62,6 +62,18 @@
         }
     
         .Actions-btns {
+          .view-eye-btn{
+            font-size: 20px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            color: #2d8ed4;
+            text-decoration: underline;
+            margin-right: 20px;
+            &:hover {
+              color: #40a9ff;
+            }
+          }
           .Delete-button {
             font-size: 20px;
             border: none;
