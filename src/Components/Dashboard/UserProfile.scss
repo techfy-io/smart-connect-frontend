@@ -16,10 +16,9 @@
     top: 0;
     right: -100%; // Initially hidden off-screen
     height: 100%;
-    width: 300px;
-    max-width: 80%; // Adjust as needed
+    width: 350px;
     background-color: #f0f2f5;
-    transition: right 0.3s ease;
+    transition: right 0.9s ease;
     z-index: 1000;
 
     &.open {
@@ -40,7 +39,7 @@
       margin-top: 20%;
       border-radius: 50%;
       text-align: center;
-      width: 90%;
+      width: 80%;
 
       // height: 40%;
       .qr-code {

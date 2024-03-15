@@ -2,119 +2,116 @@
   display: flex;
   height: 100vh;
 
-}
-.content {
-  flex: 1;
+  .content {
+    flex: 1;
 
-  .content-header {
-    // display: flex;
-    // justify-content: space-between;
-    flex: 100%;
-    height: 70px;
-    background-color: #1ba0b7;
+    .content-header {
+      flex: 100%;
+      height: 70px;
+      background-color: #1ba0b7;
+      position: sticky;
+      top: 0;
 
-    .content-header-headings {
-      padding: 20px;
-      color: white;
-    }
-
-    .content-header-logo {
-      height: 50px;
-      width: 60px;
-      padding: 10px;
-    }
-
-    .AddUser-action {
-      text-align: right;
-      margin-right: 30px;
-      padding: 20px;
-
-      .Add-user-btn {
-        background-color: #FF8000;
-        border: none;
+      .content-header-headings {
+        padding: 20px;
         color: white;
       }
+
+      .content-header-logo {
+        height: 50px;
+        width: 60px;
+        padding: 10px;
+      }
+
+      .AddUser-action {
+        text-align: right;
+        margin-right: 30px;
+        padding: 20px;
+
+        .Add-user-btn {
+          background-color: #ff8000;
+          border: none;
+          color: white;
+        }
+      }
     }
+
+    .scrollable-table {
+      max-height: 100vh;
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #ffffff;
+
+      th,
+      td {
+        border: 1px solid #e8e8e8;
+        padding: 20px;
+        text-align: center;
+      }
+
+      td {
+        cursor: pointer;
+      }
+
+      th {
+        color: #100739;
+        background-color: #f0f2f5;
+      }
+
+      tbody tr:hover {
+        background-color: #e6f7ff;
+      }
+
+      .Actions-btns {
+        .view-eye-btn {
+          font-size: 20px;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          color: #2d8ed4;
+          text-decoration: underline;
+          margin-right: 20px;
+
+          &:hover {
+            color: #40a9ff;
+          }
+        }
+
+        .Delete-button {
+          font-size: 20px;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          color: #ff8000;
+          text-decoration: underline;
+
+          &:hover {
+            color: #40a9ff;
+          }
+        }
+
+        .Edit-button {
+          font-size: 20px;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          color: rgb(25, 172, 192);
+          text-decoration: underline;
+          margin-left: 20px;
+
+          &:hover {
+            color: #40a9ff;
+          }
+        }
+      }
+    }
+
+
   }
-
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th,
-    td {
-      border: 1px solid #e8e8e8;
-      padding: 20px;
-      text-align: center; // Center align text
-    }
-
-    td {
-      cursor: pointer;
-
-    }
-
-    th {
-      color: #100739;
-      background-color: #f0f2f5;
-    }
-
-
-    tbody tr:hover {
-      background-color: #e6f7ff; // Hover row background color
-    }
-
-    .Actions-btns {
-      .view-eye-btn{
-        font-size: 20px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        color: #2d8ed4;
-        text-decoration: underline;
-        margin-right: 20px;
-        &:hover {
-          color: #40a9ff;
-        }
-      }
-      .Delete-button {
-        font-size: 20px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        color: #FF8000;
-        text-decoration: underline;
-
-        &:hover {
-          color: #40a9ff;
-        }
-      }
-
-      .Edit-button {
-        font-size: 20px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        color: rgb(25, 172, 192);
-        text-decoration: underline;
-        margin-left: 20px;
-
-        &:hover {
-          color: #40a9ff;
-        }
-      }
-    }
-
-  }
-
-}
-/* Define custom scrollbar styles */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px; /* Adjust the width as needed */
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.2); /* Adjust scrollbar thumb color */
-  border-radius: 5px; /* Adjust border radius to match your design */
 }
 
 .icon {
@@ -128,20 +125,34 @@
   }
 
   &:hover {
-    color: #1890ff; // Change color on hover
+    color: #1890ff;
   }
 }
 
 .facebook-icon {
-  color: #3b5998; // Facebook blue color
+  color: #3b5998;
 }
 
 .instagram-icon {
-  background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
+  background: linear-gradient(45deg, #515bd4, #8134af, #dd2a7b, #feda77, #f58529);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .linkedin-icon {
-  color: #0e76a8; // LinkedIn blue color
+  color: #0e76a8;
+}
+
+.custom-scrollbar {
+  overflow-y: auto;
+  max-height: 500px;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+  }
 }
