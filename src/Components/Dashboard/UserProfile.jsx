@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Spin, message } from 'antd';
 import { useParams } from 'react-router-dom';
 import Smartlogo from "../../Inspect/Smart-logo.png";
+import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
 const UserProfile = () => {
     const [loading, setLoading] = useState(false);
@@ -93,26 +94,26 @@ const UserProfile = () => {
                                 <p className="company">{userData?.company}</p>
                             </div>
                             <div className='profile-actions-buttuns'>
-                            <button className="download-btn" onClick={downloadUserData}>
-                                {loading ? (
-                                    <Spin style={{ color: "#ffffff" }} className="custom-spin" />
-                                ) : (
-                                    <>
-                                        <DownloadOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
-                                        Contact info
-                                    </>
-                                )}
-                            </button>
-                            <button className='Exchange-btn'>
-                                <RetweetOutlined style={{fontSize:"24px", marginRight: '8px'}} /> Exchange
-                            </button>
+                                <button className="download-btn" onClick={downloadUserData}>
+                                    {loading ? (
+                                        <Spin style={{ color: "#ffffff" }} className="custom-spin" />
+                                    ) : (
+                                        <>
+                                            <DownloadOutlined style={{ fontSize: '24px', marginRight: '8px' }} />
+                                            Contact info
+                                        </>
+                                    )}
+                                </button>
+                                <button className='Exchange-btn'>
+                                    <RetweetOutlined style={{ fontSize: "24px", marginRight: '8px' }} /> Exchange
+                                </button>
                             </div>
 
                             <div className="social-icons">
                                 <p className='social-icons-para'>I'm helping you</p>
-                                <FacebookOutlined className="icon facebook-icon" />
-                                <InstagramOutlined className="icon instagram-icon" />
-                                <LinkedinOutlined className="icon linkedin-icon" />
+                                <i className="fa fa-facebook icon facebook-icon"></i>
+                                <i className="fa fa-instagram  icon instagram-icon "></i>
+                                <i className="fa fa-linkedin icon linkedin-icon"></i>
                             </div>
                             <div className='smart-connect-profile-logo'>
                                 <img src={Smartlogo} alt="" />
