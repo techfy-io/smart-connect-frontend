@@ -4,6 +4,8 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 import { InstagramOutlined, LinkedinOutlined, FacebookOutlined, UploadOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
+import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+
 const AddUser = ({ isModalVisible, modalHideShow }) => {
     const [form] = Form.useForm(); // Creating form instance
     const onFinish = (values) => {
@@ -156,20 +158,21 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label={<>Facebook <FacebookOutlined style={{ fontSize: "20px", color: "#3b5998", marginLeft: "5px" }} /></>}
+                            label={<>Facebook < i className="fa fa-facebook   icon facebook-icon " style={{fontSize:"24px", marginLeft:"5px"}}></i> </>}
                             name="facebook"
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label={<>Instagram <InstagramOutlined style={{ fontSize: "20px", color: "#e4405f", marginLeft: "5px" }} /></>}
+                            label={<>Instagram <i className="fa fa-instagram  icon instagram-icon " style={{fontSize:"24px", marginLeft:"5px"}}></i></>}
                             name="instagram"
                         >
                             <Input />
                         </Form.Item>
                     </div>
                     <Form.Item
-                        label={<>Linkedin <LinkedinOutlined style={{ fontSize: "20px", color: "#0e76a8", marginLeft: "5px" }} /></>}
+                        label={<>Linkedin <i className="fa fa-linkedin icon linkedin-icon" style={{fontSize:"24px", marginLeft:"5px"}}></i>
+                        </>}
                         name="linkedin"
                     >
                         <Input />

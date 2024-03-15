@@ -117,6 +117,9 @@
   }
 
   .profile-actions-buttuns {
+    display: flex;
+    justify-content: center;
+
     .download-btn {
       width: 172px;
       margin-right: 15px;
@@ -130,7 +133,6 @@
       -webkit-tap-highlight-color: transparent;
       outline: 0px;
       border: 0px;
-      margin: 0px;
       cursor: pointer;
       user-select: none;
       vertical-align: middle;
@@ -142,7 +144,7 @@
       font-size: 0.9375rem;
       line-height: 1.75;
       min-width: 64px;
-      // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
       color: rgb(255, 255, 255);
       box-shadow: none;
       background: #FF8000;
@@ -233,7 +235,9 @@
     }
 
     .instagram-icon {
-      color: #e4405f; // Instagram red color
+      background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .linkedin-icon {
