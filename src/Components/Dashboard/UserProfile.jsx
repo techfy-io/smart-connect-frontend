@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './UserProfile.scss';
-import { DownloadOutlined, MenuOutlined, UserOutlined,RetweetOutlined } from '@ant-design/icons';
+import { DownloadOutlined, MenuOutlined, UserOutlined, RetweetOutlined } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
-import { Avatar, Spin, message} from 'antd';
+import { Avatar, Spin, message } from 'antd';
 import { useParams } from 'react-router-dom';
 import Smartlogo from "../../Inspect/Smart-logo.png";
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
@@ -88,7 +88,9 @@ const UserProfile = () => {
                         <>
                             <div className='gradient-box'></div>
                             <div className="user-details">
-                            {<Avatar icon={<UserOutlined  />} style={{padding:"25px"}}/>}
+                                <div className='user-details-image'>
+                                    <UserOutlined className='user-image' />
+                                </div>
                                 <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
                                 <p className="email" >Bio Graphy</p>
                                 <a className="email" href={`mailto:${userData?.email}`}>Job Title</a>
