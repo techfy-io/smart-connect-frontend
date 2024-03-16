@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Form, Input, message, Upload, Radio } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
-import { UploadOutlined, PlusOutlined, CloseOutlined ,DeleteOutlined} from '@ant-design/icons';
+import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
@@ -302,15 +302,33 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                             label={`Another Phone ${index + 1}`}
                             name={`phonenumber${index + 1}`}
                         >
-                            <Input
-                                suffix={
-                                    <Button
-                                        type="text"
-                                        icon={<DeleteOutlined />}
-                                        onClick={() => handleRemovePhone(index)}
+                            <InputMask
+                                style={{
+                                    width: "95%",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 6 79 95 91 92"
+                            >
+                                {() => (
+                                    <Input
+                                        suffix={
+                                            <Button
+                                                type="text"
+                                                icon={<DeleteOutlined />}
+                                                onClick={() => handleRemovePhone(index)}
+                                            />
+                                        }
                                     />
-                                }
-                            />
+                                )}
+                            </InputMask>
+
                         </Form.Item>
                     ))}
                     {
