@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined ,UserOutlined} from '@ant-design/icons';
 import { message, Spin, Button, Modal, Avatar } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -67,11 +67,11 @@ function Dashboard() {
         axios.delete(`https://api.smartconnect.cards/api/usercontacts/${id}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
-        .then(response => {
-          message.success("User Deleted Successfully");
-          setTimeout(() => window.location.reload(), 1000);
-        })
-        .catch(error => console.log("error", error));
+          .then(response => {
+            message.success("User Deleted Successfully");
+            setTimeout(() => window.location.reload(), 1000);
+          })
+          .catch(error => console.log("error", error));
       },
       onCancel() {
         console.log('Deletion canceled');
@@ -88,16 +88,24 @@ function Dashboard() {
       <Sidebar />
       <div className="content">
         <div className='content-header'>
-          {userType === "SuperAdmin" && (
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <img className='content-header-logo' src={CompanyLogo} alt="" />
-              <div className='AddUser-action'>
-                <Button className='Add-user-btn'>Add Company</Button>
+          {userType === "SuperAdmin" ? (
+            <>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <img className='content-header-logo' src={CompanyLogo} alt="" />
+                <div className='AddUser-action'>
+                  <Button className='Add-user-btn'>Add Company</Button>
+                </div>
               </div>
+            </>) : (
+            <>
+            <div style={{padding:"10px"}}>
+            {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
             </div>
-          )}
+            </>
+          )
+          }
         </div>
-        <div className="scrollable-table">
+        <div className="scrollable-table ">
           <table className="table">
             <thead>
               {userType === "SuperAdmin" ? (
