@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DeleteOutlined , UserOutlined,EyeOutlined } from '@ant-design/icons';
+import { DeleteOutlined , UserOutlined,EyeOutlined,EditOutlined } from '@ant-design/icons';
 import { Spin, Button, Modal ,Avatar} from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import CompanyLogo from '../../Inspect/CompanyLogo.png';
@@ -49,6 +49,8 @@ const CompanyUsers = () => {
                                 <td className='Actions-btns'>
                                 <button className="view-eye-btn" onClick={() =>GetUserProfile(user.id)}><EyeOutlined /></button>
                                     <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
+                                    <button className="Edit-button"><EditOutlined /></button>
+
                                 </td>
                             </tr>
                         ))}
