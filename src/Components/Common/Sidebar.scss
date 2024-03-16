@@ -1,28 +1,31 @@
 .sidebar-container {
-    display: flex;
+    position: sticky;
+    top: 0;
     height: 100vh;
-    
+    z-index: 1;
+    /* Ensure sidebar is above other content */
+    background-color: #ffffff;
 
     &.collapsed .sider {
         width: 140px;
-         // Adjust width when collapsed
+        /* Adjust width when collapsed */
     }
 }
 
 .sider {
-    position: relative;
+    // position: relative;
     width: 200px;
     background-color: #f0f2f5;
     padding: 15px;
-    transition: width 0.3s ease; // Add transition for smooth animation
+    transition: width 0.3s ease;
+    /* Add transition for smooth animation */
     height: 100vh;
-    position: sticky;
-    top: 0;
+    /* Remove redundant position: sticky; top: 0; from here */
+
     .logo-image {
         margin-top: 2%;
         width: 150px;
         height: auto;
-
     }
 
     .menu {
@@ -42,11 +45,8 @@
 
     .collabs-button {
         position: absolute;
-        /* Position the button absolutely */
         bottom: 0;
-        /* Adjust top position */
         right: 0;
-        /* Align button to the right */
         padding: 10px;
         cursor: pointer;
         background-color: #FF8000;
