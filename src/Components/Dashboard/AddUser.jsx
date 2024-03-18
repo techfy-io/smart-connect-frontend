@@ -323,8 +323,11 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                                                 type="text"
                                                 icon={<DeleteOutlined />}
                                                 onClick={() => handleRemovePhone(index)}
+                                                
                                             />
+                                            
                                         }
+                                        placeholder="+33 6 79 95 91 92"
                                     />
                                 )}
                             </InputMask>
