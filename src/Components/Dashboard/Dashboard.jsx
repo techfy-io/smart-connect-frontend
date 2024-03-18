@@ -85,7 +85,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Sidebar />
+      <Sidebar  />
       <div className="content">
         <div className='content-header'>
           {userType === "SuperAdmin" ? (
