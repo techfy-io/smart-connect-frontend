@@ -5,25 +5,46 @@ import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import { useEffect } from 'react';
 
-const AddUser = ({ isModalVisible, modalHideShow }) => {
+const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
-
+    const [currentCompany, setCurrentCompany] = useState('')
+    const [lastUserId, setLastUserId] = useState('');
     const onFinish = (values) => {
-        const { firstname, lastname, email, phone, company } = values;
+        const { first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
+            phone_number_personal, phone_number_professional, job_title, bio_graphy, postal_code, zip_code,
+            country, city, facebook_url, instagram_url, linkedin_url, company_name, profile_picture, cover_image, user_id } = values;
         const accessToken = localStorage.getItem('accessToken');
         const AddUserPayload = {
-            first_name: firstname,
-            last_name: lastname,
-            phone_number: phone,
-            email: email,
-            company: company
+            first_name,
+            last_name,
+            email,
+            email_1,
+            email_2,
+            phone_number,
+            phone_number_1,
+            phone_number_2,
+            phone_number_personal,
+            phone_number_professional,
+            job_title,
+            bio_graphy,
+            postal_code,
+            zip_code,
+            country,
+            city,
+            facebook_url,
+            instagram_url,
+            linkedin_url,
+            company_name: currentCompany,
+            profile_picture,
+            cover_image,
+            user_id: lastUserId,
         };
-
         axios.post(
-            'https://api.smartconnect.cards/api/usercontacts/',
+            `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
             AddUserPayload,
             {
                 headers: {
@@ -35,9 +56,9 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                 console.log("response", response);
                 message.success("User Added Successfully");
                 modalHideShow();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000)
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2000)
             })
             .catch(error => {
                 console.log("error", error);
@@ -74,6 +95,13 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
         setAdditionalEmails(updatedEmails);
     };
 
+    useEffect(() => {
+        const lastUserIndex = CompaniesDate?.users?.length;
+        const getlastUserId = lastUserIndex + 1;
+        setCurrentCompany(CompaniesDate.name)
+        setLastUserId(getlastUserId)
+        console.log("id", getlastUserId)
+    }, [CompaniesDate])
     return (
         <Modal
             title="Add User"
@@ -96,23 +124,37 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     onFinish={onFinish} // Callback function when form is submitted
                 >
                     {/* Profile Picture Upload */}
-                    <Form.Item label="Profile Picture">
-                        <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+                    <Form.Item label="Profile Picture" name="profile_picture">
+                        <Upload
+                            maxCount={1}
+                            beforeUpload={() => false} // Prevent default upload behavior
+                            onChange={(info) => {
+                                const { file } = info;
+                                form.setFieldsValue({ profile_picture: file }); // Set form field value to the uploaded file object
+                            }}
+                        >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
                     </Form.Item>
 
-                    {/* Cover Picture Upload */}
-                    <Form.Item label="Cover Picture">
-                        <Upload maxCount={1} beforeUpload={() => false} listType="picture">
+                    <Form.Item label="Cover Picture" name="cover_image">
+                        <Upload
+                            maxCount={1}
+                            beforeUpload={() => false} // Prevent default upload behavior
+                            onChange={(info) => {
+                                const { file } = info;
+                                form.setFieldsValue({ cover_image: file }); // Set form field value to the uploaded file object
+                            }}
+                        >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
                     </Form.Item>
+
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="First Name*"
-                            name="firstname"
+                            name="first_name"
                             rules={[
                                 {
                                     required: true,
@@ -124,7 +166,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                         </Form.Item>
                         <Form.Item
                             label="Last Name*"
-                            name="lastname"
+                            name="last_name"
                             rules={[
                                 {
                                     required: true,
@@ -138,15 +180,15 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="Company*"
-                            name="company"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter a company',
-                                }
-                            ]}
+                            name="company_name"
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: 'Please enter a company',
+                        //     }
+                        // ]}
                         >
-                            <Input />
+                            <Input defaultValue={CompaniesDate.name} disabled />
                         </Form.Item>
                         <Form.Item
                             label="Job Title"
@@ -164,7 +206,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                         </Form.Item>
                         <Form.Item
                             label="Postal Address"
-                            name="postal_address"
+                            name="postal_code"
                         >
                             <Input />
                         </Form.Item>
@@ -186,13 +228,13 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={<>Facebook < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
-                            name="facebook"
+                            name="facebook_url"
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
                             label={<>Instagram <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
-                            name="instagram"
+                            name="instagram_url"
                         >
                             <Input />
                         </Form.Item>
@@ -200,7 +242,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                     <Form.Item
                         label={<>Linkedin <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i>
                         </>}
-                        name="linkedin"
+                        name="linkedin_url"
                     >
                         <Input />
                     </Form.Item>
@@ -224,7 +266,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                         <Form.Item
                             key={index}
                             label={`Additional Email ${index + 1}`}
-                            name={`additionalEmail${index + 1}`}
+                            name={`email_1${index + 1}`}
                             rules={[
                                 {
                                     type: 'email',
@@ -291,8 +333,8 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                             name="phoneType"
                         >
                             <Radio.Group>
-                                <Radio value="professional">Professional</Radio>
-                                <Radio value="personal">Personal</Radio>
+                                <Radio value="phone_number_professional">Professional</Radio>
+                                <Radio value="phone_number_personal">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
                     </div>
@@ -300,7 +342,7 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                         <Form.Item
                             key={index}
                             label={`Another Phone ${index + 1}`}
-                            name={`phonenumber${index + 1}`}
+                            name={`phone_number_1${index + 1}`}
                         >
                             <InputMask
                                 style={{
@@ -323,9 +365,9 @@ const AddUser = ({ isModalVisible, modalHideShow }) => {
                                                 type="text"
                                                 icon={<DeleteOutlined />}
                                                 onClick={() => handleRemovePhone(index)}
-                                                
+
                                             />
-                                            
+
                                         }
                                         placeholder="+33 6 79 95 91 92"
                                     />

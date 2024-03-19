@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined, EyeOutlined ,UserOutlined} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal, Avatar } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -35,14 +35,15 @@ function Dashboard() {
         const userToken = localStorage.getItem('userinfo');
         if (userToken === "true") {
           setUserType("SuperAdmin");
-          const response = await axios.get('https://api.smartconnect.cards/api/companies/', {
+          const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
             params: { limit: 10, offset: 0 },
             headers: { 'Authorization': `Bearer ${accessToken}` }
           });
-          setCompaniesData(response.data);
+          setCompaniesData(response.data.results);
+          console.log(response.data.results)
         } else {
           setUserType("User");
-          const userResponse = await axios.get('https://api.smartconnect.cards/api/usercontacts/', {
+          const userResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/`, {
             params: { limit: 10, offset: 0 },
             headers: { 'Authorization': `Bearer ${accessToken}` }
           });
@@ -64,7 +65,7 @@ function Dashboard() {
       content: 'Are you sure you want to delete this user?',
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
-        axios.delete(`https://api.smartconnect.cards/api/usercontacts/${id}`, {
+        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
@@ -85,7 +86,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Sidebar  />
+      <Sidebar />
       <div className="content">
         <div className='content-header'>
           {userType === "SuperAdmin" ? (
@@ -98,9 +99,9 @@ function Dashboard() {
               </div>
             </>) : (
             <>
-            <div style={{padding:"10px"}}>
-            {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
-            </div>
+              <div style={{ padding: "10px" }}>
+                {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
+              </div>
             </>
           )
           }
@@ -130,7 +131,7 @@ function Dashboard() {
                     companiesData.length > 0 ? (
                       companiesData.map((company, key) => (
                         <tr key={key}>
-                          <td>{company.company}</td>
+                          <td>{company.name}</td>
                           <td className='Actions-btns'>
                             <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                             <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
@@ -164,7 +165,7 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <AddUser isModalVisible={isModalVisible} modalHideShow={modalHideShow} />
+      <AddUser CompaniesDate={companiesData} isModalVisible={isModalVisible} modalHideShow={modalHideShow} />
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={UpdatemodalHideShow} />
     </div>
   );

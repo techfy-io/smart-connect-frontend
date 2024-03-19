@@ -91,13 +91,9 @@
     margin: 0 auto;
     width: 100px;
     height: 70px;
-    background-color: rgb(237, 236, 236);
-    border-radius: 5px;
+    background: rgb(255, 236, 106);
+    background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);    }    border-radius: 5px;
     cursor: pointer;
-    &:hover{
-      background: rgb(255, 236, 106);
-      background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);    }
-    }
     .user-image{
       padding: 30px;
       font-size: 35px;

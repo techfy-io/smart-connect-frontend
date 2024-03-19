@@ -27,7 +27,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         };
 
         axios.put(
-            `https://api.smartconnect.cards/api/usercontacts/${user.id}/`,
+            `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
             UpdareUserPayload,
             {
                 headers: {
