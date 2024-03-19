@@ -3,7 +3,7 @@ import './UserProfile.scss';
 import { DownloadOutlined, MenuOutlined, UserOutlined, RetweetOutlined } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
-import { Avatar, Spin, message } from 'antd';
+import { Modal, Spin, message, Form, Input, Button } from 'antd'; // Import Form, Input, Button from antd
 import { useParams } from 'react-router-dom';
 import Smartlogo from "../../Inspect/Smart-logo.png";
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
@@ -13,6 +13,7 @@ const UserProfile = () => {
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [openExchangeModal, setExchangeModal] = useState(false);
     const accessToken = localStorage.getItem('accessToken');
     const { userId } = useParams();
 
@@ -67,6 +68,19 @@ const UserProfile = () => {
             });
     };
 
+    const handleOpenExchangeModal = () => {
+        setExchangeModal(prev => !prev);
+    };
+
+    // const handleExchangeCancel = () => {
+    //     setExchangeModal(false);
+    // };
+
+    const onFinish = (values) => {
+        console.log('Received values:', values);
+        // Here you can perform actions with the form values, like sending them to the server
+    };
+
     return (
         <div className="user-profile">
             <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
@@ -107,7 +121,7 @@ const UserProfile = () => {
                                         </>
                                     )}
                                 </button>
-                                <button className='Exchange-btn'>
+                                <button className='Exchange-btn' onClick={handleOpenExchangeModal}>
                                     <RetweetOutlined style={{ fontSize: "24px", marginRight: '8px' }} /> Exchange
                                 </button>
                             </div>
@@ -125,6 +139,75 @@ const UserProfile = () => {
                     )
                 }
             </div>
+            <Modal
+                title="Exchange with TestUser"
+                open={openExchangeModal}
+                onCancel={handleOpenExchangeModal}
+                footer={null} // No footer for now, you can add actions if needed
+            >
+                <Form
+                    name="exchangeForm"
+                    onFinish={onFinish}
+                >
+                    <label htmlFor="firstname">First Name*</label>
+                    <Form.Item
+                        name="firstName"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your first name!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="lastname">Last Name*</label>
+                    <Form.Item
+                        name="lastName"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your last name!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="companyname">Company Name*</label>
+                    <Form.Item
+                        name="companyName"
+                    >
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="email">Email*</label>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: 'The input is not a valid email!',
+                            },
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="phone">Phone</label>
+                    <Form.Item
+                        name="phone"
+                    >
+                        <Input />
+                    </Form.Item>
+                    <Form.Item >
+                        <Button type="primary" htmlType="submit" style={{ background: "#ff8000" , width:"200px" }}>
+                            Submit
+                        </Button>
+                    </Form.Item>                   
+                </Form>
+            </Modal>
         </div>
     );
 };
