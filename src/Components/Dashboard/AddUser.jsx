@@ -6,6 +6,7 @@ import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@an
 import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 import { useEffect } from 'react';
+import CompanyLogo from '../../Inspect/CompanyLogo.png';
 
 const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
@@ -48,7 +49,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             AddUserPayload,
             {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/x-www-form-urlencoded' // Change content type here
                 }
             }
         )
@@ -136,6 +138,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
                     </Form.Item>
+
 
                     <Form.Item label="Cover Picture" name="cover_image">
                         <Upload
