@@ -14,61 +14,67 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [additionalEmails, setAdditionalEmails] = useState([]);
     const [currentCompany, setCurrentCompany] = useState('')
     const [lastUserId, setLastUserId] = useState('');
-    const onFinish = (values) => {
-        const { first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
-            phone_number_personal, phone_number_professional, job_title, bio_graphy, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url, company_name, profile_picture, cover_image, user_id } = values;
-        const accessToken = localStorage.getItem('accessToken');
-        const AddUserPayload = {
-            first_name,
-            last_name,
-            email,
-            email_1,
-            email_2,
-            phone_number,
-            phone_number_1,
-            phone_number_2,
-            phone_number_personal,
-            phone_number_professional,
-            job_title,
-            bio_graphy,
-            postal_code,
-            zip_code,
-            country,
-            city,
-            facebook_url,
-            instagram_url,
-            linkedin_url,
-            company_name: currentCompany,
-            profile_picture,
-            cover_image,
-            user_id: lastUserId,
-        };
-        axios.post(
-            `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
-            AddUserPayload,
-            {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/x-www-form-urlencoded' // Change content type here
-                }
-            }
-        )
-            .then(response => {
-                console.log("response", response);
-                message.success("User Added Successfully");
-                modalHideShow();
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 2000)
-            })
-            .catch(error => {
-                console.log("error", error);
-                message.error("Failed to add user")
-                modalHideShow();
+    const onFinish = async (values) => {
 
-            });
+        const {
+            first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
+            phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
+            country, city, facebook_url, instagram_url, linkedin_url, company_name, profile_picture, cover_image, user_id
+        } = values;
+    
+        const accessToken = localStorage.getItem('accessToken');
+        const formData = new FormData();
+    
+        formData.append('first_name', first_name);
+        formData.append('last_name', last_name);
+        formData.append('email', email);
+        formData.append('email_1', additionalEmails);
+        formData.append('email_2', "email1221@gmail.com");
+        formData.append('phone_number', phone_number);
+        formData.append('phone_number_1', "11");
+        formData.append('phone_number_2', "111");
+        formData.append('phone_number_personal', "true");
+        formData.append('phone_number_professional', "false");
+        formData.append('job_title', job_title);
+        formData.append('bio_graphy', biography);
+        formData.append('postal_code', postal_code);
+        formData.append('zip_code', zip_code);
+        formData.append('country', country);
+        formData.append('city', city);
+        formData.append('facebook_url', "https://www.facebook.com/ahamad.khattak.1826");
+        formData.append('instagram_url', "https://www.instagram.com/");
+        formData.append('linkedin_url', "https://www.linkedin.com/ahmadali");
+        formData.append('company_name', currentCompany);
+        formData.append('profile_picture', profile_picture);
+        formData.append('cover_image', cover_image);
+        formData.append('user_id',lastUserId);
+    
+        try {
+            const response = await axios.post(
+                `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
+                formData,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'multipart/form-data',
+                    }
+                }
+              
+            );
+            console.log("response", response);
+            message.success("User Added Successfully");
+            modalHideShow();
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
+        } catch (error) {
+            console.error("error", error);
+            message.error("Failed to add user");
+            modalHideShow();
+
+        }
     };
+    
 
     const handleCancel = () => {
         modalHideShow();
@@ -101,9 +107,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const lastUserIndex = CompaniesDate?.users?.length;
         const getlastUserId = lastUserIndex + 1;
         setCurrentCompany(CompaniesDate.name)
-        setLastUserId(getlastUserId)
-        console.log("id", getlastUserId)
+        setLastUserId(getlastUserId+1)
     }, [CompaniesDate])
+
     return (
         <Modal
             title="Add User"

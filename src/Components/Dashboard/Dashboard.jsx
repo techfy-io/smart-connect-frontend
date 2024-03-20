@@ -8,6 +8,7 @@ import UpdateUser from './UpdateUser';
 import { Link, useNavigate } from 'react-router-dom';
 import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
+import AddCompany from './AddCompany';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -18,16 +19,16 @@ function Dashboard() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
-
-  const modalHideShow = () => setIsModalVisible(prev => !prev);
-
+  const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false); // Step 1
+  // const modalHideShow = () => setIsModalVisible(prev => !prev);
   const updateUser = (user) => {
     setSelectedUser(user);
-    UpdatemodalHideShow();
+    toggleUpdateUserModal();
   };
 
-  const UpdatemodalHideShow = () => setOpenUserEditModal(prev => !prev);
-
+  const toggleModalVisibility = () => setIsModalVisible(prev => !prev);
+  const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
+  const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); // Step 2
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -94,7 +95,7 @@ function Dashboard() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <img className='content-header-logo' src={CompanyLogo} alt="" />
                 <div className='AddUser-action'>
-                  <Button className='Add-user-btn'>Add Company</Button>
+                <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> {/* Step 4 */}
                 </div>
               </div>
             </>) : (
@@ -135,7 +136,7 @@ function Dashboard() {
                           <td className='Actions-btns'>
                             <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                             <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
-                            <button className="Edit-button"><EditOutlined /></button>
+                            <button className="Edit-button" onClick={updateUser}><EditOutlined /></button>
                           </td>
                         </tr>
                       ))
@@ -165,8 +166,9 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <AddUser CompaniesDate={companiesData} isModalVisible={isModalVisible} modalHideShow={modalHideShow} />
-      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={UpdatemodalHideShow} />
+      <AddUser CompaniesDate={companiesData} isModalVisible={isModalVisible} modalHideShow={toggleModalVisibility} />
+      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} /> {/* Step 3 */}
     </div>
   );
 }
