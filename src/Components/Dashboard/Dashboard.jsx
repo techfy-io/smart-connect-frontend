@@ -9,6 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
 import AddCompany from './AddCompany';
+import CompanyUsers from '../SuperAdmin/CompanyUsers';
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -16,17 +17,14 @@ function Dashboard() {
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false); // Step 1
-  // const modalHideShow = () => setIsModalVisible(prev => !prev);
   const updateUser = (user) => {
     setSelectedUser(user);
     toggleUpdateUserModal();
   };
 
-  const toggleModalVisibility = () => setIsModalVisible(prev => !prev);
   const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
   const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); // Step 2
   useEffect(() => {
@@ -58,7 +56,7 @@ function Dashboard() {
       }
     };
     fetchData();
-  }, []);
+  },[]);
 
   const deleteUser = (id) => {
     Modal.confirm({
@@ -82,7 +80,6 @@ function Dashboard() {
   };
 
   const GetUserProfile = (id) => navigate(`/userprofile/${id}`);
-
   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
   return (
@@ -95,7 +92,7 @@ function Dashboard() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <img className='content-header-logo' src={CompanyLogo} alt="" />
                 <div className='AddUser-action'>
-                <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> {/* Step 4 */}
+                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> {/* Step 4 */}
                 </div>
               </div>
             </>) : (
@@ -166,7 +163,6 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <AddUser CompaniesDate={companiesData} isModalVisible={isModalVisible} modalHideShow={toggleModalVisibility} />
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} /> {/* Step 3 */}
     </div>
