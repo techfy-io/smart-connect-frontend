@@ -4,7 +4,7 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
-
+console.log(user)
     useEffect(() => {
         form.setFieldsValue({
             firstname: user?.first_name,
@@ -132,9 +132,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         >
                             <InputMask
                                 style={{ width: "100%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
-                                mask="(999) 999-9999" // Define the mask format for a US phone number
+                                mask="+33 9 99 99 99 99"
                                 maskChar=""
-                                placeholder="(123) 345-6789"
+                                placeholder="+33 6 79 95 91 92"
                             >
                             </InputMask>
                         </Form.Item>

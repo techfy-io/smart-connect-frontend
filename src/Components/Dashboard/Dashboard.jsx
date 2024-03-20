@@ -25,7 +25,7 @@ function Dashboard() {
     setSelectedUser(user);
     toggleUpdateUserModal();
   };
-
+  
   const toggleModalVisibility = () => setIsModalVisible(prev => !prev);
   const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
   const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); // Step 2
@@ -82,7 +82,6 @@ function Dashboard() {
   };
 
   const GetUserProfile = (id) => navigate(`/userprofile/${id}`);
-
   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
   return (
@@ -95,7 +94,7 @@ function Dashboard() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <img className='content-header-logo' src={CompanyLogo} alt="" />
                 <div className='AddUser-action'>
-                <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> {/* Step 4 */}
+                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> {/* Step 4 */}
                 </div>
               </div>
             </>) : (

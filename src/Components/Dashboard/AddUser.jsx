@@ -13,7 +13,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
     const [currentCompany, setCurrentCompany] = useState('')
-    const [lastUserId, setLastUserId] = useState('');
     const onFinish = async (values) => {
 
         const {
@@ -21,20 +20,20 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
             country, city, facebook_url, instagram_url, linkedin_url, company_name, profile_picture, cover_image, user_id
         } = values;
-    
+
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
-    
+
         formData.append('first_name', first_name);
         formData.append('last_name', last_name);
         formData.append('email', email);
-        formData.append('email_1', additionalEmails);
-        formData.append('email_2', "email1221@gmail.com");
+        formData.append('email_1',email_1);
+        formData.append('email_2',email_2);
         formData.append('phone_number', phone_number);
-        formData.append('phone_number_1', "11");
-        formData.append('phone_number_2', "111");
-        formData.append('phone_number_personal', "true");
-        formData.append('phone_number_professional', "false");
+        formData.append('phone_number_1', phone_number_1);
+        formData.append('phone_number_2', phone_number_2);
+        formData.append('phone_number_personal',phone_number_personal);
+        formData.append('phone_number_professional',phone_number_professional);
         formData.append('job_title', job_title);
         formData.append('bio_graphy', biography);
         formData.append('postal_code', postal_code);
@@ -47,8 +46,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('company_name', currentCompany);
         formData.append('profile_picture', profile_picture);
         formData.append('cover_image', cover_image);
-        formData.append('user_id',lastUserId);
-    
+
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
@@ -59,14 +57,14 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         'Content-Type': 'multipart/form-data',
                     }
                 }
-              
+
             );
             console.log("response", response);
             message.success("User Added Successfully");
             modalHideShow();
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error("error", error);
             message.error("Failed to add user");
@@ -74,7 +72,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
 
         }
     };
-    
+
 
     const handleCancel = () => {
         modalHideShow();
@@ -104,12 +102,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     };
 
     useEffect(() => {
-        const lastUserIndex = CompaniesDate?.users?.length;
-        const getlastUserId = lastUserIndex + 1;
         setCurrentCompany(CompaniesDate.name)
-        setLastUserId(getlastUserId+1)
     }, [CompaniesDate])
-
     return (
         <Modal
             title="Add User"
@@ -275,7 +269,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Form.Item
                             key={index}
                             label={`Additional Email ${index + 1}`}
-                            name={`email_1${index + 1}`}
+                            name={`email_${index + 1}`}
                             rules={[
                                 {
                                     type: 'email',
@@ -309,7 +303,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="Phone*"
-                            name="phone"
+                            name="phone_number"
                             rules={[
                                 {
                                     required: true,
@@ -342,8 +336,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             name="phoneType"
                         >
                             <Radio.Group>
-                                <Radio value="phone_number_professional">Professional</Radio>
-                                <Radio value="phone_number_personal">Personal</Radio>
+                                <Radio name='phone_number_professional' value="phone_number_professional">Professional</Radio>
+                                <Radio name='phone_number_personal' value="phone_number_personal">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
                     </div>
@@ -351,7 +345,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Form.Item
                             key={index}
                             label={`Another Phone ${index + 1}`}
-                            name={`phone_number_1${index + 1}`}
+                            name={`phone_number_${index + 1}`}
                         >
                             <InputMask
                                 style={{
