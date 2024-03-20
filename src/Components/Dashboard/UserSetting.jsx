@@ -12,7 +12,7 @@ const UserSetting = () => {
     const accessToken = localStorage.getItem('accessToken');
 
     useEffect(() => {
-        axios.get('https://api.smartconnect.cards/api/user/settings/', {
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/user/settings/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -36,7 +36,7 @@ const UserSetting = () => {
         setLoading(true);
         let isSuccess = false;
         try {
-            await axios.put('https://api.smartconnect.cards/api/user/settings/', values, {
+            await axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/settings/`, values, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'application/json'

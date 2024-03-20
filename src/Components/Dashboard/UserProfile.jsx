@@ -26,7 +26,7 @@ const UserProfile = () => {
     const fetchUserData = async () => {
         try {
             setpageloading(true);
-            const response = await axios.get(`https://api.smartconnect.cards/api/usercontacts/${userId}/`);
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
             setUserData(response.data);
             setpageloading(false);
         } catch (error) {
@@ -37,14 +37,14 @@ const UserProfile = () => {
     };
 
     const formatUserData = () => {
-        return userId ? `https://app.smartconnect.cards/userprofile/${userId}/` : '';
+        return userId ? `${process.env.REACT_APP_BASE_API_URL}/userprofile/${userId}/` : '';
     };
 
     const downloadUserData = () => {
         if (!userData) return;
 
         setLoading(true);
-        axios.get(`https://api.smartconnect.cards/api/contacts/${userData.id}/vcf/`, {
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
             responseType: 'blob'
         })
             .then(response => {
