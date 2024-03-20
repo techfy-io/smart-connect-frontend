@@ -4,7 +4,6 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
-console.log(user)
     useEffect(() => {
         form.setFieldsValue({
             firstname: user?.first_name,

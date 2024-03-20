@@ -9,7 +9,8 @@ import AddUser from '../Dashboard/AddUser';
 import { useEffect } from 'react';
 import axios from 'axios';
 import UpdateUser from '../Dashboard/UpdateUser';
-const CompanyUsers = () => {
+const CompanyUsers = ({ companiesnewdata }) => {
+    console.log("({ companiesnewdata })",companiesnewdata)
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
@@ -30,14 +31,6 @@ const CompanyUsers = () => {
         navigate(`/userprofile/${id}`);
     }
     useEffect(() => {
-        // const accessToken = localStorage.getItem("accessToken");
-        // axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
-        //     params: { limit: 10, offset: 0 },
-        //     headers: { 'Authorization': `Bearer ${accessToken}` }
-        // }).then(response => {
-        //     setCompanyUserList(response.data.results);
-        //     console.log(response.data.results);
-        // })
         setCompanyUserList(company)
     }, [])
     return (
