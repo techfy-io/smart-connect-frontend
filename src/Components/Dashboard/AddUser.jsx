@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, message, Upload, Radio , Spin} from 'antd';
+import { Button, Modal, Form, Input, message, Upload, Radio, Spin } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -25,28 +25,28 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
 
-        formData.append('first_name', first_name);
-        formData.append('last_name', last_name);
-        formData.append('email', email);
-        formData.append('email_1',email_1);
-        formData.append('email_2',email_2);
-        formData.append('phone_number', phone_number);
-        formData.append('phone_number_1', phone_number_1);
-        formData.append('phone_number_2', phone_number_2);
-        formData.append('phone_number_personal',phone_number_personal);
-        formData.append('phone_number_professional',phone_number_professional);
-        formData.append('job_title', job_title);
-        formData.append('bio_graphy', biography);
-        formData.append('postal_code', postal_code);
-        formData.append('zip_code', zip_code);
-        formData.append('country', country);
-        formData.append('city', city);
-        formData.append('facebook_url', "https://www.facebook.com/ahamad.khattak.1826");
-        formData.append('instagram_url', "https://www.instagram.com/");
-        formData.append('linkedin_url', "https://www.linkedin.com/ahmadali");
-        formData.append('company_name', currentCompany);
-        formData.append('profile_picture', profile_picture);
-        formData.append('cover_image', cover_image);
+        formData.append('first_name', first_name || "");
+    formData.append('last_name', last_name || "");
+    formData.append('email', email || "");
+    formData.append('email_1', email_1 || "");
+    formData.append('email_2', email_2 || "");
+    formData.append('phone_number', phone_number || "");
+    formData.append('phone_number_1', phone_number_1 || "");
+    formData.append('phone_number_2', phone_number_2 || "");
+    formData.append('phone_number_personal', phone_number_personal || "");
+    formData.append('phone_number_professional', phone_number_professional || "");
+    formData.append('job_title', job_title || "");
+    formData.append('bio_graphy', biography || "");
+    formData.append('postal_code', postal_code || "");
+    formData.append('zip_code', zip_code || "");
+    formData.append('country', country || "");
+    formData.append('city', city || "");
+    formData.append('facebook_url', facebook_url || "");
+    formData.append('instagram_url', instagram_url || "");
+    formData.append('linkedin_url', linkedin_url || "");
+    formData.append('company_name', currentCompany || "");
+    formData.append('profile_picture', profile_picture || "");
+    formData.append('cover_image', cover_image || "");
 
         try {
             const response = await axios.post(
