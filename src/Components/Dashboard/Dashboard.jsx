@@ -42,7 +42,7 @@ function Dashboard() {
           console.log(response.data.results)
         } else {
           setUserType("User");
-          const userResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/api/usercontacts/`, {
+          const userResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/`, {
             params: { limit: 10, offset: 0 },
             headers: { 'Authorization': `Bearer ${accessToken}` }
           });
