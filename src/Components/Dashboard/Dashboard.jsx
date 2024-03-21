@@ -42,7 +42,7 @@ function Dashboard() {
           console.log(response.data.results)
         } else {
           setUserType("User");
-          const userResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/`, {
+          const userResponse = await axios.get(`http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts//usercontacts/`, {
             params: { limit: 10, offset: 0 },
             headers: { 'Authorization': `Bearer ${accessToken}` }
           });
@@ -64,7 +64,7 @@ function Dashboard() {
       content: 'Are you sure you want to delete this user?',
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
-        axios.delete(`https://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${id}`, {
+        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
