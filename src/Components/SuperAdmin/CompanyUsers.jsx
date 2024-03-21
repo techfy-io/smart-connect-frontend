@@ -9,8 +9,8 @@ import AddUser from '../Dashboard/AddUser';
 import { useEffect } from 'react';
 import axios from 'axios';
 import UpdateUser from '../Dashboard/UpdateUser';
-const CompanyUsers = ({ companiesnewdata }) => {
-    console.log("({ companiesnewdata })",companiesnewdata)
+const CompanyUsers = () => {
+    // console.log("({ companiesnewdata })",companiesnewdata)
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;

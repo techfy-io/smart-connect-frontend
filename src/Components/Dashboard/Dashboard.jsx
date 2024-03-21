@@ -64,7 +64,7 @@ function Dashboard() {
       content: 'Are you sure you want to delete this user?',
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
-        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
+        axios.delete(`https://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/${id}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
