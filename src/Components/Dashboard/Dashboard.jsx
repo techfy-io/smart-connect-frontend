@@ -42,7 +42,7 @@ function Dashboard() {
           console.log(response.data.results)
         } else {
           setUserType("User");
-          const userResponse = await axios.get(`http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts//usercontacts/`, {
+          const userResponse = await axios.get(`http://smart-connect.eu-west-3.elasticbeanstalk.com/api/usercontacts/`, {
             params: { limit: 10, offset: 0 },
             headers: { 'Authorization': `Bearer ${accessToken}` }
           });
