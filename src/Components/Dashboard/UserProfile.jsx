@@ -93,7 +93,14 @@ const UserProfile = () => {
                         </div>
                     ) : (
                         <>
-                            <div className='gradient-box'></div>
+                            {userData && userData.cover_image ? (
+                                <div className='user-detail-cover-image'>
+                                    <img src={userData.cover_image} alt="cover pic" />
+                                </div>
+                            ) : (
+                                <div className='gradient-box'></div>
+                            )}
+
                             <div className="user-details">
                                 <div className='user-details-image'>
                                     {userData && userData.profile_picture ? (
@@ -114,8 +121,6 @@ const UserProfile = () => {
                                         <p className="company">{userData ? userData.company : ""}</p>
                                     </>
                                 )}
-
-
                             </div>
                             <div className='profile-actions-buttuns'>
                                 <button className="download-btn" onClick={downloadUserData}>

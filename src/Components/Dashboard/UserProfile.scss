@@ -82,7 +82,17 @@
     }
   }
 
-
+  .user-detail-cover-image {
+    width: 35%;
+    margin: 0 auto;
+    height: 240px;
+    width: 35%;
+text-align: center;
+    img {
+      width: 30%;
+      height: 240px;
+    }
+  }
 
   .user-details {
     padding: 10px;
@@ -105,7 +115,6 @@
       .user-profile-box {
         width: 100px;
         margin: 0 auto;
-
         text-align: center;
         background: rgb(255, 236, 106);
         background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);

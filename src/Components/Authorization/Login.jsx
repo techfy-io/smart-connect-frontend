@@ -41,6 +41,7 @@ function App() {
           console.log("responce", resp)
           localStorage.setItem('accessToken', resp.data.access);
           localStorage.setItem('userinfo', resp.data?.is_superuser)
+          localStorage.setItem('userid', resp.data?.user_id)
           setLoading(false);
           setTimeout(() => {
             window.location.reload()
@@ -65,7 +66,7 @@ function App() {
     const registerPayload = {
       first_name: firstName,
       last_name: lastName,
-      company: company,
+      company_name: company,
       phone_number: phone,
       email: registerEmail,
       password: registerPassword,
