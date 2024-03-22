@@ -66,7 +66,7 @@ function App() {
       first_name: firstName,
       last_name: lastName,
       company: company,
-      mobile: phone,
+      phone_number: phone,
       email: registerEmail,
       password: registerPassword,
       is_active: "true",
