@@ -88,13 +88,42 @@
     padding: 10px;
 
     .user-details-image {
-    margin: 0 auto;
-    width: 100px;
-    height: 70px;
-    background: rgb(255, 236, 106);
-    background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);    }    border-radius: 5px;
+      margin: 0 auto;
+      width: 150px;
+
+      .user-profile-image {
+        width: 150px;
+        height: 120px;
+
+        img {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+        }
+      }
+
+      .user-profile-box {
+        width: 100px;
+        margin: 0 auto;
+
+        text-align: center;
+        background: rgb(255, 236, 106);
+        background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
+
+        .user-image-box {
+          height: 70px;
+          font-size: 24px;
+        }
+      }
+
+    }
+
+
+
+    border-radius: 5px;
     cursor: pointer;
-    .user-image{
+
+    .user-image {
       padding: 30px;
       font-size: 35px;
     }
@@ -244,16 +273,21 @@
 
     .facebook-icon {
       color: #3b5998; // Facebook blue color
+      text-decoration: none;
     }
 
     .instagram-icon {
       background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-decoration: none;
+
     }
 
     .linkedin-icon {
       color: #0e76a8; // LinkedIn blue color
+      text-decoration: none;
+
     }
   }
 

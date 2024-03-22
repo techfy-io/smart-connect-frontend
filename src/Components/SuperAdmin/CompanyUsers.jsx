@@ -10,37 +10,55 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import UpdateUser from '../Dashboard/UpdateUser';
 const CompanyUsers = () => {
-    // console.log("({ companiesnewdata })",companiesnewdata)
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
-    const { company } = state || {};
+    const {company } = state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [companyUserList, setCompanyUserList] = useState('');
+    const [companyUserList, setCompanyUserList] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
+    const [loading, setLoading] = useState(true); // State to track loading status
+    console.log("hi",company)
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
+
     const updateUser = (user) => {
         setSelectedUser(user);
         toggleUpdateUserModal();
     };
+
     const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
+
     const GetUserProfile = (id) => {
         navigate(`/userprofile/${id}`);
-    }
+    };
+
     useEffect(() => {
-        setCompanyUserList(company)
-    }, [])
+        const accessToken = localStorage.getItem('accessToken');
+        axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        })
+            .then((response) => {
+                setCompanyUserList(response.data.results);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                setLoading(false); // Update loading status regardless of success or failure
+            });
+    }, []);
+
     return (
         <div className='companyusers-container'>
             <Sidebar />
             <div className='compnayusers-content'>
                 <div className='content-header'>
-                    {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
                     <div className='content-header-logo'>
-                        {/* < Avatar style={{color:"white" , fontSize:"34px" , padding:"10px"}}/> */}
                         {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
                     </div>
                     <div className='company-actions'>
@@ -55,23 +73,33 @@ const CompanyUsers = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    {/* <tbody>
-                        {companyUserList && companyUserList.users.map((user, key) => (
-                            <tr key={key}>
-                                <td >{user.first_name + " " + user.last_name}</td>
-                                <td >{user.email}</td>
-                                <td className='Actions-btns'>
-                                    <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
-                                    <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
-                                    <button className="Edit-button" onClick={()=>updateUser(user)}><EditOutlined /></button>
-                                </td>
+                    <tbody>
+                        {loading ? ( // Show loading spinner if loading
+                            <tr>
+                                <td colSpan="3"><Spin /></td>
                             </tr>
-                        ))}
-                    </tbody> */}
+                        ) : companyUserList.length === 0 ? ( // Show message if no users found
+                            <tr>
+                                <td colSpan="3">No users found.</td>
+                            </tr>
+                        ) : (
+                            companyUserList.map((user, key) => (
+                                <tr key={key}>
+                                    <td>{user.first_name + " " + user.last_name}</td>
+                                    <td>{user.email}</td>
+                                    <td className='Actions-btns'>
+                                        <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                        <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
+                                        <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                                    </td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
                 </table>
             </div>
             <AddUser
-                CompaniesDate={company}
+                CompaniesDate={company.name}
                 isModalVisible={isModalVisible}
                 modalHideShow={modalHideShow}
             />

@@ -6,7 +6,6 @@ import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@an
 import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 import { useEffect } from 'react';
-import CompanyLogo from '../../Inspect/CompanyLogo.png';
 
 const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
@@ -63,9 +62,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             console.log("response", response);
             message.success("User Added Successfully");
             modalHideShow();
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error("error", error);
             message.error("Failed to add user");
@@ -103,8 +102,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     };
 
     useEffect(() => {
-        setCurrentCompany(CompaniesDate.name)
+        setCurrentCompany(CompaniesDate)
     }, [CompaniesDate])
+    console.log(CompaniesDate)
     return (
         <Modal
             title="Add User"
@@ -192,7 +192,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         //     }
                         // ]}
                         >
-                            <Input defaultValue={CompaniesDate.name} disabled />
+                            <Input defaultValue={CompaniesDate} disabled />
                         </Form.Item>
                         <Form.Item
                             label="Job Title"

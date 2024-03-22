@@ -3,10 +3,9 @@ import './UserProfile.scss';
 import { DownloadOutlined, MenuOutlined, UserOutlined, RetweetOutlined } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
-import { Modal, Spin, message, Form, Input, Button } from 'antd'; // Import Form, Input, Button from antd
+import { Modal, Spin, message, Form, Input, Button } from 'antd';
 import { useParams } from 'react-router-dom';
 import Smartlogo from "../../Inspect/Smart-logo.png";
-import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
 const UserProfile = () => {
     const [loading, setLoading] = useState(false);
@@ -14,14 +13,13 @@ const UserProfile = () => {
     const [userData, setUserData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [openExchangeModal, setExchangeModal] = useState(false);
-    const accessToken = localStorage.getItem('accessToken');
     const { userId } = useParams();
 
     useEffect(() => {
         if (userId) {
             fetchUserData();
         }
-    }, [userId]);
+    }, []);
 
     const fetchUserData = async () => {
         try {
@@ -72,13 +70,8 @@ const UserProfile = () => {
         setExchangeModal(prev => !prev);
     };
 
-    // const handleExchangeCancel = () => {
-    //     setExchangeModal(false);
-    // };
-
     const onFinish = (values) => {
         console.log('Received values:', values);
-        // Here you can perform actions with the form values, like sending them to the server
     };
 
     return (
@@ -103,12 +96,26 @@ const UserProfile = () => {
                             <div className='gradient-box'></div>
                             <div className="user-details">
                                 <div className='user-details-image'>
-                                    <UserOutlined className='user-image' />
+                                    {userData && userData.profile_picture ? (
+                                        <div className='user-profile-image'>
+                                            <img src={userData.profile_picture} alt="Profile pic" />
+                                        </div>
+                                    ) : (
+                                        <div className='user-profile-box'>
+                                            <UserOutlined style={{ margin: "0 auto" }} className='user-image-box' />
+                                        </div>
+                                    )}
                                 </div>
-                                <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                                <p className="email" >Bio Graphy</p>
-                                <a className="email" href={`mailto:${userData?.email}`}>Job Title</a>
-                                <p className="company">{userData?.company}</p>
+                                {userData && (
+                                    <>
+                                        <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
+                                        <p className="email">{userData ? userData.bio_graphy : ""}</p>
+                                        <p className="email">{userData ? userData.job_title : ""}</p>
+                                        <p className="company">{userData ? userData.company : ""}</p>
+                                    </>
+                                )}
+
+
                             </div>
                             <div className='profile-actions-buttuns'>
                                 <button className="download-btn" onClick={downloadUserData}>
@@ -128,9 +135,9 @@ const UserProfile = () => {
 
                             <div className="social-icons">
                                 <p className='social-icons-para'>Connect on social</p>
-                                <i className="fa fa-facebook icon facebook-icon"></i>
-                                <i className="fa fa-instagram  icon instagram-icon "></i>
-                                <i className="fa fa-linkedin icon linkedin-icon"></i>
+                                <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
+                                <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram  icon instagram-icon"></a>
+                                <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
                             </div>
                             <div className='smart-connect-profile-logo'>
                                 <img src={Smartlogo} alt="" />
@@ -202,10 +209,10 @@ const UserProfile = () => {
                         <Input />
                     </Form.Item>
                     <Form.Item >
-                        <Button type="primary" htmlType="submit" style={{ background: "#ff8000" , width:"200px" }}>
+                        <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
                             Submit
                         </Button>
-                    </Form.Item>                   
+                    </Form.Item>
                 </Form>
             </Modal>
         </div>
