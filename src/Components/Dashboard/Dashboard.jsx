@@ -183,7 +183,7 @@ function Dashboard() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="3">No Users found</td>
+                        <td colSpan="3">No User found</td>
                       </tr>
                     )}
                   </tbody>
