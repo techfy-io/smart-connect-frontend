@@ -27,36 +27,52 @@ function Dashboard() {
 
   const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
   const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); // Step 2
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        const userToken = localStorage.getItem('userinfo');
-        if (userToken === "true") {
-          setUserType("SuperAdmin");
-          const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
-            params: { limit: 10, offset: 0 },
-            headers: { 'Authorization': `Bearer ${accessToken}` }
-          });
-          setCompaniesData(response.data.results);
-          console.log(response.data.results)
-        } else {
-          setUserType("User");
-          const userResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/`, {
-            params: { limit: 10, offset: 0 },
-            headers: { 'Authorization': `Bearer ${accessToken}` }
-          });
-          setUserData(userResponse.data.results);
-        }
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error.message);
-        message.error('Failed to load list');
-        setLoading(false);
-      }
-    };
-    fetchData();
-  },[]);
+    const userToken = localStorage.getItem('userinfo');
+    if (userToken === "true") {
+      fetchCompanies();
+      console.log("superadmin")
+      setUserType("SuperAdmin")
+    } else {
+      fetchUsers();
+    }
+  }, []);
+
+  const fetchCompanies = () => {
+    setUserType("SuperAdmin")
+
+    const accessToken = localStorage.getItem('accessToken');
+    axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
+      params: { limit: 10, offset: 0 },
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    })
+      .then((response) => {
+        setUserType("SuperAdmin")
+        console.log(response);
+        setCompaniesData(response.data.results);
+
+      })
+      .catch((error) => {
+        console.error('Error fetching companies:', error);
+      });
+  };
+
+  const fetchUsers = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userid');
+    axios.get(`${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${userId}`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    })
+      .then((response) => {
+        setUserType("User")
+        console.log(response.data.results);
+        setUserData(response.data.results);
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+  };
 
   const deleteUser = (id) => {
     Modal.confirm({
@@ -78,10 +94,8 @@ function Dashboard() {
       },
     });
   };
-
   const GetUserProfile = (id) => navigate(`/userprofile/${id}`);
   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
-
   return (
     <div className="dashboard">
       <Sidebar />
@@ -120,52 +134,68 @@ function Dashboard() {
                 </tr>
               )}
             </thead>
-            <tbody className='custom-scrollbar'>
-              {loading ? (
-                <tr><td colSpan="3"><Spin /></td></tr>
+            {
+              userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                <>
+                  <tbody>
+                    {companiesData ? (
+                      <> {
+                        companiesData.map((company, key) => (
+                          <tr key={key}>
+                            <td>{company.name}</td>
+                            <td className='Actions-btns'>
+                              <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                              <button className="Delete-button"><DeleteOutlined /></button>
+                              <button className="Edit-button" onClick={updateUser}><EditOutlined /></button>
+                            </td>
+                          </tr>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <tr>
+                          <td colSpan="3">No Company found</td>
+                        </tr>
+                      </>
+                    )}
+                  </tbody>
+                </>
               ) : (
                 <>
-                  {userType === "SuperAdmin" ? (
-                    companiesData.length > 0 ? (
-                      companiesData.map((company, key) => (
-                        <tr key={key}>
-                          <td>{company.name}</td>
-                          <td className='Actions-btns'>
-                            <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                            <button className="Delete-button" onClick={() => alert(`Action clicked by ${company.key}`)}><DeleteOutlined /></button>
-                            <button className="Edit-button" onClick={updateUser}><EditOutlined /></button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr><td colSpan="2">No Company found</td></tr>
-                    )
-                  ) : (
-                    userData.length > 0 ? (
+                  <tbody>
+                    {userData ? (
                       userData.map((user, key) => (
                         <tr key={key}>
-                          <td>{user.first_name + "  " + user.last_name}</td>
+                          <td>{user.first_name + " " + user.last_name}</td>
                           <td>{user.email}</td>
                           <td className='Actions-btns'>
-                            <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
-                            <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
-                            <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                            <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                              <EyeOutlined />
+                            </button>
+                            <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                              <DeleteOutlined />
+                            </button>
+                            <button className="Edit-button" onClick={() => updateUser(user)}>
+                              <EditOutlined />
+                            </button>
                           </td>
                         </tr>
                       ))
                     ) : (
-                      <tr><td colSpan="3">No users found</td></tr>
-                    )
-                  )}
+                      <tr>
+                        <td colSpan="3">No User found</td>
+                      </tr>
+                    )}
+                  </tbody>
                 </>
-              )}
-            </tbody>
+              )
+            }
           </table>
         </div>
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} /> {/* Step 3 */}
-    </div>
+    </div >
   );
 }
 

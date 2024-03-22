@@ -52,7 +52,26 @@ const CompanyUsers = () => {
                 setLoading(false); // Update loading status regardless of success or failure
             });
     }, []);
-
+    const deleteUser = (id) => {
+        Modal.confirm({
+          title: 'Confirm',
+          content: 'Are you sure you want to delete this user?',
+          onOk() {
+            const accessToken = localStorage.getItem('accessToken');
+            axios.delete(`${process.env.REACT_APP_BASE_API_URL}/user/${id}/`, {
+              headers: { 'Authorization': `Bearer ${accessToken}` }
+            })
+              .then(response => {
+                message.success("User Deleted Successfully");
+                setTimeout(() => window.location.reload(), 1000);
+              })
+              .catch(error => console.log("error", error));
+          },
+          onCancel() {
+            console.log('Deletion canceled');
+          },
+        });
+      };
     return (
         <div className='companyusers-container'>
             <Sidebar />
@@ -89,7 +108,7 @@ const CompanyUsers = () => {
                                     <td>{user.email}</td>
                                     <td className='Actions-btns'>
                                         <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
-                                        <button className="Delete-button" onClick={() => alert(`Action clicked by ${user.key}`)}><DeleteOutlined /></button>
+                                        <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
                                         <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
                                     </td>
                                 </tr>
