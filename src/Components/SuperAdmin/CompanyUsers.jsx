@@ -55,7 +55,7 @@ const CompanyUsers = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    {/* <tbody>
                         {companyUserList && companyUserList.users.map((user, key) => (
                             <tr key={key}>
                                 <td >{user.first_name + " " + user.last_name}</td>
@@ -67,7 +67,7 @@ const CompanyUsers = () => {
                                 </td>
                             </tr>
                         ))}
-                    </tbody>
+                    </tbody> */}
                 </table>
             </div>
             <AddUser
