@@ -146,7 +146,7 @@ function Dashboard() {
                             <td className='Actions-btns'>
                               <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                               <button className="Delete-button"><DeleteOutlined /></button>
-                              <button className="Edit-button" onClick={updateUser}><EditOutlined /></button>
+                              <button className="Edit-button"><EditOutlined /></button>
                             </td>
                           </tr>
                         ))}

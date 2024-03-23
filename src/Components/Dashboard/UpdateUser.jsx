@@ -22,10 +22,11 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             last_name: lastname,
             email: email,
             phone_number: phone_number,
-            user: "1"
+            company_name:user.company_name,
+            user: user.id,
         };
 
-        axios.put(
+        axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
             UpdareUserPayload,
             {
