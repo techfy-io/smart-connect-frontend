@@ -235,7 +235,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             name="facebook_url"
                             rules={[
                                 {
-                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    pattern: /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/,
                                     message: 'Invalid facebook URL',
                                 },
                             ]}
@@ -245,6 +245,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Form.Item
                             label={<>Instagram <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                             name="instagram_url"
+                            rules={[
+                                {
+                                    pattern: /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/,
+                                    message: 'Invalid instagram URL',
+                                },
+                            ]}
                         >
                             <Input />
                         </Form.Item>
@@ -253,6 +259,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         label={<>Linkedin <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i>
                         </>}
                         name="linkedin_url"
+                        rules={[
+                            {
+                                pattern:/^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
+                                message: 'Invalid linkedin URL',
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>
