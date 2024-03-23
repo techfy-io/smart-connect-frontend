@@ -25,27 +25,27 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const formData = new FormData();
 
         formData.append('first_name', first_name || "");
-    formData.append('last_name', last_name || "");
-    formData.append('email', email || "");
-    if (email_1) formData.append('email_1', email_1 || "");
-    if (email_2) formData.append('email_2', email_2 || "");
-    formData.append('phone_number', phone_number || "");
-    formData.append('phone_number_1', phone_number_1 || "");
-    formData.append('phone_number_2', phone_number_2 || "");
-    formData.append('phone_number_personal', phone_number_personal || "");
-    formData.append('phone_number_professional', phone_number_professional || "");
-    formData.append('job_title', job_title || "");
-    formData.append('bio_graphy', biography || "");
-    formData.append('postal_code', postal_code || "");
-    formData.append('zip_code', zip_code || "");
-    formData.append('country', country || "");
-    formData.append('city', city || "");
-    if (facebook_url) formData.append('facebook_url', facebook_url || "");
-    if (instagram_url)  formData.append('instagram_url', instagram_url || "");
-    if (linkedin_url)  formData.append('linkedin_url', linkedin_url || "");
-    formData.append('company_name', currentCompany || "");
-    formData.append('profile_picture', profile_picture || "");
-    formData.append('cover_image', cover_image || "");
+        formData.append('last_name', last_name || "");
+        formData.append('email', email || "");
+        if (email_1) formData.append('email_1', email_1 || "");
+        if (email_2) formData.append('email_2', email_2 || "");
+        formData.append('phone_number', phone_number || "");
+        formData.append('phone_number_1', phone_number_1 || "");
+        formData.append('phone_number_2', phone_number_2 || "");
+        formData.append('phone_number_personal', phone_number_personal || "");
+        formData.append('phone_number_professional', phone_number_professional || "");
+        formData.append('job_title', job_title || "");
+        formData.append('bio_graphy', biography || "");
+        formData.append('postal_code', postal_code || "");
+        formData.append('zip_code', zip_code || "");
+        formData.append('country', country || "");
+        formData.append('city', city || "");
+        if (facebook_url) formData.append('facebook_url', facebook_url || "");
+        if (instagram_url) formData.append('instagram_url', instagram_url || "");
+        if (linkedin_url) formData.append('linkedin_url', linkedin_url || "");
+        formData.append('company_name', currentCompany || "");
+        formData.append('profile_picture', profile_picture || "");
+        formData.append('cover_image', cover_image || "");
 
         try {
             const response = await axios.post(
@@ -104,7 +104,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     useEffect(() => {
         setCurrentCompany(CompaniesDate)
     }, [CompaniesDate])
-    console.log(CompaniesDate)
     return (
         <Modal
             title="Add User"
@@ -261,7 +260,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         name="linkedin_url"
                         rules={[
                             {
-                                pattern:/^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
+                                pattern: /^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
                                 message: 'Invalid linkedin URL',
                             },
                         ]}
@@ -355,8 +354,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             name="phoneType"
                         >
                             <Radio.Group>
-                                <Radio name='phone_number_professional' value="phone_number_professional">Professional</Radio>
-                                <Radio name='phone_number_personal' value="phone_number_personal">Personal</Radio>
+                                <Radio name='phone_number_professional' value="PROFESSIONAL">Professional</Radio>
+                                <Radio name='phone_number_personal' value="PERSONAL">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
                     </div>
