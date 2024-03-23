@@ -154,7 +154,7 @@ function Dashboard() {
                     ) : (
                       <>
                         <tr>
-                          <td colSpan="3">No Compan found</td>
+                          <td colSpan="3">No Company found</td>
                         </tr>
                       </>
                     )}

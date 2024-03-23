@@ -40,9 +40,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     formData.append('zip_code', zip_code || "");
     formData.append('country', country || "");
     formData.append('city', city || "");
-    formData.append('facebook_url', facebook_url || "");
-    formData.append('instagram_url', instagram_url || "");
-    formData.append('linkedin_url', linkedin_url || "");
+    if (facebook_url) formData.append('facebook_url', facebook_url || "");
+    if (instagram_url)  formData.append('instagram_url', instagram_url || "");
+    if (linkedin_url)  formData.append('linkedin_url', linkedin_url || "");
     formData.append('company_name', currentCompany || "");
     formData.append('profile_picture', profile_picture || "");
     formData.append('cover_image', cover_image || "");
@@ -233,6 +233,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Form.Item
                             label={<>Facebook < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
                             name="facebook_url"
+                            rules={[
+                                {
+                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    message: 'Invalid facebook URL',
+                                },
+                            ]}
                         >
                             <Input />
                         </Form.Item>
