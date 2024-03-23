@@ -32,7 +32,6 @@ function Dashboard() {
     const userToken = localStorage.getItem('userinfo');
     if (userToken === "true") {
       fetchCompanies();
-      console.log("superadmin")
       setUserType("SuperAdmin")
     } else {
       fetchUsers();
@@ -51,10 +50,11 @@ function Dashboard() {
         setUserType("SuperAdmin")
         console.log(response);
         setCompaniesData(response.data.results);
-
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching companies:', error);
+        setLoading(false);
       });
   };
 
@@ -68,9 +68,11 @@ function Dashboard() {
         setUserType("User")
         console.log(response.data.results);
         setUserData(response.data.results);
+        setLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching users:', error);
+        setLoading(false);
       });
   };
 
@@ -135,58 +137,71 @@ function Dashboard() {
               )}
             </thead>
             {
-              userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+              loading ? (
                 <>
                   <tbody>
-                    {companiesData ? (
-                      <> {
-                        companiesData.map((company, key) => (
-                          <tr key={key}>
-                            <td>{company.name}</td>
-                            <td className='Actions-btns'>
-                              <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                              <button className="Delete-button"><DeleteOutlined /></button>
-                              <button className="Edit-button"><EditOutlined /></button>
-                            </td>
-                          </tr>
-                        ))}
-                      </>
-                    ) : (
-                      <>
-                        <tr>
-                          <td colSpan="3">No Company found</td>
-                        </tr>
-                      </>
-                    )}
+                    <tr>
+                      <td colSpan="3"> <Spin /></td></tr>
                   </tbody>
                 </>
               ) : (
                 <>
-                  <tbody>
-                    {userData ? (
-                      userData.map((user, key) => (
-                        <tr key={key}>
-                          <td>{user.first_name + " " + user.last_name}</td>
-                          <td>{user.email}</td>
-                          <td className='Actions-btns'>
-                            <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
-                              <EyeOutlined />
-                            </button>
-                            <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                              <DeleteOutlined />
-                            </button>
-                            <button className="Edit-button" onClick={() => updateUser(user)}>
-                              <EditOutlined />
-                            </button>
-                          </td>
-                        </tr>
-                      ))
+                  {
+                    userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                      <>
+                        <tbody>
+                          {companiesData ? (
+                            <> {
+                              companiesData.map((company, key) => (
+                                <tr key={key}>
+                                  <td>{company.name}</td>
+                                  <td className='Actions-btns'>
+                                    <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                    <button className="Delete-button"><DeleteOutlined /></button>
+                                    <button className="Edit-button"><EditOutlined /></button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              <tr>
+                                <td colSpan="3">No Company found</td>
+                              </tr>
+                            </>
+                          )}
+                        </tbody>
+                      </>
                     ) : (
-                      <tr>
-                        <td colSpan="3">No User found</td>
-                      </tr>
-                    )}
-                  </tbody>
+                      <>
+                        <tbody>
+                          {userData ? (
+                            userData.map((user, key) => (
+                              <tr key={key}>
+                                <td>{user.first_name + " " + user.last_name}</td>
+                                <td>{user.email}</td>
+                                <td className='Actions-btns'>
+                                  <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                    <EyeOutlined />
+                                  </button>
+                                  <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                    <DeleteOutlined />
+                                  </button>
+                                  <button className="Edit-button" onClick={() => updateUser(user)}>
+                                    <EditOutlined />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="3">No User found</td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </>
+                    )
+                  }
                 </>
               )
             }
@@ -194,7 +209,7 @@ function Dashboard() {
         </div>
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
-      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} /> 
+      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
     </div >
   );
 }
