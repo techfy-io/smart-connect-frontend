@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DeleteOutlined, UserOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
-import { Spin, Button, Modal, Avatar } from 'antd';
+import { Spin, Button, Modal, Avatar, message } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
@@ -62,6 +62,7 @@ const CompanyUsers = () => {
               headers: { 'Authorization': `Bearer ${accessToken}` }
             })
               .then(response => {
+                console.log("deleted user responce",response)
                 message.success("User Deleted Successfully");
                 setTimeout(() => window.location.reload(), 1000);
               })

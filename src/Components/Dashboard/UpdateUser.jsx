@@ -9,19 +9,19 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             firstname: user?.first_name,
             lastname: user?.last_name,
             email: user?.email,
-            phone: user?.phone_number,
+            phone_number: user?.phone_number,
         });
     }, [openEditModal, user]);
 
     const [form] = Form.useForm();
     const onFinish = (values) => {
-        const { firstname, lastname, email, phone } = values;
+        const { firstname, lastname, email, phone_number } = values;
         const accessToken = localStorage.getItem('accessToken');
         const UpdareUserPayload = {
             first_name: firstname,
             last_name: lastname,
             email: email,
-            phone_number: phone,
+            phone_number: phone_number,
             user: "1"
         };
 
@@ -117,14 +117,14 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         </Form.Item>
                         <Form.Item
                             label="Phone*"
-                            name="phone"
+                            name="phone_number"
                             rules={[
                                 {
                                     required: true,
                                     message: 'Please enter a phone number',
                                 },
                                 {
-                                    pattern: /\(\d{3}\) \d{3}-\d{4}/,
+                                    pattern: /\+\d{2} \d \d{2} \d{2} \d{2} \d{2}/,
                                     message: 'Invalid phone number format',
                                 },
                             ]}
