@@ -263,53 +263,60 @@
   }
 
   .social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center align items horizontally */
     padding: 25px;
-
-    .social-icons-para {
-      padding: 5px;
-      text-align: center;
-      font-family: Raleway;
-      font-weight: 600; /* Adjusted font weight to make it slightly bold */
-      font-size: 1rem; /* Increased font size for better readability */
-      line-height: 1.5; /* Adjusted line height for better spacing */
-      color: #333; /* Changed text color for better contrast */
-    }
-    
-
-    .icon {
-      font-size: 35px;
-      margin-right: 20px;
-      cursor: pointer;
-      transition: color 0.3s ease;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      &:hover {
-        color: #1890ff; // Change color on hover
-      }
-    }
-
-    .facebook-icon {
-      color: #3b5998; // Facebook blue color
-      text-decoration: none;
-    }
-
-    .instagram-icon {
-      background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-
-    }
-
-    .linkedin-icon {
-      color: #0e76a8; // LinkedIn blue color
-      text-decoration: none;
-
-    }
   }
+  
+  .social-icons-para {
+    width: 100%; /* Ensure the paragraph takes full width */
+    text-align: center;
+    font-family: Raleway;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .icon-box {
+    margin: 10px; /* Adjust margin between icon boxes */
+  background-color: #e6f7ff; /* Light blue background color */
+  border-radius: 10px; /* Rounded corners for the icon boxes */
+  padding: 10px; /* Add padding inside the icon boxes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  }
+  
+  .icon {
+    font-size: 40px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+padding: 5px;
+  }
+  
+  .icon:hover {
+    color: #1890ff;
+  }
+  
+  .facebook-icon {
+    color: #3b5998;
+    text-decoration: none;
+  }
+  
+  .instagram-icon {
+    background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+  
+  .linkedin-icon {
+    color: #0e76a8;
+    text-decoration: none;
+  }
+  
 
 
   .custom-spin .ant-spin-dot {

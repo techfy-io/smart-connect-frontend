@@ -139,11 +139,18 @@ const UserProfile = () => {
                             </div>
 
                             <div className="social-icons">
-                                <p className='social-icons-para'>Connect on social</p>
-                                <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
-                                <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram  icon instagram-icon"></a>
-                                <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
-                            </div>
+  <p className='social-icons-para'>Connect on social</p>
+  <div className="icon-box">
+    <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
+  </div>
+  <div className="icon-box">
+    <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
+  </div>
+  <div className="icon-box">
+    <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
+  </div>
+</div>
+
                             <div className='smart-connect-profile-logo'>
                                 <img src={Smartlogo} alt="" />
                             </div>
