@@ -117,8 +117,8 @@ const UserProfile = () => {
                                     <>
                                         <p className="username">{`${userData?.first_name} ${userData?.last_name}`}</p>
                                         <p className="email">{userData ? userData.bio_graphy : ""}</p>
-                                        <p className="email">{userData ? userData.job_title : ""}</p>
-                                        <p className="company">{userData ? userData.company : ""}</p>
+                                        <p className="jobtitle">{userData ? userData.job_title : ""}</p>
+                                        <p className="company">{userData ? userData.company_name : ""}</p>
                                     </>
                                 )}
                             </div>
