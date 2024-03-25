@@ -35,7 +35,7 @@ const UserProfile = () => {
     };
 
     const formatUserData = () => {
-        return userId ? `${process.env.REACT_APP_BASE_API_URL}/userprofile/${userId}/` : '';
+        return userId ? `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/` : '';
     };
 
     const downloadUserData = () => {
