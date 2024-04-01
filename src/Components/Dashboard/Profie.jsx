@@ -5,12 +5,25 @@ import SmartLogo from "../../Inspect/Smart-logo.png";
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
 import Men from "../../Inspect/Men.png";
+import { useState } from 'react';
+import QRCode from 'react-qr-code';
+import { DownloadOutlined, MenuOutlined, UserOutlined, RetweetOutlined } from '@ant-design/icons';
 
 const Profile = () => {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
     return (
         <div className="profile-container">
-            {/* <div className='profile-picture-cards'> */}
-            <div className="cover-picture-card">
+              <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
+            </div>
+            <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                <div className='QR-user-details'>
+                    <QRCode value={"23234324"} className='qr-code' />
+                </div> <br />
+                <p className='qr-code-para'>Show QRCode to share your profile</p>
+            </div>             
+                <div className="cover-picture-card">
                 <img src={coverpic} alt="" />
             </div>
             <div className="profile-card">
