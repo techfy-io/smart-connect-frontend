@@ -1,0 +1,245 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(215,170,130);
+    background: linear-gradient(127deg, rgba(215,170,130,1) 0%, rgba(153,204,204,1) 100%);
+    gap: 10px;
+
+    .cover-picture-card {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1;
+        width: 90%; // Adjust width as needed for mobile screens
+        max-width: 604px; // Maximum width for larger screens
+        border-radius: 44px;
+        overflow: hidden; // Ensure border-radius is applied correctly
+        background: #FF8000;
+    
+        img {
+            width: 100%;
+            height: auto; // Maintain aspect ratio
+            display: block; // Ensure the image does not inherit any extra spacing
+        }
+    }
+    
+    // Media query for mobile screens
+    @media screen and (max-width: 768px) {
+        .cover-picture-card {
+            width: 90%; // Adjust width for smaller screens
+            max-width: none; // Remove max-width restriction
+            border-radius: 0; // Adjust border radius if needed for smaller screens
+            top: 10%; // Adjust top position as needed for smaller screens
+        }
+    }
+    
+
+
+    .profile-card {
+        position: relative; // Position profile card relative to allow z-index to work
+        z-index: 2; // Set z-index to 2, higher than cover card
+        background-color: aliceblue;
+        width: 370px;
+        height: 350px;
+        display: flex;
+        margin-top: 5%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        // padding: 10px;
+        border-radius: 20px;
+    }
+
+    // }
+
+
+    .profile-info {
+        align-items: center;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .profile-image {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        border: 6px solid #F47122;
+        overflow: hidden;
+    }
+
+    .profile-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* Ensures the image covers the entire container */
+    }
+
+
+    .profile-details {
+        text-align: center;
+    }
+
+    .profile-name {
+        color: #546467;
+        font-family: Inter;
+        font-size: 36.693px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+
+    .profile-designation {
+        color: #546467;
+        font-family: Inter;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .profile-action {
+        display: flex;
+        justify-content: space-between;
+        /* Align buttons at the bottom with space between */
+        width: 100%;
+        /* Ensure buttons occupy full width */
+        position: absolute;
+        /* Position the buttons absolutely */
+        bottom: 0px;
+        /* Adjust the distance from the bottom */
+        left: 0;
+        /* Align the buttons to the left edge */
+        right: 0;
+    }
+
+
+    .save-button {
+        width: 185px;
+        padding: 15px 20px;
+        font-size: 16px;
+        background-color: #F47122;
+        color: white;
+        border: none;
+        border-bottom-left-radius: 20px;
+        /* Apply border radius only to the bottom left corner */
+        cursor: pointer;
+    }
+
+    .exchange-button {
+        width: 185px;
+        padding: 15px 20px;
+        font-size: 16px;
+        background-color: #546467;
+        color: white;
+        border: none;
+        border-bottom-right-radius: 20px;
+        /* Apply border radius only to the bottom left corner */
+        cursor: pointer;
+    }
+
+    .profile-action button:hover {
+        background-color: #40a9ff;
+    }
+
+    .social-links-card {
+        background-color: #ffff;
+        width: 360px;
+        height: 100px;
+    }
+
+    .social-icons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+
+    .icon-box {
+        width: 20px;
+        height: 20px;
+        background-color: #e6f7ff;
+        border-radius: 10px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+    .icon {
+        font-size: 30px;
+        cursor: pointer;
+        transition: color 0.3s ease;
+        padding: 5px;
+    }
+
+    .icon:hover {
+        color: #1890ff;
+    }
+
+    .facebook-icon {
+        color: #3b5998;
+        text-decoration: none;
+    }
+
+    .instagram-icon {
+        background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-decoration: none;
+    }
+
+    .linkedin-icon {
+        color: #0e76a8;
+        text-decoration: none;
+    }
+
+    .bio-data-card {
+        width: 360px;
+        height: 180px;
+
+        .bio-heading {
+            text-align: center;
+            color: #546467;
+            font-family: Inter;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+        }
+
+        .bio-para {
+            width: 300px;
+            text-align: center;
+            color: #546467;
+            text-align: center;
+            font-family: Inter;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 28px; /* 140% */
+        }
+    }
+}
+
+.SC-logo {
+    text-align: center;
+    display: flex;
+
+    img {
+        width: 178.788px;
+        height: 50.548px;
+    }
+}

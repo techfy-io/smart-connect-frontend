@@ -141,39 +141,49 @@
   }
 
   .username {
-    margin-top:0.5em; /* Increased bottom margin for better separation */
-    font-size: 28px; /* Slightly increased font size */
-    font-weight: 700; /* Increased font weight for more emphasis */
-    font-family: 'Roboto', sans-serif; /* Changed font to Google's Roboto */
-    line-height: 1.2; /* Adjusted line height for better spacing */
+    margin-top: 0.5em;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.2;
   }
-  
-  .email, .jobtitle {
+
+  .email,
+  .jobtitle {
     margin: 0;
-    font-family: 'Roboto', sans-serif; /* Changed font to Google's Roboto */
+    font-family: 'Roboto', sans-serif;
+    /* Changed font to Google's Roboto */
     font-weight: 600;
     font-size: 1;
-    line-height: 1.5; /* Adjusted line height for better spacing */
-    color: #000000; /* Google Blue color for text */
+    line-height: 1.5;
+    color: #000000;
   }
-  
+
   .jobtitle {
-    font-weight: 600; /* Adjusted font weight to be slightly heavier */
+    font-weight: 600;
+    /* Adjusted font weight to be slightly heavier */
   }
-  
+
   .company {
-    display: inline-block; /* Ensure the border only wraps around the text */
-    padding: 0 0.25em; /* Add padding to create space between text and border */
-    margin-top:0.5em; /* Adjust margin for spacing */
-    font-family: 'Roboto', sans-serif; /* Changed font to Google's Roboto */
+    display: inline-block;
+    /* Ensure the border only wraps around the text */
+    padding: 0 0.25em;
+    /* Add padding to create space between text and border */
+    margin-top: 0.5em;
+    /* Adjust margin for spacing */
+    font-family: 'Roboto', sans-serif;
+    /* Changed font to Google's Roboto */
     font-weight: 600;
     font-size: 1rem;
     line-height: 1.5;
-    border-left: 2px solid #FF8000; /* Yellow border on the left */
-    border-right: 2px solid #FF8000; /* Yellow border on the right */
-    color: #000000; /* Google Blue color for text */
+    border-left: 2px solid #FF8000;
+    /* Yellow border on the left */
+    border-right: 2px solid #FF8000;
+    /* Yellow border on the right */
+    color: #000000;
+    /* Google Blue color for text */
   }
-  
+
 
   .profile-actions-buttuns {
     display: flex;
@@ -181,7 +191,7 @@
 
     .download-btn {
       width: 172px;
-      margin-right:25px;
+      margin-right: 25px;
       display: inline-flex;
       -webkit-box-align: center;
       align-items: center;
@@ -265,12 +275,14 @@
   .social-icons {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center align items horizontally */
+    justify-content: center;
+    /* Center align items horizontally */
     padding: 25px;
   }
-  
+
   .social-icons-para {
-    width: 100%; /* Ensure the paragraph takes full width */
+    width: 100%;
+    /* Ensure the paragraph takes full width */
     text-align: center;
     font-family: Raleway;
     font-weight: 600;
@@ -278,45 +290,45 @@
     line-height: 1.5;
     color: #333;
   }
-  
+
   .icon-box {
-    margin: 10px; /* Adjust margin between icon boxes */
-  background-color: #e6f7ff; /* Light blue background color */
-  border-radius: 10px; /* Rounded corners for the icon boxes */
-  padding: 10px; /* Add padding inside the icon boxes */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    margin: 10px;
+    background-color: #e6f7ff;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
+
   .icon {
     font-size: 40px;
     cursor: pointer;
     transition: color 0.3s ease;
-padding: 5px;
+    padding: 5px;
   }
-  
+
   .icon:hover {
     color: #1890ff;
   }
-  
+
   .facebook-icon {
     color: #3b5998;
     text-decoration: none;
   }
-  
+
   .instagram-icon {
     background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-decoration: none;
   }
-  
+
   .linkedin-icon {
     color: #0e76a8;
     text-decoration: none;
   }
-  
+
 
 
   .custom-spin .ant-spin-dot {
