@@ -43,10 +43,9 @@ function App() {
         )}
         {/* Common routes accessible in both states */}
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/userprofile/:userId" element={<UserProfile />} />
+        <Route path="/profile/:userId" element={<Profie/>} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path='/profile' element={<Profie/>}/>
       </Routes>
     </Router>
   );
