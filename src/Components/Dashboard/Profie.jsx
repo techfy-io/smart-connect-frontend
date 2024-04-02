@@ -146,19 +146,16 @@ const Profile = () => {
                             </div>
                         </Card>
                         {
-                            userData.bio_graphy ? (
-                                <>
-                                    <Card className='bio-data-card'>
-                                        <h2 className='bio-heading'>Biography</h2>
-                                        <p className='bio-para'>{userData.bio_graphy}</p>
-                                    </Card>
-                                </>
-                            ) : (
-                                <>
+    userData && userData.bio_graphy && (
+        <>
+            <Card className='bio-data-card'>
+                <h2 className='bio-heading'>Biography</h2>
+                <p className='bio-para'>{userData.bio_graphy}</p>
+            </Card>
+        </>
+    )
+}
 
-                                </>
-                            )
-                        }
 
                         <div className='SC-logo'>
                             <img src={SClogo} alt="" srcset="" />
