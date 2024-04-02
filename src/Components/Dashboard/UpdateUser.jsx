@@ -101,7 +101,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     layout="vertical"
                     onFinish={onFinish}
                 >
-                    {/* <Form.Item label="Profile Picture" name="profile_picture">
+                    <Form.Item label="Profile Picture" name="profile_picture">
                         <Upload
                             maxCount={1}
                             beforeUpload={() => false} // Prevent default upload behavior
@@ -126,7 +126,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
-                    </Form.Item> */}
+                    </Form.Item>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="First Name*"

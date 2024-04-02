@@ -285,8 +285,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Form.Item label="Media Type">
                                 <Select
                                     placeholder="Select media type"
-                                    onChange={(value) => handleMediaTypeChange(index, value)}
                                     value={link.mediaType}
+                                    onChange={(value) => { 
+                                        // handleMediaTypeChange logic here
+                                    }}
                                 >
                                     <Select.Option value="tiktok">TikTok</Select.Option>
                                     <Select.Option value="twitter">Twitter</Select.Option>
@@ -343,7 +345,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         </>
                     ))}
 
-{/* add another social links  */}
                     {
                         additionalSocialMediaLinks.length < 2 && (
                             <Form.Item>
