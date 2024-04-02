@@ -98,7 +98,6 @@ const Profile = () => {
                             {userData && userData.profile_picture ? (
                                 <>
                                     <img src={userData.cover_image} alt="" />
-
                                 </>) : (
                                 <>
                                     <img src={coverpic} alt="" />

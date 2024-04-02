@@ -36,8 +36,8 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             last_name: lastname,
             email,
             phone_number,
-            profile_picture,
-            cover_image,
+            profile_picture, 
+            cover_image, 
             company_name,
             job_title,
             zip_code,
@@ -100,6 +100,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
+
                 >
                     <Form.Item label="Profile Picture" name="profile_picture">
                         <Upload
