@@ -11,6 +11,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
+    const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
     const [currentCompany, setCurrentCompany] = useState('')
 
     const onFinish = async (values) => {
@@ -18,7 +19,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const {
             first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url, company_name, profile_picture, cover_image, user_id
+            country, city, facebook_url, instagram_url, linkedin_url,other_link_1,other_link_2, company_name, profile_picture, cover_image, user_id
         } = values;
 
         const accessToken = localStorage.getItem('accessToken');
@@ -29,6 +30,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('email', email || "");
         if (email_1) formData.append('email_1', email_1 || "");
         if (email_2) formData.append('email_2', email_2 || "");
+        if (other_link_1) formData.append('other_link_1', other_link_1 || "");
+        if (other_link_2) formData.append('other_link_2', other_link_2 || "");
         formData.append('phone_number', phone_number || "");
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_2', phone_number_2 || "");
@@ -63,7 +66,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             message.success("User Added Successfully");
             modalHideShow();
             setTimeout(() => {
-                window.location.reload();
+                // window.location.reload();
             }, 2000);
         } catch (error) {
             console.error("error", error);
@@ -100,7 +103,16 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
     };
+    const handleAddSocialMediaLink = () => {
+        if (additionalSocialMediaLinks.length < 2) {
+            setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
+        }
+    };
 
+    const handleRemoveSocialMediaLink = (index) => {
+        const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
+        setAdditionalSocialMediaLinks(updatedLinks);
+    };
     useEffect(() => {
         setCurrentCompany(CompaniesDate)
     }, [CompaniesDate])
@@ -267,6 +279,40 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     >
                         <Input />
                     </Form.Item>
+                    {additionalSocialMediaLinks.map((link, index) => (
+                        <Form.Item
+                        key={index}
+                        label={`Additional Social Link ${index + 1}`}
+                        name={`other_link${index + 1}`}
+                        rules={[
+                            {
+                                type: 'url',
+                                message: 'Invalid URL format',
+                            },
+                        ]}
+                    >
+                        <Input
+                            suffix={
+                                <Button
+                                    type="text"
+                                    icon={<DeleteOutlined />}
+                                    onClick={() => handleRemoveSocialMediaLink(index)}
+                                />
+                            }
+                        />
+                    </Form.Item>
+                    
+                    ))}
+                    {
+                        additionalSocialMediaLinks.length < 2 && (
+                            <Form.Item>
+                                <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
+                                    Another Social Link
+                                </Button>
+                            </Form.Item>
+                        )
+                    }
+
                     <Form.Item
                         label="Email*"
                         name="email"
