@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form, Input, message, Upload, Radio, Spin } from 'antd';
+import { Button, Modal, Form, Input, message, Upload, Radio, Spin, Select } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 import { useEffect } from 'react';
+import FormItem from 'antd/es/form/FormItem';
 
 const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
@@ -19,7 +20,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const {
             first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url,other_link_1,other_link_2, company_name, profile_picture, cover_image, user_id
+            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_2, company_name, profile_picture, cover_image, user_id
         } = values;
 
         const accessToken = localStorage.getItem('accessToken');
@@ -280,29 +281,69 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Input />
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
-                        <Form.Item
-                        key={index}
-                        label={`Additional Social Link ${index + 1}`}
-                        name={`other_link${index + 1}`}
-                        rules={[
-                            {
-                                type: 'url',
-                                message: 'Invalid URL format',
-                            },
-                        ]}
-                    >
-                        <Input
-                            suffix={
-                                <Button
-                                    type="text"
-                                    icon={<DeleteOutlined />}
-                                    onClick={() => handleRemoveSocialMediaLink(index)}
-                                />
-                            }
-                        />
-                    </Form.Item>
-                    
+                        <>
+                            <Form.Item label="Media Type">
+                                <Select
+                                    placeholder="Select media type"
+                                    onChange={(value) => handleMediaTypeChange(index, value)}
+                                    value={link.mediaType}
+                                >
+                                    <Select.Option value="tiktok">TikTok</Select.Option>
+                                    <Select.Option value="twitter">Twitter</Select.Option>
+                                    <Select.Option value="github">GitHub</Select.Option>
+                                    <Select.Option value="other">Other</Select.Option>
+                                </Select>
+                            </Form.Item>
+                            {link.mediaType === 'other' ? (
+                                <Form.Item
+                                    key={index}
+                                    label={`Additional Social Link ${index + 1}`}
+                                    name={`other_link${index + 1}`}
+                                    rules={[
+                                        {
+                                            type: 'url',
+                                            message: 'Invalid URL format',
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        suffix={
+                                            <Button
+                                                type="text"
+                                                icon={<DeleteOutlined />}
+                                                onClick={() => handleRemoveSocialMediaLink(index)}
+                                            />
+                                        }
+                                    />
+                                </Form.Item>
+                            ) : (
+                                <Form.Item
+                                    key={index}
+                                    label={`Additional Social Link ${index + 1}`}
+                                    name={`social_link${index + 1}`}
+                                    rules={[
+                                        {
+                                            type: 'url',
+                                            message: 'Invalid URL format',
+                                        },
+                                    ]}
+                                >
+                                    <Input
+                                        placeholder={`Enter ${link.mediaType} link`}
+                                        suffix={
+                                            <Button
+                                                type="text"
+                                                icon={<DeleteOutlined />}
+                                                onClick={() => handleRemoveSocialMediaLink(index)}
+                                            />
+                                        }
+                                    />
+                                </Form.Item>
+                            )}
+                        </>
                     ))}
+
+
                     {
                         additionalSocialMediaLinks.length < 2 && (
                             <Form.Item>
