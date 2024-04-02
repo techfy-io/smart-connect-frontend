@@ -142,17 +142,15 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     <Form.Item label="Profile Picture" name="profile_picture">
                         <Upload
                             maxCount={1}
-                            beforeUpload={() => false} // Prevent default upload behavior
+                            beforeUpload={() => false} 
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ profile_picture: file }); // Set form field value to the uploaded file object
+                                form.setFieldsValue({ profile_picture: file }); 
                             }}
                         >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
                     </Form.Item>
-
-
                     <Form.Item label="Cover Picture" name="cover_image">
                         <Upload
                             maxCount={1}
