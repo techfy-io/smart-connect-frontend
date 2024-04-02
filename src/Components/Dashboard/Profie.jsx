@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, message, Spin } from 'antd';
+import { Card, message, Spin, Modal, Form, Input, Button } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -90,7 +90,7 @@ const Profile = () => {
                         </div>
                         <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
                             <div className='QR-user-details'>
-                                <QRCode value={"23234324"} className='qr-code' />
+                                <QRCode value={formatUserData()} className='qr-code' />
                             </div> <br />
                             <p className='qr-code-para'>Show QRCode to share your profile</p>
                         </div>
@@ -124,10 +124,10 @@ const Profile = () => {
                                 </div>
                             </div>
                             <div className='profile-action'>
-                                <button className='save-button'>
+                                <button className='save-button' onClick={downloadUserData}>
                                     <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
                                 </button>
-                                <button className='exchange-button'>
+                                <button className='exchange-button' onClick={handleOpenExchangeModal}>
                                     <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Exchange
                                 </button>
                             </div>
@@ -135,32 +135,101 @@ const Profile = () => {
                         <Card className='social-links-card'>
                             <div className="social-icons">
                                 <div className="icon-box">
-                                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
+                                    <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
                                 </div>
                                 <div className="icon-box">
-                                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
+                                    <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
                                 </div>
                                 <div className="icon-box">
-                                    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
+                                    <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
                                 </div>
                             </div>
                         </Card>
                         {
-    userData && userData.bio_graphy && (
-        <>
-            <Card className='bio-data-card'>
-                <h2 className='bio-heading'>Biography</h2>
-                <p className='bio-para'>{userData.bio_graphy}</p>
-            </Card>
-        </>
-    )
-}
+                            userData && userData.bio_graphy && (
+                                <>
+                                    <Card className='bio-data-card'>
+                                        <h2 className='bio-heading'>Biography</h2>
+                                        <p className='bio-para'>{userData.bio_graphy}</p>
+                                    </Card>
+                                </>
+                            )
+                        }
 
 
                         <div className='SC-logo'>
                             <img src={SClogo} alt="" srcset="" />
                         </div>
                     </div>
+                    <Modal
+                        title="Exchange with TestUser"
+                        open={openExchangeModal}
+                        onCancel={handleOpenExchangeModal}
+                        footer={null} // No footer for now, you can add actions if needed
+                    >
+                        <Form
+                            name="exchangeForm"
+                            onFinish={onFinish}
+                        >
+                            <label htmlFor="firstname">First Name*</label>
+                            <Form.Item
+                                name="firstName"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your first name!',
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <label htmlFor="lastname">Last Name*</label>
+                            <Form.Item
+                                name="lastName"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please input your last name!',
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <label htmlFor="companyname">Company Name*</label>
+                            <Form.Item
+                                name="companyName"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <label htmlFor="email">Email*</label>
+                            <Form.Item
+                                name="email"
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: 'The input is not a valid email!',
+                                    },
+                                    {
+                                        required: true,
+                                        message: 'Please input your email!',
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                            <label htmlFor="phone">Phone</label>
+                            <Form.Item
+                                name="phone"
+                            >
+                                <Input />
+                            </Form.Item>
+                            <Form.Item style={{ textAlign: "end" }}>
+                                <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
+                                    Submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Modal>
                 </>
             )}
         </>
