@@ -10,18 +10,19 @@
     justify-content: center;
     flex-direction: column;
     height: 100%;
-    background: rgb(215,170,130);
-    background: linear-gradient(127deg, rgba(215,170,130,1) 0%, rgba(153,204,204,1) 100%);
-    gap: 10px;
+    background: rgb(215, 170, 130);
+    background: linear-gradient(127deg, rgba(215, 170, 130, 1) 0%, rgba(153, 204, 204, 1) 100%);
+    gap: 14px;
+
     .burger-icon {
         position: absolute;
         top: 20px;
         right: 20px;
         cursor: pointer;
         z-index: 1001;
-      }
-    
-      .sidebar {
+    }
+
+    .sidebar {
         position: fixed;
         top: 0;
         right: -100%; // Initially hidden off-screen
@@ -30,43 +31,44 @@
         background-color: #f0f2f5;
         transition: right 0.9s ease;
         z-index: 1000;
-    
+
         &.open {
-          right: 0;
+            right: 0;
         }
-    
+
         .sidebar-content {
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
-    
+
         .QR-user-details {
-          margin: 0 auto;
-          background-color: #ffffff;
-          margin-top: 20%;
-          border-radius: 50%;
-          text-align: center;
-          width: 80%;
-    
-          // height: 40%;
-          .qr-code {
-            width: 60%;
-            padding: 10px;
-          }
+            margin: 0 auto;
+            background-color: #ffffff;
+            margin-top: 20%;
+            border-radius: 50%;
+            text-align: center;
+            width: 80%;
+
+            // height: 40%;
+            .qr-code {
+                width: 60%;
+                padding: 10px;
+            }
         }
-    
+
         .qr-code-para {
-          // padding: 20px;
-          text-align: center;
-          font-family: Raleway;
-          font-weight: 400;
-          font-size: 0.875rem;
-          line-height: 1.43;
+            // padding: 20px;
+            text-align: center;
+            font-family: Raleway;
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 1.43;
         }
-      }
+    }
+
     .cover-picture-card {
         position: absolute;
         top: 5%;
@@ -78,14 +80,14 @@
         border-radius: 44px;
         overflow: hidden; // Ensure border-radius is applied correctly
         background: #FF8000;
-    
+
         img {
             width: 100%;
             height: auto; // Maintain aspect ratio
             display: block; // Ensure the image does not inherit any extra spacing
         }
     }
-    
+
     // Media query for mobile screens
     @media screen and (max-width: 768px) {
         .cover-picture-card {
@@ -95,7 +97,7 @@
             top: 10%; // Adjust top position as needed for smaller screens
         }
     }
-    
+
 
 
     .profile-card {
@@ -105,7 +107,7 @@
         width: 370px;
         height: 350px;
         display: flex;
-        margin-top: 5%;
+        margin-top: 8%;
         flex-direction: column;
         align-items: center;
         justify-content: center;
@@ -202,9 +204,9 @@
         cursor: pointer;
     }
 
-    .profile-action button:hover {
-        background-color: #40a9ff;
-    }
+    // .profile-action button:hover {
+    //     background-color: #40a9ff;
+    // }
 
     .social-links-card {
         background-color: #ffff;
@@ -282,7 +284,8 @@
             font-size: 16px;
             font-style: normal;
             font-weight: 400;
-            line-height: 28px; /* 140% */
+            line-height: 28px;
+            /* 140% */
         }
     }
 }
@@ -290,6 +293,7 @@
 .SC-logo {
     text-align: center;
     display: flex;
+    margin-bottom: 10px;
 
     img {
         width: 178.788px;
