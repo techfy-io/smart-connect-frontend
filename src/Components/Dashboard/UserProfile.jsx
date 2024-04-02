@@ -41,7 +41,6 @@ const UserProfile = () => {
 
     const downloadUserData = () => {
         if (!userData) return;
-
         setLoading(true);
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
             responseType: 'blob'

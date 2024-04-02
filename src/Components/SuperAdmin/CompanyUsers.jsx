@@ -32,7 +32,7 @@ const CompanyUsers = () => {
     const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
 
     const GetUserProfile = (id) => {
-        navigate(`/userprofile/${id}`);
+        navigate(`/profile/${id}`);
     };
 
     useEffect(() => {
