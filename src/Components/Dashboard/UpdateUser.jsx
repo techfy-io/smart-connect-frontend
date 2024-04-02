@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Input, message, Upload, Radio } from 'antd';
+import { Button, Modal, Form, Input, message, Upload, Radio, Image } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import './Dashboard.scss';
 import { UploadOutlined } from '@ant-design/icons';
+import FormItem from 'antd/es/form/FormItem';
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
     useEffect(() => {
         form.setFieldsValue({
+            profile_picture: user?.profile_picture,
+            cover_image: user?.cover_image,
             firstname: user?.first_name,
             lastname: user?.last_name,
             email: user?.email,
@@ -23,40 +26,42 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             facebook_url: user?.facebook_url,
             instagram_url: user?.instagram_url,
             linkedin_url: user?.linkedin_url,
+            biography: user?.bio_graphy,
         });
     }, [openEditModal, user]);
 
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
-        const { firstname, lastname, email, phone_number_type, phone_number, profile_picture, cover_image, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url } = values;
+        const { firstname, lastname, email, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const formData = new FormData();
+        formData.append('first_name', firstname);
+        formData.append('last_name', lastname);
+        formData.append('email', email);
+        formData.append('phone_number', phone_number);
+        formData.append('phone_number_type', phone_number_type);
+        formData.append('company_name', company_name);
+        formData.append('job_title', job_title);
+        formData.append('zip_code', zip_code);
+        formData.append('postal_code', postal_code);
+        formData.append('country', country);
+        formData.append('city', city);
+        formData.append('facebook_url', facebook_url);
+        formData.append('instagram_url', instagram_url);
+        formData.append('linkedin_url', linkedin_url);
+        formData.append('user', user.id);
+        if (profile_picture) formData.append('profile_picture', profile_picture || "");
+        if (cover_image) formData.append('cover_image', cover_image || "");
+        formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
-        const updateUserPayload = {
-            first_name: firstname,
-            last_name: lastname,
-            email,
-            phone_number,
-            profile_picture, 
-            cover_image, 
-            company_name,
-            job_title,
-            zip_code,
-            phone_number_type,
-            postal_code,
-            country,
-            city,
-            facebook_url,
-            instagram_url,
-            linkedin_url,
-            user: user.id,
-        };
 
         axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
-            updateUserPayload,
+            formData,
             {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'multipart/form-data' // Set appropriate content type for file upload
                 }
             }
         )
@@ -65,7 +70,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 message.success("User Update Successfully");
                 UpdatemodalHideShow();
                 setTimeout(() => {
-                    window.location.reload();
+                    // window.location.reload();
                 }, 2000)
             })
             .catch(error => {
@@ -73,6 +78,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 message.error("Failed to Update user")
             });
     };
+
 
     const handleCancel = () => {
         UpdatemodalHideShow();
@@ -100,34 +106,48 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
-
                 >
                     <Form.Item label="Profile Picture" name="profile_picture">
                         <Upload
                             maxCount={1}
-                            beforeUpload={() => false} // Prevent default upload behavior
+                            beforeUpload={() => false}
+                            showUploadList={false} // Hide the default list of uploaded files
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ profile_picture: file }); // Set form field value to the uploaded file object
+                                form.setFieldsValue({ profile_picture: file });
                             }}
+                            defaultFileList={user && user.profile_picture ? [{ uid: '-1', name: 'profile_picture', status: 'done' }] : []}
                         >
+                            {user && user.profile_picture ? (
+                                <img src={user.profile_picture} alt="Profile Picture" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                            ) : (
+                                <>
+                                </>
+                            )}
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+
                         </Upload>
                     </Form.Item>
-
-
                     <Form.Item label="Cover Picture" name="cover_image">
+                        {user && user.cover_image ? (
+                            // If cover image exists, display the image
+                            <img src={user.cover_image} alt="Cover Picture" style={{ width: '100px', height: '100px' }} />
+                        ) : (
+                            <>
+                            </>
+                        )}
                         <Upload
                             maxCount={1}
                             beforeUpload={() => false} // Prevent default upload behavior
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ cover_image: file }); // Set form field value to the uploaded file object
+                                form.setFieldsValue({ cover_image: file });
                             }}
                         >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
                         </Upload>
                     </Form.Item>
+
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="First Name*"
@@ -203,18 +223,24 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label="Facebook URL"
+                            label={<>Facebook < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
                             name="facebook_url"
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Instagram URL"
+                            label={<>Instagram <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                             name="instagram_url"
                         >
                             <Input />
                         </Form.Item>
                     </div>
+                    <Form.Item
+                        label={<>Linkedin <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                        name="linkedin_url"
+                    >
+                        <Input />
+                    </Form.Item>
                     <Form.Item
                         label="Email*"
                         name="email"
@@ -262,11 +288,10 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 <Radio name='phone_number_personal' value="PERSONAL">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
-
                     </div>
                     <Form.Item
-                        label="LinkedIn URL"
-                        name="linkedin_url"
+                        label="Biography"
+                        name="biography"
                     >
                         <Input />
                     </Form.Item>
