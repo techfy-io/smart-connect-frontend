@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutlined, LogoutOutlined,UsergroupAddOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import axios from 'axios';
 import './Sidebar.scss';
@@ -34,6 +34,9 @@ const Sidebar = () => {
                     <ul className="menu">
                         <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
                         {/* <li className="menu-item"><SettingOutlined /> Settings</li> */}
+                        <Link to='/leads' style={{ textDecoration: "none" }}>
+                            <li className='menu-item'><UsergroupAddOutlined style={{ color: "black" }} /> Leads</li>
+                        </Link>
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>
                 ) : (
@@ -41,6 +44,9 @@ const Sidebar = () => {
                         <li className='menu-item' onClick={() => navigate('/')}><UserOutlined /> Users</li>
                         <Link to='/usersetting' style={{ textDecoration: "none" }}>
                             <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> Settings</li>
+                        </Link>
+                        <Link to='/leads' style={{ textDecoration: "none" }}>
+                            <li className='menu-item'><UsergroupAddOutlined style={{ color: "black" }} /> Leads</li>
                         </Link>
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>

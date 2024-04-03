@@ -101,7 +101,7 @@ const CompanyUsers = () => {
                             </tr>
                         ) : companyUserList.length === 0 ? ( // Show message if no users found
                             <tr>
-                                <td colSpan="3">No users found.</td>
+                                <td colSpan="4">No users found.</td>
                             </tr>
                         ) : (
                             companyUserList.map((user, key) => (

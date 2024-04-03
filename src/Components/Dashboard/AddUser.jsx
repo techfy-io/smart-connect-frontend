@@ -20,7 +20,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const {
             first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_2, company_name, profile_picture, cover_image, user_id
+            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_media, company_name, profile_picture, cover_image, user_id
         } = values;
 
         const accessToken = localStorage.getItem('accessToken');
@@ -32,7 +32,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         if (email_1) formData.append('email_1', email_1 || "");
         if (email_2) formData.append('email_2', email_2 || "");
         if (other_link_1) formData.append('other_link_1', other_link_1 || "");
-        if (other_link_2) formData.append('other_link_2', other_link_2 || "");
+        if (other_link_media) formData.append('other_link_media', other_link_media || "");
         formData.append('phone_number', phone_number || "");
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_2', phone_number_2 || "");
@@ -67,7 +67,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             message.success("User Added Successfully");
             modalHideShow();
             setTimeout(() => {
-                window.location.reload();
+                // window.location.reload();
             }, 2000);
         } catch (error) {
             console.error("error", error);
@@ -141,18 +141,20 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {/* Profile Picture Upload */}
                     <Form.Item label="Profile Picture" name="profile_picture">
                         <Upload
+                            listType="picture-circle"
                             maxCount={1}
-                            beforeUpload={() => false} 
+                            beforeUpload={() => false}
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ profile_picture: file }); 
+                                form.setFieldsValue({ profile_picture: file });
                             }}
                         >
-                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff"}} />}></Button>
                         </Upload>
                     </Form.Item>
                     <Form.Item label="Cover Picture" name="cover_image">
                         <Upload
+                            listType="picture-circle"
                             maxCount={1}
                             beforeUpload={() => false} // Prevent default upload behavior
                             onChange={(info) => {
@@ -160,7 +162,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 form.setFieldsValue({ cover_image: file }); // Set form field value to the uploaded file object
                             }}
                         >
-                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                         </Upload>
                     </Form.Item>
 
@@ -280,8 +282,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
                         <>
-                            <Form.Item label="Media Type">
-                                <Select
+                            <Form.Item label="Social Link type" name="other_link_media">
+                                {/* <Select
                                     placeholder="Select media type"
                                     value={link.mediaType}
                                     onChange={(value) => { 
@@ -292,35 +294,36 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                     <Select.Option value="twitter">Twitter</Select.Option>
                                     <Select.Option value="github">GitHub</Select.Option>
                                     <Select.Option value="other">Other</Select.Option>
-                                </Select>
+                                </Select> */}
+                                <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
-                                <Form.Item
-                                    key={index}
-                                    label={`Additional Social Link ${index + 1}`}
-                                    name={`social_link${index + 1}`}
-                                    rules={[
-                                        {
-                                            type: 'url',
-                                            message: 'Invalid URL format',
-                                        },
-                                    ]}
-                                >
-                                    <Input
-                                        placeholder={`Enter ${link.mediaType} link`}
-                                        suffix={
-                                            <Button
-                                                type="text"
-                                                icon={<DeleteOutlined />}
-                                                onClick={() => handleRemoveSocialMediaLink(index)}
-                                            />
-                                        }
-                                    />
-                                </Form.Item>
+                            <Form.Item
+                                key={index}
+                                label={`Additional Social Link`}
+                                name="other_link_1"
+                                rules={[
+                                    {
+                                        type: 'url',
+                                        message: 'Invalid URL format',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    placeholder={`Enter you social media link`}
+                                    suffix={
+                                        <Button
+                                            type="text"
+                                            icon={<DeleteOutlined />}
+                                            onClick={() => handleRemoveSocialMediaLink(index)}
+                                        />
+                                    }
+                                />
+                            </Form.Item>
                         </>
                     ))}
 
                     {
-                        additionalSocialMediaLinks.length < 2 && (
+                        additionalSocialMediaLinks.length < 1 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
                                     Another Social Link
