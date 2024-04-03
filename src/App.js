@@ -9,6 +9,7 @@ import ForgetPassword from './Components/Authorization/ForgetPassword';
 import CompanyUsers from './Components/SuperAdmin/CompanyUsers';
 import ResetPassword from './Components/Authorization/ResetPassword';
 import Profie from './Components/Dashboard/Profie';
+import Leads from './Components/Dashboard/Leads';
 
 function App() {
   // Check if the user is logged in by reading from local storage
@@ -33,7 +34,7 @@ function App() {
             <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/usersetting" element={<UserSetting />} />
-            <Route path="/companyuser" element ={<CompanyUsers/>} />
+            <Route path="/companyuser" element={<CompanyUsers />} />
           </>
         ) : (
           <>
@@ -43,9 +44,11 @@ function App() {
         )}
         {/* Common routes accessible in both states */}
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/profile/:userId" element={<Profie/>} />
+        <Route path="/profile/:userId" element={<Profie />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        <Route path="/leads" element={<Leads />} />
+
       </Routes>
     </Router>
   );
