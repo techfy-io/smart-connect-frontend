@@ -49,9 +49,18 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('postal_code', postal_code);
         formData.append('country', country);
         formData.append('city', city);
-        formData.append('facebook_url', facebook_url);
-        formData.append('instagram_url', instagram_url);
-        formData.append('linkedin_url', linkedin_url);
+        if (facebook_url) {
+            formData.append('facebook_url', facebook_url);
+        }
+        
+        if (instagram_url) {
+            formData.append('instagram_url', instagram_url);
+        }
+        
+        if (linkedin_url) {
+            formData.append('linkedin_url', linkedin_url);
+        }
+        
         formData.append('user', user.id);
         if (profile_picture && profile_picture !== user.profile_picture) {
             formData.append('profile_picture', profile_picture);

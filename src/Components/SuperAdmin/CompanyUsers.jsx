@@ -90,6 +90,7 @@ const CompanyUsers = () => {
                         <tr>
                             <th>User Name </th>
                             <th>Email</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -107,6 +108,7 @@ const CompanyUsers = () => {
                                 <tr key={key}>
                                     <td>{user.first_name + " " + user.last_name}</td>
                                     <td>{user.email}</td>
+                                    <td>{user.job_title}</td>
                                     <td className='Actions-btns'>
                                         <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
                                         <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
