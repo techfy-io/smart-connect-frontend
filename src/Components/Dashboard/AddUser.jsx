@@ -294,29 +294,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                     <Select.Option value="other">Other</Select.Option>
                                 </Select>
                             </Form.Item>
-                            {link.mediaType === 'other' ? (
-                                <Form.Item
-                                    key={index}
-                                    label={`Additional Social Link ${index + 1}`}
-                                    name={`other_link${index + 1}`}
-                                    rules={[
-                                        {
-                                            type: 'url',
-                                            message: 'Invalid URL format',
-                                        },
-                                    ]}
-                                >
-                                    <Input
-                                        suffix={
-                                            <Button
-                                                type="text"
-                                                icon={<DeleteOutlined />}
-                                                onClick={() => handleRemoveSocialMediaLink(index)}
-                                            />
-                                        }
-                                    />
-                                </Form.Item>
-                            ) : (
                                 <Form.Item
                                     key={index}
                                     label={`Additional Social Link ${index + 1}`}
@@ -339,7 +316,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                         }
                                     />
                                 </Form.Item>
-                            )}
                         </>
                     ))}
 
