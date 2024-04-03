@@ -7,6 +7,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import FormItem from 'antd/es/form/FormItem';
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
+    const [loading, setLoading] = useState(false); // State to manage loading state of the button
+
     useEffect(() => {
         form.setFieldsValue({
             profile_picture: user?.profile_picture,
@@ -33,6 +35,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
+        setLoading(true);
         const { firstname, lastname, email, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
@@ -50,8 +53,14 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('instagram_url', instagram_url);
         formData.append('linkedin_url', linkedin_url);
         formData.append('user', user.id);
-        if (profile_picture) formData.append('profile_picture', profile_picture || "");
-        if (cover_image) formData.append('cover_image', cover_image || "");
+        if (profile_picture && profile_picture !== user.profile_picture) {
+            formData.append('profile_picture', profile_picture);
+        }
+
+        // Check if cover image has changed
+        if (cover_image && cover_image !== user.cover_image) {
+            formData.append('cover_image', cover_image);
+        }
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
 
@@ -68,9 +77,10 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             .then(response => {
                 console.log("response", response);
                 message.success("User Update Successfully");
+                setLoading(false)
                 UpdatemodalHideShow();
                 setTimeout(() => {
-                    // window.location.reload();
+                    window.location.reload();
                 }, 2000)
             })
             .catch(error => {
@@ -96,9 +106,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="add" type="primary" onClick={() => form.submit()}>
+                <Button key="add" style={{ backgroundColor: "#F47122" }} type="primary" onClick={() => form.submit()} loading={loading}>
                     Update
-                </Button>,
+                </Button>
             ]}
         >
             <div className='custom-scrollbar' style={{ overflowY: 'auto', height: '450px' }}>
@@ -108,46 +118,66 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     onFinish={onFinish}
                 >
                     <Form.Item label="Profile Picture" name="profile_picture">
-                        <Upload
-                            maxCount={1}
-                            beforeUpload={() => false}
-                            showUploadList={false} // Hide the default list of uploaded files
-                            onChange={(info) => {
-                                const { file } = info;
-                                form.setFieldsValue({ profile_picture: file });
-                            }}
-                            defaultFileList={user && user.profile_picture ? [{ uid: '-1', name: 'profile_picture', status: 'done' }] : []}
-                        >
-                            {user && user.profile_picture ? (
-                                <img src={user.profile_picture} alt="Profile Picture" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
-                            ) : (
-                                <>
-                                </>
-                            )}
-                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
-
-                        </Upload>
+                        {user && user.profile_picture ? (
+                            <Upload
+                                listType="picture-circle"
+                                maxCount={1}
+                                beforeUpload={() => false}
+                                showUploadList={true}
+                                onChange={(info) => {
+                                    const { file } = info;
+                                    form.setFieldsValue({ profile_picture: file });
+                                }}
+                                defaultFileList={[{ uid: '-1', name: 'profile_picture', status: 'done', url: user.profile_picture }]}
+                            >
+                                <Button shape="default" icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
+                            </Upload>
+                        ) : (
+                            <Upload
+                                listType="picture-circle"
+                                maxCount={1}
+                                beforeUpload={() => false}
+                                showUploadList={true}
+                                onChange={(info) => {
+                                    const { file } = info;
+                                    form.setFieldsValue({ profile_picture: file });
+                                }}
+                                defaultFileList={[]}
+                            >
+                                <Button shape="default" icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
+                            </Upload>
+                        )}
                     </Form.Item>
+
                     <Form.Item label="Cover Picture" name="cover_image">
                         {user && user.cover_image ? (
-                            // If cover image exists, display the image
-                            <img src={user.cover_image} alt="Cover Picture" style={{ width: '100px', height: '100px' }} />
+                            <Upload
+                            listType="picture-circle"
+                                maxCount={1}
+                                beforeUpload={() => false}
+                                onChange={(info) => {
+                                    const { file } = info;
+                                    form.setFieldsValue({ cover_image: file });
+                                }}
+                                defaultFileList={[{ uid: '-1', name: 'cover_image', status: 'done', url: user.cover_image }]}
+                            >
+                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                            </Upload>
                         ) : (
-                            <>
-                            </>
+                            <Upload
+                            listType="picture-circle"
+                                maxCount={1}
+                                beforeUpload={() => false}
+                                onChange={(info) => {
+                                    const { file } = info;
+                                    form.setFieldsValue({ cover_image: file });
+                                }}
+                                defaultFileList={[]}
+                            >
+                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                            </Upload>
                         )}
-                        <Upload
-                            maxCount={1}
-                            beforeUpload={() => false} // Prevent default upload behavior
-                            onChange={(info) => {
-                                const { file } = info;
-                                form.setFieldsValue({ cover_image: file });
-                            }}
-                        >
-                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
-                        </Upload>
                     </Form.Item>
-
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="First Name*"
