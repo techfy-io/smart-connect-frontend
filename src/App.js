@@ -35,6 +35,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/usersetting" element={<UserSetting />} />
             <Route path="/companyuser" element={<CompanyUsers />} />
+            <Route path="/leads" element={<Leads />} />
           </>
         ) : (
           <>
@@ -47,7 +48,6 @@ function App() {
         <Route path="/profile/:userId" element={<Profie />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/leads" element={<Leads />} />
 
       </Routes>
     </Router>

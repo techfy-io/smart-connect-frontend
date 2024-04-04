@@ -218,7 +218,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             label="Postal Address"
                             name="postal_code"
                         >
-                            <Input maxLength={20} />
+                            <Input />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
