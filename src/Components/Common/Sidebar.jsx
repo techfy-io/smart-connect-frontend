@@ -48,7 +48,7 @@ const Sidebar = () => {
                             <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> Settings</li>
                         </Link>
                         <Link to='/leads' style={{ textDecoration: "none" }}>
-                            <li className='menu-item'><UsergroupAddOutlined style={{ color: "black" }} /> Leads</li>
+                            <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
                         </Link>
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>
