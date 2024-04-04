@@ -404,7 +404,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 }}
                                 mask="+33 9 99 99 99 99"
                                 maskChar=""
-                                placeholder="+33 6 79 95 91 92"
+                                placeholder="+33 9 99 99 99 99"
                             >
                             </InputMask>
                         </Form.Item>
@@ -436,7 +436,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 }}
                                 mask="+33 9 99 99 99 99"
                                 maskChar=""
-                                placeholder="+33 6 79 95 91 92"
+                                placeholder="+33 9 99 99 99 99"
                             >
                                 {() => (
                                     <Input
@@ -449,7 +449,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                             />
 
                                         }
-                                        placeholder="+33 6 79 95 91 92"
+                                        placeholder="+33 9 99 99 99 99"
                                     />
                                 )}
                             </InputMask>

@@ -373,7 +373,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
                                 mask="+33 9 99 99 99 99"
                                 maskChar=""
-                                placeholder="+33 6 79 95 91 92"
+                                placeholder="+33 9 99 99 99 99"
                             />
                         </Form.Item>
                         <Form.Item

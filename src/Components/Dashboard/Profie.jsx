@@ -154,6 +154,9 @@ const Profile = () => {
                                 <div className="icon-box">
                                     <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
                                 </div>
+                                <div className="icon-box">
+                                    <a href={userData?.other_link_1} target="_blank" rel="noopener noreferrer" className="fa fa-globe icon linkedin-icon"></a>
+                                </div>
                             </div>
                         </Card>
                         {
@@ -260,7 +263,7 @@ const Profile = () => {
                                     }}
                                     mask="+33 9 99 99 99 99"
                                     maskChar=""
-                                    placeholder="+33 6 79 95 91 92"
+                                    placeholder="+33 9 99 99 99 99"
                                 >
                                 </InputMask>
                             </Form.Item>
