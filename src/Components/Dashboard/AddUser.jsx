@@ -293,7 +293,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             </Form.Item>
                             <Form.Item
                                 key={index}
-                                label={`Additional Social Link`}
+                                label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {

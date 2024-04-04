@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message } from 'antd';
 import axios from 'axios';
 import './UserSetting.scss';
-import ReactInputMask from 'react-input-mask';
+import InputMask from "react-input-mask";
 const { Header } = Layout;
 
 const UserSetting = () => {
