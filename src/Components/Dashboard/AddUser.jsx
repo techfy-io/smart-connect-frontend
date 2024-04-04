@@ -47,7 +47,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('company_name', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
-    
+
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
@@ -71,7 +71,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             modalHideShow();
         }
     };
-    
+
     const handleCancel = () => {
         modalHideShow();
         form.resetFields();
@@ -121,7 +121,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button style={{ backgroundColor: "#F47122" }}   key="add" type="primary" onClick={() => form.submit()}>
+                <Button style={{ backgroundColor: "#F47122" }} key="add" type="primary" onClick={() => form.submit()}>
                     Add
                 </Button>,
             ]}

@@ -76,8 +76,18 @@ const Profile = () => {
     };
 
     const onFinish = (values) => {
-        console.log('Received values:', values);
+        axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/exchange/', values)
+            .then(response => {
+                console.log("Response:", response);
+                message.success("Data exchanged successfully");
+                setExchangeModal(false);
+            })
+            .catch(error => {
+                console.error("Error exchanging data:", error);
+                message.error("Failed to exchange data");
+            });
     };
+    
     return (
         <>
             {pageloading ? (
@@ -174,7 +184,7 @@ const Profile = () => {
                         >
                             <label htmlFor="firstname">First Name*</label>
                             <Form.Item
-                                name="firstName"
+                                name="first_name"
                                 rules={[
                                     {
                                         required: true,
@@ -186,7 +196,7 @@ const Profile = () => {
                             </Form.Item>
                             <label htmlFor="lastname">Last Name*</label>
                             <Form.Item
-                                name="lastName"
+                                name="last_name"
                                 rules={[
                                     {
                                         required: true,
@@ -198,7 +208,7 @@ const Profile = () => {
                             </Form.Item>
                             <label htmlFor="companyname">Company Name*</label>
                             <Form.Item
-                                name="companyName"
+                                name="company_name"
                                 rules={[
                                     {
                                         required: true,
@@ -226,34 +236,34 @@ const Profile = () => {
                             </Form.Item>
                             <label htmlFor="phone">Phone*</label>
                             <Form.Item
-                            name="phone_number"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Please enter a phone number',
-                                },
-                                {
-                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                    message: 'Invalid phone number format',
-                                },
-                            ]}
-                        >
-                            <InputMask
-                                style={{
-                                    width: "100%",
-                                    height: "30px",
-                                    borderRadius: "5px",
-                                    border: "1px solid #d9d9d9",
-                                    paddingLeft: "8px",
-                                    color: "black",
-                                    transition: "border-color 0.3s",
-                                }}
-                                mask="+33 9 99 99 99 99"
-                                maskChar=""
-                                placeholder="+33 6 79 95 91 92"
+                                name="phone_number"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter a phone number',
+                                    },
+                                    {
+                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                        message: 'Invalid phone number format',
+                                    },
+                                ]}
                             >
-                            </InputMask>
-                        </Form.Item>
+                                <InputMask
+                                    style={{
+                                        width: "100%",
+                                        height: "30px",
+                                        borderRadius: "5px",
+                                        border: "1px solid #d9d9d9",
+                                        paddingLeft: "8px",
+                                        color: "black",
+                                        transition: "border-color 0.3s",
+                                    }}
+                                    mask="+33 9 99 99 99 99"
+                                    maskChar=""
+                                    placeholder="+33 6 79 95 91 92"
+                                >
+                                </InputMask>
+                            </Form.Item>
                             <Form.Item style={{ textAlign: "end" }}>
                                 <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
                                     Submit
