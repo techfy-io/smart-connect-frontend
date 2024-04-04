@@ -16,23 +16,18 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [currentCompany, setCurrentCompany] = useState('')
 
     const onFinish = async (values) => {
-
         const {
             first_name, last_name, email, email_1, email_2, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
             country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_media, company_name, profile_picture, cover_image, user_id
         } = values;
-
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
-
         formData.append('first_name', first_name || "");
         formData.append('last_name', last_name || "");
         formData.append('email', email || "");
-        if (email_1) formData.append('email_1', email_1 || "");
-        if (email_2) formData.append('email_2', email_2 || "");
-        if (other_link_1) formData.append('other_link_1', other_link_1 || "");
-        if (other_link_media) formData.append('other_link_media', other_link_media || "");
+        formData.append('email_1', email_1 || "");
+        formData.append('email_2', email_2 || "");
         formData.append('phone_number', phone_number || "");
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_2', phone_number_2 || "");
@@ -44,13 +39,15 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('zip_code', zip_code || "");
         formData.append('country', country || "");
         formData.append('city', city || "");
-        if (facebook_url) formData.append('facebook_url', facebook_url || "");
-        if (instagram_url) formData.append('instagram_url', instagram_url || "");
-        if (linkedin_url) formData.append('linkedin_url', linkedin_url || "");
+        formData.append('facebook_url', facebook_url || "");
+        formData.append('instagram_url', instagram_url || "");
+        formData.append('linkedin_url', linkedin_url || "");
+        formData.append('other_link_1', other_link_1 || "");
+        formData.append('other_link_media', other_link_media || "");
         formData.append('company_name', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
-
+    
         try {
             const response = await axios.post(
                 `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
@@ -61,7 +58,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         'Content-Type': 'multipart/form-data',
                     }
                 }
-
             );
             console.log("response", response);
             message.success("User Added Successfully");
@@ -73,11 +69,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             console.error("error", error);
             message.error("Failed to add user");
             modalHideShow();
-
         }
     };
-
-
+    
     const handleCancel = () => {
         modalHideShow();
         form.resetFields();
@@ -127,7 +121,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button key="add" type="primary" onClick={() => form.submit()}>
+                <Button style={{ backgroundColor: "#F47122" }}   key="add" type="primary" onClick={() => form.submit()}>
                     Add
                 </Button>,
             ]}
@@ -149,7 +143,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 form.setFieldsValue({ profile_picture: file });
                             }}
                         >
-                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff"}} />}></Button>
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                         </Upload>
                     </Form.Item>
                     <Form.Item label="Cover Picture" name="cover_image">
