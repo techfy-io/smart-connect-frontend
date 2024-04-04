@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message } from 'antd';
 import axios from 'axios';
 import './UserSetting.scss';
-
+import ReactInputMask from 'react-input-mask';
 const { Header } = Layout;
 
 const UserSetting = () => {
@@ -119,17 +119,33 @@ const UserSetting = () => {
                                 <Input placeholder="Company" />
                             </Form.Item>
                             <Form.Item
-                                style={{ marginLeft: "15px" }}
-                                name="mobile"
-                                label="Phone"
+                                name="phone_number"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your phone number!',
+                                        message: 'Please enter a phone number',
+                                    },
+                                    {
+                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                        message: 'Invalid phone number format',
                                     },
                                 ]}
                             >
-                                <Input placeholder="Phone" />
+                                <InputMask
+                                    style={{
+                                        width: "100%",
+                                        height: "30px",
+                                        borderRadius: "5px",
+                                        border: "1px solid #d9d9d9",
+                                        paddingLeft: "8px",
+                                        color: "black",
+                                        transition: "border-color 0.3s",
+                                    }}
+                                    mask="+33 9 99 99 99 99"
+                                    maskChar=""
+                                    placeholder="+33 9 99 99 99 99"
+                                >
+                                </InputMask>
                             </Form.Item>
                         </div>
                         <Form.Item

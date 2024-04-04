@@ -141,7 +141,7 @@ function App() {
                       style={{ width: "95%", marginLeft: "5px", height: "2.8rem", borderRadius: "8px", border: "0.0625rem solid #B0E1F2", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
                       mask="+33 9 99 99 99 99"
                       maskChar=""
-                      placeholder="+33 6 79 95 91 92"
+                      placeholder="+33 9 99 99 99 99"
                       onChange={(e) => setPhone(e.target.value)}
                     >
                     </InputMask>
