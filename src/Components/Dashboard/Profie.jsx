@@ -9,6 +9,8 @@ import QRCode from 'react-qr-code';
 import { MenuOutlined, SaveOutlined, SyncOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import InputMask from "react-input-mask";
+
 const Profile = () => {
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
@@ -176,7 +178,7 @@ const Profile = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your first name!',
+                                        message: 'Please enter your first name!',
                                     },
                                 ]}
                             >
@@ -188,7 +190,7 @@ const Profile = () => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your last name!',
+                                        message: 'Please enter your last name!',
                                     },
                                 ]}
                             >
@@ -197,6 +199,12 @@ const Profile = () => {
                             <label htmlFor="companyname">Company Name*</label>
                             <Form.Item
                                 name="companyName"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter your company name!',
+                                    },
+                                ]}
                             >
                                 <Input />
                             </Form.Item>
@@ -210,18 +218,42 @@ const Profile = () => {
                                     },
                                     {
                                         required: true,
-                                        message: 'Please input your email!',
+                                        message: 'Please enter your email!',
                                     },
                                 ]}
                             >
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="phone">Phone</label>
+                            <label htmlFor="phone">Phone*</label>
                             <Form.Item
-                                name="phone"
+                            name="phone_number"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: 'Please enter a phone number',
+                                },
+                                {
+                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    message: 'Invalid phone number format',
+                                },
+                            ]}
+                        >
+                            <InputMask
+                                style={{
+                                    width: "100%",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 6 79 95 91 92"
                             >
-                                <Input />
-                            </Form.Item>
+                            </InputMask>
+                        </Form.Item>
                             <Form.Item style={{ textAlign: "end" }}>
                                 <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
                                     Submit

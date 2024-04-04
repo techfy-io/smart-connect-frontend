@@ -16,6 +16,8 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             firstname: user?.first_name,
             lastname: user?.last_name,
             email: user?.email,
+            email_1: user?.email_1,
+            email_2: user?.email_2,
             phone_number: user?.phone_number,
             company_name: user?.company_name,
             job_title: user?.job_title,
@@ -28,6 +30,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             facebook_url: user?.facebook_url,
             instagram_url: user?.instagram_url,
             linkedin_url: user?.linkedin_url,
+            other_link_1: user?.other_link_1,
             biography: user?.bio_graphy,
         });
     }, [openEditModal, user]);
@@ -36,11 +39,13 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
 
     const onFinish = (values) => {
         setLoading(true);
-        const { firstname, lastname, email, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const { firstname, lastname, email, email_1, email_2,other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
         formData.append('last_name', lastname);
         formData.append('email', email);
+        formData.append('email', email_1);
+        formData.append('email', email_2);
         formData.append('phone_number', phone_number);
         formData.append('phone_number_type', phone_number_type);
         formData.append('company_name', company_name);
@@ -52,15 +57,18 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         if (facebook_url) {
             formData.append('facebook_url', facebook_url);
         }
-        
+
         if (instagram_url) {
             formData.append('instagram_url', instagram_url);
         }
-        
+
         if (linkedin_url) {
             formData.append('linkedin_url', linkedin_url);
         }
-        
+        if (other_link_1) {
+            formData.append('other_link_1', other_link_1);
+        }
+
         formData.append('user', user.id);
         if (profile_picture && profile_picture !== user.profile_picture) {
             formData.append('profile_picture', profile_picture);
@@ -161,7 +169,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     <Form.Item label="Cover Picture" name="cover_image">
                         {user && user.cover_image ? (
                             <Upload
-                            listType="picture-circle"
+                                listType="picture-circle"
                                 maxCount={1}
                                 beforeUpload={() => false}
                                 onChange={(info) => {
@@ -174,7 +182,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             </Upload>
                         ) : (
                             <Upload
-                            listType="picture-circle"
+                                listType="picture-circle"
                                 maxCount={1}
                                 beforeUpload={() => false}
                                 onChange={(info) => {
@@ -281,6 +289,12 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         <Input />
                     </Form.Item>
                     <Form.Item
+                        label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                        name="other_link_1"
+                    >
+                        <Input placeholder='Additional Social link' />
+                    </Form.Item>
+                    <Form.Item
                         label="Email*"
                         name="email"
                         rules={[
@@ -294,8 +308,34 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input placeholder='Additional email' />
                     </Form.Item>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <Form.Item
+                            label="Additional Email 1"
+                            name="email_1"
+                            rules={[
+                                {
+                                    type: 'email',
+                                    message: 'Invalid email format',
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Additional Email 2"
+                            name="email_2"
+                            rules={[
+                                {
+                                    type: 'email',
+                                    message: 'Invalid email format',
+                                },
+                            ]}
+                        >
+                            <Input placeholder='Additional email' />
+                        </Form.Item>
+                    </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="Phone*"

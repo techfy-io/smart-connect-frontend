@@ -97,7 +97,7 @@ const CompanyUsers = () => {
                     <tbody>
                         {loading ? ( // Show loading spinner if loading
                             <tr>
-                                <td colSpan="3"><Spin /></td>
+                                <td colSpan="4"><Spin /></td>
                             </tr>
                         ) : companyUserList.length === 0 ? ( // Show message if no users found
                             <tr>
