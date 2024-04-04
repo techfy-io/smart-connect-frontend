@@ -39,13 +39,17 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
 
     const onFinish = (values) => {
         setLoading(true);
-        const { firstname, lastname, email, email_1, email_2,other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const { firstname, lastname, email, email_1, email_2, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
         formData.append('last_name', lastname);
         formData.append('email', email);
-        formData.append('email', email_1);
-        formData.append('email', email_2);
+        if (email_2){
+            formData.append('email', email_1);
+        }
+        if (email_1){
+            formData.append('email', email_2);
+        }
         formData.append('phone_number', phone_number);
         formData.append('phone_number_type', phone_number_type);
         formData.append('company_name', company_name);
@@ -103,6 +107,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             .catch(error => {
                 console.log("error", error);
                 message.error("Failed to Update user")
+                setLoading(false)
             });
     };
 
@@ -289,8 +294,21 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         <Input />
                     </Form.Item>
                     <Form.Item
+                        label={<>Social Link type </>}
+                        name="other_link_media"
+                       
+                    >
+                        <Input placeholder='Additional Social link' />
+                    </Form.Item>
+                    <Form.Item
                         label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                         name="other_link_1"
+                        rules={[
+                            {
+                                type: 'url',
+                                message: 'Invalid URL format',
+                            },
+                        ]}
                     >
                         <Input placeholder='Additional Social link' />
                     </Form.Item>

@@ -67,7 +67,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             message.success("User Added Successfully");
             modalHideShow();
             setTimeout(() => {
-                // window.location.reload();
+                window.location.reload();
             }, 2000);
         } catch (error) {
             console.error("error", error);
