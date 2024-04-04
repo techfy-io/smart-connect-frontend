@@ -35,7 +35,7 @@ const Sidebar = () => {
                         <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
                         {/* <li className="menu-item"><SettingOutlined /> Settings</li> */}
                         <Link to='/leads' style={{ textDecoration: "none" }}>
-                            <li className='menu-item'><UsergroupAddOutlined style={{ color: "black" }} /> Leads</li>
+                            <li className='menu-item' style={{color:"black"}}><UsergroupAddOutlined  /> Leads</li>
                         </Link>
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>

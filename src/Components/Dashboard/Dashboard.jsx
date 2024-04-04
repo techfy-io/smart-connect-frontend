@@ -43,7 +43,7 @@ function Dashboard() {
 
     const accessToken = localStorage.getItem('accessToken');
     axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
-      params: { limit: 10, offset: 0 },
+      // params: { limit: 10, offset: 0 },
       headers: { 'Authorization': `Bearer ${accessToken}` }
     })
       .then((response) => {
@@ -86,6 +86,7 @@ function Dashboard() {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
+            console.log(response,"delete user resp")
             message.success("User Deleted Successfully");
             setTimeout(() => window.location.reload(), 1000);
           })
@@ -142,7 +143,7 @@ function Dashboard() {
                 <>
                   <tbody>
                     <tr>
-                      <td colSpan="3"> <Spin /></td></tr>
+                      <td colSpan="4"> <Spin /></td></tr>
                   </tbody>
                 </>
               ) : (
@@ -197,7 +198,7 @@ function Dashboard() {
                             ))
                           ) : (
                             <tr>
-                              <td colSpan="3">No User found</td>
+                              <td colSpan="4">No User found</td>
                             </tr>
                           )}
                         </tbody>
