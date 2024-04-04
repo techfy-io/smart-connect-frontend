@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutlined, LogoutOutlined,UsergroupAddOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutlined, LogoutOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import axios from 'axios';
 import './Sidebar.scss';
@@ -14,28 +14,30 @@ const Sidebar = () => {
     };
     const Logoutuser = () => {
         localStorage.removeItem("accessToken");
-        message.success("User logout")
         window.location.reload();
+        setTimeout(() => {
+            message.success("User logout")
+        }, 3000);
     }
     useState(() => {
         const userToken = localStorage.getItem('userinfo');
         if (userToken == "true") {
             setUserType("SuperAdmin")
         }
-        else(
+        else (
             setUserType("User")
         )
     }, [])
     return (
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
-        <div className="sider">
+            <div className="sider">
                 <img className='logo-image' src={Smartlogo} alt="" />
                 {usertype == "SuperAdmin" ? (
                     <ul className="menu">
                         <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
                         {/* <li className="menu-item"><SettingOutlined /> Settings</li> */}
                         <Link to='/leads' style={{ textDecoration: "none" }}>
-                            <li className='menu-item' style={{color:"black"}}><UsergroupAddOutlined  /> Leads</li>
+                            <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
                         </Link>
                         <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                     </ul>

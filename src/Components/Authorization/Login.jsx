@@ -43,10 +43,7 @@ function App() {
           localStorage.setItem('userinfo', resp.data?.is_superuser)
           localStorage.setItem('userid', resp.data?.company_id)
           setLoading(false);
-          setTimeout(() => {
-            window.location.reload()
-            message.success("Login Successfully");
-          }, 1000);
+          window.location.reload()
         })
         .catch(error => {
           setLoading(false);

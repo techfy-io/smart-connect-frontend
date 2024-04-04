@@ -253,10 +253,10 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             <Input maxLength={5} />
                         </Form.Item>
                         <Form.Item
-                            label="Postal Code"
+                            label="Postal Address"
                             name="postal_code"
                         >
-                            <Input maxLength={20} />
+                            <Input />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>

@@ -121,7 +121,7 @@ function Dashboard() {
           )
           }
         </div>
-        <div className="scrollable-table ">
+        {/* <div className="scrollable-table "> */}
           <table className="table">
             <thead>
               {userType === "SuperAdmin" ? (
@@ -209,7 +209,7 @@ function Dashboard() {
               )
             }
           </table>
-        </div>
+        {/* </div> */}
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
