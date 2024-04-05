@@ -20,7 +20,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             email_2: user?.email_2,
             phone_number: user?.phone_number,
             company_name: user?.company_name,
-            job_title: user?.job_title,
+            job_title: user?.job_title ? user.job_title  :"",
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
             phone_number_personal: user?.phone_number_personal,

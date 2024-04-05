@@ -10,7 +10,7 @@ import CompanyUsers from './Components/SuperAdmin/CompanyUsers';
 import ResetPassword from './Components/Authorization/ResetPassword';
 import Profie from './Components/Dashboard/Profie';
 import Leads from './Components/Dashboard/Leads';
-
+import ScrollToTop from './Components/Common/Scrolltop';
 function App() {
   // Check if the user is logged in by reading from local storage
   const checkAccessToken = () => {
@@ -27,6 +27,7 @@ function App() {
 
   return (
     <Router>
+                  <ScrollToTop />
       <Routes>
         {isLoggedIn ? (
           <>
