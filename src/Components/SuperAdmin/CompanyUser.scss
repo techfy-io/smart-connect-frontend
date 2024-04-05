@@ -38,8 +38,12 @@
         }
     }
     .table {
-        width: 100%;
-        border-collapse: collapse;
+      width: 100%;
+      border-collapse: collapse;
+      overflow-y: auto;
+      max-height: 400px;
+      scrollbar-width: thin; /* Set scrollbar width to thin */
+      scrollbar-color: #888 transparent; 
     
         th,
         td {
@@ -58,7 +62,14 @@
           background-color: #f0f2f5;
         }
     
-    
+        &::-webkit-scrollbar {
+          width: 5px; /* Set scrollbar width */
+      }
+
+      &::-webkit-scrollbar-thumb {
+          background-color: #888; /* Set thumb color */
+          border-radius: 5px; /* Set thumb border radius */
+      }
         tbody tr:hover {
           background-color: #e6f7ff; // Hover row background color
         }

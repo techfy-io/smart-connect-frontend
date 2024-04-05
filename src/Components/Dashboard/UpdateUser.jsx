@@ -3,11 +3,13 @@ import { Button, Modal, Form, Input, message, Upload, Radio, Image } from 'antd'
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import './Dashboard.scss';
-import { UploadOutlined } from '@ant-design/icons';
+import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import FormItem from 'antd/es/form/FormItem';
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
-    const [loading, setLoading] = useState(false); // State to manage loading state of the button
+    const [loading, setLoading] = useState(false);
+    const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
+    const [additionalEmails, setAdditionalEmails] = useState([]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -20,7 +22,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             email_2: user?.email_2,
             phone_number: user?.phone_number,
             company_name: user?.company_name,
-            job_title: user?.job_title,
+            job_title: user?.job_title ? user.job_title : "",
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
             phone_number_personal: user?.phone_number_personal,
@@ -30,6 +32,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             facebook_url: user?.facebook_url,
             instagram_url: user?.instagram_url,
             linkedin_url: user?.linkedin_url,
+            other_link_media: user?.other_link_media,
             other_link_1: user?.other_link_1,
             biography: user?.bio_graphy,
         });
@@ -39,17 +42,11 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
 
     const onFinish = (values) => {
         setLoading(true);
-        const { firstname, lastname, email, email_1, email_2, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const { firstname, lastname, email, email_1, email_2, other_link_media, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
         formData.append('last_name', lastname);
         formData.append('email', email);
-        if (email_2){
-            formData.append('email', email_1);
-        }
-        if (email_1){
-            formData.append('email', email_2);
-        }
         formData.append('phone_number', phone_number);
         formData.append('phone_number_type', phone_number_type);
         formData.append('company_name', company_name);
@@ -58,40 +55,49 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('postal_code', postal_code);
         formData.append('country', country);
         formData.append('city', city);
+        formData.append('other_link_media', other_link_media);
+        if (other_link_1 && other_link_1 !== user.other_link_1) {
+            formData.append('other_link_1', other_link_1);
+        }
+        if (email_1 && email_1 !== user.email_1) {
+            formData.append('email_1', email_1);
+        }
+        // if (email_2 && email_2 !== user.email_2) {
+        //     formData.append('email_2', email_2);
+        // }
         if (facebook_url) {
             formData.append('facebook_url', facebook_url);
         }
-
+    
         if (instagram_url) {
             formData.append('instagram_url', instagram_url);
         }
-
+    
         if (linkedin_url) {
             formData.append('linkedin_url', linkedin_url);
         }
-        if (other_link_1) {
-            formData.append('other_link_1', other_link_1);
-        }
-
         formData.append('user', user.id);
+    
+        // Check if profile picture is provided and different from current user's profile picture
         if (profile_picture && profile_picture !== user.profile_picture) {
             formData.append('profile_picture', profile_picture);
         }
-
-        // Check if cover image has changed
+    
+        // Check if cover image is provided and different from current user's cover image
         if (cover_image && cover_image !== user.cover_image) {
             formData.append('cover_image', cover_image);
         }
+    
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
-
+    
         axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
             formData,
             {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'multipart/form-data' // Set appropriate content type for file upload
+                    'Content-Type': 'multipart/form-data'
                 }
             }
         )
@@ -101,7 +107,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 setLoading(false)
                 UpdatemodalHideShow();
                 setTimeout(() => {
-                    window.location.reload();
+                    // window.location.reload();
                 }, 2000)
             })
             .catch(error => {
@@ -110,6 +116,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 setLoading(false)
             });
     };
+    
 
 
     const handleCancel = () => {
@@ -117,10 +124,27 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         form.resetFields();
     };
 
+    const handleAddSocialMediaLink = () => {
+        setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
+    };
+
+    const handleRemoveSocialMediaLink = (index) => {
+        const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
+        setAdditionalSocialMediaLinks(updatedLinks);
+    };
+
+    const handleAddAdditionalEmail = () => {
+        setAdditionalEmails([...additionalEmails, '']);
+    };
+
+    const handleRemoveAdditionalEmail = (index) => {
+        const updatedEmails = additionalEmails.filter((email, i) => i !== index);
+        setAdditionalEmails(updatedEmails);
+    };
+
     return (
         <Modal
             width={450}
-            // style={{ marginTop: "50px" }}
             title="UpdateUser"
             open={openEditModal}
             onCancel={handleCancel}
@@ -183,7 +207,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 }}
                                 defaultFileList={[{ uid: '-1', name: 'cover_image', status: 'done', url: user.cover_image }]}
                             >
-                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                             </Upload>
                         ) : (
                             <Upload
@@ -196,7 +220,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 }}
                                 defaultFileList={[]}
                             >
-                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}>Upload</Button>
+                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                             </Upload>
                         )}
                     </Form.Item>
@@ -226,11 +250,6 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             <Input />
                         </Form.Item>
                     </div>
-
-                    {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-
-                    {/* </div> */}
-
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="Company Name"
@@ -293,25 +312,63 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     >
                         <Input />
                     </Form.Item>
-                    <Form.Item
-                        label={<>Social Link type </>}
-                        name="other_link_media"
-                       
-                    >
-                        <Input placeholder='Additional Social link' />
-                    </Form.Item>
-                    <Form.Item
-                        label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
-                        name="other_link_1"
-                        rules={[
-                            {
-                                type: 'url',
-                                message: 'Invalid URL format',
-                            },
-                        ]}
-                    >
-                        <Input placeholder='Additional Social link' />
-                    </Form.Item>
+                    {user && user.other_link_1 ? (
+                        <>
+                            <Form.Item label="Social Link type" name="other_link_media">
+                                <Input placeholder="Twitter Tiktok" />
+                            </Form.Item>
+                            <Form.Item
+                                label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                name="other_link_1"
+                                rules={[
+                                    {
+                                        type: 'url',
+                                        message: 'Invalid URL format',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    placeholder={`Enter your social media link`}
+                                />
+                            </Form.Item>
+                        </>
+                    ) : null}
+                    {additionalSocialMediaLinks.map((link, index) => (
+                        <div key={index}>
+                            <Form.Item label="Social Link type" name={`other_link_media`}>
+                                <Input placeholder="Twitter Tiktok" />
+                            </Form.Item>
+                            <Form.Item
+                                label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                name={`other_link_1`}
+                                rules={[
+                                    {
+                                        type: 'url',
+                                        message: 'Invalid URL format',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    placeholder={`Enter your social media link`}
+                                    suffix={
+                                        <Button
+                                            type="text"
+                                            icon={<DeleteOutlined />}
+                                            onClick={() => handleRemoveSocialMediaLink(index)}
+                                        />
+                                    }
+                                />
+                            </Form.Item>
+                        </div>
+                    ))}
+                    {user && !user.other_link_1 && additionalSocialMediaLinks.length < 1 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
+                                Add Another Social Link
+                            </Button>
+                        </Form.Item>
+                    )}
+
                     <Form.Item
                         label="Email*"
                         name="email"
@@ -328,32 +385,55 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     >
                         <Input placeholder='Additional email' />
                     </Form.Item>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Form.Item
-                            label="Additional Email 1"
-                            name="email_1"
-                            rules={[
-                                {
-                                    type: 'email',
-                                    message: 'Invalid email format',
-                                },
-                            ]}
-                        >
-                            <Input />
+                    {user && user.email_1 ? (
+                        <>
+                            <Form.Item
+                                label="Additional Email"
+                                name="email_1"
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: 'Invalid email format',
+                                    },
+                                ]}
+                            >
+                                <Input />
+                            </Form.Item>
+                        </>
+                    ) : null}
+                    {additionalEmails.map((email, index) => (
+                        <div key={index}>
+                            <Form.Item
+                                label={`Additional Email`}
+                                name={`email_${index + 1}`}
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: 'Invalid email format',
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    placeholder={`Additional email`}
+                                    suffix={
+                                        <Button
+                                            type="text"
+                                            icon={<DeleteOutlined />}
+                                            onClick={() => handleRemoveAdditionalEmail(index)}
+                                        />
+                                    }
+                                />
+                            </Form.Item>
+                        </div>
+                    ))}
+                    {user && !user.email_1 && additionalEmails.length < 1 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddAdditionalEmail} icon={<PlusOutlined />}>
+                                Email
+                            </Button>
                         </Form.Item>
-                        <Form.Item
-                            label="Additional Email 2"
-                            name="email_2"
-                            rules={[
-                                {
-                                    type: 'email',
-                                    message: 'Invalid email format',
-                                },
-                            ]}
-                        >
-                            <Input placeholder='Additional email' />
-                        </Form.Item>
-                    </div>
+                    )}
+
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label="Phone*"

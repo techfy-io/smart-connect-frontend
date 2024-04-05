@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar } from 'antd'; // Import Avatar component
+import { message, Spin, Button, Avatar } from 'antd';
 import axios from 'axios';
 
 const Leads = () => {
@@ -18,13 +18,12 @@ const Leads = () => {
                     'Content-Type': 'multipart/form-data',
                 }
             });
-            console.log(response.data.results)
             setExchangeData(response.data.results);
-            setLoading(false); // Set loading to false after data is fetched
+            setLoading(false);
         } catch (error) {
             console.error("Error fetching exchanged users:", error);
             message.error("Failed to fetch exchanged users");
-            setLoading(false); // Set loading to false if there's an error
+            setLoading(false);
         }
     };
 
@@ -32,7 +31,6 @@ const Leads = () => {
         getExchangeUser();
     }, []);
 
-    // Function to generate random color
     const getRandomColor = () => {
         const letters = '0123456789ABCDEF';
         let color = '#';
@@ -52,7 +50,7 @@ const Leads = () => {
                     </div>
                 </div>
                 <div className="table-container">
-                    {loading ? ( // Show loading spinner if data is being fetched
+                    {loading ? (
                         <div style={{ textAlign: 'center', padding: '20px', marginTop: "20px" }}>
                             <Spin size="large" />
                         </div>
@@ -70,7 +68,7 @@ const Leads = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {exchangeData.length > 0 ? ( // Check if exchangeData has data
+                                {exchangeData.length > 0 ? (
                                     exchangeData.map((user, index) => (
                                         <tr key={index}>
                                             <td>
@@ -88,10 +86,9 @@ const Leads = () => {
                                                     <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} />
                                                 </div>
                                             </td>
-
                                         </tr>
                                     ))
-                                ) : ( // Display message if no data is found
+                                ) : (
                                     <tr>
                                         <td colSpan="7" style={{ textAlign: 'center' }}>No data found</td>
                                     </tr>

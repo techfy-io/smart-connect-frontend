@@ -176,7 +176,7 @@ const Profile = () => {
                         </div>
                     </div>
                     <Modal
-                        title="Exchange with TestUser"
+                        title="Exchange" 
                         open={openExchangeModal}
                         onCancel={handleOpenExchangeModal}
                         footer={null} // No footer for now, you can add actions if needed

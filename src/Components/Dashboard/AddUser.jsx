@@ -27,7 +27,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('last_name', last_name || "");
         formData.append('email', email || "");
         formData.append('email_1', email_1 || "");
-        formData.append('email_2', email_2 || "");
+        // formData.append('email_2', email_2 || "");
         formData.append('phone_number', phone_number || "");
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_2', phone_number_2 || "");
@@ -277,18 +277,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {additionalSocialMediaLinks.map((link, index) => (
                         <>
                             <Form.Item label="Social Link type" name="other_link_media">
-                                {/* <Select
-                                    placeholder="Select media type"
-                                    value={link.mediaType}
-                                    onChange={(value) => { 
-                                        // handleMediaTypeChange logic here
-                                    }}
-                                >
-                                    <Select.Option value="tiktok">TikTok</Select.Option>
-                                    <Select.Option value="twitter">Twitter</Select.Option>
-                                    <Select.Option value="github">GitHub</Select.Option>
-                                    <Select.Option value="other">Other</Select.Option>
-                                </Select> */}
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
@@ -320,7 +308,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         additionalSocialMediaLinks.length < 1 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                    Another Social Link
+                                   Social Link
                                 </Button>
                             </Form.Item>
                         )
@@ -345,7 +333,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {additionalEmails.map((email, index) => (
                         <Form.Item
                             key={index}
-                            label={`Additional Email ${index + 1}`}
+                            label={`Additional Email`}
                             name={`email_${index + 1}`}
                             rules={[
                                 {
@@ -366,7 +354,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         </Form.Item>
                     ))}
                     {
-                        additionalEmails.length < 2 && (
+                        additionalEmails.length < 1 && (
                             <>
                                 <Form.Item>
                                     <Button type="dashed" onClick={handleAddEmail} icon={<PlusOutlined />}>
