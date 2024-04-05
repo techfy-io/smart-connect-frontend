@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Modal, Avatar } from 'antd';
+import { message, Spin, Button, Modal, Avatar, Empty } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
 import AddUser from './AddUser';
@@ -86,7 +86,7 @@ function Dashboard() {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
-            console.log(response,"delete user resp")
+            console.log(response, "delete user resp")
             message.success("User Deleted Successfully");
             setTimeout(() => window.location.reload(), 1000);
           })
@@ -99,7 +99,7 @@ function Dashboard() {
   };
   const GetUserProfile = (id) => {
     navigate(`/profile/${id}`);
-};  const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+  }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
   return (
     <div className="dashboard">
       <Sidebar />
@@ -123,93 +123,93 @@ function Dashboard() {
           }
         </div>
         {/* <div className="scrollable-table "> */}
-          <table className="table">
-            <thead>
-              {userType === "SuperAdmin" ? (
-                <tr>
-                  <th>Company Name</th>
-                  <th>Action</th>
-                </tr>
-              ) : (
-                <tr>
-                  <th>User Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Action</th>
-                </tr>
-              )}
-            </thead>
-            {
-              loading ? (
-                <>
-                  <tbody>
-                    <tr>
-                      <td colSpan="4"> <Spin /></td></tr>
-                  </tbody>
-                </>
-              ) : (
-                <>
-                  {
-                    userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
-                      <>
-                        <tbody>
-                          {companiesData ? (
-                            <> {
-                              companiesData.map((company, key) => (
-                                <tr key={key}>
-                                  <td>{company.name}</td>
-                                  <td className='Actions-btns'>
-                                    <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                    <button className="Delete-button"><DeleteOutlined /></button>
-                                    <button className="Edit-button"><EditOutlined /></button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </>
-                          ) : (
-                            <>
-                              <tr>
-                                <td colSpan="3">No Company found</td>
-                              </tr>
-                            </>
-                          )}
-                        </tbody>
-                      </>
-                    ) : (
-                      <>
-                        <tbody>
-                          {userData ? (
-                            userData.map((user, key) => (
+        <table className="table">
+          <thead>
+            {userType === "SuperAdmin" ? (
+              <tr>
+                <th>Company Name</th>
+                <th>Action</th>
+              </tr>
+            ) : (
+              <tr>
+                <th>User Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+            )}
+          </thead>
+          {
+            loading ? (
+              <>
+                <tbody>
+                  <tr>
+                    <td colSpan="4"> <Spin /></td></tr>
+                </tbody>
+              </>
+            ) : (
+              <>
+                {
+                  userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                    <>
+                      <tbody>
+                        {companiesData ? (
+                          <> {
+                            companiesData.map((company, key) => (
                               <tr key={key}>
-                                <td>{user.first_name + " " + user.last_name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.job_title}</td>
+                                <td>{company.name}</td>
                                 <td className='Actions-btns'>
-                                  <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
-                                    <EyeOutlined />
-                                  </button>
-                                  <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                                    <DeleteOutlined />
-                                  </button>
-                                  <button className="Edit-button" onClick={() => updateUser(user)}>
-                                    <EditOutlined />
-                                  </button>
+                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                  <button className="Delete-button"><DeleteOutlined /></button>
+                                  <button className="Edit-button"><EditOutlined /></button>
                                 </td>
                               </tr>
-                            ))
-                          ) : (
-                            <tr>
-                              <td colSpan="4">No User found</td>
+                            ))}
+                          </>
+                        ) : (
+                          <>
+                           <td colSpan="4">
+                            <Empty description="No Company found" />
+                          </td>
+                          </>
+                        )}
+                      </tbody>
+                    </>
+                  ) : (
+                    <>
+                      <tbody>
+                        {userData ? (
+                          userData.map((user, key) => (
+                            <tr key={key}>
+                              <td>{user.first_name + " " + user.last_name}</td>
+                              <td>{user.email}</td>
+                              <td>{user.job_title}</td>
+                              <td className='Actions-btns'>
+                                <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                  <EyeOutlined />
+                                </button>
+                                <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                  <DeleteOutlined />
+                                </button>
+                                <button className="Edit-button" onClick={() => updateUser(user)}>
+                                  <EditOutlined />
+                                </button>
+                              </td>
                             </tr>
-                          )}
-                        </tbody>
-                      </>
-                    )
-                  }
-                </>
-              )
-            }
-          </table>
+                          ))
+                        ) : (
+                          <td colSpan="4">
+                            <Empty description="No users found" />
+                          </td>
+                        )}
+                      </tbody>
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+        </table>
         {/* </div> */}
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DeleteOutlined, UserOutlined, EyeOutlined, EditOutlined } from '@ant-design/icons';
-import { Spin, Button, Modal, Avatar, message } from 'antd';
+import { Spin, Button, Modal, Avatar, message, Empty } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
@@ -13,13 +13,13 @@ const CompanyUsers = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { state } = location;
-    const {company } = state || {};
+    const { company } = state || {};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [companyUserList, setCompanyUserList] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
     const [loading, setLoading] = useState(true); // State to track loading status
-    console.log("hi",company)
+    console.log("hi", company)
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
@@ -54,25 +54,25 @@ const CompanyUsers = () => {
     }, []);
     const deleteUser = (id) => {
         Modal.confirm({
-          title: 'Confirm',
-          content: 'Are you sure you want to delete this user?',
-          onOk() {
-            const accessToken = localStorage.getItem('accessToken');
-            axios.delete(`${process.env.REACT_APP_BASE_API_URL}/user/${id}/`, {
-              headers: { 'Authorization': `Bearer ${accessToken}` }
-            })
-              .then(response => {
-                console.log("deleted user responce",response)
-                message.success("User Deleted Successfully");
-                setTimeout(() => window.location.reload(), 1000);
-              })
-              .catch(error => console.log("error", error));
-          },
-          onCancel() {
-            console.log('Deletion canceled');
-          },
+            title: 'Confirm',
+            content: 'Are you sure you want to delete this user?',
+            onOk() {
+                const accessToken = localStorage.getItem('accessToken');
+                axios.delete(`${process.env.REACT_APP_BASE_API_URL}/user/${id}/`, {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                })
+                    .then(response => {
+                        console.log("deleted user responce", response)
+                        message.success("User Deleted Successfully");
+                        setTimeout(() => window.location.reload(), 1000);
+                    })
+                    .catch(error => console.log("error", error));
+            },
+            onCancel() {
+                console.log('Deletion canceled');
+            },
         });
-      };
+    };
     return (
         <div className='companyusers-container'>
             <Sidebar />
@@ -101,7 +101,9 @@ const CompanyUsers = () => {
                             </tr>
                         ) : companyUserList.length === 0 ? ( // Show message if no users found
                             <tr>
-                                <td colSpan="4">No users found.</td>
+                                <td colSpan="4">
+                                    <Empty description="No users found" />
+                                </td>
                             </tr>
                         ) : (
                             companyUserList.map((user, key) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar } from 'antd';
+import { message, Spin, Button, Avatar,Empty } from 'antd';
 import axios from 'axios';
 
 const Leads = () => {
@@ -90,7 +90,10 @@ const Leads = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="7" style={{ textAlign: 'center' }}>No data found</td>
+                                        {/* <td colSpan="7" style={{ textAlign: 'center' }}>No data found</td> */}
+                                        <td colSpan="7" tyle={{ textAlign: 'center' }}>
+                                            <Empty description="No users found" />
+                                        </td>
                                     </tr>
                                 )}
                             </tbody>
