@@ -14,23 +14,25 @@
 
 .sider {
     // position: relative;
-    width: 200px;
+    width: 230px;
     background-color: #f0f2f5;
-    padding: 15px;
     transition: width 0.3s ease;
-    /* Add transition for smooth animation */
     height: 100vh;
-    /* Remove redundant position: sticky; top: 0; from here */
+
+    .sider-content {
+        padding: 25px;
+
+    }
 
     .logo-image {
-        margin-top: 2%;
+        // padding: 15px;
         width: 150px;
         height: auto;
     }
 
     .menu {
+        // padding: 15px;
         list-style: none;
-        padding: 0;
         margin-top: 15%;
 
         .menu-item {
