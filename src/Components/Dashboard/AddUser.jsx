@@ -426,20 +426,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 maskChar=""
                                 placeholder="+33 9 99 99 99 99"
                             >
-                                {() => (
-                                    <Input
-                                        suffix={
-                                            <Button
-                                                type="text"
-                                                icon={<DeleteOutlined />}
-                                                onClick={() => handleRemovePhone(index)}
-
-                                            />
-
-                                        }
-                                        placeholder="+33 9 99 99 99 99"
-                                    />
-                                )}
                             </InputMask>
 
                         </Form.Item>
