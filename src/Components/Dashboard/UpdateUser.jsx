@@ -107,7 +107,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 setLoading(false)
                 UpdatemodalHideShow();
                 setTimeout(() => {
-                    // window.location.reload();
+                    window.location.reload();
                 }, 2000)
             })
             .catch(error => {

@@ -3,63 +3,75 @@ import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutline
 import { message } from 'antd';
 import axios from 'axios';
 import './Sidebar.scss';
-import Smartlogo from "../../Inspect/Smart-logo.png"
-import { Link, useNavigate } from 'react-router-dom';
+import Smartlogo from "../../Inspect/Smart-logo.png";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
 const Sidebar = () => {
-    const [usertype, setUserType] = useState('')
+    const [usertype, setUserType] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    const [showLeadsMenu, setShowLeadsMenu] = useState(false);
+
     const toggleSidebar = () => {
         setIsSidebarCollapsed(!isSidebarCollapsed);
     };
+
     const Logoutuser = () => {
         localStorage.removeItem("accessToken");
         window.location.reload();
         setTimeout(() => {
-            message.success("User logout")
+            message.success("User logout");
         }, 3000);
-    }
-    useState(() => {
+    };
+
+    useEffect(() => {
         const userToken = localStorage.getItem('userinfo');
-        if (userToken == "true") {
-            setUserType("SuperAdmin")
+        if (userToken === "true") {
+            setUserType("SuperAdmin");
+        } else {
+            setUserType("User");
         }
-        else (
-            setUserType("User")
-        )
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        const isCompanyUserScreen = location.pathname === '/companyuser';
+        setShowLeadsMenu(isCompanyUserScreen);
+    }, [location.pathname]);
+
     return (
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             <div className="sider">
-                <img className='logo-image' src={Smartlogo} alt="" />
-                {usertype == "SuperAdmin" ? (
-                    <ul className="menu">
-                        <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
-                        {/* <li className="menu-item"><SettingOutlined /> Settings</li> */}
-                        <Link to='/leads' style={{ textDecoration: "none" }}>
-                            <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
-                        </Link>
-                        <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
-                    </ul>
-                ) : (
-                    <ul className='menu'>
-                        <li className='menu-item' onClick={() => navigate('/')}><UserOutlined /> Users</li>
-                        <Link to='/usersetting' style={{ textDecoration: "none" }}>
-                            <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> Settings</li>
-                        </Link>
-                        <Link to='/leads' style={{ textDecoration: "none" }}>
-                            <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
-                        </Link>
-                        <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
-                    </ul>
-                )}
-                <button className="collabs-button" onClick={toggleSidebar}>
-                    {isSidebarCollapsed ? <RightOutlined /> : <LeftOutlined />}
-                </button>
+                <div className='sider-content'>
+                    <img className='logo-image' src={Smartlogo} alt="" />
+                    {usertype === "SuperAdmin" ? (
+                        <ul className="menu">
+                            <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
+                            {showLeadsMenu && (
+                                <Link to='/leads' style={{ textDecoration: "none" }}>
+                                    <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
+                                </Link>)}
+                            <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
+                        </ul>
+                    ) : (
+                        <ul className='menu'>
+                            <li className='menu-item' onClick={() => navigate('/')}><UserOutlined /> Users</li>
+                            <Link to='/usersetting' style={{ textDecoration: "none" }}>
+                                <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> Settings</li>
+                            </Link>
+                            {showLeadsMenu && (
+                                <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
+                            )}
+                            <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
+                        </ul>
+                    )}
+                    <button className="collabs-button" onClick={toggleSidebar}>
+                        {isSidebarCollapsed ? <RightOutlined /> : <LeftOutlined />}
+                    </button>
+                </div>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default Sidebar
+export default Sidebar;

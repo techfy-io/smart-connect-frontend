@@ -3,34 +3,34 @@
     top: 0;
     height: 100vh;
     z-index: 1;
-    /* Ensure sidebar is above other content */
     background-color: #ffffff;
 
     &.collapsed .sider {
-        width: 140px;
-        /* Adjust width when collapsed */
+        width: 190px;
     }
 }
 
 .sider {
     // position: relative;
-    width: 200px;
+    width: 240px;
     background-color: #f0f2f5;
-    padding: 15px;
     transition: width 0.3s ease;
-    /* Add transition for smooth animation */
     height: 100vh;
-    /* Remove redundant position: sticky; top: 0; from here */
+
+    .sider-content {
+        padding: 25px;
+
+    }
 
     .logo-image {
-        margin-top: 2%;
+        // padding: 15px;
         width: 150px;
         height: auto;
     }
 
     .menu {
+        // padding: 15px;
         list-style: none;
-        padding: 0;
         margin-top: 15%;
 
         .menu-item {
