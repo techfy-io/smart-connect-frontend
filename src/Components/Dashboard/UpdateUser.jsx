@@ -480,7 +480,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     {user && user.phone_number_1 ? (
                         <>
                             <Form.Item
-                                label="Phone*"
+                                label="Another Phone"
                                 name="phone_number_1"
                                 rules={[
                                     {
@@ -500,45 +500,36 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     ) :
                         null}
                     {additionalPhones.map((phone, index) => (
-                        <Form.Item
-                            key={index}
-                            label={`Another Phone`}
-                            name={`phone_number_${index + 1}`}
-                        >
-                            <InputMask
-                                style={{
-                                    width: "95%",
-                                    height: "30px",
-                                    borderRadius: "5px",
-                                    border: "1px solid #d9d9d9",
-                                    paddingLeft: "8px",
-                                    color: "black",
-                                    transition: "border-color 0.3s",
-                                }}
-                                mask="+33 9 99 99 99 99"
-                                maskChar=""
-                                placeholder="+33 9 99 99 99 99"
-                            >
-                                {() => (
-                                    <Input
-                                        suffix={
-                                            <Button
-                                                type="text"
-                                                icon={<DeleteOutlined />}
-                                                onClick={() => handleRemovePhone(index)}
-
-                                            />
-
-                                        }
-                                        placeholder="+33 9 99 99 99 99"
-                                    />
-                                )}
-                            </InputMask>
-
-                        </Form.Item>
+                       <Form.Item
+                       key={index}
+                       label={`Another Phone`}
+                       name={`phone_number_${index + 1}`}
+                       rules={[
+                           {
+                               pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                               message: 'Invalid phone number format',
+                           },
+                       ]}
+                   >
+                       <InputMask
+                           style={{
+                               width: "97%", 
+                               height: "30px",
+                               borderRadius: "5px", 
+                               border: "1px solid #d9d9d9",
+                               paddingLeft: "8px", 
+                               color: "black", 
+                               transition: "border-color 0.3s",
+                           }}
+                           mask="+33 9 99 99 99 99"
+                           maskChar=""
+                           placeholder="+33 9 99 99 99 99"
+                       >
+                       </InputMask>
+                   </Form.Item>
                     ))}
                     {
-                        user && !user.phone_number_1 && additionalPhones.length  < 1 && (
+                        user && !user.phone_number_1 && additionalPhones.length < 1 && (
                             <>
                                 <Form.Item>
                                     <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>
