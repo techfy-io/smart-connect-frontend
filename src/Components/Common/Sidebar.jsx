@@ -35,9 +35,13 @@ const Sidebar = () => {
     }, []);
 
     useEffect(() => {
-        const isCompanyUserScreen = location.pathname === '/companyuser';
-        setShowLeadsMenu(isCompanyUserScreen);
+        if (location.pathname === '/companyuser' || location.pathname === '/leads') {
+            setShowLeadsMenu(true);
+        } else {
+            setShowLeadsMenu(false);
+        }
     }, [location.pathname]);
+
 
     return (
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
@@ -47,10 +51,14 @@ const Sidebar = () => {
                     {usertype === "SuperAdmin" ? (
                         <ul className="menu">
                             <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
-                            {showLeadsMenu && (
-                                <Link to='/leads' style={{ textDecoration: "none" }}>
-                                    <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
-                                </Link>)}
+                            {showLeadsMenu ? (
+                                <>
+                                    <Link to='/leads' style={{ textDecoration: "none" }}>
+                                        <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
+                                    </Link>
+                                </>
+                            ) : (<>
+                            </>)}
                             <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                         </ul>
                     ) : (
