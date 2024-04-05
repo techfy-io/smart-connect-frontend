@@ -97,8 +97,9 @@ function Dashboard() {
       },
     });
   };
-  const GetUserProfile = (id) => navigate(`/userprofile/${id}`);
-  const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+  const GetUserProfile = (id) => {
+    navigate(`/profile/${id}`);
+};  const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
   return (
     <div className="dashboard">
       <Sidebar />
