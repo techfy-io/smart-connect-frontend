@@ -409,7 +409,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {additionalPhones.map((phone, index) => (
                         <Form.Item
                             key={index}
-                            label={`Another Phone ${index + 1}`}
+                            label={`Another Phone`}
                             name={`phone_number_${index + 1}`}
                         >
                             <InputMask
@@ -445,7 +445,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         </Form.Item>
                     ))}
                     {
-                        additionalPhones.length < 2 && (
+                        additionalPhones.length < 1 && (
                             <>
                                 <Form.Item>
                                     <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>

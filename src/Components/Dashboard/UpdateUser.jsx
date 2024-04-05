@@ -10,6 +10,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
     const [loading, setLoading] = useState(false);
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
+    const [additionalPhones, setAdditionalPhones] = useState([]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -26,6 +27,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
             phone_number_personal: user?.phone_number_personal,
+            phone_number_1: user?.phone_number_1,
             postal_code: user?.postal_code,
             country: user?.country,
             city: user?.city,
@@ -42,12 +44,13 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
 
     const onFinish = (values) => {
         setLoading(true);
-        const { firstname, lastname, email, email_1, email_2, other_link_media, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const { firstname, lastname, email, email_1, email_2, phone_number_1, other_link_media, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
         formData.append('last_name', lastname);
         formData.append('email', email);
         formData.append('phone_number', phone_number);
+        formData.append('phone_number_1', phone_number_1);
         formData.append('phone_number_type', phone_number_type);
         formData.append('company_name', company_name);
         formData.append('job_title', job_title);
@@ -68,29 +71,29 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         if (facebook_url) {
             formData.append('facebook_url', facebook_url);
         }
-    
+
         if (instagram_url) {
             formData.append('instagram_url', instagram_url);
         }
-    
+
         if (linkedin_url) {
             formData.append('linkedin_url', linkedin_url);
         }
         formData.append('user', user.id);
-    
+
         // Check if profile picture is provided and different from current user's profile picture
         if (profile_picture && profile_picture !== user.profile_picture) {
             formData.append('profile_picture', profile_picture);
         }
-    
+
         // Check if cover image is provided and different from current user's cover image
         if (cover_image && cover_image !== user.cover_image) {
             formData.append('cover_image', cover_image);
         }
-    
+
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
-    
+
         axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
             formData,
@@ -116,7 +119,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 setLoading(false)
             });
     };
-    
+
 
 
     const handleCancel = () => {
@@ -141,7 +144,15 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
     };
-
+    const handleAddPhone = () => {
+        if (additionalPhones.length < 2) {
+            setAdditionalPhones([...additionalPhones, '']);
+        }
+    };
+    const handleRemovePhone = (index) => {
+        const updatedPhones = additionalPhones.filter((phone, i) => i !== index);
+        setAdditionalPhones(updatedPhones);
+    };
     return (
         <Modal
             width={450}
@@ -466,6 +477,77 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             </Radio.Group>
                         </Form.Item>
                     </div>
+                    {user && user.phone_number_1 ? (
+                        <>
+                            <Form.Item
+                                label="Phone*"
+                                name="phone_number_1"
+                                rules={[
+                                    {
+                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                        message: 'Invalid phone number format',
+                                    },
+                                ]}
+                            >
+                                <InputMask
+                                    style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
+                                    mask="+33 9 99 99 99 99"
+                                    maskChar=""
+                                    placeholder="+33 9 99 99 99 99"
+                                />
+                            </Form.Item>
+                        </>
+                    ) :
+                        null}
+                    {additionalPhones.map((phone, index) => (
+                        <Form.Item
+                            key={index}
+                            label={`Another Phone`}
+                            name={`phone_number_${index + 1}`}
+                        >
+                            <InputMask
+                                style={{
+                                    width: "95%",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 9 99 99 99 99"
+                            >
+                                {() => (
+                                    <Input
+                                        suffix={
+                                            <Button
+                                                type="text"
+                                                icon={<DeleteOutlined />}
+                                                onClick={() => handleRemovePhone(index)}
+
+                                            />
+
+                                        }
+                                        placeholder="+33 9 99 99 99 99"
+                                    />
+                                )}
+                            </InputMask>
+
+                        </Form.Item>
+                    ))}
+                    {
+                        user && !user.phone_number_1 && additionalPhones.length  < 1 && (
+                            <>
+                                <Form.Item>
+                                    <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>
+                                        Phone
+                                    </Button>
+                                </Form.Item>
+                            </>
+                        )
+                    }
                     <Form.Item
                         label="Biography"
                         name="biography"
