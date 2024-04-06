@@ -364,7 +364,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             </Button>
                         </Form.Item>
                     )}
-
+{/* email input */}
                     <Form.Item
                         label="Email*"
                         name="email"
