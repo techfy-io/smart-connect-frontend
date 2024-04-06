@@ -100,9 +100,22 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             })
             .catch(error => {
                 console.log("error", error);
-                message.error("Failed to Update user")
-                setLoading(false)
+                const responseData = error.response.data;
+                let errorMessage = '';
+
+                // Iterate over the properties of the responseData object
+                for (const prop in responseData) {
+                    if (responseData.hasOwnProperty(prop)) {
+                        errorMessage = responseData[prop][0];
+                        // Exit the loop after finding the first error message
+                        break;
+                    }
+                }
+
+                message.error(errorMessage);
+                setLoading(false);
             });
+
     };
 
 
@@ -364,7 +377,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             </Button>
                         </Form.Item>
                     )}
-{/* email input */}
+                    {/* email input */}
                     <Form.Item
                         label="Email*"
                         name="email"
