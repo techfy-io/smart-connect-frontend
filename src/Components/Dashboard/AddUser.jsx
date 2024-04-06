@@ -14,6 +14,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [additionalEmails, setAdditionalEmails] = useState([]);
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
     const [currentCompany, setCurrentCompany] = useState('')
+    const [loading, setLoading] = useState(false);
 
     const onFinish = async (values) => {
         const {
@@ -61,6 +62,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             );
             console.log("response", response);
             message.success("User Added Successfully");
+            setLoading(false)
             modalHideShow();
             setTimeout(() => {
                 window.location.reload();
@@ -69,6 +71,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             console.error("error", error);
             message.error("Failed to add user");
             modalHideShow();
+            setLoading(false)
         }
     };
 
@@ -121,9 +124,19 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button style={{ backgroundColor: "#F47122" }} key="add" type="primary" onClick={() => form.submit()}>
+                <Button
+                    style={{ backgroundColor: "#F47122" }}
+                    key="add"
+                    type="primary"
+                    onClick={() => {
+                        setLoading(true);
+                        form.submit();
+                    }}
+                    loading={loading}
+                >
                     Add
-                </Button>,
+                </Button>
+
             ]}
         >
             <div className='custom-scrollbar' style={{ overflowX: 'auto', height: '450px' }}>
