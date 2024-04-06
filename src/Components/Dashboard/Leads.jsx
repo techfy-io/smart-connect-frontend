@@ -12,7 +12,7 @@ const Leads = () => {
     const getExchangeUser = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
-            const response = await axios.get('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/exchange/', {
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
