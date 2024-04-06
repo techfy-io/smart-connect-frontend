@@ -27,7 +27,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('first_name', first_name || "");
         formData.append('last_name', last_name || "");
         formData.append('email', email || "");
-        if (email_1) { formData.append('email_1', email_1); }
+        if (email_1) { formData.append('email_1', email_1 || ""); }
         // formData.append('email_2', email_2 || "");
         formData.append('phone_number', phone_number || "");
         formData.append('phone_number_1', phone_number_1 || "");
@@ -132,7 +132,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         setLoading(true);
                         form.submit();
                     }}
-                    loading={loading}
+                // loading={loading}
                 >
                     Add
                 </Button>
