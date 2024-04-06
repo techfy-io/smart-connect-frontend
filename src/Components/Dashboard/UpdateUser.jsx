@@ -59,26 +59,11 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('country', country);
         formData.append('city', city);
         formData.append('other_link_media', other_link_media);
-        if (other_link_1 && other_link_1 !== user.other_link_1) {
-            formData.append('other_link_1', other_link_1);
-        }
-        if (email_1 && email_1 !== user.email_1) {
-            formData.append('email_1', email_1);
-        }
-        // if (email_2 && email_2 !== user.email_2) {
-        //     formData.append('email_2', email_2);
-        // }
-        if (facebook_url) {
-            formData.append('facebook_url', facebook_url);
-        }
-
-        if (instagram_url) {
-            formData.append('instagram_url', instagram_url);
-        }
-
-        if (linkedin_url) {
-            formData.append('linkedin_url', linkedin_url);
-        }
+        formData.append('other_link_1', other_link_1);
+        formData.append('email_1', email_1 ? email_1 : "");
+        formData.append('facebook_url', facebook_url);
+        formData.append('instagram_url', instagram_url);
+        formData.append('linkedin_url', linkedin_url);
         formData.append('user', user.id);
 
         // Check if profile picture is provided and different from current user's profile picture
@@ -379,7 +364,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             </Button>
                         </Form.Item>
                     )}
-
+{/* email input */}
                     <Form.Item
                         label="Email*"
                         name="email"
@@ -500,33 +485,33 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     ) :
                         null}
                     {additionalPhones.map((phone, index) => (
-                       <Form.Item
-                       key={index}
-                       label={`Another Phone`}
-                       name={`phone_number_${index + 1}`}
-                       rules={[
-                           {
-                               pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                               message: 'Invalid phone number format',
-                           },
-                       ]}
-                   >
-                       <InputMask
-                           style={{
-                               width: "97%", 
-                               height: "30px",
-                               borderRadius: "5px", 
-                               border: "1px solid #d9d9d9",
-                               paddingLeft: "8px", 
-                               color: "black", 
-                               transition: "border-color 0.3s",
-                           }}
-                           mask="+33 9 99 99 99 99"
-                           maskChar=""
-                           placeholder="+33 9 99 99 99 99"
-                       >
-                       </InputMask>
-                   </Form.Item>
+                        <Form.Item
+                            key={index}
+                            label={`Another Phone`}
+                            name={`phone_number_${index + 1}`}
+                            rules={[
+                                {
+                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    message: 'Invalid phone number format',
+                                },
+                            ]}
+                        >
+                            <InputMask
+                                style={{
+                                    width: "97%",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 9 99 99 99 99"
+                            >
+                            </InputMask>
+                        </Form.Item>
                     ))}
                     {
                         user && !user.phone_number_1 && additionalPhones.length < 1 && (
