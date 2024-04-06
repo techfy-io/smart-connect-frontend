@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar,Empty } from 'antd';
+import { message, Spin, Button, Avatar, Empty } from 'antd';
 import axios from 'axios';
 
 const Leads = () => {
@@ -46,7 +46,11 @@ const Leads = () => {
             <div className='leads-content'>
                 <div className='leads-header'>
                     <div style={{ padding: "20px", color: "white" }}>
-                        <h2>Leads <span style={{ fontSize: "15px" }}>(4)</span></h2>
+                        <h2>Leads
+                            <span style={{ fontSize: "15px" , padding:"4px"}}>
+                                {loading ? "" : (exchangeData && `(${exchangeData?.length})`)}
+                            </span>
+                        </h2>
                     </div>
                 </div>
                 <div className="table-container">
@@ -90,7 +94,6 @@ const Leads = () => {
                                     ))
                                 ) : (
                                     <tr>
-                                        {/* <td colSpan="7" style={{ textAlign: 'center' }}>No data found</td> */}
                                         <td colSpan="7" tyle={{ textAlign: 'center' }}>
                                             <Empty description="No users found" />
                                         </td>
