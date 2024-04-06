@@ -68,10 +68,21 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 window.location.reload();
             }, 2000);
         } catch (error) {
-            console.error("error", error);
-            message.error("Failed to add user");
-            modalHideShow();
-            setLoading(false)
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+
+            // Iterate over the properties of the responseData object
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    // Exit the loop after finding the first error message
+                    break;
+                }
+            }
+
+            message.error(errorMessage);
+            setLoading(false);
         }
     };
 
