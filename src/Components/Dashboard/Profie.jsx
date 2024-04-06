@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import InputMask from "react-input-mask";
 
 const Profile = () => {
+    const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -81,6 +82,8 @@ const Profile = () => {
                 console.log("Response:", response);
                 message.success("Data exchanged successfully");
                 setExchangeModal(false);
+                form.resetFields();
+
             })
             .catch(error => {
                 console.error("Error exchanging data:", error);
