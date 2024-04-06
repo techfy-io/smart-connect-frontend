@@ -76,7 +76,7 @@ const Profile = () => {
     };
 
     const onFinish = (values) => {
-        axios.post('http://smart-connect.eu-west-3.elasticbeanstalk.com/api/exchange/', values)
+        axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, values)
             .then(response => {
                 console.log("Response:", response);
                 message.success("Data exchanged successfully");
