@@ -50,7 +50,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
 
         try {
             const response = await axios.post(
-                `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
+                `http://app.smart-connect.eu-west-3.elasticbeanstalk.com/api/superadmin/create_user/`,
                 formData,
                 {
                     headers: {
