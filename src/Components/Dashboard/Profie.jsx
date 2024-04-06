@@ -179,7 +179,7 @@ const Profile = () => {
                         title="Exchange" 
                         open={openExchangeModal}
                         onCancel={handleOpenExchangeModal}
-                        footer={null} // No footer for now, you can add actions if needed
+                        footer={null} 
                     >
                         <Form
                             name="exchangeForm"
