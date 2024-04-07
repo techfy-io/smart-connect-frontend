@@ -135,18 +135,24 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-                <Button
-                    style={{ backgroundColor: "#F47122" }}
-                    key="add"
-                    type="primary"
-                    onClick={() => {
-                        setLoading(true);
-                        form.submit();
-                    }}
-                // loading={loading}
-                >
-                    Add
-                </Button>
+               <Button
+               style={{ backgroundColor: "#F47122" }}
+               key="add"
+               type="primary"
+               onClick={() => {
+                   form.validateFields().then(() => {
+                       setLoading(true);
+                       form.submit();
+                   }).catch((error) => {
+                    setLoading(false);
+
+                   });
+               }}
+               loading={loading}
+           >
+               Add
+           </Button>
+           
 
             ]}
         >
