@@ -23,7 +23,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             email_2: user?.email_2,
             phone_number: user?.phone_number,
             company_name: user?.company_name,
-            job_title: user?.job_title ? user.job_title : "",
+            job_title: user?.job_title,
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
             phone_number_personal: user?.phone_number_personal,
@@ -60,9 +60,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('city', city);
         formData.append('other_link_media', other_link_media);
         formData.append('other_link_1', other_link_1);
-        if(email_1){
-            formData.append('email_1',email_1);
-        }
+        // if (email_1) {
+        //     formData.append('email_1', email_1);
+        // }
         formData.append('facebook_url', facebook_url);
         formData.append('instagram_url', instagram_url);
         formData.append('linkedin_url', linkedin_url);
@@ -396,7 +396,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     >
                         <Input placeholder='Additional email' />
                     </Form.Item>
-                    {user && user.email_1 ? (
+                    {/* {user && user.email_1 ? (
                         <>
                             <Form.Item
                                 label="Additional Email"
@@ -443,7 +443,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 Email
                             </Button>
                         </Form.Item>
-                    )}
+                    )} */}
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item

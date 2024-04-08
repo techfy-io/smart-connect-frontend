@@ -27,10 +27,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('first_name', first_name || "");
         formData.append('last_name', last_name || "");
         formData.append('email', email || "");
-        if (email_1) { formData.append('email_1', email_1 || ""); }
+        if (email_1) { formData.append('email_1', email_1); }
         // formData.append('email_2', email_2 || "");
         formData.append('phone_number', phone_number || "");
-        formData.append('phone_number_1', phone_number_1 || "");
+        if (phone_number_1) {
+            formData.append('phone_number_1', phone_number_1);
+        }
         formData.append('phone_number_2', phone_number_2 || "");
         formData.append('phone_number_personal', phone_number_personal || "");
         formData.append('phone_number_professional', phone_number_professional || "");
@@ -40,9 +42,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('zip_code', zip_code || "");
         formData.append('country', country || "");
         formData.append('city', city || "");
-        formData.append('facebook_url', facebook_url || "");
-        formData.append('instagram_url', instagram_url || "");
-        formData.append('linkedin_url', linkedin_url || "");
+        formData.append('facebook_url', facebook_url||"");
+        formData.append('instagram_url', instagram_url ||"");
+        formData.append('linkedin_url', linkedin_url||"");
         formData.append('other_link_1', other_link_1 || "");
         formData.append('other_link_media', other_link_media || "");
         formData.append('company_name', currentCompany || "");
@@ -136,24 +138,24 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                 <Button key="cancel" onClick={handleCancel}>
                     Cancel
                 </Button>,
-               <Button
-               style={{ backgroundColor: "#F47122" }}
-               key="add"
-               type="primary"
-               onClick={() => {
-                   form.validateFields().then(() => {
-                       setLoading(true);
-                       form.submit();
-                   }).catch((error) => {
-                    setLoading(false);
+                <Button
+                    style={{ backgroundColor: "#F47122" }}
+                    key="add"
+                    type="primary"
+                    onClick={() => {
+                        form.validateFields().then(() => {
+                            setLoading(true);
+                            form.submit();
+                        }).catch((error) => {
+                            setLoading(false);
 
-                   });
-               }}
-               loading={loading}
-           >
-               Add
-           </Button>
-           
+                        });
+                    }}
+                    loading={loading}
+                >
+                    Add
+                </Button>
+
 
             ]}
         >
