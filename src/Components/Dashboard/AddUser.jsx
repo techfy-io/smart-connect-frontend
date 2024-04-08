@@ -89,6 +89,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const handleCancel = () => {
         modalHideShow();
         form.resetFields();
+        setLoading(false);
     };
 
     const handleAddPhone = () => {
