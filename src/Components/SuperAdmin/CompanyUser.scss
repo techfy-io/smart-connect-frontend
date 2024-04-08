@@ -1,6 +1,6 @@
 .companyusers-container {
     display: flex;
-    height: 100vh;
+    // height: 100vh;
 
 }
 
@@ -37,83 +37,90 @@
             color: white;
         }
     }
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      overflow-y: auto;
-      max-height: 400px;
-      scrollbar-width: thin; /* Set scrollbar width to thin */
-      scrollbar-color: #888 transparent; 
-    
-        th,
-        td {
-          border: 1px solid #e8e8e8;
-          padding: 20px;
-          text-align: center; // Center align text
-        }
-    
-        td {
-          cursor: pointer;
-    
-        }
-    
-        th {
-          color: #100739;
-          background-color: #f0f2f5;
-        }
-    
-        &::-webkit-scrollbar {
-          width: 5px; /* Set scrollbar width */
-      }
 
-      &::-webkit-scrollbar-thumb {
-          background-color: #888; /* Set thumb color */
-          border-radius: 5px; /* Set thumb border radius */
-      }
-        tbody tr:hover {
-          background-color: #e6f7ff; // Hover row background color
+  .table-container {
+        // max-height: 400px; // Adjust the height as needed
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #888 transparent;
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+
+            th,
+            td {
+                border: 1px solid #e8e8e8;
+                padding: 20px;
+                text-align: center;
+
+                &:last-child {
+                    .Actions-btns {
+                        margin-right: 0;
+                    }
+                }
+            }
+
+            th {
+                color: #100739;
+                background-color: #f0f2f5;
+            }
+
+            tbody tr:hover {
+                background-color: #e6f7ff;
+            }
+
+            .Actions-btns {
+                .view-eye-btn {
+                    font-size: 20px;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    color: #2d8ed4;
+                    text-decoration: underline;
+                    margin-right: 20px;
+
+                    &:hover {
+                        color: #40a9ff;
+                    }
+                }
+
+                .Delete-button {
+                    font-size: 20px;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    color: #ff8000;
+                    text-decoration: underline;
+
+                    &:hover {
+                        color: #40a9ff;
+                    }
+                }
+
+                .Edit-button {
+                    font-size: 20px;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    color: rgb(25, 172, 192);
+                    text-decoration: underline;
+                    margin-left: 20px;
+
+                    &:hover {
+                        color: #40a9ff;
+                    }
+                }
+            }
         }
-    
-        .Actions-btns {
-          .view-eye-btn{
-            font-size: 20px;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            color: #2d8ed4;
-            text-decoration: underline;
-            margin-right: 20px;
-            &:hover {
-              color: #40a9ff;
-            }
-          }
-          .Delete-button {
-            font-size: 20px;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            color: #FF8000;
-            text-decoration: underline;
-    
-            &:hover {
-              color: #40a9ff;
-            }
-          }
-    
-          .Edit-button {
-            font-size: 20px;
-            border: none;
-            background-color: transparent;
-            cursor: pointer;
-            color: rgb(25, 172, 192);
-            text-decoration: underline;
-            margin-left: 20px;
-    
-            &:hover {
-              color: #40a9ff;
-            }
-          }
+
+        &::-webkit-scrollbar {
+            width: 5px;
         }
-    
-      }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 5px;
+        }
+    }
 }
