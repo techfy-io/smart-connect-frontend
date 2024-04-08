@@ -150,7 +150,7 @@ const Leads = () => {
                                             <td>{user.company_name && user.company_name.length > 15 ? user.company_name.substring(0, 15) + '...' : user.company_name}</td>
                                             <td>{user.phone_number}</td>
                                             <td>{user.email && user.email.length > 20 ? user.email.substring(0, 20) + '...' : user.email}</td>
-                                            <td>owner name </td>
+                                            <td>{user.owner}</td>
                                             <td>
                                                 {
                                                     (() => {
