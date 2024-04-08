@@ -47,7 +47,9 @@ const Sidebar = () => {
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             <div className="sider">
                 <div className='sider-content'>
-                    <img className='logo-image' src={Smartlogo} alt="" />
+                    <Link to='/'>
+                        <img className='logo-image' src={Smartlogo} alt="" />
+                    </Link>
                     {usertype === "SuperAdmin" ? (
                         <ul className="menu">
                             <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> Companies</li>
