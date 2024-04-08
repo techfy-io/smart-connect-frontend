@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, message, Spin, Modal, Form, Input, Button } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
 import Men from "../../Inspect/Men.png";
-import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
 import { MenuOutlined, SaveOutlined, SyncOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import InputMask from "react-input-mask";
 
 const Profile = () => {
@@ -41,7 +40,6 @@ const Profile = () => {
 
     const formatUserData = () => {
         return window.location.href
-        // return userId ? `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/` : '';
     };
 
     const downloadUserData = () => {
@@ -76,32 +74,37 @@ const Profile = () => {
         setExchangeModal(prev => !prev);
     };
 
-    const onFinish = (values) => {
-        axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, values)
-            .then(response => {
-                console.log("Response:", response);
-                message.success("Data exchanged successfully");
-                setExchangeModal(false);
-                form.resetFields();
+    const onFinish = async (values) => {
+        const formData = new FormData();
 
-            })
-            .catch(error => {
-                console.log("error", error);
-                const responseData = error.response.data;
-                let errorMessage = '';
+        formData.append('first_name', values.first_name || "");
+        formData.append('last_name', values.last_name || "");
+        formData.append('company_name', userData?.company_name);
+        formData.append('email', values.email);
+        formData.append('phone_number', values.phone_number || "");
+        formData.append('owner', userData?.id);
 
-                // Iterate over the properties of the responseData object
-                for (const prop in responseData) {
-                    if (responseData.hasOwnProperty(prop)) {
-                        errorMessage = responseData[prop][0];
-                        // Exit the loop after finding the first error message
-                        break;
-                    }
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, formData);
+            console.log("Response:", response);
+            message.success("Data exchanged successfully");
+            setExchangeModal(false);
+            form.resetFields();
+        } catch (error) {
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    break;
                 }
+            }
 
-                message.error(errorMessage);
-                setLoading(false);
-            });
+            message.error(errorMessage);
+            setLoading(false);
+        }
     };
 
     return (
@@ -188,17 +191,18 @@ const Profile = () => {
 
 
                         <div className='SC-logo'>
-                            <img src={SClogo} alt="" srcset="" />
+                            <img src={SClogo} alt="" srcSet="" />
                         </div>
                     </div>
                     <Modal
                         title="Exchange"
-                        open={openExchangeModal}
+                        visible={openExchangeModal}
                         onCancel={handleOpenExchangeModal}
                         footer={null}
                     >
                         <Form
                             name="exchangeForm"
+                            form={form}
                             onFinish={onFinish}
                         >
                             <label htmlFor="firstname">First Name*</label>
@@ -228,14 +232,14 @@ const Profile = () => {
                             <label htmlFor="companyname">Company Name*</label>
                             <Form.Item
                                 name="company_name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Please enter your company name!',
-                                    },
-                                ]}
+                                // rules={[
+                                //     {
+                                //         required: true,
+                                //         message: 'Please enter your company name!',
+                                //     },
+                                // ]}
                             >
-                                <Input />
+                                <Input defaultValue={userData?.company_name} disabled />
                             </Form.Item>
                             <label htmlFor="email">Email*</label>
                             <Form.Item
@@ -282,9 +286,6 @@ const Profile = () => {
                                     placeholder="+33 9 99 99 99 99"
                                 >
                                 </InputMask>
-                            </Form.Item>
-                            <Form.Item style={{ display: "none" }} name="owner_name" initialValue={`${userData?.first_name} ${userData?.last_name}`}>
-                                <Input />
                             </Form.Item>
                             <Form.Item style={{ textAlign: "end" }}>
                                 <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
