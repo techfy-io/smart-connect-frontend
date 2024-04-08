@@ -15,31 +15,36 @@
 
 .leads-content {
     width: 100%;
-    overflow: hidden; /* Hide overflow from the content beneath the header */
+    overflow: hidden;
+    /* Hide overflow from the content beneath the header */
 }
 
 .table-container {
     overflow-x: auto;
-    max-height: calc(100vh - 70px); /* Adjust max-height based on fixed header height */
-  /* Customizing scrollbar */
-  &::-webkit-scrollbar {
-    width: 5px; /* Width of the scrollbar */
-}
+    max-height: calc(100vh - 70px);
 
-/* Track */
-&::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
+    /* Adjust max-height based on fixed header height */
+    /* Customizing scrollbar */
+    &::-webkit-scrollbar {
+        width: 5px;
+        /* Width of the scrollbar */
+    }
 
-/* Handle */
-&::-webkit-scrollbar-thumb {
-    background: #949292; 
-}
+    /* Track */
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
 
-/* Handle on hover */
-&::-webkit-scrollbar-thumb:hover {
-    background: #ffffff; 
-}   
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+        background: #949292;
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+        background: #ffffff;
+    }
+
     .table {
         width: 100%;
         border-collapse: collapse;
@@ -49,7 +54,7 @@
         td {
             border: 1px solid #e8e8e8;
             padding: 20px;
-            // text-align: center;
+            text-align: left;
         }
 
         td {
@@ -67,31 +72,31 @@
 
         .Actions-btns {
             .Delete-button {
-              font-size: 25px;
-              border: none;
-              background-color: transparent;
-              cursor: pointer;
-              color: #ff8000;
-              text-decoration: underline;
-    
-              &:hover {
-                color: #40a9ff;
-              }
+                font-size: 25px;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                color: #ff8000;
+                text-decoration: underline;
+
+                &:hover {
+                    color: #40a9ff;
+                }
             }
-    
+
             .Edit-button {
-              font-size: 25px;
-              border: none;
-              background-color: transparent;
-              cursor: pointer;
-              color: rgb(25, 172, 192);
-              text-decoration: underline;
-              margin-left: 20px;
-    
-              &:hover {
-                color: #40a9ff;
-              }
+                font-size: 25px;
+                border: none;
+                background-color: transparent;
+                cursor: pointer;
+                color: rgb(25, 172, 192);
+                text-decoration: underline;
+                margin-left: 20px;
+
+                &:hover {
+                    color: #40a9ff;
+                }
             }
-          }
+        }
     }
 }

@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar, Empty } from 'antd';
+import { message, Spin, Button, Avatar, Empty, Modal, Form, Input } from 'antd';
 import axios from 'axios';
+import InputMask from "react-input-mask";
+
 
 const Leads = () => {
+    const [form] = Form.useForm();
     const [exchangeData, setExchangeData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+
+    useEffect(() => {
+        getExchangeUser();
+    }, []);
 
     const getExchangeUser = async () => {
         try {
@@ -27,23 +36,46 @@ const Leads = () => {
         }
     };
 
-    // const DeleteExchnage = (id) => {
-    //     axios.delete(`${process.env.REACT_APP_BASE_API_URL}/exchange/{id}/`, {
-    //         headers: {
-    //             'Authorization': `Bearer ${accessToken}`,
-    //             'Content-Type': 'multipart/form-data',
-    //         }
-    //     })
-    //     .then((resp=>{
-    //         console.log("resp",resp)
-    //     }))
-    //     .catch((error)=>{
-    //         console.log(error)
-    //     });
-    // }
-    useEffect(() => {
-        getExchangeUser();
-    }, []);
+    const deleteExchangeUser = async (id) => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/exchange/${id}/`, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            message.success("User deleted successfully");
+            getExchangeUser(); // Refresh data after deletion
+        } catch (error) {
+            console.error("Error deleting exchanged user:", error);
+            message.error("Failed to delete exchanged user");
+        }
+    };
+
+    const onFinish = async (values) => {
+        try {
+            // Implement update functionality here
+            const accessToken = localStorage.getItem('accessToken');
+            await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+            setIsModalVisible(false);
+            message.success("User updated successfully");
+            getExchangeUser(); // Refresh data after update
+        } catch (error) {
+            console.error("Error updating exchanged user:", error);
+            message.error("Failed to update exchanged user");
+        }
+    };
+
+    const handleEdit = (user) => {
+        setSelectedUser(user);
+        setIsModalVisible(true);
+    };
 
     const getRandomColor = () => {
         const letters = '0123456789ABCDEF';
@@ -100,8 +132,8 @@ const Leads = () => {
                                             <td>date</td>
                                             <td>
                                                 <div className="Actions-btns ">
-                                                    <Button className="Edit-button" shape="circle" icon={<EditOutlined />} />
-                                                    <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} />
+                                                    <Button className="Edit-button" shape="circle" icon={<EditOutlined />} onClick={() => handleEdit(user)} />
+                                                    <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteExchangeUser(user.id)} />
                                                 </div>
                                             </td>
                                         </tr>
@@ -118,6 +150,58 @@ const Leads = () => {
                     )}
                 </div>
             </div>
+            <Modal
+                layout="vertical"
+                width={450}
+                title="Update User"
+                open={isModalVisible}
+                onOk={() => form.submit()}
+                onCancel={() => setIsModalVisible(false)}>
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={onFinish}
+                    initialValues={selectedUser}>
+                    <label htmlFor="first_name">First Name*</label>
+                    <Form.Item name="first_name"
+                        rules={[{ required: true, message: 'Please input your first name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="last_name">Last Name*</label>
+                    <Form.Item name="last_name"
+                        rules={[{ required: true, message: 'Please input your last name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="company_name">Company Name*</label>
+                    <Form.Item name="company_name"
+                        rules={[{ required: true, message: 'Please input your company name!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="email">Email*</label>
+                    <Form.Item name="email"
+                        rules={[{ required: true, message: 'Please input your email!' }]}>
+                        <Input />
+                    </Form.Item>
+                    <label htmlFor="phone_number">Phone Number*</label>
+                    <Form.Item name="phone_number"
+                        rules={[{ required: true, message: 'Please input your phone number!' }]}>
+                        <InputMask
+                            style={{
+                                width: "95%",
+                                height: "30px",
+                                borderRadius: "5px",
+                                border: "1px solid #d9d9d9",
+                                paddingLeft: "8px",
+                                color: "black",
+                                transition: "border-color 0.3s",
+                            }}
+                            mask="+33 9 99 99 99 99"
+                            maskChar=""
+                            placeholder="+33 9 99 99 99 99"
+                        />
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
     );
 }
