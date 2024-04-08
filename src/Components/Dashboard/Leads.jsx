@@ -27,6 +27,20 @@ const Leads = () => {
         }
     };
 
+    // const DeleteExchnage = (id) => {
+    //     axios.delete(`${process.env.REACT_APP_BASE_API_URL}/exchange/{id}/`, {
+    //         headers: {
+    //             'Authorization': `Bearer ${accessToken}`,
+    //             'Content-Type': 'multipart/form-data',
+    //         }
+    //     })
+    //     .then((resp=>{
+    //         console.log("resp",resp)
+    //     }))
+    //     .catch((error)=>{
+    //         console.log(error)
+    //     });
+    // }
     useEffect(() => {
         getExchangeUser();
     }, []);
@@ -47,7 +61,7 @@ const Leads = () => {
                 <div className='leads-header'>
                     <div style={{ padding: "20px", color: "white" }}>
                         <h2>Leads
-                            <span style={{ fontSize: "15px" , padding:"4px"}}>
+                            <span style={{ fontSize: "15px", padding: "4px" }}>
                                 {loading ? "" : (exchangeData && `(${exchangeData?.length})`)}
                             </span>
                         </h2>

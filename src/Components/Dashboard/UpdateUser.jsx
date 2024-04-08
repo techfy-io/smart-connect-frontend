@@ -60,7 +60,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('city', city);
         formData.append('other_link_media', other_link_media);
         formData.append('other_link_1', other_link_1);
-        formData.append('email_1', email_1 ? email_1 : "");
+        if(email_1){
+            formData.append('email_1',email_1);
+        }
         formData.append('facebook_url', facebook_url);
         formData.append('instagram_url', instagram_url);
         formData.append('linkedin_url', linkedin_url);
