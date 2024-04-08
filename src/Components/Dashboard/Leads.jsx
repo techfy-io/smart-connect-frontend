@@ -6,7 +6,6 @@ import { message, Spin, Button, Avatar, Empty, Modal, Form, Input } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 
-
 const Leads = () => {
     const [form] = Form.useForm();
     const [exchangeData, setExchangeData] = useState([]);
@@ -55,7 +54,6 @@ const Leads = () => {
 
     const onFinish = async (values) => {
         try {
-            // Implement update functionality here
             const accessToken = localStorage.getItem('accessToken');
             await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
                 headers: {
@@ -75,6 +73,12 @@ const Leads = () => {
     const handleEdit = (user) => {
         setSelectedUser(user);
         setIsModalVisible(true);
+        form.setFieldsValue(user); // Set form fields value with selected user data
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+        form.resetFields(); // Reset form fields on cancel
     };
 
     const getRandomColor = () => {
@@ -123,13 +127,20 @@ const Leads = () => {
                                         <tr key={index}>
                                             <td>
                                                 <Avatar size="small" style={{ backgroundColor: getRandomColor(), padding: "20px", marginRight: "10px", fontSize: "15px" }}> {`${user.first_name.charAt(0).toUpperCase()}${user.last_name.charAt(0).toUpperCase()}`}</Avatar>
-                                                {user.first_name + " " + user.last_name}
+                                                {`${user.first_name} ${user.last_name}`.slice(0, 15)}
                                             </td>
                                             <td>{user.company_name && user.company_name.length > 15 ? user.company_name.substring(0, 15) + '...' : user.company_name}</td>
                                             <td>{user.phone_number}</td>
                                             <td>{user.email && user.email.length > 20 ? user.email.substring(0, 20) + '...' : user.email}</td>
                                             <td>owner name </td>
-                                            <td>date</td>
+                                            <td>
+                                                {
+                                                    (() => {
+                                                        const date = new Date(user.created_at);
+                                                        return `${date.toLocaleDateString()}`;
+                                                    })()
+                                                }
+                                            </td>
                                             <td>
                                                 <div className="Actions-btns ">
                                                     <Button className="Edit-button" shape="circle" icon={<EditOutlined />} onClick={() => handleEdit(user)} />
@@ -154,14 +165,13 @@ const Leads = () => {
                 layout="vertical"
                 width={450}
                 title="Update User"
-                open={isModalVisible}
+                visible={isModalVisible} // Changed from 'open' to 'visible'
                 onOk={() => form.submit()}
-                onCancel={() => setIsModalVisible(false)}>
+                onCancel={handleCancel}>
                 <Form
                     form={form}
                     layout="vertical"
-                    onFinish={onFinish}
-                    initialValues={selectedUser}>
+                    onFinish={onFinish}>
                     <label htmlFor="first_name">First Name*</label>
                     <Form.Item name="first_name"
                         rules={[{ required: true, message: 'Please input your first name!' }]}>
@@ -172,7 +182,7 @@ const Leads = () => {
                         rules={[{ required: true, message: 'Please input your last name!' }]}>
                         <Input />
                     </Form.Item>
-                    <label htmlFor="company_name">Company Name*</label>
+                    <label htmlFor="company name">Company Name*</label>
                     <Form.Item name="company_name"
                         rules={[{ required: true, message: 'Please input your company name!' }]}>
                         <Input />
