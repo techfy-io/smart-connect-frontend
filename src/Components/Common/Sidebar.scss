@@ -41,6 +41,10 @@
                 color: #FF8000;
             }
         }
+        &.active {
+            color: #FF8000; // Apply color for active tab
+            font-weight: bold; // Add any additional styling for active tab
+        }
     }
 
     .collabs-button {
