@@ -119,9 +119,6 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             });
 
     };
-
-
-
     const handleCancel = () => {
         UpdatemodalHideShow();
         form.resetFields();

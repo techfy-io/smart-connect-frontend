@@ -12,6 +12,7 @@ const Leads = () => {
     const [loading, setLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    const [updating, setUpdating] = useState(false); // State for update button loading
 
     useEffect(() => {
         getExchangeUser();
@@ -35,25 +36,25 @@ const Leads = () => {
         }
     };
 
-    const deleteExchangeUser = async (id) => {
-        try {
-            const accessToken = localStorage.getItem('accessToken');
-            await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/exchange/${id}/`, {
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'multipart/form-data',
-                }
-            });
-            message.success("User deleted successfully");
-            getExchangeUser(); // Refresh data after deletion
-        } catch (error) {
-            console.error("Error deleting exchanged user:", error);
-            message.error("Failed to delete exchanged user");
-        }
+    const deleteExchangeUser = (id) => {
+        const accessToken = localStorage.getItem('accessToken');
+        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/exchange/${id}/`, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+            .then(response => {
+                console.log(response, "delete user resp")
+                message.success("User Deleted Successfully");
+                getExchangeUser(); // Refresh data after deletion
+            })
+            .catch(error => console.log("error", error));
     };
 
     const onFinish = async (values) => {
         try {
+            setUpdating(true); // Show loading indicator on update button
             const accessToken = localStorage.getItem('accessToken');
             await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
                 headers: {
@@ -67,6 +68,8 @@ const Leads = () => {
         } catch (error) {
             console.error("Error updating exchanged user:", error);
             message.error("Failed to update exchanged user");
+        } finally {
+            setUpdating(false); // Hide loading indicator on update button
         }
     };
 
@@ -79,6 +82,21 @@ const Leads = () => {
     const handleCancel = () => {
         setIsModalVisible(false);
         form.resetFields(); // Reset form fields on cancel
+    };
+
+    const handleDeleteConfirm = (id) => {
+        Modal.confirm({
+            title: 'Confirm',
+            content: 'Are you sure you want to delete this user?',
+            onOk() {
+                deleteExchangeUser(id);
+            },
+            onCancel() {
+                console.log('Deletion canceled');
+            },
+            okText: 'Yes', // Update OK button text
+            cancelText: 'No', // Update Cancel button text
+        });
     };
 
     const getRandomColor = () => {
@@ -144,7 +162,7 @@ const Leads = () => {
                                             <td>
                                                 <div className="Actions-btns ">
                                                     <Button className="Edit-button" shape="circle" icon={<EditOutlined />} onClick={() => handleEdit(user)} />
-                                                    <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} onClick={() => deleteExchangeUser(user.id)} />
+                                                    <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} onClick={() => handleDeleteConfirm(user.id)} />
                                                 </div>
                                             </td>
                                         </tr>
@@ -165,9 +183,12 @@ const Leads = () => {
                 layout="vertical"
                 width={450}
                 title="Update User"
-                visible={isModalVisible} // Changed from 'open' to 'visible'
+                visible={isModalVisible}
                 onOk={() => form.submit()}
-                onCancel={handleCancel}>
+                onCancel={handleCancel}
+                okText="Update" // Update OK button text
+                cancelText="Cancel" // Update Cancel button text
+                confirmLoading={updating}> {/* Show loading indicator on OK button */}
                 <Form
                     form={form}
                     layout="vertical"
@@ -188,13 +209,33 @@ const Leads = () => {
                         <Input />
                     </Form.Item>
                     <label htmlFor="email">Email*</label>
-                    <Form.Item name="email"
-                        rules={[{ required: true, message: 'Please input your email!' }]}>
+                    <Form.Item
+                        name="email"
+                        rules={[
+                            {
+                                type: 'email',
+                                message: 'Invalid email format',
+                            },
+                            {
+                                required: true,
+                                message: 'Please input your email!',
+                            },
+                        ]}
+                    >
                         <Input />
                     </Form.Item>
                     <label htmlFor="phone_number">Phone Number*</label>
                     <Form.Item name="phone_number"
-                        rules={[{ required: true, message: 'Please input your phone number!' }]}>
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter a phone number',
+                            },
+                            {
+                                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                message: 'Invalid phone number format',
+                            },
+                        ]}>
                         <InputMask
                             style={{
                                 width: "95%",
