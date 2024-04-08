@@ -205,8 +205,8 @@ const Leads = () => {
                     </Form.Item>
                     <label htmlFor="company name">Company Name*</label>
                     <Form.Item name="company_name"
-                        rules={[{ required: true, message: 'Please input your company name!' }]}>
-                        <Input />
+                        rules={[{ required: true, message: 'Please input your company name!' }]} >
+                        <Input disabled />
                     </Form.Item>
                     <label htmlFor="email">Email*</label>
                     <Form.Item
