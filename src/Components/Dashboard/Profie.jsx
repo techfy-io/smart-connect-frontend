@@ -86,11 +86,24 @@ const Profile = () => {
 
             })
             .catch(error => {
-                console.error("Error exchanging data:", error);
-                message.error("Failed to exchange data");
+                console.log("error", error);
+                const responseData = error.response.data;
+                let errorMessage = '';
+
+                // Iterate over the properties of the responseData object
+                for (const prop in responseData) {
+                    if (responseData.hasOwnProperty(prop)) {
+                        errorMessage = responseData[prop][0];
+                        // Exit the loop after finding the first error message
+                        break;
+                    }
+                }
+
+                message.error(errorMessage);
+                setLoading(false);
             });
     };
-    
+
     return (
         <>
             {pageloading ? (
@@ -165,10 +178,10 @@ const Profile = () => {
                         {
                             userData && userData.bio_graphy && (
                                 <>
-                                    <Card className='bio-data-card'>
+                                    <div className='bio-data-card'>
                                         <h2 className='bio-heading'>Biography</h2>
                                         <p className='bio-para'>{userData.bio_graphy}</p>
-                                    </Card>
+                                    </div>
                                 </>
                             )
                         }
@@ -179,10 +192,10 @@ const Profile = () => {
                         </div>
                     </div>
                     <Modal
-                        title="Exchange" 
+                        title="Exchange"
                         open={openExchangeModal}
                         onCancel={handleOpenExchangeModal}
-                        footer={null} 
+                        footer={null}
                     >
                         <Form
                             name="exchangeForm"
@@ -269,6 +282,9 @@ const Profile = () => {
                                     placeholder="+33 9 99 99 99 99"
                                 >
                                 </InputMask>
+                            </Form.Item>
+                            <Form.Item style={{ display: "none" }} name="owner_name" initialValue={`${userData?.first_name} ${userData?.last_name}`}>
+                                <Input />
                             </Form.Item>
                             <Form.Item style={{ textAlign: "end" }}>
                                 <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>

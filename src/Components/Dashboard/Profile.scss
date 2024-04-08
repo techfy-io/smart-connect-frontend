@@ -274,8 +274,10 @@
 
     .bio-data-card {
         width: 360px;
-        // height: 180px;
-
+        height: auto;
+        background-color: #ffff;
+        border-radius: 8px;
+        word-wrap: break-word; /* Add word-wrap property here */
         .bio-heading {
             text-align: center;
             color: #546467;
@@ -284,10 +286,10 @@
             font-style: normal;
             font-weight: 600;
             line-height: normal;
+            padding: 10px;
         }
-
+    
         .bio-para {
-            width: 300px;
             text-align: center;
             color: #546467;
             text-align: center;
@@ -296,9 +298,10 @@
             font-style: normal;
             font-weight: 400;
             line-height: 28px;
-            /* 140% */
+            padding: 10px;
         }
     }
+    
 }
 
 .SC-logo {

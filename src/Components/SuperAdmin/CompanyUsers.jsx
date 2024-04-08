@@ -19,7 +19,6 @@ const CompanyUsers = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
     const [loading, setLoading] = useState(true); // State to track loading status
-    console.log("hi", company)
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
@@ -36,6 +35,9 @@ const CompanyUsers = () => {
     };
 
     useEffect(() => {
+        getCompanyUser();
+    }, []);
+    const getCompanyUser = () => {
         const accessToken = localStorage.getItem('accessToken');
         axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
             headers: {
@@ -49,9 +51,9 @@ const CompanyUsers = () => {
                 console.log(error);
             })
             .finally(() => {
-                setLoading(false); // Update loading status regardless of success or failure
+                setLoading(false);
             });
-    }, []);
+    }
     const deleteUser = (id) => {
         Modal.confirm({
             title: 'Confirm',
@@ -64,7 +66,8 @@ const CompanyUsers = () => {
                     .then(response => {
                         console.log("deleted user responce", response)
                         message.success("User Deleted Successfully");
-                        setTimeout(() => window.location.reload(), 1000);
+                        // setTimeout(() => window.location.reload(), 1000);
+                        getCompanyUser();
                     })
                     .catch(error => console.log("error", error));
             },
@@ -87,43 +90,43 @@ const CompanyUsers = () => {
                 </div>
                 <div className="table-container">
 
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>User Name </th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? ( // Show loading spinner if loading
+                    <table className="table">
+                        <thead>
                             <tr>
-                                <td colSpan="4"><Spin /></td>
+                                <th>User Name </th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Action</th>
                             </tr>
-                        ) : companyUserList.length === 0 ? ( // Show message if no users found
-                            <tr>
-                                <td colSpan="4">
-                                    <Empty description="No users found" />
-                                </td>
-                            </tr>
-                        ) : (
-                            companyUserList.map((user, key) => (
-                                <tr key={key}>
-                                    <td>{user.first_name + " " + user.last_name}</td>
-                                    <td>{user.email}</td>
-                                    <td>{user.job_title}</td>
-                                    <td className='Actions-btns'>
-                                        <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
-                                        <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
-                                        <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                        </thead>
+                        <tbody>
+                            {loading ? ( // Show loading spinner if loading
+                                <tr>
+                                    <td colSpan="4"><Spin /></td>
+                                </tr>
+                            ) : companyUserList.length === 0 ? ( // Show message if no users found
+                                <tr>
+                                    <td colSpan="4">
+                                        <Empty description="No users found" />
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
-            </div>
+                            ) : (
+                                companyUserList.map((user, key) => (
+                                    <tr key={key}>
+                                        <td>{user.first_name + " " + user.last_name}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.job_title}</td>
+                                        <td className='Actions-btns'>
+                                            <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                            <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
+                                            <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <AddUser
                 CompaniesDate={company.name}

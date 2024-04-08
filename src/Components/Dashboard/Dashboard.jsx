@@ -88,7 +88,8 @@ function Dashboard() {
           .then(response => {
             console.log(response, "delete user resp")
             message.success("User Deleted Successfully");
-            setTimeout(() => window.location.reload(), 1000);
+            // setTimeout(() => window.location.reload(), 1000);
+            fetchUsers();
           })
           .catch(error => console.log("error", error));
       },
@@ -168,9 +169,9 @@ function Dashboard() {
                           </>
                         ) : (
                           <>
-                           <td colSpan="4">
-                            <Empty description="No Company found" />
-                          </td>
+                            <td colSpan="4">
+                              <Empty description="No Company found" />
+                            </td>
                           </>
                         )}
                       </tbody>
