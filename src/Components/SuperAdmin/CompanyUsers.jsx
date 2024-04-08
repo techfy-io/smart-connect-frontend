@@ -85,6 +85,8 @@ const CompanyUsers = () => {
                         <Button type='primary' className='Add-company-btn' onClick={modalHideShow}>Add User</Button>
                     </div>
                 </div>
+                <div className="table-container">
+
                 <table className="table">
                     <thead>
                         <tr>
@@ -121,6 +123,7 @@ const CompanyUsers = () => {
                         )}
                     </tbody>
                 </table>
+            </div>
             </div>
             <AddUser
                 CompaniesDate={company.name}
