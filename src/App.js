@@ -49,7 +49,6 @@ function App() {
         <Route path="/profile/:userId" element={<Profie />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-
       </Routes>
     </Router>
   );
