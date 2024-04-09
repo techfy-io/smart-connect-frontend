@@ -11,6 +11,7 @@ import ResetPassword from './Components/Authorization/ResetPassword';
 import Profie from './Components/Dashboard/Profie';
 import Leads from './Components/Dashboard/Leads';
 import ScrollToTop from './Components/Common/Scrolltop';
+import Newside from './Components/Common/Newside';
 function App() {
   // Check if the user is logged in by reading from local storage
   const checkAccessToken = () => {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/profile/:userId" element={<Profie />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
+        {/* <Route path="/newside" element={<Newside />} /> */}
       </Routes>
     </Router>
   );
