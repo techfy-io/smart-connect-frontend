@@ -58,13 +58,13 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('country', country);
         formData.append('city', city);
         formData.append('other_link_media', other_link_media);
-        formData.append('other_link_1', other_link_1);
+        formData.append('other_link_1', other_link_1 || "");
         // if (email_1) {
         //     formData.append('email_1', email_1);
         // }
-        formData.append('facebook_url', facebook_url);
-        formData.append('instagram_url', instagram_url);
-        formData.append('linkedin_url', linkedin_url);
+        formData.append('facebook_url', facebook_url || "");
+        formData.append('instagram_url', instagram_url || "");
+        formData.append('linkedin_url', linkedin_url || "");
         formData.append('user', user.id);
 
         // Check if profile picture is provided and different from current user's profile picture
@@ -461,7 +461,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 mask="+33 9 99 99 99 99"
                                 maskChar=""
                                 placeholder="+33 1 23 45 67 89"
-                                />
+                            />
                         </Form.Item>
                         <Form.Item
                             label="Phone Type"
