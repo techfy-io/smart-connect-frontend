@@ -160,9 +160,16 @@ const Profile = () => {
                                         </div>
                                     </div>
                                     <div className='profile-action'>
-                                        <button className='save-button' onClick={downloadUserData}>
-                                            <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
+                                        <button className='save-button' onClick={downloadUserData} disabled={loading}>
+                                            {loading ? (
+                                                <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
+                                            ) : (
+                                                <>
+                                                    <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
+                                                </>
+                                            )}
                                         </button>
+
                                         <button className='exchange-button' onClick={handleOpenExchangeModal}>
                                             <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Exchange
                                         </button>
