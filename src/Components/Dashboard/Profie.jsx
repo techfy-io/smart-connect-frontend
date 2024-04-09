@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, message, Spin, Modal, Form, Input, Button } from 'antd';
+import { Card, message, Spin, Modal, Form, Input, Button, Empty } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -33,7 +33,7 @@ const Profile = () => {
             setpageloading(false);
         } catch (error) {
             console.error("Failed to fetch user data:", error);
-            message.error("Failed to fetch user data:", error);
+            // message.error("Failed to fetch user data:", error);
             setpageloading(false);
         }
     };
@@ -77,11 +77,11 @@ const Profile = () => {
     const onFinish = async (values) => {
         const formData = new FormData();
 
-        formData.append('first_name', values.first_name || "");
-        formData.append('last_name', values.last_name || "");
-        formData.append('company_name', userData?.company_name);
+        formData.append('first_name', values.first_name);
+        formData.append('last_name', values.last_name);
+        formData.append('company_name',values.company_name||"");
         formData.append('email', values.email);
-        formData.append('phone_number', values.phone_number || "");
+        formData.append('phone_number', values.phone_number);
         formData.append('owner', userData?.id);
 
         try {
@@ -115,85 +115,94 @@ const Profile = () => {
                 </div>
             ) : (
                 <>
-                    <div className="profile-container">
-                        <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                            <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
-                        </div>
-                        <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                            <div className='QR-user-details'>
-                                <QRCode value={formatUserData()} className='qr-code' />
-                            </div> <br />
-                            <p className='qr-code-para'>Show QRCode to share your profile</p>
-                        </div>
-                        <div className="cover-picture-card">
-                            {userData && userData.profile_picture ? (
-                                <>
-                                    <img src={userData.cover_image} alt="" />
-                                </>) : (
-                                <>
-                                    <img src={coverpic} alt="" />
-                                </>
-                            )}
-                        </div>
-                        <div className="profile-card">
-                            <div className="profile-info">
-                                <div className='profile-image'>
-                                    {userData && userData.profile_picture ? (
-                                        <>
-                                            <img src={userData.profile_picture} alt="Profile" />
-                                        </>) : (
-                                        <>
-                                            <img src={Men} alt="Profile" />
-                                        </>
-                                    )}
-                                </div>
-                                <div className="profile-details">
-                                    <p className="profile-name">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                                    <p className="profile-designation">{userData?.job_title}</p>
-                                    <p className="profile-designation">{userData?.company_name}</p>
-                                </div>
-                            </div>
-                            <div className='profile-action'>
-                                <button className='save-button' onClick={downloadUserData}>
-                                    <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
-                                </button>
-                                <button className='exchange-button' onClick={handleOpenExchangeModal}>
-                                    <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Exchange
-                                </button>
-                            </div>
-                        </div>
-                        <Card className='social-links-card'>
-                            <div className="social-icons">
-                                <div className="icon-box">
-                                    <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
-                                </div>
-                                <div className="icon-box">
-                                    <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
-                                </div>
-                                <div className="icon-box">
-                                    <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
-                                </div>
-                                <div className="icon-box">
-                                    <a href={userData?.other_link_1} target="_blank" rel="noopener noreferrer" className="fa fa-globe icon linkedin-icon"></a>
-                                </div>
-                            </div>
-                        </Card>
                         {
-                            userData && userData.bio_graphy && (
-                                <>
-                                    <div className='bio-data-card'>
-                                        <h2 className='bio-heading'>Biography</h2>
-                                        <p className='bio-para'>{userData.bio_graphy}</p>
+                            userData ? (
+                                <div className="profile-container">
+
+                                    <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                        <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                     </div>
-                                </>
+                                    <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                                        <div className='QR-user-details'>
+                                            <QRCode value={formatUserData()} className='qr-code' />
+                                        </div> <br />
+                                        <p className='qr-code-para'>Show QRCode to share your profile</p>
+                                    </div>
+                                    <div className="cover-picture-card">
+                                        {userData && userData.profile_picture ? (
+                                            <>
+                                                <img src={userData.cover_image} alt="" />
+                                            </>) : (
+                                            <>
+                                                <img src={coverpic} alt="" />
+                                            </>
+                                        )}
+                                    </div>
+                                    <div className="profile-card">
+                                        <div className="profile-info">
+                                            <div className='profile-image'>
+                                                {userData && userData.profile_picture ? (
+                                                    <>
+                                                        <img src={userData.profile_picture} alt="Profile" />
+                                                    </>) : (
+                                                    <>
+                                                        <img src={Men} alt="Profile" />
+                                                    </>
+                                                )}
+                                            </div>
+                                            <div className="profile-details">
+                                                <p className="profile-name">{`${userData?.first_name} ${userData?.last_name}`}</p>
+                                                <p className="profile-designation">{userData?.job_title}</p>
+                                                <p className="profile-designation">{userData?.company_name}</p>
+                                            </div>
+                                        </div>
+                                        <div className='profile-action'>
+                                            <button className='save-button' onClick={downloadUserData}>
+                                                <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
+                                            </button>
+                                            <button className='exchange-button' onClick={handleOpenExchangeModal}>
+                                                <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Exchange
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <Card className='social-links-card'>
+                                        <div className="social-icons">
+                                            <div className="icon-box">
+                                                <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
+                                            </div>
+                                            <div className="icon-box">
+                                                <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
+                                            </div>
+                                            <div className="icon-box">
+                                                <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
+                                            </div>
+                                            <div className="icon-box">
+                                                <a href={userData?.other_link_1} target="_blank" rel="noopener noreferrer" className="fa fa-globe icon linkedin-icon"></a>
+                                            </div>
+                                        </div>
+                                    </Card>
+                                    {
+                                        userData && userData.bio_graphy && (
+                                            <>
+                                                <div className='bio-data-card'>
+                                                    <h2 className='bio-heading'>Biography</h2>
+                                                    <p className='bio-para'>{userData.bio_graphy}</p>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+                                    <div className='SC-logo'>
+                                        <img src={SClogo} alt="" srcSet="" />
+                                    </div>
+                                </div>
+                            ) :(
+                                <div className='profile-container' style={{height:"100vh"}}>
+                                   <div>
+                                  <Empty description="The User is no longer availible"/>
+                                   </div>
+                                </div>
                             )
                         }
-
-
-                        <div className='SC-logo'>
-                            <img src={SClogo} alt="" srcSet="" />
-                        </div>
-                    </div>
                     <Modal
                         title="Exchange"
                         visible={openExchangeModal}
@@ -229,17 +238,10 @@ const Profile = () => {
                             >
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="companyname">Company Name*</label>
+                            <label htmlFor="companyname">Company Name</label>
                             <Form.Item
-                                name="company_name"
-                                // rules={[
-                                //     {
-                                //         required: true,
-                                //         message: 'Please enter your company name!',
-                                //     },
-                                // ]}
-                            >
-                                <Input defaultValue={userData?.company_name} disabled />
+                                name="company_name">
+                                <Input  />
                             </Form.Item>
                             <label htmlFor="email">Email*</label>
                             <Form.Item
@@ -283,7 +285,7 @@ const Profile = () => {
                                     }}
                                     mask="+33 9 99 99 99 99"
                                     maskChar=""
-                                    placeholder="+33 9 99 99 99 99"
+                                    placeholder="+33 1 23 45 67 89"
                                 >
                                 </InputMask>
                             </Form.Item>

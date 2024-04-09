@@ -31,6 +31,7 @@ const Sidebar = () => {
             setUserType("SuperAdmin");
         } else {
             setUserType("User");
+            setShowLeadsMenu(true);
         }
     }, []);
 
@@ -39,6 +40,10 @@ const Sidebar = () => {
             setShowLeadsMenu(true);
         } else {
             setShowLeadsMenu(false);
+        }
+        const userToken = localStorage.getItem('userinfo');
+        if (userToken != "true") {
+            setShowLeadsMenu(true);
         }
     }, [location.pathname]);
 
@@ -64,14 +69,20 @@ const Sidebar = () => {
                             <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                         </ul>
                     ) : (
+
                         <ul className='menu'>
                             <li className='menu-item' onClick={() => navigate('/')}><UserOutlined /> Users</li>
                             <Link to='/usersetting' style={{ textDecoration: "none" }}>
                                 <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> Settings</li>
                             </Link>
-                            {showLeadsMenu && (
-                                <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
-                            )}
+                            {showLeadsMenu ? (
+                                <>
+                                    <Link to='/leads' style={{ textDecoration: "none" }}>
+                                        <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> Leads</li>
+                                    </Link>
+                                </>
+                            ) : (<>
+                            </>)}
                             <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> Logout</li>
                         </ul>
                     )}
