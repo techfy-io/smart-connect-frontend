@@ -92,8 +92,8 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                                 }}
                                 mask="+33 9 99 99 99 99"
                                 maskChar=""
-                                placeholder="+33 9 99 99 99 99"
-                            >
+                                placeholder="+33 1 23 45 67 89"
+                                >
                             </InputMask>
                 </Form.Item>
                 <Form.Item style={{ textAlign: 'right' }}>

@@ -42,6 +42,7 @@ function App() {
           localStorage.setItem('accessToken', resp.data.access);
           localStorage.setItem('userinfo', resp.data?.is_superuser)
           localStorage.setItem('userid', resp.data?.company_id)
+          console.log("hiii logion")
           setLoading(false);
           window.location.reload()
         })
@@ -138,7 +139,7 @@ function App() {
                       style={{ width: "95%", marginLeft: "5px", height: "2.8rem", borderRadius: "8px", border: "0.0625rem solid #B0E1F2", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
                       mask="+33 9 99 99 99 99"
                       maskChar=""
-                      placeholder="+33 9 99 99 99 99"
+                      placeholder="+33 1 23 45 67 89"
                       onChange={(e) => setPhone(e.target.value)}
                     >
                     </InputMask>

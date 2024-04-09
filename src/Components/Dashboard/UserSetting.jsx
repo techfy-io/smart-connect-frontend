@@ -119,6 +119,8 @@ const UserSetting = () => {
                                 <Input placeholder="Company" />
                             </Form.Item>
                             <Form.Item
+                             style={{ marginLeft: "15px" }}
+                                label="Phone*"
                                 name="phone_number"
                                 rules={[
                                     {
@@ -134,8 +136,8 @@ const UserSetting = () => {
                                 <InputMask
                                     style={{
                                         width: "100%",
-                                        height: "30px",
-                                        borderRadius: "5px",
+                                        height: "44px",
+                                        borderRadius: '0.625rem',
                                         border: "1px solid #d9d9d9",
                                         paddingLeft: "8px",
                                         color: "black",
@@ -143,7 +145,7 @@ const UserSetting = () => {
                                     }}
                                     mask="+33 9 99 99 99 99"
                                     maskChar=""
-                                    placeholder="+33 9 99 99 99 99"
+                                    placeholder="+33 1 23 45 67 89"
                                 >
                                 </InputMask>
                             </Form.Item>
