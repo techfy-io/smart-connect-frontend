@@ -22,8 +22,8 @@ const UserSetting = () => {
                 form.setFieldsValue({
                     first_name: data.first_name,
                     last_name: data.last_name,
-                    company: data.company,
-                    mobile: data.mobile,
+                    company_name: data.company_name,
+                    phone_number: data.phone_number,
                     email: data.email,
                 });
             })
@@ -49,6 +49,9 @@ const UserSetting = () => {
             setLoading(false);
             if (isSuccess) {
                 message.success("Settings updated successfully!");
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             } else {
                 message.error("Failed to update user settings");
             }
@@ -107,7 +110,7 @@ const UserSetting = () => {
                         </div>
                         <div style={{ display: "flex" }}>
                             <Form.Item
-                                name="company"
+                                name="company_name"
                                 label="Company"
                                 rules={[
                                     {
@@ -120,7 +123,7 @@ const UserSetting = () => {
                             </Form.Item>
                             <Form.Item
                              style={{ marginLeft: "15px" }}
-                                label="Phone*"
+                                label="Phone"
                                 name="phone_number"
                                 rules={[
                                     {
