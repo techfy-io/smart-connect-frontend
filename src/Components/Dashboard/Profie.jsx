@@ -5,6 +5,7 @@ import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
 import Men from "../../Inspect/Men.png";
 import Men1 from "../../Inspect/Men1.png";
+import SCBLACKV3 from "../../Inspect/SCBLACKV3.png";
 import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
@@ -202,7 +203,7 @@ const Profile = () => {
                                     )
                                 }
                                 <div className='SC-logo'>
-                                    <img src={SClogo} alt="" srcSet="" />
+                                    <img src={SCBLACKV3} alt="" srcSet="" />
                                 </div>
                             </div>
                         ) : (
