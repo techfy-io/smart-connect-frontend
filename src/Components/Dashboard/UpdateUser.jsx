@@ -49,21 +49,17 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('last_name', lastname);
         formData.append('email', email);
         formData.append('phone_number', phone_number);
-        if(phone_number_1){
-            formData.append('phone_number_1', phone_number_1);
-        }
-        formData.append('phone_number_type', phone_number_type||"");
-        formData.append('company_name', company_name ||"");
+        formData.append('phone_number_1', phone_number_1 || "");
+        formData.append('phone_number_type', phone_number_type || "");
+        formData.append('company_name', company_name || "");
         formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code);
         formData.append('postal_code', postal_code);
-        formData.append('country', country ||"");
+        formData.append('country', country || "");
         formData.append('city', city || "");
         formData.append('other_link_media', other_link_media || "");
         formData.append('other_link_1', other_link_1 || "");
-        if(email_1){
-            formData.append('email_1', email_1);
-        }
+        formData.append('email_1', email_1 || "");
         formData.append('facebook_url', facebook_url || "");
         formData.append('instagram_url', instagram_url || "");
         formData.append('linkedin_url', linkedin_url || "");
