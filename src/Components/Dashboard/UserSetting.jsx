@@ -9,9 +9,13 @@ const UserSetting = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [formChanged, setFormChanged] = useState(false);
-    const accessToken = localStorage.getItem('accessToken');
-
+    const [accessToken, setAccesstoken] = useState()
     useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken');
+        setAccesstoken(accessToken)
+        GetUserProfileData();
+    }, [form, accessToken]);
+    const GetUserProfileData = () => {
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/user/settings/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -30,8 +34,7 @@ const UserSetting = () => {
             .catch(error => {
                 console.log("Error:", error);
             });
-    }, [form, accessToken]);
-
+    }
     const handleSubmit = async (values) => {
         setLoading(true);
         let isSuccess = false;
@@ -49,11 +52,13 @@ const UserSetting = () => {
             setLoading(false);
             if (isSuccess) {
                 message.success("Settings updated successfully!");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2000);
+                GetUserProfileData()
             } else {
                 message.error("Failed to update user settings");
+                GetUserProfileData()
             }
         }
     };
@@ -122,7 +127,7 @@ const UserSetting = () => {
                                 <Input placeholder="Company" />
                             </Form.Item>
                             <Form.Item
-                             style={{ marginLeft: "15px" }}
+                                style={{ marginLeft: "15px" }}
                                 label="Phone"
                                 name="phone_number"
                                 rules={[

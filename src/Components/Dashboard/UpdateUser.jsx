@@ -49,19 +49,21 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('last_name', lastname);
         formData.append('email', email);
         formData.append('phone_number', phone_number);
-        formData.append('phone_number_1', phone_number_1);
-        formData.append('phone_number_type', phone_number_type);
-        formData.append('company_name', company_name);
-        formData.append('job_title', job_title);
+        if(phone_number_1){
+            formData.append('phone_number_1', phone_number_1);
+        }
+        formData.append('phone_number_type', phone_number_type||"");
+        formData.append('company_name', company_name ||"");
+        formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code);
         formData.append('postal_code', postal_code);
-        formData.append('country', country);
-        formData.append('city', city);
-        formData.append('other_link_media', other_link_media);
+        formData.append('country', country ||"");
+        formData.append('city', city || "");
+        formData.append('other_link_media', other_link_media || "");
         formData.append('other_link_1', other_link_1 || "");
-        // if (email_1) {
-        //     formData.append('email_1', email_1);
-        // }
+        if(email_1){
+            formData.append('email_1', email_1);
+        }
         formData.append('facebook_url', facebook_url || "");
         formData.append('instagram_url', instagram_url || "");
         formData.append('linkedin_url', linkedin_url || "");
@@ -342,12 +344,12 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     ) : null}
                     {additionalSocialMediaLinks.map((link, index) => (
                         <div key={index}>
-                            <Form.Item label="Social Link type" name={`other_link_media`}>
+                            <Form.Item label="Social Link type" name="other_link_media">
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
                                 label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
-                                name={`other_link_1`}
+                                name="other_link_1"
                                 rules={[
                                     {
                                         type: 'url',
@@ -392,7 +394,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     >
                         <Input placeholder='Additional email' />
                     </Form.Item>
-                    {/* {user && user.email_1 ? (
+                    {user && user.email_1 ? (
                         <>
                             <Form.Item
                                 label="Additional Email"
@@ -412,7 +414,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         <div key={index}>
                             <Form.Item
                                 label={`Additional Email`}
-                                name={`email_${index + 1}`}
+                                name="email_1"
                                 rules={[
                                     {
                                         type: 'email',
@@ -439,7 +441,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 Email
                             </Button>
                         </Form.Item>
-                    )} */}
+                    )}
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
@@ -490,7 +492,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                     mask="+33 9 99 99 99 99"
                                     maskChar=""
                                     placeholder="+33 1 23 45 67 89"
-                                    />
+                                />
                             </Form.Item>
                         </>
                     ) :
