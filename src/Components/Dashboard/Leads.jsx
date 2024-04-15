@@ -147,9 +147,9 @@ const Leads = () => {
                                                 <Avatar size="small" style={{ backgroundColor: getRandomColor(), padding: "20px", marginRight: "10px", fontSize: "15px" }}> {`${user.first_name.charAt(0).toUpperCase()}${user.last_name.charAt(0).toUpperCase()}`}</Avatar>
                                                 {`${user.first_name} ${user.last_name}`.slice(0, 15)}
                                             </td>
-                                            <td>{user.company_name && user.company_name.length > 15 ? user.company_name.substring(0, 15) + '...' : user.company_name}</td>
+                                            <td>{user.company_name && user.company_name.length > 25 ? user.company_name.substring(0, 25) + '...' : user.company_name}</td>
                                             <td>{user.phone_number}</td>
-                                            <td>{user.email && user.email.length > 20 ? user.email.substring(0, 20) + '...' : user.email}</td>
+                                            <td>{user.email && user.email.length > 30 ? user.email.substring(0, 30) + '...' : user.email}</td>
                                             <td>{user.owner}</td>
                                             <td>
                                                 {
