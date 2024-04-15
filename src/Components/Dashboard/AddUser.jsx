@@ -27,10 +27,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('first_name', first_name || "");
         formData.append('last_name', last_name || "");
         formData.append('email', email || "");
-        if (email_1) { formData.append('email_1', email_1); }
+        if (email_1) { formData.append('email_1', email_1 || ""); }
         formData.append('phone_number', phone_number || "");
         if (phone_number_1) {
-            formData.append('phone_number_1', phone_number_1);
+            formData.append('phone_number_1', phone_number_1 ||"");
         }
         formData.append('phone_number_2', phone_number_2 || "");
         formData.append('phone_number_personal', phone_number_personal || "");
