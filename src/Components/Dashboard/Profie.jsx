@@ -152,7 +152,7 @@ const Profile = () => {
                                     {/* code para */}
                                     <p className='qr-code-para'>Show QRCode to share your profile</p>
                                        <div className='download-qr-code-btn'>
-                                           <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
+                                           <Button icon={<DownloadOutlined />}  onClick={downloadQRCode}>
                                                Download QR Code
                                            </Button>
                                        </div>

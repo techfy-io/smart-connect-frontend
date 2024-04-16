@@ -111,7 +111,7 @@ function Dashboard() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <img className='content-header-logo' src={CompanyLogo} alt="" />
                 <div className='AddUser-action'>
-                  {/* <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> Step 4 */}
+                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> 
                 </div>
               </div>
             </>) : (
