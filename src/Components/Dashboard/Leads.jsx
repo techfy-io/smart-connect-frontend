@@ -95,8 +95,8 @@ const Leads = () => {
             onCancel() {
                 console.log('Deletion canceled');
             },
-            okText: 'Yes', // Update OK button text
-            cancelText: 'No', // Update Cancel button text
+            okText: 'Yes', 
+            cancelText: 'No',
         });
     };
 
@@ -172,7 +172,7 @@ const Leads = () => {
                                 ) : (
                                     <tr>
                                         <td colSpan="7" tyle={{ textAlign: 'center' }}>
-                                            <Empty description="No users found" />
+                                            <Empty description="No Leads found" />
                                         </td>
                                     </tr>
                                 )}
