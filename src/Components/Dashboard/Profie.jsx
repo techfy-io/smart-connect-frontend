@@ -58,7 +58,7 @@ const Profile = () => {
                 const url = window.URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = 'user_data.vcf';
+                link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);

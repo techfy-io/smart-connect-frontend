@@ -18,7 +18,8 @@ const CompanyUsers = () => {
     const [companyUserList, setCompanyUserList] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
-    const [loading, setLoading] = useState(true); // State to track loading status
+    const [loading, setLoading] = useState(true); 
+    console.log(company,"company")
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
@@ -38,7 +39,9 @@ const CompanyUsers = () => {
         getCompanyUser();
     }, []);
     const getCompanyUser = () => {
+        
         const accessToken = localStorage.getItem('accessToken');
+        localStorage.setItem('userid', company.id);
         axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,

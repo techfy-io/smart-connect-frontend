@@ -13,9 +13,6 @@ const UserSetting = () => {
     useEffect(() => {
         const accessToken = localStorage.getItem('accessToken');
         setAccesstoken(accessToken)
-        GetUserProfileData();
-    }, [form, accessToken]);
-    const GetUserProfileData = () => {
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/user/settings/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -34,7 +31,8 @@ const UserSetting = () => {
             .catch(error => {
                 console.log("Error:", error);
             });
-    }
+    }, [form, accessToken]);
+
     const handleSubmit = async (values) => {
         setLoading(true);
         let isSuccess = false;
@@ -52,13 +50,11 @@ const UserSetting = () => {
             setLoading(false);
             if (isSuccess) {
                 message.success("Settings updated successfully!");
-                // setTimeout(() => {
-                //     window.location.reload();
-                // }, 2000);
-                GetUserProfileData()
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
             } else {
                 message.error("Failed to update user settings");
-                GetUserProfileData()
             }
         }
     };
