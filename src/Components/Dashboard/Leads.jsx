@@ -21,7 +21,8 @@ const Leads = () => {
     const getExchangeUser = async () => {
         try {
             const accessToken = localStorage.getItem('accessToken');
-            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, {
+            const userid = localStorage.getItem('userid');
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/exchange/?company_id=${userid}`, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -47,14 +48,14 @@ const Leads = () => {
             .then(response => {
                 console.log(response, "delete user resp")
                 message.success("User Deleted Successfully");
-                getExchangeUser(); // Refresh data after deletion
+                getExchangeUser(); 
             })
             .catch(error => console.log("error", error));
     };
 
     const onFinish = async (values) => {
         try {
-            setUpdating(true); // Show loading indicator on update button
+            setUpdating(true); 
             const accessToken = localStorage.getItem('accessToken');
             await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
                 headers: {

@@ -117,7 +117,9 @@ function Dashboard() {
             </>) : (
             <>
               <div style={{ padding: "10px" }}>
-                {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
+                {/* {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
+                {userData.company_name}
+
               </div>
             </>
           )
