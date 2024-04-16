@@ -94,20 +94,20 @@ function App() {
             <img src={Smartlogo} className='Smart-connect-logo' alt="" />
           </div>
 
-          <div className='tab-container'>
+          {/* <div className='tab-container'>
             <button type='primary'
               className={activeForm === 'login' ? 'button-style active-button-style' : 'button-style'}
               onClick={() => handleTabChange('login')}
             >
               Login
             </button>
-            {/* <button type='primary'
+            <button type='primary'
               className={activeForm === 'signup' ? 'button-style active-button-style' : 'button-style'}
               onClick={() => handleTabChange('signup')}
             >
               Sign up
-            </button> */}
-          </div>
+            </button>
+          </div> */}
           <div className="tab-content">
             {activeForm === 'login' ? (
               <>

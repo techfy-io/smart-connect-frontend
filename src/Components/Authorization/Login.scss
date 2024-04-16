@@ -97,7 +97,7 @@ $baseFontSize: 16px;
 
         .Smart-connect-logo {
             width: 260.506px;
-            height: 85.167px;
+            height: 65.167px;
         }
 
         @media only screen and (max-width:768px) {
@@ -108,37 +108,6 @@ $baseFontSize: 16px;
             }
         }
     }
-
-
-
-
-    .custom-tabs {
-        margin-top: 1rem;
-        text-align: center;
-
-        .ant-tabs-nav {
-            .ant-tabs-tab {
-                margin: 0;
-                padding: 0.5rem 1.551rem;
-                border: none;
-                border-radius: 0.5rem;
-            }
-
-            .ant-tabs-tab-active {
-                color: white;
-            }
-        }
-    }
-
-    .TabPanes {
-        padding: 1.75rem;
-        text-align: center;
-    }
-
-    .tab-content {
-        text-align: center;
-    }
-
     .section-title {
         color: #1E2226;
         text-align: center;
@@ -147,7 +116,7 @@ $baseFontSize: 16px;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        margin-top: 1rem;
+        // margin-top: 1rem;
     }
 
     .section-pera {
