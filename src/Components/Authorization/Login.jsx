@@ -101,12 +101,12 @@ function App() {
             >
               Login
             </button>
-            <button type='primary'
+            {/* <button type='primary'
               className={activeForm === 'signup' ? 'button-style active-button-style' : 'button-style'}
               onClick={() => handleTabChange('signup')}
             >
               Sign up
-            </button>
+            </button> */}
           </div>
           <div className="tab-content">
             {activeForm === 'login' ? (

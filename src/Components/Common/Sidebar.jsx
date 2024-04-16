@@ -22,7 +22,7 @@ const Sidebar = () => {
         window.location.reload();
         setTimeout(() => {
             message.success("User logout");
-        }, 3000);
+        }, 4000);
     };
 
     useEffect(() => {
