@@ -72,12 +72,13 @@
 
         .Actions-btns {
             .Delete-button {
-                font-size: 25px;
+                font-size: 20px;
                 border: none;
                 background-color: transparent;
                 cursor: pointer;
                 color: #ff8000;
                 text-decoration: underline;
+                margin-left: 10px;
 
                 &:hover {
                     color: #40a9ff;
@@ -85,7 +86,7 @@
             }
 
             .Edit-button {
-                font-size: 25px;
+                font-size: 20px;
                 border: none;
                 background-color: transparent;
                 cursor: pointer;

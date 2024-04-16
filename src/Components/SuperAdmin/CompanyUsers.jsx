@@ -85,7 +85,8 @@ const CompanyUsers = () => {
             <div className='compnayusers-content'>
                 <div className='content-header'>
                     <div className='content-header-logo'>
-                        {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />}
+                        {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
+                        {company.name}
                     </div>
                     <div className='company-actions'>
                         <Button type='primary' className='Add-company-btn' onClick={modalHideShow}>Add User</Button>
@@ -103,7 +104,7 @@ const CompanyUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading ? ( // Show loading spinner if loading
+                            {loading ? (
                                 <tr>
                                     <td colSpan="4"><Spin /></td>
                                 </tr>

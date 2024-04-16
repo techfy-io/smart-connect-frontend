@@ -12,7 +12,7 @@ const Leads = () => {
     const [loading, setLoading] = useState(true);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
-    const [updating, setUpdating] = useState(false); // State for update button loading
+    const [updating, setUpdating] = useState(false); 
 
     useEffect(() => {
         getExchangeUser();
@@ -48,14 +48,14 @@ const Leads = () => {
             .then(response => {
                 console.log(response, "delete user resp")
                 message.success("User Deleted Successfully");
-                getExchangeUser(); 
+                getExchangeUser();
             })
             .catch(error => console.log("error", error));
     };
 
     const onFinish = async (values) => {
         try {
-            setUpdating(true); 
+            setUpdating(true);
             const accessToken = localStorage.getItem('accessToken');
             await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
                 headers: {
@@ -161,11 +161,12 @@ const Leads = () => {
                                                 }
                                             </td>
                                             <td>
-                                                <div className="Actions-btns ">
-                                                    <Button className="Edit-button" shape="circle" icon={<EditOutlined />} onClick={() => handleEdit(user)} />
-                                                    <Button className="Delete-button" shape="circle" icon={<DeleteOutlined />} onClick={() => handleDeleteConfirm(user.id)} />
+                                                <div className="Actions-btns">
+                                                    <button className="Edit-button" shape="circle" onClick={() => handleEdit(user)}><EditOutlined /></button>
+                                                    <button className="Delete-button" shape="circle" onClick={() => handleDeleteConfirm(user.id)}><DeleteOutlined /></button>
                                                 </div>
                                             </td>
+
                                         </tr>
                                     ))
                                 ) : (
@@ -183,7 +184,7 @@ const Leads = () => {
             <Modal
                 layout="vertical"
                 width={450}
-                title="Update User"
+                title="Update Leads"
                 visible={isModalVisible}
                 onOk={() => form.submit()}
                 onCancel={handleCancel}
@@ -250,7 +251,7 @@ const Leads = () => {
                             mask="+33 9 99 99 99 99"
                             maskChar=""
                             placeholder="+33 1 23 45 67 89"
-                            />
+                        />
                     </Form.Item>
                 </Form>
             </Modal>
