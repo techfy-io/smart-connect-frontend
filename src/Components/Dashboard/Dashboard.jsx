@@ -19,7 +19,8 @@ function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
-  const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false); // Step 1
+  const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
+  const [companyName, setCompanyName] = useState('')
   const updateUser = (user) => {
     setSelectedUser(user);
     toggleUpdateUserModal();
@@ -67,6 +68,8 @@ function Dashboard() {
       .then((response) => {
         setUserType("User")
         console.log(response.data.results);
+        setCompanyName(response.data.results[0].company_name);
+console.log(companyName)
         setUserData(response.data.results);
         setLoading(false);
       })
@@ -111,15 +114,18 @@ function Dashboard() {
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <img className='content-header-logo' src={CompanyLogo} alt="" />
                 <div className='AddUser-action'>
-                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button> 
+                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button>
                 </div>
               </div>
             </>) : (
             <>
-              <div style={{ padding: "10px" }}>
-                {/* {< Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
-                {userData.company_name}
-
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className='content-header-companyName'>
+                        {companyName}
+                    </div>
+                <div className='AddUser-action'>
+                  <a href="https://www.google.com/" style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
+                </div>
               </div>
             </>
           )
@@ -163,7 +169,7 @@ function Dashboard() {
                                 <td>{company.name}</td>
                                 <td className='Actions-btns'>
                                   <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                  <button className="Delete-button"><DeleteOutlined/></button>
+                                  <button className="Delete-button"><DeleteOutlined /></button>
                                   <button className="Edit-button"><EditOutlined /></button>
                                 </td>
                               </tr>
