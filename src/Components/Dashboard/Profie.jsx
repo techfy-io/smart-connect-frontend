@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
@@ -10,9 +10,11 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
+import html2canvas from 'html2canvas';
+
 
 const Profile = () => {
     const [form] = Form.useForm();
@@ -22,6 +24,8 @@ const Profile = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [openExchangeModal, setExchangeModal] = useState(false);
     const { userId } = useParams();
+    const qrCodeRef = useRef(null); // Ref for QR code element
+
 
     useEffect(() => {
         if (userId) {
@@ -111,6 +115,17 @@ const Profile = () => {
         }
     };
 
+    const downloadQRCode = () => {
+        html2canvas(qrCodeRef.current).then(canvas => {
+            const link = document.createElement('a');
+            link.download = `${userData?.first_name}_${userData?.last_name}.png`;
+            link.href = canvas.toDataURL();
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    };
+
     return (
         <>
             {pageloading ? (
@@ -127,10 +142,19 @@ const Profile = () => {
                                     <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                 </div>
                                 <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                                    <div className='QR-user-details'>
+                                    <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                                        <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
+                                    </div>
+                                    <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
-                                    </div> <br />
+                                    </div>
+                                    <br />
                                     <p className='qr-code-para'>Show QRCode to share your profile</p>
+                                       <div className='download-qr-code-btn'>
+                                           <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
+                                               Download QR Code
+                                           </Button>
+                                       </div>
                                 </div>
                                 <div className="cover-picture-card">
                                     {userData && userData.profile_picture ? (

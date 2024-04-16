@@ -19,7 +19,6 @@
         top: 20px;
         right: 20px;
         cursor: pointer;
-        z-index: 1001;
     }
 
     .sidebar {
@@ -54,18 +53,24 @@
 
             // height: 40%;
             .qr-code {
+                margin-top: 3%;
                 width: 60%;
                 padding: 10px;
             }
         }
 
         .qr-code-para {
+            margin-top: 2%;
             // padding: 20px;
             text-align: center;
             font-family: Raleway;
             font-weight: 400;
             font-size: 0.875rem;
             line-height: 1.43;
+        }
+        .download-qr-code-btn{
+            margin-top: 5%;
+            text-align: center;
         }
     }
 
