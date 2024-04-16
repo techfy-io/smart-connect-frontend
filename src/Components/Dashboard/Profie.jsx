@@ -125,7 +125,14 @@ const Profile = () => {
             document.body.removeChild(link);
         });
     };
-
+    const handleSocialIconClick = (url) => {
+        if (!url) {
+            message.error("No media available please add one .");
+            // You can also use message.warning("No media link available in message.");
+        } else {
+            window.open(url, "_blank");
+        }
+    };
     return (
         <>
             {pageloading ? (
