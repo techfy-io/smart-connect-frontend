@@ -50,9 +50,9 @@ const UserSetting = () => {
             setLoading(false);
             if (isSuccess) {
                 message.success("Settings updated successfully!");
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000);
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2000);
             } else {
                 message.error("Failed to update user settings");
             }
