@@ -130,28 +130,38 @@ function Dashboard() {
   };
   const openUpdateCompanyModal = (company) => {
     setCompanyInfo(company);
+    form.setFieldsValue({
+      name: company.name,
+      email: company.email,
+      phone_number: company.phone_number
+    });
     toggleUpdateCompanyModal();
   };
   const handleUpdateCompany = () => {
-    const accessToken = localStorage.getItem('accessToken');
-    const { id, ...updatedCompany } = companyInfo; // Destructuring id from companyInfo
-    axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, updatedCompany, {
-      headers: { 'Authorization': `Bearer ${accessToken}` }
-    })
-      .then((response => {
-        console.log(response);
-        message.success("Company Updated Successfully");
-        toggleUpdateCompanyModal(); // Close modal after successful update
-        fetchCompanies(); // Refresh company data
-      }))
-      .catch(error => {
-        console.error('Error updating company:', error);
-        // Handle error, show message, etc.
-      });
+    form.validateFields().then((values) => {
+      const accessToken = localStorage.getItem('accessToken');
+      const { id } = companyInfo; // Get the company id from companyInfo state
+      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      })
+        .then((response) => {
+          console.log(response);
+          message.success("Company Updated Successfully");
+          toggleUpdateCompanyModal(); // Close modal after successful update
+          fetchCompanies(); // Refresh company data
+        })
+        .catch(error => {
+          console.error('Error updating company:', error);
+          // Handle error, show message, etc.
+        });
+    }).catch((errorInfo) => {
+      console.log('Validation failed:', errorInfo);
+    });
   };
+
   const handleCancel = () => {
-    toggleUpdateCompanyModal();
     form.resetFields();
+    toggleUpdateCompanyModal();
   };
 
   const GetUserProfile = (id) => {
@@ -350,7 +360,6 @@ function Dashboard() {
             />
           </Form.Item>
         </Form>
-
       </Modal>
 
     </div >
