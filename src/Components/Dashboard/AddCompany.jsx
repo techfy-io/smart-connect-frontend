@@ -28,7 +28,10 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
             );
             message.success("Company added successfully")
             console.log('Company added successfully:', response.data);
-            // handleCancel();
+            toggleAddCompanyModal();
+              setTimeout(() => {
+                window.location.reload();
+            }, 2000);
         } catch (error) {
             console.error('Error adding company:', error);
             message.error(error.response.data.name)
