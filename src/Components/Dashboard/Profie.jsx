@@ -125,7 +125,13 @@ const Profile = () => {
             document.body.removeChild(link);
         });
     };
-
+    const handleSocialIconClick = (url) => {
+        if (!url) {
+            message.error("No media available please add one .");
+        } else {
+            window.open(url, "_blank");
+        }
+    };
     return (
         <>
             {pageloading ? (
