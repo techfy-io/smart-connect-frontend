@@ -6,7 +6,7 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
     const [form] = Form.useForm();
-    const [loading, setLoading] = useState(false); // State to control loading indicator
+    const [loading, setLoading] = useState(false); 
 
     const handleCancel = () => {
         toggleAddCompanyModal();
@@ -15,7 +15,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
 
     const onFinish = async (values) => {
         try {
-            setLoading(true); // Start loading
+            setLoading(true); 
             const accessToken = localStorage.getItem('accessToken');
             const response = await axios.post(
                 `${process.env.REACT_APP_BASE_API_URL}/companies/add/`,
@@ -33,10 +33,19 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                 window.location.reload();
             }, 2000);
         } catch (error) {
-            console.error('Error adding company:', error);
-            message.error(error.response.data.name)
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    break;
+                }
+            }
+            message.error(errorMessage);
+            setLoading(false);
         } finally {
-            setLoading(false); // Stop loading (whether success or error)
+            setLoading(false); 
         }
     };
 
