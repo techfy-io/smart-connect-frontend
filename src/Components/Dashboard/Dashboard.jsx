@@ -150,15 +150,25 @@ function Dashboard() {
           toggleUpdateCompanyModal(); // Close modal after successful update
           fetchCompanies(); // Refresh company data
         })
-        .catch(error => {
-          console.error('Error updating company:', error);
-          // Handle error, show message, etc.
+        .catch((error) => { // Added parentheses around error parameter
+          console.log("error", error);
+          const responseData = error.response.data;
+          let errorMessage = '';
+          for (const prop in responseData) {
+            if (responseData.hasOwnProperty(prop)) {
+              errorMessage = responseData[prop][0];
+              break;
+            }
+          }
+          message.error(errorMessage);
+          setLoading(false);
         });
     }).catch((errorInfo) => {
       console.log('Validation failed:', errorInfo);
     });
   };
 
+// dasd
   const handleCancel = () => {
     form.resetFields();
     toggleUpdateCompanyModal();
