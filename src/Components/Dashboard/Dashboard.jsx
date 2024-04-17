@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Modal, Avatar, Empty } from 'antd';
+import { message, Spin, Button, Modal, Avatar, Form, Input, Empty } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
 import AddUser from './AddUser';
@@ -10,8 +10,10 @@ import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
 import AddCompany from './AddCompany';
 import CompanyUsers from '../SuperAdmin/CompanyUsers';
+import InputMask from "react-input-mask";
 
 function Dashboard() {
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const [userType, setUserType] = useState("");
   const [companiesData, setCompaniesData] = useState([]);
@@ -20,7 +22,9 @@ function Dashboard() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
+  const [updateCompanyModalVisible, setUpdateCompanyModalVisible] = useState(false); // Step 1
   const [companyName, setCompanyName] = useState('')
+  const [companyInfo, setCompanyInfo] = useState({}); // Step 1
   const updateUser = (user) => {
     setSelectedUser(user);
     toggleUpdateUserModal();
@@ -28,6 +32,7 @@ function Dashboard() {
 
   const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
   const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); // Step 2
+  const toggleUpdateCompanyModal = () => setUpdateCompanyModalVisible(prev => !prev); // Step 2
 
   useEffect(() => {
     const userToken = localStorage.getItem('userinfo');
@@ -69,7 +74,7 @@ function Dashboard() {
         setUserType("User")
         console.log(response.data.results);
         setCompanyName(response.data.results[0].company_name);
-console.log(companyName)
+        console.log(companyName)
         setUserData(response.data.results);
         setLoading(false);
       })
@@ -101,6 +106,54 @@ console.log(companyName)
       },
     });
   };
+  const deleteCompany = (id) => {
+    Modal.confirm({
+      title: 'Confirm',
+      content: 'Are you sure you want to delete this Company?',
+      onOk() {
+        const accessToken = localStorage.getItem('accessToken');
+        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        })
+          .then(response => {
+            console.log(response, "delete Company resp")
+            message.success("Company Deleted Successfully");
+            // setTimeout(() => window.location.reload(), 1000);
+            fetchCompanies();
+          })
+          .catch(error => console.log("error", error));
+      },
+      onCancel() {
+        console.log('Deletion canceled');
+      },
+    });
+  };
+  const openUpdateCompanyModal = (company) => {
+    setCompanyInfo(company);
+    toggleUpdateCompanyModal();
+  };
+  const handleUpdateCompany = () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const { id, ...updatedCompany } = companyInfo; // Destructuring id from companyInfo
+    axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, updatedCompany, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    })
+      .then((response => {
+        console.log(response);
+        message.success("Company Updated Successfully");
+        toggleUpdateCompanyModal(); // Close modal after successful update
+        fetchCompanies(); // Refresh company data
+      }))
+      .catch(error => {
+        console.error('Error updating company:', error);
+        // Handle error, show message, etc.
+      });
+  };
+  const handleCancel = () => {
+    toggleUpdateCompanyModal();
+    form.resetFields();
+  };
+
   const GetUserProfile = (id) => {
     navigate(`/profile/${id}`);
   }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
@@ -120,9 +173,9 @@ console.log(companyName)
             </>) : (
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <div className='content-header-companyName'>
-                        {companyName}
-                    </div>
+                <div className='content-header-companyName'>
+                  {companyName}
+                </div>
                 <div className='AddUser-action'>
                   <a href="https://www.google.com/" style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
                 </div>
@@ -169,8 +222,13 @@ console.log(companyName)
                                 <td>{company.name}</td>
                                 <td className='Actions-btns'>
                                   <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                  <button className="Delete-button"><DeleteOutlined /></button>
-                                  <button className="Edit-button"><EditOutlined /></button>
+                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                  <button
+                                    className="Edit-button"
+                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                  >
+                                    <EditOutlined />
+                                  </button>
                                 </td>
                               </tr>
                             ))}
@@ -223,6 +281,78 @@ console.log(companyName)
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
+      {/* Update company Modal */}
+      <Modal
+        title="Update Company"
+        open={updateCompanyModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleUpdateCompany} loading={loading}>
+            Update
+          </Button>,
+        ]}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={companyInfo}
+          onFinish={handleUpdateCompany}
+        >
+          <Form.Item label="Company Name" name="name">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: 'Please enter an email',
+              },
+              {
+                type: 'email',
+                message: 'Invalid email format',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Phone"
+            name="phone_number"
+            rules={[
+              {
+                required: true,
+                message: 'Please enter a phone number',
+              },
+              {
+                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                message: 'Invalid phone number format',
+              },
+            ]}
+          >
+            <InputMask
+              style={{
+                width: "97%",
+                height: "30px",
+                borderRadius: "5px",
+                border: "1px solid #d9d9d9",
+                paddingLeft: "8px",
+                color: "black",
+                transition: "border-color 0.3s",
+              }}
+              mask="+33 9 99 99 99 99"
+              maskChar=""
+              placeholder="+33 1 23 45 67 89"
+            />
+          </Form.Item>
+        </Form>
+
+      </Modal>
+
     </div >
   );
 }
