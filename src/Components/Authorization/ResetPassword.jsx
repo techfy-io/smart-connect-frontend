@@ -45,10 +45,10 @@ const ResetPassword = () => {
         try {
             await axios.post(`https://api.smartconnect.cards/api/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
             ,token});
-            message.success("Password reset successfully");
+            message.success("Password Update successfully");
         } catch (error) {
             console.log("Error:", error);
-            message.error("Failed to reset password");
+            message.error("Failed to Update password");
         } finally {
             setLoading(false);
         }
