@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar } from 'antd';
+import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -127,9 +127,27 @@ const Profile = () => {
     };
     const handleSocialIconClick = (url) => {
         if (!url) {
-            message.error("No media available please add one .");
+            message.error("No media available, please add one.");
         } else {
             window.open(url, "_blank");
+        }
+    };
+
+    const renderSocialIcon = (url, iconClass, tooltipTitle) => {
+        if (!url) {
+            return (
+                <Tooltip title="No media available, please add one.">
+                    <div className="icon-box disabled">
+                        <span className={`fa ${iconClass} icon`} />
+                    </div>
+                </Tooltip>
+            );
+        } else {
+            return (
+                <div className="icon-box" onClick={() => handleSocialIconClick(url)}>
+                    <a href={url} target="_blank" rel="noopener noreferrer" className={`fa ${iconClass} icon`}></a>
+                </div>
+            );
         }
     };
     return (
@@ -157,11 +175,11 @@ const Profile = () => {
                                     <br />
                                     {/* code para */}
                                     <p className='qr-code-para'>Show QRCode to share your profile</p>
-                                       <div className='download-qr-code-btn'>
-                                           <Button icon={<DownloadOutlined />}  onClick={downloadQRCode}>
-                                               Download QR Code
-                                           </Button>
-                                       </div>
+                                    <div className='download-qr-code-btn'>
+                                        <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
+                                            Download QR Code
+                                        </Button>
+                                    </div>
                                 </div>
                                 <div className="cover-picture-card">
                                     {userData && userData.profile_picture ? (
@@ -207,7 +225,7 @@ const Profile = () => {
                                         </button>
                                     </div>
                                 </div>
-                                <Card className='social-links-card'>
+                                {/* <Card className='social-links-card'>
                                     <div className="social-icons">
                                         <div className="icon-box">
                                             <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
@@ -221,6 +239,14 @@ const Profile = () => {
                                         <div className="icon-box">
                                             <a href={userData?.other_link_1} target="_blank" rel="noopener noreferrer" className="fa fa-globe icon linkedin-icon"></a>
                                         </div>
+                                    </div>
+                                </Card> */}
+                                <Card className='social-links-card'>
+                                    <div className="social-icons">
+                                        {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
+                                        {renderSocialIcon(userData?.instagram_url, 'fa-instagram', 'Instagram')}
+                                        {renderSocialIcon(userData?.linkedin_url, 'fa-linkedin', 'LinkedIn')}
+                                        {renderSocialIcon(userData?.other_link_1, 'fa-globe', 'Other Link')}
                                     </div>
                                 </Card>
                                 {
