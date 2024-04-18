@@ -9,7 +9,7 @@ const { Header } = Layout;
 
 const ResetPassword = () => {
     const [form] = Form.useForm();
-    const [loading, setLoading] = useState(true); // Initially set loading to true
+    const [loading, setLoading] = useState(true); 
     const [isValidToken, setIsValidToken] = useState(false);
 
     const { token, uid } = useParams();
@@ -17,7 +17,9 @@ const ResetPassword = () => {
     useEffect(() => {
         const validateToken = async () => {
             try {
-                await axios.post('https://api.smartconnect.cards/api/validate-token/', { uid, token });
+                await axios.get('https://api.smartconnect.cards/api/reset-password/validate-token/', {
+                    params: { uid, token } // Pass parameters in the 'params' object
+                });
                 setIsValidToken(true);
             } catch (error) {
                 setIsValidToken(false);
@@ -25,9 +27,10 @@ const ResetPassword = () => {
                 setLoading(false);
             }
         };
-
+    
         validateToken();
     }, [token, uid]);
+    
 
     const handleSubmit = async (values) => {
         setLoading(true);
