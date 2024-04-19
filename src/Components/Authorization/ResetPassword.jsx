@@ -10,6 +10,7 @@ const { Header } = Layout;
 const ResetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
+    const [updateloading, setupdateloading] = useState(true);
     const [isValidToken, setIsValidToken] = useState(false);
 
     const location = useLocation();
@@ -41,7 +42,7 @@ const ResetPassword = () => {
     }, [token, uidb64]);
 
     const handleSubmit = async (values) => {
-        setLoading(true);
+        setupdateloading(true);
         try {
             await axios.post(`https://api.smartconnect.cards/api/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
             ,token});
@@ -50,7 +51,7 @@ const ResetPassword = () => {
             console.log("Error:", error);
             message.error(error.response.data.error);
         } finally {
-            setLoading(false);
+            setupdateloading(false);
         }
     };
 
@@ -128,7 +129,7 @@ const ResetPassword = () => {
                                     type="primary"
                                     htmlType="submit"
                                     className="reset-password-form-enable-button"
-                                    loading={loading}
+                                    loading={updateloading}
                                 >
                                     Save
                                 </Button>

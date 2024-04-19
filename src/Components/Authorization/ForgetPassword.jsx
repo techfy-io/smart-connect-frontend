@@ -75,7 +75,7 @@ const ForgetPassword = () => {
                                 className="ResetPassword-form-enable-button"
                                 loading={loading}
                             >
-                                Save
+                                Submit
                             </Button>
                         </Form.Item>
                     </Form>
