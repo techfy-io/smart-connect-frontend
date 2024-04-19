@@ -21,7 +21,7 @@ const ResetPassword = () => {
         const validateToken = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.smartconnect.cards/api/reset-password/validate_token/?uidb64=${uidb64}&token=${token}`,
+                    `https://api.smartconnect.cards/api/reset-password/validate_token/?uid=${uidb64}&token=${token}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
