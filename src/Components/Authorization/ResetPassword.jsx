@@ -10,6 +10,7 @@ const { Header } = Layout;
 const ResetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
+    const [updateloading, setupdateloading] = useState(true);
     const [isValidToken, setIsValidToken] = useState(false);
 
     const location = useLocation();
@@ -21,7 +22,7 @@ const ResetPassword = () => {
         const validateToken = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.smartconnect.cards/api/reset-password/validate_token/?uidb64=${uidb64}&token=${token}`,
+                    `https://api.smartconnect.cards/api/reset-password/validate_token/?uid=${uidb64}&token=${token}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -41,16 +42,16 @@ const ResetPassword = () => {
     }, [token, uidb64]);
 
     const handleSubmit = async (values) => {
-        setLoading(true);
+        setupdateloading(true);
         try {
             await axios.post(`https://api.smartconnect.cards/api/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
             ,token});
             message.success("Password Update successfully");
         } catch (error) {
             console.log("Error:", error);
-            message.error("Failed to Update password");
+            message.error(error.response.data.error);
         } finally {
-            setLoading(false);
+            setupdateloading(false);
         }
     };
 
@@ -128,7 +129,7 @@ const ResetPassword = () => {
                                     type="primary"
                                     htmlType="submit"
                                     className="reset-password-form-enable-button"
-                                    loading={loading}
+                                    loading={updateloading}
                                 >
                                     Save
                                 </Button>

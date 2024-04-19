@@ -17,8 +17,17 @@ const ForgetPassword = () => {
             await axios.post('https://api.smartconnect.cards/api/forgot-password/', values);
             message.success("Email sent successfully");
         } catch (error) {
-            console.log("Error:", error);
-            message.error("Failed to Reset password");
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    break;
+                }
+            }
+            message.error(errorMessage);
+            setLoading(false);
         } finally {
             setLoading(false);
         }
@@ -66,7 +75,7 @@ const ForgetPassword = () => {
                                 className="ResetPassword-form-enable-button"
                                 loading={loading}
                             >
-                                Save
+                                Submit
                             </Button>
                         </Form.Item>
                     </Form>
