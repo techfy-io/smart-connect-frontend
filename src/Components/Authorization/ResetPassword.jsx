@@ -17,7 +17,7 @@ const ResetPassword = () => {
     const searchParams = new URLSearchParams(location.search);
     const uidb64 = searchParams.get('uid');
     const token = searchParams.get('token');
-
+// token validation
     useEffect(() => {
         const validateToken = async () => {
             try {
