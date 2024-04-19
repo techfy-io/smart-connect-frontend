@@ -10,7 +10,7 @@ const { Header } = Layout;
 const ResetPassword = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
-    const [updateloading, setupdateloading] = useState(true);
+    const [updateloading, setupdateloading] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
 
     const location = useLocation();
@@ -44,12 +44,15 @@ const ResetPassword = () => {
     const handleSubmit = async (values) => {
         setupdateloading(true);
         try {
-            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/${uidb64}/${token}/`, { ...values ,uidb64
+            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
             ,token});
+            setupdateloading(false);
             message.success("Password Update successfully");
         } catch (error) {
             console.log("Error:", error);
             message.error(error.response.data.error);
+            setupdateloading(false);
+
         } finally {
             setupdateloading(false);
         }
