@@ -22,7 +22,7 @@ const ResetPassword = () => {
         const validateToken = async () => {
             try {
                 const response = await axios.get(
-                    `https://api.smartconnect.cards/api/reset-password/validate_token/?uid=${uidb64}&token=${token}`,
+                    `${process.env.REACT_APP_BASE_API_URL}/reset-password/validate_token/?uid=${uidb64}&token=${token}`,
                     {
                         headers: {
                             'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const ResetPassword = () => {
     const handleSubmit = async (values) => {
         setupdateloading(true);
         try {
-            await axios.post(`https://api.smartconnect.cards/api/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
+            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/${uidb64}/${token}/`, { ...values ,uidb64
             ,token});
             message.success("Password Update successfully");
         } catch (error) {

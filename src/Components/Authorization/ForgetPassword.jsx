@@ -14,7 +14,7 @@ const ForgetPassword = () => {
         setToken(localStorage.getItem('accessToken'));
         setLoading(true);
         try {
-            await axios.post('https://api.smartconnect.cards/api/forgot-password/', values);
+            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/forgot-password/`, values);
             message.success("Email sent successfully");
         } catch (error) {
             console.log("error", error);
