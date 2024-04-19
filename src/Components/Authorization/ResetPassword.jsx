@@ -48,7 +48,7 @@ const ResetPassword = () => {
             message.success("Password Update successfully");
         } catch (error) {
             console.log("Error:", error);
-            message.error("Failed to Update password");
+            message.error(error.response.data.error);
         } finally {
             setLoading(false);
         }
