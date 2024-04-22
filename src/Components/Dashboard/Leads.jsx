@@ -57,7 +57,7 @@ const Leads = () => {
         try {
             setUpdating(true);
             const accessToken = localStorage.getItem('accessToken');
-            await axios.put(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
+            await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/exchange/${selectedUser.id}/`, values, {
                 headers: {
                     'Authorization': `Bearer ${accessToken}`,
                     'Content-Type': 'multipart/form-data',
@@ -67,8 +67,16 @@ const Leads = () => {
             message.success("User updated successfully");
             getExchangeUser(); // Refresh data after update
         } catch (error) {
-            console.error("Error updating exchanged user:", error);
-            message.error("Failed to update exchanged user");
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    break;
+                }
+            }
+            message.error(errorMessage);
         } finally {
             setUpdating(false); // Hide loading indicator on update button
         }
