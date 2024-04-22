@@ -6,7 +6,7 @@
     background-color: #ffffff;
 
     &.collapsed .sider {
-        width: 190px;
+        width: 180px;
     }
 }
 
@@ -14,7 +14,7 @@
     // position: relative;
     width: 240px;
     background-color: #f0f2f5;
-    transition: width 0.3s ease;
+    transition: width 1.5s ease;
     height: 100vh;
 
     .sider-content {
