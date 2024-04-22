@@ -17,7 +17,7 @@ const ResetPassword = () => {
     const searchParams = new URLSearchParams(location.search);
     const uidb64 = searchParams.get('uid');
     const token = searchParams.get('token');
-
+// token validation
     useEffect(() => {
         const validateToken = async () => {
             try {
@@ -49,10 +49,17 @@ const ResetPassword = () => {
             setupdateloading(false);
             message.success("Password Update successfully");
         } catch (error) {
-            console.log("Error:", error);
-            message.error(error.response.data.error);
+            console.log("error", error);
+            const responseData = error.response.data;
+            let errorMessage = '';
+            for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                    errorMessage = responseData[prop][0];
+                    break;
+                }
+            }
+            message.error(errorMessage);
             setupdateloading(false);
-
         } finally {
             setupdateloading(false);
         }

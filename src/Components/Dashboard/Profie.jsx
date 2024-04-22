@@ -82,6 +82,10 @@ const Profile = () => {
         setExchangeModal(prev => !prev);
     };
 
+    const handleCancel=()=>{
+        handleOpenExchangeModal();
+        form.resetFields();
+    }
     const onFinish = async (values) => {
         const formData = new FormData();
 
@@ -275,8 +279,8 @@ const Profile = () => {
                     }
                     <Modal
                         title="Exchange"
-                        visible={openExchangeModal}
-                        onCancel={handleOpenExchangeModal}
+                        open={openExchangeModal}
+                        onCancel={handleCancel}
                         footer={null}
                     >
                         <Form
@@ -359,11 +363,18 @@ const Profile = () => {
                                 >
                                 </InputMask>
                             </Form.Item>
+                            <div style={{display:"flex" , justifyContent:"space-between"}}>
                             <Form.Item style={{ textAlign: "end" }}>
+                                <Button  style={{ width: "200px" }} onClick={handleCancel}>
+                                    Cancel
+                                </Button>
+                            </Form.Item>
+                            <Form.Item style={{ textAlign: "center" }}>
                                 <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
                                     Submit
                                 </Button>
                             </Form.Item>
+                            </div>
                         </Form>
                     </Modal>
                 </>
