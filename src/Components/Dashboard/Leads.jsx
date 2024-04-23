@@ -82,11 +82,11 @@ const Leads = () => {
         }
     };
 
-    const handleEdit = (user) => {
-        setSelectedUser(user);
-        setIsModalVisible(true);
-        form.setFieldsValue(user); // Set form fields value with selected user data
-    };
+    // const handleEdit = (user) => {
+    //     setSelectedUser(user);
+    //     setIsModalVisible(true);
+    //     form.setFieldsValue(user); // Set form fields value with selected user data
+    // };
 
     const handleCancel = () => {
         setIsModalVisible(false);
@@ -154,7 +154,7 @@ const Leads = () => {
                                         <tr key={index}>
                                             <td>
                                                 <Avatar size="small" style={{ backgroundColor: getRandomColor(), padding: "20px", marginRight: "10px", fontSize: "15px" }}> {`${user.first_name.charAt(0).toUpperCase()}${user.last_name.charAt(0).toUpperCase()}`}</Avatar>
-                                                {`${user.first_name} ${user.last_name}`.slice(0, 35)}
+                                                {`${user.first_name} ${user.last_name}`.slice(0,25)}
                                             </td>
                                             <td>{user.company_name && user.company_name.length > 25 ? user.company_name.substring(0, 25) + '...' : user.company_name}</td>
                                             <td>{user.phone_number}</td>
@@ -170,7 +170,7 @@ const Leads = () => {
                                             </td>
                                             <td>
                                                 <div className="Actions-btns">
-                                                    <button className="Edit-button" shape="circle" onClick={() => handleEdit(user)}><EditOutlined /></button>
+                                                    {/* <button className="Edit-button" shape="circle" onClick={() => handleEdit(user)}><EditOutlined /></button> */}
                                                     <button className="Delete-button" shape="circle" onClick={() => handleDeleteConfirm(user.id)}><DeleteOutlined /></button>
                                                 </div>
                                             </td>
