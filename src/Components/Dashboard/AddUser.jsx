@@ -433,8 +433,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             name="phoneType"
                         >
                             <Radio.Group>
-                                <Radio name='phone_number_professional' value="PROFESSIONAL">Professional</Radio>
-                                <Radio name='phone_number_personal' value="PERSONAL">Personal</Radio>
+                                <Radio name='phone_number_professional' value="Professionnel">Professionnel</Radio>
+                                <Radio name='phone_number_personal' value="Personal">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
                     </div>
