@@ -23,6 +23,7 @@ const ForgetPassword = () => {
                 if (error.response.status === 404 || error.response.status === 500) {
                     // Handle 404 or 500 error
                     message.error("Failed: Something went wrong with the server.");
+
                 } else {
                     // Handle other errors with response data
                     const responseData = error.response.data;
@@ -45,7 +46,10 @@ const ForgetPassword = () => {
                 // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error("Failed: Error setting up the request.");
+                
             }
+            setLoading(false);
+
         } finally {
             setLoading(false);
         }

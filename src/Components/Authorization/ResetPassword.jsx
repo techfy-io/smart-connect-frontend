@@ -48,6 +48,7 @@ const ResetPassword = () => {
             ,token});
             setupdateloading(false);
             message.success("Password Update successfully");
+            window.location.href = '/'; // Redirect to the desired URL upon success
         } catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -149,9 +150,9 @@ const ResetPassword = () => {
                                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 />
                             </Form.Item>
-                            <div style={{textAlign:"right"}} >
+                            {/* <div style={{textAlign:"right"}} >
                             <Link className='forget-password-link' to={'/'}>Back to Login?</Link>
-                            </div>
+                            </div> */}
                             <Form.Item>
                                 <Button
                                     type="primary"
