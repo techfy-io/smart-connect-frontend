@@ -42,7 +42,6 @@ function App() {
           localStorage.setItem('accessToken', resp.data.access);
           localStorage.setItem('userinfo', resp.data?.is_superuser)
           localStorage.setItem('userid', resp.data?.company_id)
-          console.log("hiii logion")
           setLoading(false);
           window.location.reload()
         })
