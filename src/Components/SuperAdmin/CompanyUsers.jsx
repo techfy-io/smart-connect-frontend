@@ -89,7 +89,7 @@ const CompanyUsers = () => {
                         {company.name}
                     </div>
                     <div className='company-actions'>
-                        <Button type='primary' className='Add-company-btn' onClick={modalHideShow}>Add User</Button>
+                        <Button  className='Add-company-btn' onClick={modalHideShow}>Add User</Button>
                     </div>
                 </div>
                 <div className="table-container">

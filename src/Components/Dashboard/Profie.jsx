@@ -52,7 +52,7 @@ const Profile = () => {
 
     const downloadUserData = () => {
         if (!userData) return;
-    
+
         setLoading(true);
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
             responseType: 'blob'
@@ -61,10 +61,10 @@ const Profile = () => {
                 const reader = new FileReader();
                 reader.onload = () => {
                     let vcfData = reader.result;
-    
+
                     // Extract profile picture URL from the VCF data
                     const profilePicUrl = `${userData.profile_picture}`;
-    
+
                     // Convert the profile picture to Base64 data
                     fetch(profilePicUrl)
                         .then(response => response.blob())
@@ -74,7 +74,7 @@ const Profile = () => {
                                 const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
                                 // Replace PHOTO property with Base64 encoded image data
                                 vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b;TYPE=JPEG:${profilePicBase64}`);
-                                
+
                                 const blob = new Blob([vcfData], { type: 'text/vcard' });
                                 const url = window.URL.createObjectURL(blob);
                                 const link = document.createElement('a');
@@ -99,26 +99,27 @@ const Profile = () => {
                 setLoading(false);
             });
     };
-    
+
 
     const handleOpenExchangeModal = () => {
         setExchangeModal(prev => !prev);
     };
 
-    const handleCancel=()=>{
+    const handleCancel = () => {
         handleOpenExchangeModal();
         form.resetFields();
     }
     const onFinish = async (values) => {
         const formData = new FormData();
-
+        setLoading(true); // Set loading state to true while submitting
+    
         formData.append('first_name', values.first_name);
         formData.append('last_name', values.last_name);
         formData.append('company_name', values.company_name || "");
         formData.append('email', values.email);
         formData.append('phone_number', values.phone_number);
         formData.append('owner', userData?.id);
-
+    
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, formData);
             console.log("Response:", response);
@@ -127,20 +128,39 @@ const Profile = () => {
             form.resetFields();
         } catch (error) {
             console.log("error", error);
-            const responseData = error.response.data;
-            let errorMessage = '';
-
-            for (const prop in responseData) {
-                if (responseData.hasOwnProperty(prop)) {
-                    errorMessage = responseData[prop][0];
-                    break;
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                if (error.response.status === 404 || error.response.status === 500) {
+                    // Handle 404 or 500 error
+                    message.error("Failed: Something went wrong with the server.");
+                } else {
+                    // Handle other errors with response data
+                    const responseData = error.response.data;
+                    let errorMessage = '';
+    
+                    for (const prop in responseData) {
+                        if (responseData.hasOwnProperty(prop)) {
+                            errorMessage = responseData[prop][0];
+                            break;
+                        }
+                    }
+    
+                    message.error(errorMessage);
                 }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error("No response received from the server:", error.request);
+                message.error("Failed: No response received from the server.");
+            } else {
+                // Something happened in setting up the request that triggered an error
+                console.error("Error setting up the request:", error.message);
+                message.error("Failed: Error setting up the request.");
             }
-
-            message.error(errorMessage);
-            setLoading(false);
+        } finally {
+            setLoading(false); // Reset loading state after submission
         }
     };
+    
 
     const downloadQRCode = () => {
         html2canvas(qrCodeRef.current).then(canvas => {
@@ -386,17 +406,22 @@ const Profile = () => {
                                 >
                                 </InputMask>
                             </Form.Item>
-                            <div style={{display:"flex" , justifyContent:"space-between"}}>
-                            <Form.Item style={{ textAlign: "end" }}>
-                                <Button  style={{ width: "200px" }} onClick={handleCancel}>
-                                    Cancel
-                                </Button>
-                            </Form.Item>
-                            <Form.Item style={{ textAlign: "center" }}>
-                                <Button type="primary" htmlType="submit" style={{ background: "#ff8000", width: "200px" }}>
-                                    Submit
-                                </Button>
-                            </Form.Item>
+                            <div style={{ display: "flex", justifyContent: "space-between" }}>
+                                <Form.Item style={{ textAlign: "end" }}>
+                                    <Button style={{ width: "200px" }} onClick={handleCancel}>
+                                        Cancel
+                                    </Button>
+                                </Form.Item>
+                                <Form.Item style={{ textAlign: "center" }}>
+                                    <Button
+                                        type="primary"
+                                        htmlType="submit"
+                                        style={{ background: "#ff8000", width: "200px" }}
+                                        loading={loading} // Set loading state for the button
+                                    >
+                                        {loading ? 'Submitting...' : 'Submit'} {/* Display different text based on loading state */}
+                                    </Button>
+                                </Form.Item>
                             </div>
                         </Form>
                     </Modal>

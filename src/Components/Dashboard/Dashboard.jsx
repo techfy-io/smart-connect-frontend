@@ -210,6 +210,7 @@ function Dashboard() {
             {userType === "SuperAdmin" ? (
               <tr>
                 <th>Company Name</th>
+                <th>Email</th>
                 <th>Action</th>
               </tr>
             ) : (
@@ -240,6 +241,7 @@ function Dashboard() {
                             companiesData.map((company, key) => (
                               <tr key={key}>
                                 <td>{company.name}</td>
+                                <td>{company.email}</td>
                                 <td className='Actions-btns'>
                                   <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                                   <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>

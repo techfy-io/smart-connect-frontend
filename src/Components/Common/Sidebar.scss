@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 .sidebar-container {
     position: sticky;
     top: 0;
@@ -6,44 +7,45 @@
     background-color: #ffffff;
 
     &.collapsed .sider {
-        width: 180px;
+        width:30px;
     }
 }
 
 .sider {
-    // position: relative;
     width: 240px;
     background-color: #f0f2f5;
-    transition: width 1.5s ease;
+    transition: width 0.8s ease;
     height: 100vh;
+    overflow-x: hidden;
 
     .sider-content {
-        padding: 25px;
-
+        padding: 35px;
     }
 
     .logo-image {
-        // padding: 15px;
         width: 150px;
         height: auto;
     }
 
     .menu {
-        // padding: 15px;
         list-style: none;
         margin-top: 15%;
-
+        width: 150px;
+        // font-family: 'Roboto', sans-serif;;
         .menu-item {
+            // width: 150px;
             padding: 10px 0;
             cursor: pointer;
+            font-size: 18px; /* Increased font size */
+            transition: color 0.3s ease; /* Smooth color transition */
 
             &:hover {
                 color: #FF8000;
             }
         }
         &.active {
-            color: #FF8000; // Apply color for active tab
-            font-weight: bold; // Add any additional styling for active tab
+            color: #FF8000; 
+            font-weight: bold; 
         }
     }
 
@@ -57,9 +59,12 @@
         color: #fff;
         border: none;
         border-radius: 5px;
+        font-size: 20px; /* Increased font size */
+        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
 
         &:hover {
-            cursor: pointer;
+            background-color: #FFA94D; /* Lighter shade on hover */
+            transform: scale(1.1); /* Slightly scale up on hover */
         }
     }
 }
