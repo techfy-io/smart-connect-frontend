@@ -46,7 +46,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('linkedin_url', linkedin_url||"");
         formData.append('other_link_1', other_link_1 || "");
         formData.append('other_link_media', other_link_media || "");
-        formData.append('company_name', currentCompany || "");
+        formData.append('company', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
 
@@ -140,6 +140,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         setAdditionalSocialMediaLinks(updatedLinks);
     };
     useEffect(() => {
+        console.log(CompaniesDate,"name ha company ka ")
         setCurrentCompany(CompaniesDate)
     }, [CompaniesDate])
     return (

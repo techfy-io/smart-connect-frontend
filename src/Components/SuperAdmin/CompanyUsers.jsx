@@ -19,7 +19,6 @@ const CompanyUsers = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
     const [loading, setLoading] = useState(true); 
-    console.log(company,"company")
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
@@ -133,7 +132,7 @@ const CompanyUsers = () => {
                 </div>
             </div>
             <AddUser
-                CompaniesDate={company.name}
+                CompaniesDate={company.id}
                 isModalVisible={isModalVisible}
                 modalHideShow={modalHideShow}
             />
