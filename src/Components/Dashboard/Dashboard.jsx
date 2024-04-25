@@ -197,7 +197,7 @@ function Dashboard() {
                   {companyName}
                 </div>
                 <div className='AddUser-action'>
-                  <a href="https://www.google.com/" style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
+                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
                 </div>
               </div>
             </>
