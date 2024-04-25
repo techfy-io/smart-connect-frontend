@@ -162,7 +162,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             form.submit();
                         }).catch((error) => {
                             setLoading(false);
-
                         });
                     }}
                     loading={loading}
