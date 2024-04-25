@@ -112,14 +112,14 @@ const Profile = () => {
     const onFinish = async (values) => {
         const formData = new FormData();
         setLoading(true); // Set loading state to true while submitting
-    
+
         formData.append('first_name', values.first_name);
         formData.append('last_name', values.last_name);
         formData.append('company_name', values.company_name || "");
         formData.append('email', values.email);
         formData.append('phone_number', values.phone_number);
         formData.append('owner', userData?.id);
-    
+
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, formData);
             console.log("Response:", response);
@@ -137,14 +137,14 @@ const Profile = () => {
                     // Handle other errors with response data
                     const responseData = error.response.data;
                     let errorMessage = '';
-    
+
                     for (const prop in responseData) {
                         if (responseData.hasOwnProperty(prop)) {
                             errorMessage = responseData[prop][0];
                             break;
                         }
                     }
-    
+
                     message.error(errorMessage);
                 }
             } else if (error.request) {
@@ -160,7 +160,7 @@ const Profile = () => {
             setLoading(false); // Reset loading state after submission
         }
     };
-    
+
 
     const downloadQRCode = () => {
         html2canvas(qrCodeRef.current).then(canvas => {
@@ -229,7 +229,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div className="cover-picture-card">
-                                    {userData && userData.profile_picture  ? (
+                                    {userData && userData.profile_picture ? (
                                         <>
                                             <img src={userData.cover_image} alt="" />
                                         </>) : (
@@ -324,7 +324,20 @@ const Profile = () => {
                         title="Exchange"
                         open={openExchangeModal}
                         onCancel={handleCancel}
-                        footer={null}
+                        footer={[
+                            <Button onClick={handleCancel}>
+                                Cancel
+                            </Button>,
+                            <Button
+                            onClick={() => form.submit()} // Trigger form submission
+                            type="primary"
+                                htmlType="submit"
+                                style={{ background: "#ff8000" }}
+                                loading={loading} 
+                            >
+                                Submit
+                            </Button>
+                        ]}
                     >
                         <Form
                             name="exchangeForm"
@@ -406,23 +419,6 @@ const Profile = () => {
                                 >
                                 </InputMask>
                             </Form.Item>
-                            <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                <Form.Item style={{ textAlign: "end" }}>
-                                    <Button style={{ width: "200px" }} onClick={handleCancel}>
-                                        Cancel
-                                    </Button>
-                                </Form.Item>
-                                <Form.Item style={{ textAlign: "center" }}>
-                                    <Button
-                                        type="primary"
-                                        htmlType="submit"
-                                        style={{ background: "#ff8000", width: "200px" }}
-                                        loading={loading} // Set loading state for the button
-                                    >
-                                        {loading ? 'Submitting...' : 'Submit'} {/* Display different text based on loading state */}
-                                    </Button>
-                                </Form.Item>
-                            </div>
                         </Form>
                     </Modal>
                 </>
