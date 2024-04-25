@@ -123,7 +123,7 @@ function App() {
               </>
             ) : (
               <>
-                <p className="section-title">Create Account</p>
+                {/* <p className="section-title">Create Account</p>
                 <p className='section-pera'>Sign up to get started!</p>
                 <form className="signup-form">
                   <div className='signup-form-names-fields'>
@@ -142,14 +142,12 @@ function App() {
                     >
                     </InputMask>
                   </div>
-                  {/* <div className='signup-form-names-fields'> */}
                   <Input id="Company" className="form-input" placeholder="Company" onChange={(e) => setCompany(e.target.value)} />
                   <Input.Password id="signupPassword" className="form-input" onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Password" />
-                  {/* </div> */}
                   <Button type="primary" className="form-button" onClick={registerUser}>
                     {loading ? <Spin /> : "Sign up"}
                   </Button>
-                </form>
+                </form> */}
               </>
             )}
           </div>
