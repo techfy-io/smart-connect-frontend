@@ -229,7 +229,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div className="cover-picture-card">
-                                    {userData && userData.profile_picture ? (
+                                    {userData && userData.profile_picture  ? (
                                         <>
                                             <img src={userData.cover_image} alt="" />
                                         </>) : (
@@ -392,7 +392,7 @@ const Profile = () => {
                             >
                                 <InputMask
                                     style={{
-                                        width: "100%",
+                                        width: "98.1%",
                                         height: "30px",
                                         borderRadius: "5px",
                                         border: "1px solid #d9d9d9",
