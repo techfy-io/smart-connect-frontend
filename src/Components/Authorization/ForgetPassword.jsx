@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Input, Button, Form, message } from 'antd';
+import { Layout, Input, Button, Form, message, Menu, Dropdown, } from 'antd';
 import axios from 'axios';
 import './ForgetPassword.scss';
+import { DownOutlined } from '@ant-design/icons';
+import { useTranslation } from "react-i18next";
 
 const { Header } = Layout;
 
 const ForgetPassword = () => {
+    const { t, i18n } = useTranslation('translation')
+
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [accessToken, setToken] = useState();
@@ -16,7 +20,7 @@ const ForgetPassword = () => {
         try {
             await axios.post(`${process.env.REACT_APP_BASE_API_URL}/forgot-password/`, values);
             message.success("Email sent successfully");
-        }catch (error) {
+        } catch (error) {
             console.log("error", error);
             if (error.response) {
                 // The request was made and the server responded with a status code
@@ -28,14 +32,14 @@ const ForgetPassword = () => {
                     // Handle other errors with response data
                     const responseData = error.response.data;
                     let errorMessage = '';
-    
+
                     for (const prop in responseData) {
                         if (responseData.hasOwnProperty(prop)) {
                             errorMessage = responseData[prop][0];
                             break;
                         }
                     }
-    
+
                     message.error(errorMessage);
                 }
             } else if (error.request) {
@@ -46,7 +50,7 @@ const ForgetPassword = () => {
                 // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error("Failed: Error setting up the request.");
-                
+
             }
             setLoading(false);
 
@@ -54,13 +58,32 @@ const ForgetPassword = () => {
             setLoading(false);
         }
     };
-
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+    const menu = (
+        <Menu>
+            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+                French
+            </Menu.Item>
+            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+                English
+            </Menu.Item>
+        </Menu>
+    );
     return (
         <div className='ResetPassword-main-layout'>
+            <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px" }}>
+                        {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </div>
             <div className='ResetPassword-custom-card'>
                 <div className='ResetPassword-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                        Forgot Password
+                       {t("Forgot Password")}
                     </button>
                 </div>
                 <div className="ResetPassword-tab-content">
@@ -74,12 +97,11 @@ const ForgetPassword = () => {
                         }}
                     >
                         <div className='section-para-container'>
-                            <p className='section-para'>Enter the email address you used when joining, and we’ll send
-                                reset instructions to reset your password.</p>
+                            <p className='section-para'>{t("Enter the email address you used when joining, and we’ll send reset instructions to reset your password.")}</p>
                         </div>
                         <Form.Item
                             name="email"
-                            label="Email"
+                            label={t("Email")}
                             rules={[
                                 {
                                     required: true,
@@ -97,7 +119,7 @@ const ForgetPassword = () => {
                                 className="ResetPassword-form-enable-button"
                                 loading={loading}
                             >
-                                Submit
+                                {t('Submit')}
                             </Button>
                         </Form.Item>
                     </Form>

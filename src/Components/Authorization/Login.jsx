@@ -6,8 +6,7 @@ import Smartlogo from "../../Inspect/Smart-logo.png";
 import InputMask from "react-input-mask";
 import './Login.scss'
 import axios from 'axios';
-import { useTranslation, initReactI18next, I18nextProvider } from "react-i18next";
-import { changeLanguage } from 'i18next';
+import { useTranslation } from "react-i18next";
 const { Content } = Layout;
 
 function App() {
@@ -35,7 +34,7 @@ function App() {
       password: password
     };
     if (!loginPayload.email || !loginPayload.password) {
-      message.error("Please enter your email and password");
+      message.error(t("Please enter your email and password"));
       setLoading(false);
     }
     else {
@@ -55,38 +54,38 @@ function App() {
         })
     }
   };
-  const registerUser = () => {
-    setLoading(true);
-    if (!firstName || !lastName || !company || !phone || !registerEmail || !registerPassword) {
-      message.error("Please fill in all fields");
-      setLoading(false);
-      return;
-    }
+  // const registerUser = () => {
+  //   setLoading(true);
+  //   if (!firstName || !lastName || !company || !phone || !registerEmail || !registerPassword) {
+  //     message.error("Please fill in all fields");
+  //     setLoading(false);
+  //     return;
+  //   }
 
-    const registerPayload = {
-      first_name: firstName,
-      last_name: lastName,
-      company_name: company,
-      phone_number: phone,
-      email: registerEmail,
-      password: registerPassword,
-      is_active: "true",
-    };
-    axios.post(`${process.env.REACT_APP_BASE_API_URL}/register/`, registerPayload)
-      .then(resp => {
-        console.log(resp)
-        message.success("Registration successful");
-        setLoading(false)
-        setTimeout(() => {
-          handleTabChange('login')
-        }, 2000);
-      })
-      .catch(error => {
-        console.log(error?.response?.data?.email)
-        message.error(error?.response?.data?.email)
-        setLoading(false)
-      });
-  };
+  //   const registerPayload = {
+  //     first_name: firstName,
+  //     last_name: lastName,
+  //     company_name: company,
+  //     phone_number: phone,
+  //     email: registerEmail,
+  //     password: registerPassword,
+  //     is_active: "true",
+  //   };
+  //   axios.post(`${process.env.REACT_APP_BASE_API_URL}/register/`, registerPayload)
+  //     .then(resp => {
+  //       console.log(resp)
+  //       message.success("Registration successful");
+  //       setLoading(false)
+  //       setTimeout(() => {
+  //         handleTabChange('login')
+  //       }, 2000);
+  //     })
+  //     .catch(error => {
+  //       console.log(error?.response?.data?.email)
+  //       message.error(error?.response?.data?.email)
+  //       setLoading(false)
+  //     });
+  // };
 
   const menu = (
     <Menu>
@@ -98,7 +97,6 @@ function App() {
       </Menu.Item>
     </Menu>
   );
-
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
@@ -139,7 +137,7 @@ function App() {
                 <form className="login-form">
                   <Input id="loginemail" className="form-input" placeholder={t("Enter your email or username")} onChange={(e) => setEmail(e.target.value)} required />
                   <Input.Password id="loginPassword" className="form-input" placeholder={t('Password')} onChange={(e) => setPassword(e.target.value)} required />
-                  <Link className='forget-password-link' to={'/forgetpassword'}>{t('Forgot password?')}</Link>
+                  <Link className='forget-password-link' to={'/forgetpassword'}>{t('Forgot Password')}?</Link>
                   <Button type="primary" className="form-button" onClick={loginUser}>
                     {loading ? <Spin /> : t("Login")}
                   </Button>
