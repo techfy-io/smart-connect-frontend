@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { Layout, Card, Button, Input, message, Spin } from 'antd';
+import { Layout, Card, Button, Input, message, Spin, Menu, Dropdown } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from "../../Inspect/logo.png";
+import { DownOutlined } from '@ant-design/icons';
 import Smartlogo from "../../Inspect/Smart-logo.png";
 import InputMask from "react-input-mask";
-
 import './Login.scss'
 import axios from 'axios';
+import { useTranslation, initReactI18next, I18nextProvider } from "react-i18next";
+import { changeLanguage } from 'i18next';
 const { Content } = Layout;
 
 function App() {
+  const { t, i18n } = useTranslation('translation')
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
@@ -26,6 +28,7 @@ function App() {
   };
 
   const loginUser = () => {
+
     setLoading(true);
     const loginPayload = {
       email: email,
@@ -85,8 +88,29 @@ function App() {
       });
   };
 
+  const menu = (
+    <Menu>
+      <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+        French
+      </Menu.Item>
+      <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+        English
+      </Menu.Item>
+    </Menu>
+  );
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <Layout className='main-layout' style={{ width: '100%', height: '100vh' }}>
+      <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <Dropdown overlay={menu} trigger={['click']} >
+          <Button type="primary" style={{ width: "100px" }}>
+            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
+          </Button>
+        </Dropdown>
+      </div>
       <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card className="custom-card" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <div className='custom-title'>
@@ -110,14 +134,14 @@ function App() {
           <div className="tab-content">
             {activeForm === 'login' ? (
               <>
-                <h1 className="section-title">Welcome</h1>
-                <p className='section-pera'>Sign in to continue</p>
+                <h1 className="section-title">{t('Welcome')}</h1>
+                <p className='section-pera'>{t('Sign in to continue')}</p>
                 <form className="login-form">
-                  <Input id="loginemail" className="form-input" placeholder="Enter your email or username" onChange={(e) => setEmail(e.target.value)} required />
-                  <Input.Password id="loginPassword" className="form-input" placeholder="Password" onChange={(e) => setPassword(e.target.value)} required />
-                  <Link className='forget-password-link' to={'/forgetpassword'}>Forgot password?</Link>
+                  <Input id="loginemail" className="form-input" placeholder={t("Enter your email or username")} onChange={(e) => setEmail(e.target.value)} required />
+                  <Input.Password id="loginPassword" className="form-input" placeholder={t('Password')} onChange={(e) => setPassword(e.target.value)} required />
+                  <Link className='forget-password-link' to={'/forgetpassword'}>{t('Forgot password?')}</Link>
                   <Button type="primary" className="form-button" onClick={loginUser}>
-                    {loading ? <Spin /> : "Login"}
+                    {loading ? <Spin /> : t("Login")}
                   </Button>
                 </form>
               </>
