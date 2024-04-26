@@ -11,7 +11,7 @@ import Sidebar from '../Common/Sidebar';
 import AddCompany from './AddCompany';
 import CompanyUsers from '../SuperAdmin/CompanyUsers';
 import InputMask from "react-input-mask";
-import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import 'font-awesome/css/font-awesome.min.css'; 
 
 function Dashboard() {
   const [form] = Form.useForm();
@@ -201,6 +201,7 @@ function Dashboard() {
     return (
       <div className="dashboard">
         <Sidebar />
+
         <div className="content">
           <div className='content-header'>
             {userType === "SuperAdmin" ? (
