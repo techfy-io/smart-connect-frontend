@@ -96,6 +96,7 @@ const ForgetPassword = () => {
                             remember: true,
                         }}
                     >
+                        {/* forget para */}
                         <div className='section-para-container'>
                             <p className='section-para'>{t("Enter the email address you used when joining, and we’ll send reset instructions to reset your password.")}</p>
                         </div>
