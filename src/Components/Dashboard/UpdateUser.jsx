@@ -5,6 +5,7 @@
     import './Dashboard.scss';
     import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
     import FormItem from 'antd/es/form/FormItem';
+    import Men1 from "../../Inspect/Men1.png";
 
     const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         const [loading, setLoading] = useState(false);
@@ -483,7 +484,7 @@
                                 name="phone_number_type"
                             >
                                 <Radio.Group >
-                                    <Radio name='phone_number_professional' value="PROFESSIONAL">Professional</Radio>
+                                    <Radio name='phone_number_professional' value="PROFESSIONNEL">Professionnel</Radio>
                                     <Radio name='phone_number_personal' value="PERSONAL">Personal</Radio>
                                 </Radio.Group>
                             </Form.Item>

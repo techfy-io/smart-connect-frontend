@@ -11,6 +11,7 @@ import Sidebar from '../Common/Sidebar';
 import AddCompany from './AddCompany';
 import CompanyUsers from '../SuperAdmin/CompanyUsers';
 import InputMask from "react-input-mask";
+import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 
 function Dashboard() {
   const [form] = Form.useForm();
@@ -185,7 +186,9 @@ function Dashboard() {
           {userType === "SuperAdmin" ? (
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <img className='content-header-logo' src={CompanyLogo} alt="" />
+                {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+                <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{color:"white" , fontSize:"50px" }}></i>
+                
                 <div className='AddUser-action'>
                   <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button>
                 </div>
@@ -197,7 +200,7 @@ function Dashboard() {
                   {companyName}
                 </div>
                 <div className='AddUser-action'>
-                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
+                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
                 </div>
               </div>
             </>
