@@ -20,6 +20,7 @@ function Dashboard() {
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updateCompanyloading, setupdateCompanyloading] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
@@ -140,245 +141,264 @@ function Dashboard() {
   };
   const handleUpdateCompany = () => {
     form.validateFields().then((values) => {
-      const accessToken = localStorage.getItem('accessToken');
-      const { id } = companyInfo; // Get the company id from companyInfo state
-      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
-        headers: { 'Authorization': `Bearer ${accessToken}` }
-      })
-        .then((response) => {
-          console.log(response);
-          message.success("Company Updated Successfully");
-          toggleUpdateCompanyModal(); // Close modal after successful update
-          fetchCompanies(); // Refresh company data
+      setupdateCompanyloading(true);
+        const accessToken = localStorage.getItem('accessToken');
+        const { id } = companyInfo; // Get the company id from companyInfo state
+        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         })
-        .catch((error) => { // Added parentheses around error parameter
-          console.log("error", error);
-          const responseData = error.response.data;
-          let errorMessage = '';
-          for (const prop in responseData) {
-            if (responseData.hasOwnProperty(prop)) {
-              errorMessage = responseData[prop][0];
-              break;
+        .then((response) => {
+            console.log(response);
+            message.success("Company Updated Successfully");
+            toggleUpdateCompanyModal(); // Close modal after successful update
+            fetchCompanies(); // Refresh company data
+            setupdateCompanyloading(false);
+        })
+        .catch((error) => { // Syntax fix: added parentheses around error
+            console.log("error", error);
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                if (error.response.status === 404 || error.response.status === 500) {
+                    // Handle 404 or 500 error
+                    message.error("Failed: Something went wrong with the server.");
+                } else {
+                    // Handle other errors with response data
+                    const responseData = error.response.data;
+                    let errorMessage = '';
+
+                    for (const prop in responseData) {
+                        if (responseData.hasOwnProperty(prop)) {
+                            errorMessage = responseData[prop][0];
+                            break;
+                        }
+                    }
+
+                    message.error(errorMessage);
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error("No response received from the server:", error.request);
+                message.error("Failed: No response received from the server.");
+            } else {
+                // Something happened in setting up the request that triggered an error
+                console.error("Error setting up the request:", error.message);
+                message.error("Failed: Error setting up the request.");
             }
-          }
-          message.error(errorMessage);
-          setLoading(false);
+            setupdateCompanyloading(false);
         });
-    }).catch((errorInfo) => {
-      console.log('Validation failed:', errorInfo);
     });
-  };
+};
 
-// dasd
-  const handleCancel = () => {
-    form.resetFields();
-    toggleUpdateCompanyModal();
-  };
+    // dasd
+    const handleCancel = () => {
+      form.resetFields();
+      toggleUpdateCompanyModal();
+    };
 
-  const GetUserProfile = (id) => {
-    navigate(`/profile/${id}`);
-  }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
-  return (
-    <div className="dashboard">
-      <Sidebar />
-      <div className="content">
-        <div className='content-header'>
-          {userType === "SuperAdmin" ? (
-            <>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
-                <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{color:"white" , fontSize:"50px" }}></i>
-                
-                <div className='AddUser-action'>
-                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button>
-                </div>
-              </div>
-            </>) : (
-            <>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className='content-header-companyName'>
-                  {companyName}
-                </div>
-                <div className='AddUser-action'>
-                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
-                </div>
-              </div>
-            </>
-          )
-          }
-        </div>
-        {/* <div className="scrollable-table "> */}
-        <table className="table">
-          <thead>
+    const GetUserProfile = (id) => {
+      navigate(`/profile/${id}`);
+    }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+    return (
+      <div className="dashboard">
+        <Sidebar />
+        <div className="content">
+          <div className='content-header'>
             {userType === "SuperAdmin" ? (
-              <tr>
-                <th>Company Name</th>
-                <th>Email</th>
-                <th>Action</th>
-              </tr>
-            ) : (
-              <tr>
-                <th>User Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Action</th>
-              </tr>
-            )}
-          </thead>
-          {
-            loading ? (
               <>
-                <tbody>
-                  <tr>
-                    <td colSpan="4"> <Spin /></td></tr>
-                </tbody>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+                  <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
+
+                  <div className='AddUser-action'>
+                    <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button>
+                  </div>
+                </div>
+              </>) : (
+              <>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <div className='content-header-companyName'>
+                    {companyName}
+                  </div>
+                  <div className='AddUser-action'>
+                    <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
+                  </div>
+                </div>
               </>
-            ) : (
-              <>
-                {
-                  userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
-                    <>
-                      <tbody>
-                        {companiesData ? (
-                          <> {
-                            companiesData.map((company, key) => (
+            )
+            }
+          </div>
+          {/* <div className="scrollable-table "> */}
+          <table className="table">
+            <thead>
+              {userType === "SuperAdmin" ? (
+                <tr>
+                  <th>Company Name</th>
+                  <th>Email</th>
+                  <th>Action</th>
+                </tr>
+              ) : (
+                <tr>
+                  <th>User Name</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Action</th>
+                </tr>
+              )}
+            </thead>
+            {
+              loading ? (
+                <>
+                  <tbody>
+                    <tr>
+                      <td colSpan="4"> <Spin /></td></tr>
+                  </tbody>
+                </>
+              ) : (
+                <>
+                  {
+                    userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                      <>
+                        <tbody>
+                          {companiesData ? (
+                            <> {
+                              companiesData.map((company, key) => (
+                                <tr key={key}>
+                                  <td>{company.name}</td>
+                                  <td>{company.email}</td>
+                                  <td className='Actions-btns'>
+                                    <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                    <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                    <button
+                                      className="Edit-button"
+                                      onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                    >
+                                      <EditOutlined />
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              <td colSpan="4">
+                                <Empty description="No Company found" />
+                              </td>
+                            </>
+                          )}
+                        </tbody>
+                      </>
+                    ) : (
+                      <>
+                        <tbody>
+                          {userData && userData.length > 0 ? (
+                            userData.map((user, key) => (
                               <tr key={key}>
-                                <td>{company.name}</td>
-                                <td>{company.email}</td>
+                                <td>{user.first_name + " " + user.last_name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.job_title}</td>
                                 <td className='Actions-btns'>
-                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
-                                  <button
-                                    className="Edit-button"
-                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
-                                  >
+                                  <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                    <EyeOutlined />
+                                  </button>
+                                  <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                    <DeleteOutlined />
+                                  </button>
+                                  <button className="Edit-button" onClick={() => updateUser(user)}>
                                     <EditOutlined />
                                   </button>
                                 </td>
                               </tr>
-                            ))}
-                          </>
-                        ) : (
-                          <>
+                            ))
+                          ) : (
                             <td colSpan="4">
-                              <Empty description="No Company found" />
+                              <Empty description="No users found" />
                             </td>
-                          </>
-                        )}
-                      </tbody>
-                    </>
-                  ) : (
-                    <>
-                      <tbody>
-                        {userData && userData.length > 0 ? (
-                          userData.map((user, key) => (
-                            <tr key={key}>
-                              <td>{user.first_name + " " + user.last_name}</td>
-                              <td>{user.email}</td>
-                              <td>{user.job_title}</td>
-                              <td className='Actions-btns'>
-                                <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
-                                  <EyeOutlined />
-                                </button>
-                                <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                                  <DeleteOutlined />
-                                </button>
-                                <button className="Edit-button" onClick={() => updateUser(user)}>
-                                  <EditOutlined />
-                                </button>
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <td colSpan="4">
-                            <Empty description="No users found" />
-                          </td>
-                        )}
-                      </tbody>
-                    </>
-                  )
-                }
-              </>
-            )
-          }
-        </table>
-        {/* </div> */}
-      </div>
-      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
-      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
-      {/* Update company Modal */}
-      <Modal
-        title="Update Company"
-        open={updateCompanyModalVisible}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="submit" type="primary" onClick={handleUpdateCompany} loading={loading}>
-            Update
-          </Button>,
-        ]}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={companyInfo}
-          onFinish={handleUpdateCompany}
+                          )}
+                        </tbody>
+                      </>
+                    )
+                  }
+                </>
+              )
+            }
+          </table>
+          {/* </div> */}
+        </div>
+        <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+        <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
+        {/* Update company Modal */}
+        <Modal
+          title="Update Company"
+          open={updateCompanyModalVisible}
+          onCancel={handleCancel}
+          footer={[
+            <Button key="cancel" onClick={handleCancel}>
+              Cancel
+            </Button>,
+            <Button key="submit" type="primary" onClick={handleUpdateCompany} loading={updateCompanyloading}>
+              Update
+            </Button>,
+          ]}
         >
-          <Form.Item label="Company Name" name="name">
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter an email',
-              },
-              {
-                type: 'email',
-                message: 'Invalid email format',
-              },
-            ]}
+          <Form
+            form={form}
+            layout="vertical"
+            initialValues={companyInfo}
+            onFinish={handleUpdateCompany}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Phone"
-            name="phone_number"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter a phone number',
-              },
-              {
-                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                message: 'Invalid phone number format',
-              },
-            ]}
-          >
-            <InputMask
-              style={{
-                width: "97%",
-                height: "30px",
-                borderRadius: "5px",
-                border: "1px solid #d9d9d9",
-                paddingLeft: "8px",
-                color: "black",
-                transition: "border-color 0.3s",
-              }}
-              mask="+33 9 99 99 99 99"
-              maskChar=""
-              placeholder="+33 1 23 45 67 89"
-            />
-          </Form.Item>
-        </Form>
-      </Modal>
+            <Form.Item label="Company Name" name="name">
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter an email',
+                },
+                {
+                  type: 'email',
+                  message: 'Invalid email format',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Phone"
+              name="phone_number"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter a phone number',
+                },
+                {
+                  pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                  message: 'Invalid phone number format',
+                },
+              ]}
+            >
+              <InputMask
+                style={{
+                  width: "97%",
+                  height: "30px",
+                  borderRadius: "5px",
+                  border: "1px solid #d9d9d9",
+                  paddingLeft: "8px",
+                  color: "black",
+                  transition: "border-color 0.3s",
+                }}
+                mask="+33 9 99 99 99 99"
+                maskChar=""
+                placeholder="+33 1 23 45 67 89"
+              />
+            </Form.Item>
+          </Form>
+        </Modal>
 
-    </div >
-  );
-}
+      </div >
+    );
+  }
 
-export default Dashboard;
+  export default Dashboard;
