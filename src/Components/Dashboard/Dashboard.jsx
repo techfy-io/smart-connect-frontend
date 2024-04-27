@@ -138,7 +138,7 @@ function Dashboard() {
     form.setFieldsValue({
       name: company.name,
       email: company.email,
-      phone_number: company.phone_number
+      phone_number: company.phone_number,
     });
     toggleUpdateCompanyModal();
   };
@@ -208,17 +208,16 @@ function Dashboard() {
   const menu = (
     <Menu>
       <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-        {t('French')}
+        French
       </Menu.Item>
       <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-        {t('English')}
+        English
       </Menu.Item>
     </Menu>
   );
   return (
     <div className="dashboard">
       <Sidebar />
-
       <div className="content">
         <div className='content-header'>
           {userType === "SuperAdmin" ? (
@@ -371,7 +370,13 @@ function Dashboard() {
           initialValues={companyInfo}
           onFinish={handleUpdateCompany}
         >
-          <Form.Item label={t('Company Name')} name="name">
+          <Form.Item label={t('Company Name')} name="name"
+           rules={[
+            {
+              required: true,
+              message: 'Please enter an Company Name',
+            }
+          ]}>
             <Input />
           </Form.Item>
           <Form.Item
@@ -380,45 +385,43 @@ function Dashboard() {
             rules={[
               {
                 required: true,
-                message: t('Please enter an email'),
+                message: 'Please enter an email',
               },
               {
                 type: 'email',
-                message: t('Please input a valid email!'),
+                message: 'Please input a valid email!',
               },
             ]}
           >
             <Input />
           </Form.Item>
+
           <Form.Item
-            label={t('Phone')}
-            name="phone_number"
-            rules={[
-              {
-                required: true,
-                message: t('Please enter a phone number'),
-              },
-              {
-                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                message: t('Invalid phone number format'),
-              },
-            ]}
-          >
-            <InputMask
-              style={{
-                width: "97%",
-                height: "30px",
-                borderRadius: "5px",
-                border: "1px solid #d9d9d9",
-                paddingLeft: "8px",
-                color: "black",
-                transition: "border-color 0.3s",
-              }}
-              mask="+33 9 99 99 99 99"
-              maskChar=""
-              placeholder="+33 1 23 45 67 89"
-            />
-          </Form.Item>
+  label={t('Phone')}
+  name="phone_number"
+  rules={[
+    {
+      pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+      message: t('Invalid phone number format'),
+    },
+  ]}
+>
+  <InputMask
+    style={{
+      width: "97%",
+      height: "30px",
+      borderRadius: "5px",
+      border: "1px solid #d9d9d9",
+      paddingLeft: "8px",
+      color: "black",
+      transition: "border-color 0.3s",
+    }}
+    mask="+33 9 99 99 99 99"
+    maskChar=""
+    placeholder="+33 1 23 45 67 89"
+  />
+</Form.Item>
+
         </Form>
       </Modal>
 
