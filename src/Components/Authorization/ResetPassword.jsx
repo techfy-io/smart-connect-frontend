@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Input, Button, Form, message, Spin, Result } from 'antd';
+import { Layout, Input, Button, Form, message, Spin, Result, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './ResetPassword.scss';
-import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined , DownOutlined} from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import  {Link}  from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 const { Header } = Layout;
-
 const ResetPassword = () => {
+    const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(true);
     const [updateloading, setupdateloading] = useState(false);
     const [isValidToken, setIsValidToken] = useState(false);
-
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const uidb64 = searchParams.get('uid');
@@ -83,9 +83,28 @@ const ResetPassword = () => {
             setupdateloading(false);
         }
     };
-
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+    };
+    const menu = (
+        <Menu>
+            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+                French
+            </Menu.Item>
+            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+                English
+            </Menu.Item>
+        </Menu>
+    );
     return (
         <div className='reset-password-main-layout'>
+             <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px" }}>
+                        {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </div>
             {loading ? (
                 <div style={{ textAlign: "center", color: "white" }}>
                     <Spin indicator={<LoadingOutlined style={{ fontSize: 34 }} />} style={{ color: "white" }} />
@@ -94,7 +113,7 @@ const ResetPassword = () => {
                 <div className='reset-password-custom-card'>
                     <div className='reset-password-tab-container'>
                         <button type='primary' className={'button-style active-button-style'}>
-                            Reset Password
+                            {t("Reset Password")}
                         </button>
                     </div>
                     <div className="reset-password-tab-content">
@@ -112,35 +131,35 @@ const ResetPassword = () => {
                             </div>
                             <Form.Item
                                 name="new_password"
-                                label="New Password"
+                                label={t("New Password")}
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your new password',
+                                        message: (t('Please input your new password')),
                                     },
                                 ]}
                             >
                                 <Input.Password
-                                    placeholder="New Password"
+                                    placeholder={t("New Password")}
                                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 />
                             </Form.Item>
                             <Form.Item
                                 name="confirm_password"
-                                label="Confirm Password"
+                                label={t("Confirm Password")}
                                 dependencies={['new_password']}
                                 hasFeedback
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please confirm your password',
+                                        message: (t('Please confirm your password')),
                                     },
                                     ({getFieldValue}) => ({
                                         validator(_, value) {
                                             if (!value || getFieldValue('new_password') === value) {
                                                 return Promise.resolve();
                                             }
-                                            return Promise.reject(new Error('The new password and confirm password do not match!'));
+                                            return Promise.reject(new Error(t('The new password and confirm password do not match!')));
                                         },
                                     }),
                                 ]}
@@ -160,7 +179,7 @@ const ResetPassword = () => {
                                     className="reset-password-form-enable-button"
                                     loading={updateloading}
                                 >
-                                    Save
+                                    {t("Save")}
                                 </Button>
                             </Form.Item>
                         </Form>
@@ -169,8 +188,8 @@ const ResetPassword = () => {
             ) : (
                 <Result
                     icon={<CloseCircleOutlined style={{ color: '#f5222d', fontSize: 50 }} />}
-                    title={<><h3 style={{ color: "white" }}>Invalid or expired token</h3></>}
-                    subTitle={<><h5 style={{ color: "white" }}>Please check your email for the latest reset link or request a new one.</h5></>}
+                    title={<><h3 style={{ color: "white" }}>{t("Invalid or expired token")}</h3></>}
+                    subTitle={<><h5 style={{ color: "white" }}>{t("Please check your email for the latest reset link or request a new one.")}</h5></>}
                 />
             )}
         </div>

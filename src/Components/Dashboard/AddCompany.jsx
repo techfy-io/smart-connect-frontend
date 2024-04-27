@@ -89,7 +89,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input yourfirst name!',
+                            message: 'Please input your first name!',
                         },
                     ]}
                 >

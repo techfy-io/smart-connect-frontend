@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Modal, Avatar, Form, Input, Empty } from 'antd';
+import { DeleteOutlined, EditOutlined, EyeOutlined, DownOutlined } from '@ant-design/icons';
+import { message, Spin, Button, Modal, Avatar, Form, Input, Empty, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
 import AddUser from './AddUser';
@@ -11,9 +11,12 @@ import Sidebar from '../Common/Sidebar';
 import AddCompany from './AddCompany';
 import CompanyUsers from '../SuperAdmin/CompanyUsers';
 import InputMask from "react-input-mask";
-import 'font-awesome/css/font-awesome.min.css'; 
+import 'font-awesome/css/font-awesome.min.css';
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
+  const { t, i18n } = useTranslation('translation');
+
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [userType, setUserType] = useState("");
@@ -88,8 +91,8 @@ function Dashboard() {
 
   const deleteUser = (id) => {
     Modal.confirm({
-      title: 'Confirm',
-      content: 'Are you sure you want to delete this user?',
+      title: t('Confirm'),
+      content: t('Are you sure you want to delete this user?'),
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
         axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
@@ -97,7 +100,7 @@ function Dashboard() {
         })
           .then(response => {
             console.log(response, "delete user resp")
-            message.success("User Deleted Successfully");
+            message.success(t('User Deleted Successfully'));
             // setTimeout(() => window.location.reload(), 1000);
             fetchUsers();
           })
@@ -110,8 +113,8 @@ function Dashboard() {
   };
   const deleteCompany = (id) => {
     Modal.confirm({
-      title: 'Confirm',
-      content: 'Are you sure you want to delete this Company?',
+      title: t('Confirm'),
+      content: t('Are you sure you want to delete this Company?'),
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
         axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
@@ -119,7 +122,7 @@ function Dashboard() {
         })
           .then(response => {
             console.log(response, "delete Company resp")
-            message.success("Company Deleted Successfully");
+            message.success(t('Company Deleted Successfully'));
             // setTimeout(() => window.location.reload(), 1000);
             fetchCompanies();
           })
@@ -142,264 +145,285 @@ function Dashboard() {
   const handleUpdateCompany = () => {
     form.validateFields().then((values) => {
       setupdateCompanyloading(true);
-        const accessToken = localStorage.getItem('accessToken');
-        const { id } = companyInfo; // Get the company id from companyInfo state
-        axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
-            headers: { 'Authorization': `Bearer ${accessToken}` }
-        })
+      const accessToken = localStorage.getItem('accessToken');
+      const { id } = companyInfo; // Get the company id from companyInfo state
+      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      })
         .then((response) => {
-            console.log(response);
-            message.success("Company Updated Successfully");
-            toggleUpdateCompanyModal(); // Close modal after successful update
-            fetchCompanies(); // Refresh company data
-            setupdateCompanyloading(false);
+          console.log(response);
+          message.success(t('Company Updated Successfully'));
+          toggleUpdateCompanyModal(); // Close modal after successful update
+          fetchCompanies(); // Refresh company data
+          setupdateCompanyloading(false);
         })
         .catch((error) => { // Syntax fix: added parentheses around error
-            console.log("error", error);
-            if (error.response) {
-                // The request was made and the server responded with a status code
-                if (error.response.status === 404 || error.response.status === 500) {
-                    // Handle 404 or 500 error
-                    message.error("Failed: Something went wrong with the server.");
-                } else {
-                    // Handle other errors with response data
-                    const responseData = error.response.data;
-                    let errorMessage = '';
-
-                    for (const prop in responseData) {
-                        if (responseData.hasOwnProperty(prop)) {
-                            errorMessage = responseData[prop][0];
-                            break;
-                        }
-                    }
-
-                    message.error(errorMessage);
-                }
-            } else if (error.request) {
-                // The request was made but no response was received
-                console.error("No response received from the server:", error.request);
-                message.error("Failed: No response received from the server.");
+          console.log("error", error);
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            if (error.response.status === 404 || error.response.status === 500) {
+              // Handle 404 or 500 error
+              message.error(t('Failed: Something went wrong with the server.'));
             } else {
-                // Something happened in setting up the request that triggered an error
-                console.error("Error setting up the request:", error.message);
-                message.error("Failed: Error setting up the request.");
+              // Handle other errors with response data
+              const responseData = error.response.data;
+              let errorMessage = '';
+
+              for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                  errorMessage = responseData[prop][0];
+                  break;
+                }
+              }
+
+              message.error(errorMessage);
             }
-            setupdateCompanyloading(false);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error("No response received from the server:", error.request);
+            message.error(t('Failed: No response received from the server.'));
+          } else {
+            // Something happened in setting up the request that triggered an error
+            console.error("Error setting up the request:", error.message);
+            message.error(t('Failed: Error setting up the request.'));
+          }
+          setupdateCompanyloading(false);
         });
     });
-};
+  };
 
-    // dasd
-    const handleCancel = () => {
-      form.resetFields();
-      toggleUpdateCompanyModal();
-    };
+  // dasd
+  const handleCancel = () => {
+    form.resetFields();
+    toggleUpdateCompanyModal();
+  };
 
-    const GetUserProfile = (id) => {
-      navigate(`/profile/${id}`);
-    }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
-    return (
-      <div className="dashboard">
-        <Sidebar />
+  const GetUserProfile = (id) => {
+    navigate(`/profile/${id}`);
+  }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
-        <div className="content">
-          <div className='content-header'>
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+        {t('French')}
+      </Menu.Item>
+      <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+        {t('English')}
+      </Menu.Item>
+    </Menu>
+  );
+  return (
+    <div className="dashboard">
+      <Sidebar />
+
+      <div className="content">
+        <div className='content-header'>
+          {userType === "SuperAdmin" ? (
+            <>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+                <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
+
+                <div className='AddUser-action'>
+                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
+                  {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
+                  <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                    </Button>
+                  </Dropdown>
+                  {/* </div> */}
+                </div>
+              </div>
+            </>) : (
+            <>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div className='content-header-companyName'>
+                  {companyName}
+                </div>
+                <div className='AddUser-action'>
+                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
+                </div>
+              </div>
+            </>
+          )
+          }
+        </div>
+        {/* <div className="scrollable-table "> */}
+        <table className="table">
+          <thead>
             {userType === "SuperAdmin" ? (
+              <tr>
+                <th>{t('Company Name')}</th>
+                <th>{t('Email')}</th>
+                <th>{t('Action')}</th>
+              </tr>
+            ) : (
+              <tr>
+                <th>{t('User Name')}</th>
+                <th>{t('Email')}</th>
+                <th>{t('Role')}</th>
+                <th>{t('Action')}</th>
+              </tr>
+            )}
+          </thead>
+          {
+            loading ? (
               <>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
-                  <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
-
-                  <div className='AddUser-action'>
-                    <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>Add Company</Button>
-                  </div>
-                </div>
-              </>) : (
-              <>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
-                  <div className='content-header-companyName'>
-                    {companyName}
-                  </div>
-                  <div className='AddUser-action'>
-                    <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>Purchase New Card</Button></a>
-                  </div>
-                </div>
+                <tbody>
+                  <tr>
+                    <td colSpan="4"> <Spin /></td></tr>
+                </tbody>
               </>
-            )
-            }
-          </div>
-          {/* <div className="scrollable-table "> */}
-          <table className="table">
-            <thead>
-              {userType === "SuperAdmin" ? (
-                <tr>
-                  <th>Company Name</th>
-                  <th>Email</th>
-                  <th>Action</th>
-                </tr>
-              ) : (
-                <tr>
-                  <th>User Name</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Action</th>
-                </tr>
-              )}
-            </thead>
-            {
-              loading ? (
-                <>
-                  <tbody>
-                    <tr>
-                      <td colSpan="4"> <Spin /></td></tr>
-                  </tbody>
-                </>
-              ) : (
-                <>
-                  {
-                    userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
-                      <>
-                        <tbody>
-                          {companiesData ? (
-                            <> {
-                              companiesData.map((company, key) => (
-                                <tr key={key}>
-                                  <td>{company.name}</td>
-                                  <td>{company.email}</td>
-                                  <td className='Actions-btns'>
-                                    <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                    <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
-                                    <button
-                                      className="Edit-button"
-                                      onClick={() => openUpdateCompanyModal(company)} // Pass company info here
-                                    >
-                                      <EditOutlined />
-                                    </button>
-                                  </td>
-                                </tr>
-                              ))}
-                            </>
-                          ) : (
-                            <>
-                              <td colSpan="4">
-                                <Empty description="No Company found" />
-                              </td>
-                            </>
-                          )}
-                        </tbody>
-                      </>
-                    ) : (
-                      <>
-                        <tbody>
-                          {userData && userData.length > 0 ? (
-                            userData.map((user, key) => (
+            ) : (
+              <>
+                {
+                  userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                    <>
+                      <tbody>
+                        {companiesData ? (
+                          <> {
+                            companiesData.map((company, key) => (
                               <tr key={key}>
-                                <td>{user.first_name + " " + user.last_name}</td>
-                                <td>{user.email}</td>
-                                <td>{user.job_title}</td>
+                                <td>{company.name}</td>
+                                <td>{company.email}</td>
                                 <td className='Actions-btns'>
-                                  <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
-                                    <EyeOutlined />
-                                  </button>
-                                  <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                                    <DeleteOutlined />
-                                  </button>
-                                  <button className="Edit-button" onClick={() => updateUser(user)}>
+                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                  <button
+                                    className="Edit-button"
+                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                  >
                                     <EditOutlined />
                                   </button>
                                 </td>
                               </tr>
-                            ))
-                          ) : (
+                            ))}
+                          </>
+                        ) : (
+                          <>
                             <td colSpan="4">
-                              <Empty description="No users found" />
+                              <Empty description={t('No Company found')} />
                             </td>
-                          )}
-                        </tbody>
-                      </>
-                    )
-                  }
-                </>
-              )
-            }
-          </table>
-          {/* </div> */}
-        </div>
-        <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
-        <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
-        {/* Update company Modal */}
-        <Modal
-          title="Update Company"
-          open={updateCompanyModalVisible}
-          onCancel={handleCancel}
-          footer={[
-            <Button key="cancel" onClick={handleCancel}>
-              Cancel
-            </Button>,
-            <Button key="submit" type="primary" onClick={handleUpdateCompany} loading={updateCompanyloading}>
-              Update
-            </Button>,
-          ]}
+                          </>
+                        )}
+                      </tbody>
+                    </>
+                  ) : (
+                    <>
+                      <tbody>
+                        {userData && userData.length > 0 ? (
+                          userData.map((user, key) => (
+                            <tr key={key}>
+                              <td>{user.first_name + " " + user.last_name}</td>
+                              <td>{user.email}</td>
+                              <td>{user.job_title}</td>
+                              <td className='Actions-btns'>
+                                <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                  <EyeOutlined />
+                                </button>
+                                <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                  <DeleteOutlined />
+                                </button>
+                                <button className="Edit-button" onClick={() => updateUser(user)}>
+                                  <EditOutlined />
+                                </button>
+                              </td>
+                            </tr>
+                          ))
+                        ) : (
+                          <td colSpan="4">
+                            <Empty description={t('No users found')} />
+                          </td>
+                        )}
+                      </tbody>
+                    </>
+                  )
+                }
+              </>
+            )
+          }
+        </table>
+        {/* </div> */}
+      </div>
+      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
+      {/* Update company Modal */}
+      <Modal
+        title={t('Update Company')}
+        open={updateCompanyModalVisible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            {t('Cancel')}
+          </Button>,
+          <Button key="submit" type="primary" onClick={handleUpdateCompany} loading={updateCompanyloading}>
+            {t('Update')}
+          </Button>,
+        ]}
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={companyInfo}
+          onFinish={handleUpdateCompany}
         >
-          <Form
-            form={form}
-            layout="vertical"
-            initialValues={companyInfo}
-            onFinish={handleUpdateCompany}
+          <Form.Item label={t('Company Name')} name="name">
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={t('Email')}
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: t('Please enter an email'),
+              },
+              {
+                type: 'email',
+                message: t('Please input a valid email!'),
+              },
+            ]}
           >
-            <Form.Item label="Company Name" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter an email',
-                },
-                {
-                  type: 'email',
-                  message: 'Invalid email format',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Phone"
-              name="phone_number"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please enter a phone number',
-                },
-                {
-                  pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                  message: 'Invalid phone number format',
-                },
-              ]}
-            >
-              <InputMask
-                style={{
-                  width: "97%",
-                  height: "30px",
-                  borderRadius: "5px",
-                  border: "1px solid #d9d9d9",
-                  paddingLeft: "8px",
-                  color: "black",
-                  transition: "border-color 0.3s",
-                }}
-                mask="+33 9 99 99 99 99"
-                maskChar=""
-                placeholder="+33 1 23 45 67 89"
-              />
-            </Form.Item>
-          </Form>
-        </Modal>
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label={t('Phone')}
+            name="phone_number"
+            rules={[
+              {
+                required: true,
+                message: t('Please enter a phone number'),
+              },
+              {
+                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                message: t('Invalid phone number format'),
+              },
+            ]}
+          >
+            <InputMask
+              style={{
+                width: "97%",
+                height: "30px",
+                borderRadius: "5px",
+                border: "1px solid #d9d9d9",
+                paddingLeft: "8px",
+                color: "black",
+                transition: "border-color 0.3s",
+              }}
+              mask="+33 9 99 99 99 99"
+              maskChar=""
+              placeholder="+33 1 23 45 67 89"
+            />
+          </Form.Item>
+        </Form>
+      </Modal>
 
-      </div >
-    );
-  }
+    </div >
+  );
+}
 
-  export default Dashboard;
+export default Dashboard;
