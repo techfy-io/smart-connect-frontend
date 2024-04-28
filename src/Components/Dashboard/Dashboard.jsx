@@ -113,26 +113,28 @@ function Dashboard() {
   };
   const deleteCompany = (id) => {
     Modal.confirm({
-      title: t('Confirm'),
-      content: t('Are you sure you want to delete this Company?'),
+      title: t('Confirm'), // Use t() to translate the title
+      content: t('Are you sure you want to delete this Company?'), // Use t() to translate the content
+      okText: t('OK'), // Translate the OK button text
+      cancelText: t('Cancel'), // Translate the Cancel button text
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
         axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
-          .then(response => {
-            console.log(response, "delete Company resp")
-            message.success(t('Company Deleted Successfully'));
-            // setTimeout(() => window.location.reload(), 1000);
-            fetchCompanies();
-          })
-          .catch(error => console.log("error", error));
+        .then(response => {
+          console.log(response, "delete Company resp")
+          message.success(t('Company Deleted Successfully'));
+          fetchCompanies();
+        })
+        .catch(error => console.log("error", error));
       },
       onCancel() {
         console.log('Deletion canceled');
       },
     });
   };
+  
   const openUpdateCompanyModal = (company) => {
     setCompanyInfo(company);
     form.setFieldsValue({

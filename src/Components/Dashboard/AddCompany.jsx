@@ -3,8 +3,10 @@ import { Modal, Form, Input, Button, message } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { useTranslation } from "react-i18next";
 
 const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
+    const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false); 
 
@@ -26,7 +28,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     }
                 }
             );
-            message.success("Company added successfully")
+            message.success(t("Company added successfully"))
             console.log('Company added successfully:', response.data);
             toggleAddCompanyModal();
               setTimeout(() => {
@@ -57,11 +59,11 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
             } else if (error.request) {
                 // The request was made but no response was received
                 console.error("No response received from the server:", error.request);
-                message.error("Failed: No response received from the server.");
+                message.error(t("Failed: No response received from the server."));
             } else {
                 // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
-                message.error("Failed: Error setting up the request.");
+                message.error(t("Failed: Error setting up the request."));
             } 
             setLoading(false)
         } finally {
@@ -71,7 +73,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
 
     return (
         <Modal
-            title="Add Company"
+            title={t("Add Company")}
             open={openAddcompanymodal}
             onCancel={handleCancel}
             footer={null}
@@ -79,63 +81,63 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
         // height={400}
         >
             <Form
-                name="exchangeForm"
+                name={t("Add New Company")}
                 form={form}
                 onFinish={onFinish}
             >
-                <label htmlFor="firstname">First Name*</label>
+                <label htmlFor="firstname">{t("First Name")}*</label>
                 <Form.Item
                     name="first_name"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your first name!',
+                            message: (t('Please input your first name!')),
                         },
                     ]}
                 >
                     <Input />
                 </Form.Item>
-                <label htmlFor="lastname">Last Name*</label>
+                <label htmlFor="lastname">{t("Last Name")}*</label>
                 <Form.Item
                     name="last_name"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your last name!',
+                            message: (t('Please input your last name!')),
                         },
                     ]}
                 >
                     <Input />
                 </Form.Item>
-                <label htmlFor="company_name">Company Name*</label>
+                <label htmlFor="company_name">{t("Company Name")}*</label>
                 <Form.Item
                     name="company_name"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your company  name!',
+                            message: (t('Please input your company name!')),
                         },
                     ]}
                 >
                     <Input />
                 </Form.Item>
-                <label htmlFor="email">Email*</label>
+                <label htmlFor="email">{t("Email")}*</label>
                 <Form.Item
                     name="email"
                     rules={[
                         {
                             type: 'email',
-                            message: 'The input is not a valid email!',
+                            message: (t('Please input a valid email!')),
                         },
                         {
                             required: true,
-                            message: 'Please input your email!',
+                            message: (t('Please enter an email')),
                         },
                     ]}
                 >
                     <Input />
                 </Form.Item>
-                <label htmlFor="password">Password*</label>
+                <label htmlFor="password">{t("Password")}*</label>
                 <Form.Item
                     name="password"
                     rules={[
@@ -144,7 +146,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                         },
                         {
                             required: true,
-                            message: 'Please input your password!',
+                            message: (t('Please input your password!')),
                         },
                     ]}
                 >
@@ -153,7 +155,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                         iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                 </Form.Item>
-                <label htmlFor="phone">Phone</label>
+                <label htmlFor="phone">{t("Phone")}</label>
                 <Form.Item
                     name="phone_number"
                 >
@@ -175,10 +177,10 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                 </Form.Item>
                 <Form.Item style={{ textAlign: 'right' }}>
                     <Button style={{ marginRight: 8 }} onClick={handleCancel}>
-                        Cancel
+                        {t("Cancel")}
                     </Button>
                     <Button type="primary" htmlType="submit" style={{ background: "#ff8000" }} loading={loading}>
-                        Add Company
+                        {t("Add Company")}
                     </Button>
                 </Form.Item>
             </Form>
