@@ -247,6 +247,11 @@ function Dashboard() {
                 </div>
                 <div className='AddUser-action'>
                   <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
+                  <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                    </Button>
+                  </Dropdown>
                 </div>
               </div>
             </>

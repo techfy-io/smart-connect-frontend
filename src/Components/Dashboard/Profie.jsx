@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip } from 'antd';
+import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip , Menu, Dropdown } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -10,13 +10,15 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined , DownOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
+import { useTranslation } from "react-i18next";
 
 
 const Profile = () => {
+    const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
@@ -174,7 +176,7 @@ const Profile = () => {
     };
     const handleSocialIconClick = (url) => {
         if (!url) {
-            message.error("No media available, please add one.");
+            message.error(t("No media available, please add one."));
         } else {
             window.open(url, "_blank");
         }
@@ -183,7 +185,7 @@ const Profile = () => {
     const renderSocialIcon = (url, iconClass, tooltipTitle) => {
         if (!url) {
             return (
-                <Tooltip title="No media available, please add one.">
+                <Tooltip title={t("No media available, please add one.")}>
                     <div className="icon-box disabled">
                         <span className={`fa ${iconClass} icon`} />
                     </div>
@@ -197,6 +199,19 @@ const Profile = () => {
             );
         }
     };
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+      };
+      const menu = (
+        <Menu>
+          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+            French
+          </Menu.Item>
+          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+            English
+          </Menu.Item>
+        </Menu>
+      );
     return (
         <>
             {pageloading ? (
@@ -208,7 +223,13 @@ const Profile = () => {
                     {
                         userData ? (
                             <div className="profile-container">
-
+ <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
+        <Dropdown overlay={menu} trigger={['click']} >
+          <Button type="primary" style={{ width: "100px" }}>
+            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
+          </Button>
+        </Dropdown>
+      </div>
                                 <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                 </div>
@@ -221,10 +242,10 @@ const Profile = () => {
                                     </div>
                                     <br />
                                     {/* code para */}
-                                    <p className='qr-code-para'>Show QRCode to share your profile</p>
+                                    <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                     <div className='download-qr-code-btn'>
                                         <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
-                                            Download QR Code
+                                            {t("Download QR Code")}
                                         </Button>
                                     </div>
                                 </div>
@@ -262,13 +283,13 @@ const Profile = () => {
                                                 <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
                                             ) : (
                                                 <>
-                                                    <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Save Contact
+                                                    <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Save Contact")}
                                                 </>
                                             )}
                                         </button>
 
                                         <button className='exchange-button' onClick={handleOpenExchangeModal}>
-                                            <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> Exchange
+                                            <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Exchange")}
                                         </button>
                                     </div>
                                 </div>
@@ -300,7 +321,7 @@ const Profile = () => {
                                     userData && userData.bio_graphy && (
                                         <>
                                             <div className='bio-data-card'>
-                                                <h2 className='bio-heading'>Biography</h2>
+                                                <h2 className='bio-heading'>{t("Biography")}</h2>
                                                 <p className='bio-para'>{userData.bio_graphy}</p>
                                             </div>
                                         </>
@@ -315,18 +336,18 @@ const Profile = () => {
                                 <div>
                                     {/* <img src={Emptyicon} alt="" />
                                     <h5 sty>The User is no longer availible</h5> */}
-                                    <Empty Size="Large" description="The User is no longer available" />
+                                    <Empty Size="Large" description={t("The User is no longer available")} />
                                 </div>
                             </div>
                         )
                     }
                     <Modal
-                        title="Exchange"
+                        title={t("Exchange")}
                         open={openExchangeModal}
                         onCancel={handleCancel}
                         footer={[
                             <Button onClick={handleCancel}>
-                                Cancel
+                                {t("Cancel")}
                             </Button>,
                             <Button
                             onClick={() => form.submit()} // Trigger form submission
@@ -335,71 +356,71 @@ const Profile = () => {
                                 style={{ background: "#ff8000" }}
                                 loading={loading} 
                             >
-                                Submit
+                                {t("Submit")}
                             </Button>
                         ]}
                     >
                         <Form
-                            name="exchangeForm"
+                            name="exchange Form"
                             form={form}
                             onFinish={onFinish}
                         >
-                            <label htmlFor="firstname">First Name*</label>
+                            <label htmlFor="firstname">{t("First Name")}*</label>
                             <Form.Item
                                 name="first_name"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please enter your first name!',
+                                        message: (t('Please input your first name!')),
                                     },
                                 ]}
                             >
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="lastname">Last Name*</label>
+                            <label htmlFor="lastname">{t("Last Name")}*</label>
                             <Form.Item
                                 name="last_name"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please enter your last name!',
+                                        message: (t('Please input your last name!')),
                                     },
                                 ]}
                             >
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="companyname">Company Name</label>
+                            <label htmlFor="companyname">{t("Company Name")}</label>
                             <Form.Item
                                 name="company_name">
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="email">Email*</label>
+                            <label htmlFor="email">{t("Email")}*</label>
                             <Form.Item
                                 name="email"
                                 rules={[
                                     {
                                         type: 'email',
-                                        message: 'The input is not a valid email!',
+                                        message: (t('Please input a valid email!')),
                                     },
                                     {
                                         required: true,
-                                        message: 'Please enter your email!',
+                                        message: (t('Please enter an email')),
                                     },
                                 ]}
                             >
                                 <Input />
                             </Form.Item>
-                            <label htmlFor="phone">Phone*</label>
+                            <label htmlFor="phone">{t("Phone")}*</label>
                             <Form.Item
                                 name="phone_number"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please enter a phone number',
+                                        message: (t('Please enter a phone number')),
                                     },
                                     {
                                         pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                        message: 'Invalid phone number format',
+                                        message: (t('Invalid phone number format')),
                                     },
                                 ]}
                             >
