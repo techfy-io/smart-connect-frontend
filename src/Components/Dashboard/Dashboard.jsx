@@ -122,19 +122,19 @@ function Dashboard() {
         axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
-        .then(response => {
-          console.log(response, "delete Company resp")
-          message.success(t('Company Deleted Successfully'));
-          fetchCompanies();
-        })
-        .catch(error => console.log("error", error));
+          .then(response => {
+            console.log(response, "delete Company resp")
+            message.success(t('Company Deleted Successfully'));
+            fetchCompanies();
+          })
+          .catch(error => console.log("error", error));
       },
       onCancel() {
         console.log('Deletion canceled');
       },
     });
   };
-  
+
   const openUpdateCompanyModal = (company) => {
     setCompanyInfo(company);
     form.setFieldsValue({
@@ -285,31 +285,31 @@ function Dashboard() {
                   userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
                     <>
                       <tbody>
-                        {companiesData ? (
-                          <> {
-                            companiesData.map((company, key) => (
-                              <tr key={key}>
-                                <td>{company.name}</td>
-                                <td>{company.email}</td>
-                                <td className='Actions-btns'>
-                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
-                                  <button
-                                    className="Edit-button"
-                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
-                                  >
-                                    <EditOutlined />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </>
+                        {companiesData.length  ? (
+                        <> {
+                          companiesData.map((company, key) => (
+                            <tr key={key}>
+                              <td>{company.name}</td>
+                              <td>{company.email}</td>
+                              <td className='Actions-btns'>
+                                <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                <button
+                                  className="Edit-button"
+                                  onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                >
+                                  <EditOutlined />
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </>
                         ) : (
-                          <>
-                            <td colSpan="4">
-                              <Empty description={t('No Company found')} />
-                            </td>
-                          </>
+                        <>
+                          <td colSpan="4">
+                            <Empty description={t('No Company found')} />
+                          </td>
+                        </>
                         )}
                       </tbody>
                     </>
@@ -373,12 +373,12 @@ function Dashboard() {
           onFinish={handleUpdateCompany}
         >
           <Form.Item label={t('Company Name')} name="name"
-           rules={[
-            {
-              required: true,
-              message: 'Please enter an Company Name',
-            }
-          ]}>
+            rules={[
+              {
+                required: true,
+                message: (t("Please input your company name!")),
+              }
+            ]}>
             <Input />
           </Form.Item>
           <Form.Item
@@ -387,11 +387,11 @@ function Dashboard() {
             rules={[
               {
                 required: true,
-                message: 'Please enter an email',
+                message: (t('Please enter an email')),
               },
               {
                 type: 'email',
-                message: 'Please input a valid email!',
+                message: (t('Please input a valid email!')),
               },
             ]}
           >
@@ -399,30 +399,30 @@ function Dashboard() {
           </Form.Item>
 
           <Form.Item
-  label={t('Phone')}
-  name="phone_number"
-  rules={[
-    {
-      pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-      message: t('Invalid phone number format'),
-    },
-  ]}
->
-  <InputMask
-    style={{
-      width: "97%",
-      height: "30px",
-      borderRadius: "5px",
-      border: "1px solid #d9d9d9",
-      paddingLeft: "8px",
-      color: "black",
-      transition: "border-color 0.3s",
-    }}
-    mask="+33 9 99 99 99 99"
-    maskChar=""
-    placeholder="+33 1 23 45 67 89"
-  />
-</Form.Item>
+            label={t('Phone')}
+            name="phone_number"
+            rules={[
+              {
+                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                message: t('Invalid phone number format'),
+              },
+            ]}
+          >
+            <InputMask
+              style={{
+                width: "97%",
+                height: "30px",
+                borderRadius: "5px",
+                border: "1px solid #d9d9d9",
+                paddingLeft: "8px",
+                color: "black",
+                transition: "border-color 0.3s",
+              }}
+              mask="+33 9 99 99 99 99"
+              maskChar=""
+              placeholder="+33 1 23 45 67 89"
+            />
+          </Form.Item>
 
         </Form>
       </Modal>

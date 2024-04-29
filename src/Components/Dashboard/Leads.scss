@@ -6,13 +6,17 @@
 }
 
 .leads-header {
+    display: flex;
+    justify-content: space-between;
     flex: 100%;
     height: 70px;
     background-color: #100739;
     position: sticky;
     top: 0;
+    .language-translate-btn{
+        padding: 18px;
+    }
 }
-
 .leads-content {
     width: 100%;
     overflow: hidden;
