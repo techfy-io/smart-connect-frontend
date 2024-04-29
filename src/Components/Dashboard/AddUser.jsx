@@ -412,7 +412,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         )
                     }
 
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
                         <Form.Item
                             label="Phone*"
                             name="phone_number"
@@ -452,7 +452,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 <Radio name='phone_number_personal' value="Personal">Personal</Radio>
                             </Radio.Group>
                         </Form.Item>
-                    </div>
+                    {/* </div> */}
                     {additionalPhones.map((phone, index) => (
                         <Form.Item
                             key={index}

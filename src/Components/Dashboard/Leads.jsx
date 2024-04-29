@@ -9,7 +9,6 @@ import { useTranslation } from "react-i18next";
 
 const Leads = () => {
     const { t, i18n } = useTranslation('translation');
-
     const [form] = Form.useForm();
     const [exchangeData, setExchangeData] = useState([]);
     const [loading, setLoading] = useState(true);
