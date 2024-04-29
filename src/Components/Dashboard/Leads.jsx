@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
-import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar, Empty, Modal, Form, Input } from 'antd';
+import { DeleteOutlined, EditOutlined, EyeOutlined, UserOutlined ,DownOutlined} from '@ant-design/icons';
+import { message, Spin, Button, Avatar, Empty, Modal, Form, Input ,Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
+import { useTranslation } from "react-i18next";
 
 const Leads = () => {
+    const { t, i18n } = useTranslation('translation');
+
     const [form] = Form.useForm();
     const [exchangeData, setExchangeData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -47,7 +50,7 @@ const Leads = () => {
         })
             .then(response => {
                 console.log(response, "delete user resp")
-                message.success("User Deleted Successfully");
+                message.success(t("User Deleted Successfully"));
                 getExchangeUser();
             })
             .catch(error => console.log("error", error));
@@ -95,16 +98,16 @@ const Leads = () => {
 
     const handleDeleteConfirm = (id) => {
         Modal.confirm({
-            title: 'Confirm',
-            content: 'Are you sure you want to delete this user?',
+            title: (t('Confirm')),
+            content: (t('Are you sure you want to delete this user?')),
+            okText: t('OK'), // Translate the OK button text
+            cancelText: t('Cancel'), // Translate the Cancel button text
             onOk() {
                 deleteExchangeUser(id);
             },
             onCancel() {
                 console.log('Deletion canceled');
             },
-            okText: 'Yes', 
-            cancelText: 'No',
         });
     };
 
@@ -116,7 +119,19 @@ const Leads = () => {
         }
         return color;
     };
-
+    const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+      };
+      const menu = (
+        <Menu>
+          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+            French
+          </Menu.Item>
+          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+            English
+          </Menu.Item>
+        </Menu>
+      );
     return (
         <div className='leads'>
             <Sidebar />
@@ -129,6 +144,13 @@ const Leads = () => {
                             </span>
                         </h2>
                     </div>
+                    <div className='language-translate-btn'>
+                    <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                    </Button>
+                  </Dropdown>
+                    </div>
                 </div>
                 <div className="table-container">
                     {loading ? (
@@ -139,13 +161,13 @@ const Leads = () => {
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Company Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Email</th>
-                                    <th>Owner Name</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
+                                    <th>{t("Name")}</th>
+                                    <th>{t("Company Name")}</th>
+                                    <th>{t("Phone")}</th>
+                                    <th>{t("Email")}</th>
+                                    <th>{t("Owner Name")}</th>
+                                    <th>{t("Date")}</th>
+                                    <th>{t("Action")}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -180,7 +202,7 @@ const Leads = () => {
                                 ) : (
                                     <tr>
                                         <td colSpan="7" tyle={{ textAlign: 'center' }}>
-                                            <Empty description="No Leads found" />
+                                            <Empty description={t("No Leads found")} />
                                         </td>
                                     </tr>
                                 )}
@@ -203,47 +225,47 @@ const Leads = () => {
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}>
-                    <label htmlFor="first_name">First Name*</label>
+                    <label htmlFor="first_name">{t("First Name")}*</label>
                     <Form.Item name="first_name"
-                        rules={[{ required: true, message: 'Please input your first name!' }]}>
+                        rules={[{ required: true, message: (t('Please input your first name!')) }]}>
                         <Input />
                     </Form.Item>
-                    <label htmlFor="last_name">Last Name*</label>
+                    <label htmlFor="last_name">{t("Last Name")}*</label>
                     <Form.Item name="last_name"
-                        rules={[{ required: true, message: 'Please input your last name!' }]}>
+                        rules={[{ required: true, message: (t('Please input your last name!')) }]}>
                         <Input />
                     </Form.Item>
-                    <label htmlFor="company name">Company Name*</label>
+                    <label htmlFor="company name">{t("Company Name")}*</label>
                     <Form.Item name="company_name"
                         rules={[{ required: true, message: 'Please input your company name!' }]} >
                         <Input disabled />
                     </Form.Item>
-                    <label htmlFor="email">Email*</label>
+                    <label htmlFor="email">{t("Email")}*</label>
                     <Form.Item
                         name="email"
                         rules={[
                             {
                                 type: 'email',
-                                message: 'Invalid email format',
+                                message: (t('Please input a valid email!')),
                             },
                             {
                                 required: true,
-                                message: 'Please input your email!',
+                                message: (t('Please enter an email')),
                             },
                         ]}
                     >
                         <Input />
                     </Form.Item>
-                    <label htmlFor="phone_number">Phone Number*</label>
+                    <label htmlFor="phone_number">{t("Phone")}*</label>
                     <Form.Item name="phone_number"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter a phone number',
+                                message: (t('Please enter a phone number')),
                             },
                             {
                                 pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                message: 'Invalid phone number format',
+                                message: (t('Invalid phone number format')),
                             },
                         ]}>
                         <InputMask
