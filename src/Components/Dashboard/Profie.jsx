@@ -249,6 +249,9 @@ const Profile = () => {
                                         </Button>
                                     </div>
                                 </div>
+                                <div>
+                                    
+                                </div>
                                 <div className="cover-picture-card">
                                     {userData && userData.profile_picture ? (
                                         <>

@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Input, Button, Form, message } from 'antd';
+import React, { useState, useEffect, useTransition } from 'react';
+import { Layout, Input, Button, Form, message,Menu , Dropdown } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+
 import axios from 'axios';
 import './UserSetting.scss';
 import InputMask from "react-input-mask";
-const { Header } = Layout;
+import { useTranslation } from "react-i18next";
 
+const { Header } = Layout;
 const UserSetting = () => {
+    const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const [formChanged, setFormChanged] = useState(false);
@@ -49,12 +53,12 @@ const UserSetting = () => {
         } finally {
             setLoading(false);
             if (isSuccess) {
-                message.success("Settings updated successfully!");
+                message.success(t("Settings updated successfully!"));
                 // setTimeout(() => {
                 //     window.location.reload();
                 // }, 2000);
             } else {
-                message.error("Failed to update user settings");
+                message.error(t("Failed to update user settings"));
             }
         }
     };
@@ -63,12 +67,32 @@ const UserSetting = () => {
         setFormChanged(true);
     };
 
+    const menu = (
+        <Menu>
+          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+            French
+          </Menu.Item>
+          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+            English
+          </Menu.Item>
+        </Menu>
+      );
+      const changeLanguage = (lng) => {
+        i18n.changeLanguage(lng);
+      };
     return (
         <div className='setting-main-layout'>
+             <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <Dropdown overlay={menu} trigger={['click']} >
+          <Button type="primary" style={{ width: "100px" }}>
+            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
+          </Button>
+        </Dropdown>
+      </div>
             <div className='setting-custom-card'>
                 <div className='setting-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                        Profile Setting
+                        {t("Profile Setting")}
                     </button>
                 </div>
                 <div className="setting-tab-content">
@@ -85,62 +109,62 @@ const UserSetting = () => {
                         <div style={{ display: "flex" }}>
                             <Form.Item
                                 name="first_name"
-                                label="First name"
+                                label={t("First Name")}
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your first name!',
+                                        message: (t('first name is required')),
                                     },
                                 ]}
                             >
-                                <Input placeholder="First Name" />
+                                <Input placeholder={t("First Name")} />
                             </Form.Item>
                             <Form.Item
                                 style={{ marginLeft: "15px" }}
                                 name="last_name"
-                                label="Last name"
+                                label={t("Last Name")}
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your last name!',
+                                        message: (t('last name is required')),
                                     },
                                 ]}
                             >
-                                <Input placeholder="Last Name" />
+                                <Input placeholder={t("Last Name")} />
                             </Form.Item>
                         </div>
-                        <div style={{ display: "flex" }}>
+                        {/* <div style={{ display: "flex" }}> */}
                             <Form.Item
                                 name="company_name"
-                                label="Company"
+                                label={t("Company")}
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your company!',
+                                        message: (t('Company name is required!')),
                                     },
                                 ]}
                             >
-                                <Input placeholder="Company" />
+                                <Input placeholder={t("Company")} />
                             </Form.Item>
                             <Form.Item
-                                style={{ marginLeft: "15px" }}
-                                label="Phone"
+                                // style={{ marginLeft: "15px" }}
+                                label={t("Phone")}
                                 name="phone_number"
                                 rules={[
                                     {
                                         required: true,
-                                        message: 'Please enter a phone number',
+                                        message: (t('Please enter a phone number')),
                                     },
                                     {
                                         pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                        message: 'Invalid phone number format',
+                                        message: (t('Invalid phone number format')),
                                     },
                                 ]}
                             >
                                 <InputMask
                                     style={{
-                                        width: "100%",
-                                        height: "44px",
+                                        width: "98%",
+                                        height: "42px",
                                         borderRadius: '0.625rem',
                                         border: "1px solid #d9d9d9",
                                         paddingLeft: "8px",
@@ -153,19 +177,22 @@ const UserSetting = () => {
                                 >
                                 </InputMask>
                             </Form.Item>
-                        </div>
+                        {/* </div> */}
                         <Form.Item
                             name="email"
-                            label="Email"
+                            label={t("Email")}
                             rules={[
                                 {
                                     required: true,
+                                    message: (t('Please enter an email')),
+                                },
+                                {
                                     type: 'email',
-                                    message: 'Please input a valid email!',
+                                    message: (t("Please input a valid email!")),
                                 },
                             ]}
                         >
-                            <Input placeholder="Email" />
+                            <Input placeholder={t("Email")} />
                         </Form.Item>
                         <Form.Item>
                             <Button
@@ -177,7 +204,7 @@ const UserSetting = () => {
                                 loading={loading}
                                 disabled={!formChanged}
                             >
-                                Save
+                                {t("Save")}
                             </Button>
                         </Form.Item>
                     </Form>

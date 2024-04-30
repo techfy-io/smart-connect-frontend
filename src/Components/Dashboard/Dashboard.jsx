@@ -232,7 +232,7 @@ function Dashboard() {
                   <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
                   {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
                   <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                    <Button type="primary" className='language-change-btn'>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>

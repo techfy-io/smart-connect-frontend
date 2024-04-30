@@ -108,7 +108,7 @@ const CompanyUsers = () => {
                     <div className='company-actions'>
                         <Button  className='Add-company-btn' onClick={modalHideShow}>{t("Add User")}</Button>
                         <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                    <Button type="primary" style={{marginLeft: "4px" }}>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>

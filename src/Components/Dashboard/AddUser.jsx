@@ -250,7 +250,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Input defaultValue={CompaniesDate} disabled />
                         </Form.Item>
                         <Form.Item
-                            label={t("Job Title")}
+                            label={t("Poste")}
                             name="job_title"
                         >
                             <Input />
@@ -298,7 +298,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label={<>Instagram <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                            label={<>{t("Instagram")} <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                             name="instagram_url"
                             rules={[
                                 {
@@ -311,7 +311,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         </Form.Item>
                     </div>
                     <Form.Item
-                        label={<>Linkedin <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i>
+                        label={<>{t("Linkedin")} <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i>
                         </>}
                         name="linkedin_url"
                         rules={[
@@ -325,12 +325,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
                         <>
-                            <Form.Item label="Social Link type" name="other_link_media">
-                                <Input placeholder="Twitter Tiktok" />
+                            <Form.Item label={t("Social Link type")} name="other_link_media">
+                                <Input placeholder={t("Twitter Tiktok")} />
                             </Form.Item>
                             <Form.Item
                                 key={index}
-                                label={<>Additional Social link <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Additional Social link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
@@ -340,7 +340,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 ]}
                             >
                                 <Input
-                                    placeholder={`Enter you social media link`}
+                                    placeholder={t(`Enter you social media link`)}
                                     suffix={
                                         <Button
                                             type="text"
@@ -357,7 +357,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         additionalSocialMediaLinks.length < 1 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                    {("Social Link")}
+                                    {t("Social Link")}
                                 </Button>
                             </Form.Item>
                         )
