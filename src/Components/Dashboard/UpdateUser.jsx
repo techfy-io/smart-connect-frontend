@@ -462,7 +462,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
 
                     {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
                         <Form.Item
-                            label={t("Phone")}
+                            label={`${t("Phone")}*`}
                             name="phone_number"
                             rules={[
                                 {
