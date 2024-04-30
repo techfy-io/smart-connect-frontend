@@ -425,8 +425,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 },
                                 {
                                     pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                    message: (t('Invalid phone number format')),
-s                                },
+                                    message: (t('Invalid phone number format'))
+                                },
                             ]}
                         >
                             <InputMask
