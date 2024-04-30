@@ -361,7 +361,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     ) : null}
                     {additionalSocialMediaLinks.map((link, index) => (
                         <div key={index}>
-                            <Form.Item label="Social Link type" name="other_link_media">
+                            <Form.Item label={t("Social Link type")} name="other_link_media">
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
