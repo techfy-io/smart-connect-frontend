@@ -217,7 +217,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter a first name',
+                                    message: (t('first name is required')),
                                 },
                             ]}
                         >
@@ -229,7 +229,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter a last name',
+                                    message: (t('last name is required')),
                                 },
                             ]}
                         >
@@ -272,13 +272,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label="Country"
+                            label={t("Country")}
                             name="country"
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="City"
+                            label={t("City")}
                             name="city"
                         >
                             <Input />
@@ -286,12 +286,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label={<>Facebook < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
+                            label={<>{t("Facebook")} < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
                             name="facebook_url"
                             rules={[
                                 {
                                     pattern: /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/,
-                                    message: 'Invalid facebook URL',
+                                    message: (t("Invalid URL format")),
                                 },
                             ]}
                         >
@@ -303,7 +303,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             rules={[
                                 {
                                     pattern: /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/,
-                                    message: 'Invalid instagram URL',
+                                    message: (t("Invalid URL format")),
                                 },
                             ]}
                         >
@@ -317,7 +317,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         rules={[
                             {
                                 pattern: /^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
-                                message: 'Invalid linkedin URL',
+                                message: (t("Invalid URL format")),
                             },
                         ]}
                     >
@@ -335,7 +335,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 rules={[
                                     {
                                         type: 'url',
-                                        message: 'Invalid URL format',
+                                        message: (t("Invalid URL format")),
                                     },
                                 ]}
                             >
@@ -357,23 +357,23 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         additionalSocialMediaLinks.length < 1 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                    Social Link
+                                    {("Social Link")}
                                 </Button>
                             </Form.Item>
                         )
                     }
 
                     <Form.Item
-                        label="Email*"
+                        label={`${t("Email")}*`}
                         name="email"
                         rules={[
                             {
                                 required: true,
-                                message: 'Please enter an email',
+                                message: (t('Please enter an email')),
                             },
                             {
                                 type: 'email',
-                                message: 'Invalid email format',
+                                message: (t("Please input a valid email!")),
                             },
                         ]}
                     >
@@ -382,12 +382,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {additionalEmails.map((email, index) => (
                         <Form.Item
                             key={index}
-                            label={`Additional Email`}
+                            label={t("Additional Email")}
                             name={`email_${index + 1}`}
                             rules={[
                                 {
                                     type: 'email',
-                                    message: 'Invalid email format',
+                                    message: (t("Please input a valid email!")),
                                 },
                             ]}
                         >
@@ -407,7 +407,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <>
                                 <Form.Item>
                                     <Button type="dashed" onClick={handleAddEmail} icon={<PlusOutlined />}>
-                                        Email
+                                        {t("Email")}
                                     </Button>
                                 </Form.Item>
                             </>
@@ -416,17 +416,17 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
 
                     {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
                         <Form.Item
-                            label="Phone*"
+                            label={`${t("Phone")}*`}
                             name="phone_number"
                             rules={[
                                 {
                                     required: true,
-                                    message: 'Please enter a phone number',
+                                    message: (t('Please enter a phone number')),
                                 },
                                 {
                                     pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                    message: 'Invalid phone number format',
-                                },
+                                    message: (t('Invalid phone number format')),
+s                                },
                             ]}
                         >
                             <InputMask
@@ -446,19 +446,19 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             </InputMask>
                         </Form.Item>
                         <Form.Item
-                            label="Phone Type"
+                            label={t("Phone Type")}
                             name="phoneType"
                         >
                             <Radio.Group>
-                                <Radio name='phone_number_professional' value="Professionnel">Professionnel</Radio>
-                                <Radio name='phone_number_personal' value="Personal">Personal</Radio>
+                                <Radio name='phone_number_professional' value="Professionnel">{t("Professionnel")}</Radio>
+                                <Radio name='phone_number_personal' value="Personal">{t("Personal")}</Radio>
                             </Radio.Group>
                         </Form.Item>
                     {/* </div> */}
                     {additionalPhones.map((phone, index) => (
                         <Form.Item
                             key={index}
-                            label={`Another Phone`}
+                            label={t(`Another Phone`)}
                             name={`phone_number_${index + 1}`}
                         >
                             <InputMask
@@ -484,14 +484,14 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <>
                                 <Form.Item>
                                     <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>
-                                        Phone
+                                        {t("Phone")}
                                     </Button>
                                 </Form.Item>
                             </>
                         )
                     }
                     <Form.Item
-                        label="Biography"
+                        label={t("Biography")}
                         name="biography"
                     >
                         <Input />

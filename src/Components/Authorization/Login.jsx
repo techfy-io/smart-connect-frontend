@@ -52,7 +52,7 @@ function App() {
             // The request was made and the server responded with a status code
             if (error.response.status === 404 || error.response.status === 500) {
                 // Handle 404 or 500 error
-                message.error("Failed: Something went wrong with the server.");
+                message.error(t("Failed: Something went wrong with the server."));
             } else {
                 // Handle other errors with response data
                 const responseData = error.response.data;
@@ -70,11 +70,11 @@ function App() {
         } else if (error.request) {
             // The request was made but no response was received
             console.error("No response received from the server:", error.request);
-            message.error("Failed: No response received from the server.");
+            message.error(t("Failed: No response received from the server."));
         } else {
             // Something happened in setting up the request that triggered an error
             console.error("Error setting up the request:", error.message);
-            message.error("Failed: Error setting up the request.");
+            message.error(t("Failed: Error setting up the request."))
         }
         setLoading(false)
         })
