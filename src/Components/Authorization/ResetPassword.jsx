@@ -165,7 +165,7 @@ const ResetPassword = () => {
                                 ]}
                             >
                                 <Input.Password
-                                    placeholder="Confirm Password"
+                                    placeholder={t("Confirm Password")}
                                     iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                                 />
                             </Form.Item>

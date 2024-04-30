@@ -7,8 +7,10 @@ import './Dashboard.scss';
 import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
 import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
+import { useTranslation } from "react-i18next";
 
 const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
+    const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
@@ -145,13 +147,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     }, [CompaniesDate])
     return (
         <Modal
-            title="Add User"
+            title={t("Add User")}
             width={450}
             open={isModalVisible}
             onCancel={handleCancel}
             footer={[
                 <Button key="cancel" onClick={handleCancel}>
-                    Cancel
+                    {t("Cancel")}
                 </Button>,
                 <Button
                     style={{ backgroundColor: "#F47122" }}
@@ -167,7 +169,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     }}
                     loading={loading}
                 >
-                    Add
+                    {t("Add")}
                 </Button>
 
 
@@ -180,7 +182,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     onFinish={onFinish} // Callback function when form is submitted
                 >
                     {/* Profile Picture Upload */}
-                    <Form.Item label="Profile Picture" name="profile_picture">
+                    <Form.Item label={t("Profile Picture")} name="profile_picture">
                         <Upload
                             listType="picture-circle"
                             maxCount={1}
@@ -193,7 +195,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                         </Upload>
                     </Form.Item>
-                    <Form.Item label="Cover Picture" name="cover_image">
+                    <Form.Item label={t("Cover Picture")} name="cover_image">
                         <Upload
                             listType="picture-circle"
                             maxCount={1}
@@ -210,7 +212,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label="First Name*"
+                            label={`${t("First Name")}*`}
                             name="first_name"
                             rules={[
                                 {
@@ -222,7 +224,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Last Name*"
+                            label={`${t("Last Name")}*`}
                             name="last_name"
                             rules={[
                                 {
@@ -236,7 +238,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label="Company*"
+                            label={`${t("Company")}*`}
                             name="company_name"
                         // rules={[
                         //     {
@@ -248,7 +250,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Input defaultValue={CompaniesDate} disabled />
                         </Form.Item>
                         <Form.Item
-                            label="Job Title"
+                            label={t("Job Title")}
                             name="job_title"
                         >
                             <Input />
@@ -256,13 +258,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
-                            label="Zip Code"
+                            label={t("Zip Code")}
                             name="zip_code"
                         >
                             <Input maxLength={5} />
                         </Form.Item>
                         <Form.Item
-                            label="Postal Address"
+                            label={t("Postal Address")}
                             name="postal_code"
                         >
                             <Input />

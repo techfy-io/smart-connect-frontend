@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip , Menu, Dropdown } from 'antd';
+import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip, Menu, Dropdown } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -10,7 +10,7 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined , DownOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined, DownOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
@@ -201,17 +201,17 @@ const Profile = () => {
     };
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
-      };
-      const menu = (
+    };
+    const menu = (
         <Menu>
-          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-            French
-          </Menu.Item>
-          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-            English
-          </Menu.Item>
+            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+                French
+            </Menu.Item>
+            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+                English
+            </Menu.Item>
         </Menu>
-      );
+    );
     return (
         <>
             {pageloading ? (
@@ -223,13 +223,13 @@ const Profile = () => {
                     {
                         userData ? (
                             <div className="profile-container">
- <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
-        <Dropdown overlay={menu} trigger={['click']} >
-          <Button type="primary" style={{ width: "100px" }}>
-            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
-          </Button>
-        </Dropdown>
-      </div>
+                                <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
+                                    <Dropdown overlay={menu} trigger={['click']} >
+                                        <Button type="primary" style={{ width: "100px" }}>
+                                            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
+                                        </Button>
+                                    </Dropdown>
+                                </div>
                                 <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                 </div>
@@ -350,11 +350,11 @@ const Profile = () => {
                                 {t("Cancel")}
                             </Button>,
                             <Button
-                            onClick={() => form.submit()} // Trigger form submission
-                            type="primary"
+                                onClick={() => form.submit()} // Trigger form submission
+                                type="primary"
                                 htmlType="submit"
                                 style={{ background: "#ff8000" }}
-                                loading={loading} 
+                                loading={loading}
                             >
                                 {t("Submit")}
                             </Button>
