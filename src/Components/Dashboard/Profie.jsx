@@ -76,7 +76,6 @@ const Profile = () => {
                                 const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
                                 // Replace PHOTO property with Base64 encoded image data
                                 vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b;TYPE=JPEG:${profilePicBase64}`);
-
                                 const blob = new Blob([vcfData], { type: 'text/vcard' });
                                 const url = window.URL.createObjectURL(blob);
                                 const link = document.createElement('a');

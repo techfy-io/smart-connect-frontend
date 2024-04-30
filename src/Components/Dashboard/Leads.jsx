@@ -137,7 +137,7 @@ const Leads = () => {
             <div className='leads-content'>
                 <div className='leads-header'>
                     <div style={{ padding: "20px", color: "white" }}>
-                        <h2>Leads
+                        <h2>{t("Leads")}
                             <span style={{ fontSize: "15px", padding: "4px" }}>
                                 {loading ? "" : (exchangeData && `(${exchangeData?.length})`)}
                             </span>
