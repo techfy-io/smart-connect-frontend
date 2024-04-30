@@ -7,7 +7,7 @@ import { I18nextProvider } from 'react-i18next';
 const root = createRoot(document.getElementById('root'));
 
 i18n.init({
-  lng: 'en',
+  lng: 'fr',
   debug: true,
   resources: {
     en: {
@@ -102,9 +102,11 @@ i18n.init({
         "Exchange": "Exchange",
         "The User is no longer available": "The User is no longer available",
         "Confirm Password": "Confirm Password",
+        "No Leads found":"No Leads found",
         "Add User": "Add User",
         "Add": "Add",
         "Job Title":"Job Title",
+        "Poste":"Poste",
         "Personal": "Personal",
         "Professionnel": "Professional",
         "Phone Type": "Phone Type",
@@ -118,8 +120,6 @@ i18n.init({
         "No media available, please add one.": "No media available, please add one.",
         "Download QR Code": "Download QR Code",
         "Show QRCode to share your profile": "Show QRCode to share your profile",
-        "Save Contact": "Save Contact",
-        "Exchange": "Exchange",
         "The User is no longer available": "The User is no longer available",
         "French": "French",
         "English": "English",
@@ -183,7 +183,8 @@ i18n.init({
         "Please enter an email": "Veuillez saisir une adresse e-mail",
         "Company Deleted Successfully": "Société supprimée avec succès",
         "Name": "Nom",
-        "Owner Name": "Le nom du propriétaire",
+        "Owner Name": "Propriétaire de la carte",
+        "No Leads found":"Vous n'avez pas encore de prospects",
         "First Name": "Prénom",
         "Last Name": "Nom de famille",
         "Please input your first name!": "Veuillez entrer votre prénom !",
@@ -202,6 +203,7 @@ i18n.init({
         "Profile Picture": "Photo de profil",
         "Cover Picture": "Photo de couverture",
         "Invalid URL format": "Format d'URL invalide",
+        "Poste":"Poste",
         "Zip Code": "Code postal",
         "Postal Address": "Adresse postale",
         "Country": "Pays",
@@ -218,7 +220,7 @@ i18n.init({
         "No media available, please add one.": "Aucun média disponible, veuillez en ajouter un.",
         "Download QR Code": "Télécharger le code QR",
         "Show QRCode to share your profile": "Afficher le code QR pour partager votre profil",
-        "Save Contact": "Enregistrer le contact",
+        "Save Contact":"Enregistrer contact",
         "Exchange": "Échange",
         "The User is no longer available": "L'utilisateur n'est plus disponible",
         // new data
@@ -231,20 +233,11 @@ i18n.init({
         "Failed: Error setting up the request.": "Échec : Erreur lors de la configuration de la requête.",
         "Failed: Something went wrong with the server.": "Échec : Quelque chose s'est mal passé avec le serveur.",
         "Failed: No response received from the server.": "Échec : Aucune réponse reçue du serveur.",
-        "Social Link": "Lien social",
+        "Social Link": "lien vers vos réseaux sociaux",
         "No media available, please add one.": "Pas de média disponible, veuillez en ajouter un.",
         "Download QR Code": "Télécharger le code QR",
         "Show QRCode to share your profile": "Afficher le code QR pour partager votre profil",
-        "Save Contact": "Enregistrer le contact",
-        "Exchange": "Échanger",
         "The User is no longer available": "L'utilisateur n'est plus disponible",
-        "": "",
-        "": "",
-        "": "",
-
-
-
-
         "Date": "Date",
         "French": "Français",
         "English": "Anglais",
