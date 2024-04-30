@@ -97,6 +97,7 @@
     // Media query for mobile screens
     @media screen and (max-width: 768px) {
         .cover-picture-card {
+            
             width: 100%; // Adjust width for smaller screens
             max-width: none; // Remove max-width restriction
             border-radius: 0px;

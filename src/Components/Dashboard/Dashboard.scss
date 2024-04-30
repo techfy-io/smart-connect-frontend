@@ -24,13 +24,14 @@
       }
 
       .content-header-companyName {
+        width: 30%;
         height: 50px;
         padding: 20px;
         font-size: 24px;
         /* Increase font size for emphasis */
         font-weight: bold;
         color: white;
-        text-decoration: underline;
+        // text-decoration: underline;
         /* Remove unwanted text decoration */
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         /* Add a subtle text shadow for depth */
@@ -38,8 +39,9 @@
       }
 
       .AddUser-action {
+        width: 70%;
         text-align: right;
-        margin-right: 30px;
+        margin-right: 5px;
         padding: 18px;
       }
 
