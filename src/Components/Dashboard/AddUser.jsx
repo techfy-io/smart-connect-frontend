@@ -250,7 +250,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Input defaultValue={CompaniesDate} disabled />
                         </Form.Item>
                         <Form.Item
-                            label={t("Poste")}
+                            label={t("Job title")}
                             name="job_title"
                         >
                             <Input />

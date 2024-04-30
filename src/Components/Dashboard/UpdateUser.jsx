@@ -284,7 +284,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             <Input disabled />
                         </Form.Item>
                         <Form.Item
-                            label={t("Poste")}
+                            label={t("Job title")}
                             name="job_title"
                         >
                             <Input />

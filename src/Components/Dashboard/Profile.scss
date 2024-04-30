@@ -20,7 +20,15 @@
         right: 20px;
         cursor: pointer;
     }
-
+    .profile-login-btn{
+        position: absolute;
+        top: 15px;
+        right: 60px;
+        cursor: pointer;
+        .profile-action-login-btn{
+            background-color: #F47122;
+        }
+    }
     .sidebar {
         position: fixed;
         top: 0;
@@ -57,6 +65,7 @@
                 width: 60%;
                 padding: 10px;
             }
+           
         }
 
         .qr-code-para {
@@ -73,7 +82,7 @@
             text-align: center;
         }
     }
-
+ 
     .cover-picture-card {
         position: absolute;
         top: 5%;
