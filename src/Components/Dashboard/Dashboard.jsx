@@ -13,6 +13,7 @@ import CompanyUsers from '../SuperAdmin/CompanyUsers';
 import InputMask from "react-input-mask";
 import 'font-awesome/css/font-awesome.min.css';
 import { useTranslation } from "react-i18next";
+import html2canvas from 'html2canvas';
 
 function Dashboard() {
   const { t, i18n } = useTranslation('translation');
@@ -332,12 +333,13 @@ function Dashboard() {
                                 <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />
                                 </button>
-                                <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                                  <DeleteOutlined />
-                                </button>
                                 <button className="Edit-button" onClick={() => updateUser(user)}>
                                   <EditOutlined />
                                 </button>
+                                {/* <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                  <DeleteOutlined />
+                                </button> */}
+                              
                               </td>
                             </tr>
                           ))

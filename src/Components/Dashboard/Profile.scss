@@ -186,6 +186,7 @@
         justify-content: space-between;
         /* Align buttons at the bottom with space between */
         width: 100%;
+        height: 60px;
         /* Ensure buttons occupy full width */
         position: absolute;
         /* Position the buttons absolutely */
@@ -199,7 +200,7 @@
 
     .save-button {
         width: 185px;
-        padding: 15px 20px;
+        // padding: 15px 20px;
         font-size: 16px;
         background-color: #F47122;
         color: white;
@@ -211,7 +212,7 @@
 
     .exchange-button {
         width: 185px;
-        padding: 15px 20px;
+        // padding: 15px 20px;
         font-size: 16px;
         background-color: #546467;
         color: white;
