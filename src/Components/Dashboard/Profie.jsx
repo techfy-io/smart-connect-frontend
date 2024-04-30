@@ -15,7 +15,7 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
 import { useTranslation } from "react-i18next";
-
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     const { t, i18n } = useTranslation('translation');
@@ -236,6 +236,10 @@ const Profile = () => {
                                     <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
                                         <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                     </div>
+                                    <div className='profile-login-btn'>
+                                        <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
+                                            <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>Login</Link></Button>
+                                        </Tooltip>                                    </div>
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
                                     </div>
@@ -249,7 +253,7 @@ const Profile = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    
+
                                 </div>
                                 <div className="cover-picture-card">
                                     {userData && userData.profile_picture ? (
