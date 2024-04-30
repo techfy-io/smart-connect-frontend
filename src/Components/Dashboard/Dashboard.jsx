@@ -226,13 +226,14 @@ function Dashboard() {
             <>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+                {/* <div className='content-header-companyName'> */}
                 <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
-
+                {/* </div> */}
                 <div className='AddUser-action'>
                   <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
                   {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
                   <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" className='language-change-btn'>
+                    <Button type="primary" className='language-change-btn' style={{marginLeft: "4px" }}>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>
@@ -248,7 +249,7 @@ function Dashboard() {
                 <div className='AddUser-action'>
                   <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
                   <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
+                    <Button type="primary" style={{ marginLeft: "4px" }}>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>
