@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { DeleteOutlined, UserOutlined, EyeOutlined, EditOutlined , DownOutlined} from '@ant-design/icons';
-import { Spin, Button, Modal, Avatar, message, Empty , Menu, Dropdown } from 'antd';
+import { DeleteOutlined, UserOutlined, EyeOutlined, EditOutlined, DownOutlined, DownloadOutlined } from '@ant-design/icons';
+import { Spin, Button, Modal, Avatar, message, Empty, Menu, Dropdown } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import CompanyLogo from '../../Inspect/CompanyLogo.png';
 import Sidebar from '../Common/Sidebar';
@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import UpdateUser from '../Dashboard/UpdateUser';
 import { useTranslation } from "react-i18next";
+import QRCodeModal from "../Common/QRCodeModals";
 
 const CompanyUsers = () => {
     const { t, i18n } = useTranslation('translation');
@@ -21,7 +22,8 @@ const CompanyUsers = () => {
     const [companyUserList, setCompanyUserList] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
     const [openUserEditModal, setOpenUserEditModal] = useState(false);
-    const [loading, setLoading] = useState(true); 
+    const [qrModalVisible, setQRModalVisible] = useState(false);
+    const [loading, setLoading] = useState(true);
     const modalHideShow = () => {
         setIsModalVisible(prev => !prev);
     };
@@ -41,7 +43,7 @@ const CompanyUsers = () => {
         getCompanyUser();
     }, []);
     const getCompanyUser = () => {
-        
+
         const accessToken = localStorage.getItem('accessToken');
         localStorage.setItem('userid', company.id);
         axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
@@ -63,8 +65,8 @@ const CompanyUsers = () => {
         Modal.confirm({
             title: (t('Confirm')),
             content: (t('Are you sure you want to delete this user?')),
-            okText:(t("OK")),
-            cancelText: t('Cancel'), 
+            okText: (t("OK")),
+            cancelText: t('Cancel'),
             onOk() {
                 const accessToken = localStorage.getItem('accessToken');
                 axios.delete(`${process.env.REACT_APP_BASE_API_URL}/user/${id}/`, {
@@ -83,19 +85,27 @@ const CompanyUsers = () => {
             },
         });
     };
+    const handleDownloadClick = (user) => {
+        setSelectedUser(user);
+        setQRModalVisible(true);
+    };
+
+    const closeModal = () => {
+        setQRModalVisible(false);
+    };
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
-      };
-      const menu = (
+    };
+    const menu = (
         <Menu>
-          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-            French
-          </Menu.Item>
-          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-            English
-          </Menu.Item>
+            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+                French
+            </Menu.Item>
+            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+                English
+            </Menu.Item>
         </Menu>
-      );
+    );
     return (
         <div className='companyusers-container'>
             <Sidebar />
@@ -106,12 +116,12 @@ const CompanyUsers = () => {
                         {company.name}
                     </div>
                     <div className='company-actions'>
-                        <Button  className='Add-company-btn' onClick={modalHideShow}>{t("Add User")}</Button>
+                        <Button className='Add-company-btn' onClick={modalHideShow}>{t("Add User")}</Button>
                         <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" style={{marginLeft: "4px" }}>
-                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                    </Button>
-                  </Dropdown>
+                            <Button type="primary" style={{ marginLeft: "4px" }}>
+                                {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                            </Button>
+                        </Dropdown>
                     </div>
                 </div>
                 <div className="table-container">
@@ -129,7 +139,7 @@ const CompanyUsers = () => {
                                 <tr>
                                     <td colSpan="4"><Spin /></td>
                                 </tr>
-                            ) : companyUserList.length === 0 ? ( 
+                            ) : companyUserList.length === 0 ? (
                                 <tr>
                                     <td colSpan="4">
                                         <Empty description={t("No users found")} />
@@ -145,6 +155,9 @@ const CompanyUsers = () => {
                                             <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
                                             <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
                                             <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                                            <button className="Edit-button" onClick={() => handleDownloadClick(user)}>
+                                                <DownloadOutlined />
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -159,6 +172,12 @@ const CompanyUsers = () => {
                 modalHideShow={modalHideShow}
             />
             <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+            <QRCodeModal
+                visible={qrModalVisible}
+                onClose={closeModal}
+                qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${selectedUser.id}` : ''}
+                firstName={selectedUser ? selectedUser.first_name : ''}
+            />
         </div>
     );
 }

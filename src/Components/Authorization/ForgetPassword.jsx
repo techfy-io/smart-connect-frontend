@@ -111,7 +111,7 @@ const ForgetPassword = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder="Email" />
+                            <Input placeholder={t("Email")} />
                         </Form.Item>
                         <Form.Item>
                             <Button

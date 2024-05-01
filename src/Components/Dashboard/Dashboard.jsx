@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined, EyeOutlined, DownOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, DownOutlined, DownloadOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal, Avatar, Form, Input, Empty, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -14,6 +14,7 @@ import InputMask from "react-input-mask";
 import 'font-awesome/css/font-awesome.min.css';
 import { useTranslation } from "react-i18next";
 import html2canvas from 'html2canvas';
+import QRCodeModal from "../Common/QRCodeModals";
 
 function Dashboard() {
   const { t, i18n } = useTranslation('translation');
@@ -25,12 +26,14 @@ function Dashboard() {
   const [userData, setUserData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateCompanyloading, setupdateCompanyloading] = useState(false);
+  const [qrModalVisible, setQRModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
   const [updateCompanyModalVisible, setUpdateCompanyModalVisible] = useState(false); // Step 1
   const [companyName, setCompanyName] = useState('')
   const [companyInfo, setCompanyInfo] = useState({}); // Step 1
+
   const updateUser = (user) => {
     setSelectedUser(user);
     toggleUpdateUserModal();
@@ -90,28 +93,28 @@ function Dashboard() {
       });
   };
 
-  const deleteUser = (id) => {
-    Modal.confirm({
-      title: t('Confirm'),
-      content: t('Are you sure you want to delete this user?'),
-      onOk() {
-        const accessToken = localStorage.getItem('accessToken');
-        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
-          headers: { 'Authorization': `Bearer ${accessToken}` }
-        })
-          .then(response => {
-            console.log(response, "delete user resp")
-            message.success(t('User Deleted Successfully'));
-            // setTimeout(() => window.location.reload(), 1000);
-            fetchUsers();
-          })
-          .catch(error => console.log("error", error));
-      },
-      onCancel() {
-        console.log('Deletion canceled');
-      },
-    });
-  };
+  // const deleteUser = (id) => {
+  //   Modal.confirm({
+  //     title: t('Confirm'),
+  //     content: t('Are you sure you want to delete this user?'),
+  //     onOk() {
+  //       const accessToken = localStorage.getItem('accessToken');
+  //       axios.delete(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${id}`, {
+  //         headers: { 'Authorization': `Bearer ${accessToken}` }
+  //       })
+  //         .then(response => {
+  //           console.log(response, "delete user resp")
+  //           message.success(t('User Deleted Successfully'));
+  //           // setTimeout(() => window.location.reload(), 1000);
+  //           fetchUsers();
+  //         })
+  //         .catch(error => console.log("error", error));
+  //     },
+  //     onCancel() {
+  //       console.log('Deletion canceled');
+  //     },
+  //   });
+  // };
   const deleteCompany = (id) => {
     Modal.confirm({
       title: t('Confirm'), // Use t() to translate the title
@@ -205,6 +208,14 @@ function Dashboard() {
     navigate(`/profile/${id}`);
   }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
+  const handleDownloadClick = (user) => {
+    setSelectedUser(user);
+    setQRModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setQRModalVisible(false);
+  };
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
@@ -234,10 +245,12 @@ function Dashboard() {
                   <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
                   {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
                   <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" className='language-change-btn' style={{marginLeft: "4px" }}>
+                    <Button className='language-change-btn' type="primary" style={{ marginLeft: "4px" }}>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>
+
+
                   {/* </div> */}
                 </div>
               </div>
@@ -292,31 +305,31 @@ function Dashboard() {
                   userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
                     <>
                       <tbody>
-                        {companiesData.length  ? (
-                        <> {
-                          companiesData.map((company, key) => (
-                            <tr key={key}>
-                              <td>{company.name}</td>
-                              <td>{company.email}</td>
-                              <td className='Actions-btns'>
-                                <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
-                                <button
-                                  className="Edit-button"
-                                  onClick={() => openUpdateCompanyModal(company)} // Pass company info here
-                                >
-                                  <EditOutlined />
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </>
+                        {companiesData.length ? (
+                          <> {
+                            companiesData.map((company, key) => (
+                              <tr key={key}>
+                                <td>{company.name}</td>
+                                <td>{company.email}</td>
+                                <td className='Actions-btns'>
+                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                  <button
+                                    className="Edit-button"
+                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                  >
+                                    <EditOutlined />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </>
                         ) : (
-                        <>
-                          <td colSpan="4">
-                            <Empty description={t('No Company found')} />
-                          </td>
-                        </>
+                          <>
+                            <td colSpan="4">
+                              <Empty description={t('No Company found')} />
+                            </td>
+                          </>
                         )}
                       </tbody>
                     </>
@@ -339,7 +352,10 @@ function Dashboard() {
                                 {/* <button className="Delete-button" onClick={() => deleteUser(user.id)}>
                                   <DeleteOutlined />
                                 </button> */}
-                              
+                                <button className="Edit-button" onClick={() => handleDownloadClick(user)}>
+                                  <DownloadOutlined />
+                                </button>
+
                               </td>
                             </tr>
                           ))
@@ -434,7 +450,12 @@ function Dashboard() {
 
         </Form>
       </Modal>
-
+      <QRCodeModal
+        visible={qrModalVisible}
+        onClose={closeModal}
+        qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${selectedUser.id}` : ''}
+        firstName={selectedUser ? selectedUser.first_name : ''}
+      />
     </div >
   );
 }
