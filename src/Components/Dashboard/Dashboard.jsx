@@ -258,7 +258,7 @@ function Dashboard() {
             <>
               {/* <div className='content-company-header'> */}
                 <div className='content-company-name'>
-                  {companyName.length > 35 ? `${companyName.substring(0, 35)}...` : companyName}
+                  {companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName}
                 </div>
                 <div className='AddUser-action'>
                   <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
