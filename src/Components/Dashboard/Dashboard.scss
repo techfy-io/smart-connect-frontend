@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito Sans");
+
 .dashboard {
   display: flex;
 
@@ -6,17 +7,13 @@
     flex: 1;
 
     .content-header {
+      display: flex;
+      justify-content: space-between;
       flex: 100%;
       height: 70px;
       background-color: #100739;
       position: sticky;
       top: 0;
-
-      .content-header-headings {
-        width: 30%;
-        padding: 20px;
-        color: white;
-      }
 
       .content-header-logo {
         height: 50px;
@@ -24,19 +21,22 @@
         padding: 10px;
       }
 
-      .content-header-companyName {
+      .content-company-name {
         width: 30%;
         height: 50px;
         padding: 20px;
         font-size: 24px;
-        /* Increase font size for emphasis */
         font-weight: bold;
         color: white;
-        // text-decoration: underline;
-        /* Remove unwanted text decoration */
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        /* Add a subtle text shadow for depth */
-        font-family: Nunito Sans,
+        font-family: 'Nunito Sans';
+
+        @media only screen and (max-width: 768px) {
+          width:100px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
 
       .AddUser-action {
@@ -44,22 +44,21 @@
         text-align: right;
         margin-right: 5px;
         padding: 18px;
-      }
 
-      .AddUser-action .Add-user-btn {
-        background-color: #ff8000;
-        border: none;
-        color: white;
-        border-radius: 5px;
-        font-size: 15px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
+        .Add-user-btn {
+          background-color: #ff8000;
+          border: none;
+          color: white;
+          border-radius: 5px;
+          font-size: 15px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
 
-      .AddUser-action .Add-user-btn:hover {
-        background-color: #ff9933;
+          &:hover {
+            background-color: #ff9933;
+          }
+        }
       }
-
     }
 
     .scrollable-table {
@@ -77,6 +76,7 @@
         border: 1px solid #e8e8e8;
         padding: 20px;
         text-align: center;
+        width: 10%;
       }
 
       td {
@@ -93,50 +93,38 @@
       }
 
       .Actions-btns {
-        .view-eye-btn {
+        .view-eye-btn,
+        .Delete-button,
+        .Edit-button,.download-button {
           font-size: 20px;
           border: none;
           background-color: transparent;
           cursor: pointer;
-          color: #2d8ed4;
-          text-decoration: underline;
-          margin-right: 14px;
-
-          &:hover {
-            color: #40a9ff;
-          }
-        }
-
-        .Delete-button {
-          font-size: 20px;
-          border: none;
-          background-color: transparent;
-          cursor: pointer;
-          color: #ff8000;
-          text-decoration: underline;
-
-          &:hover {
-            color: #40a9ff;
-          }
-        }
-
-        .Edit-button {
-          font-size: 20px;
-          border: none;
-          background-color: transparent;
-          cursor: pointer;
-          color: rgb(25, 172, 192);
           text-decoration: underline;
           margin-left: 14px;
-
+      
           &:hover {
             color: #40a9ff;
           }
         }
+      
+        .view-eye-btn {
+          color: #2d8ed4;
+        }
+      
+        .Delete-button {
+          color: #ff8000;
+        }
+      
+        .Edit-button {
+          color: #19acc0;
+        }
+        .download-button{
+            color: #073907;
+        }
       }
+      
     }
-
-
   }
 }
 

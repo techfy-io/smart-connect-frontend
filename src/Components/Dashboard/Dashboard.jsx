@@ -236,7 +236,7 @@ function Dashboard() {
         <div className='content-header'>
           {userType === "SuperAdmin" ? (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
                 {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
                 {/* <div className='content-header-companyName'> */}
                 <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
@@ -253,12 +253,12 @@ function Dashboard() {
 
                   {/* </div> */}
                 </div>
-              </div>
+              {/* </div> */}
             </>) : (
             <>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div className='content-header-companyName'>
-                  {companyName}
+              {/* <div className='content-company-header'> */}
+                <div className='content-company-name'>
+                  {companyName.length > 35 ? `${companyName.substring(0, 35)}...` : companyName}
                 </div>
                 <div className='AddUser-action'>
                   <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
@@ -268,7 +268,7 @@ function Dashboard() {
                     </Button>
                   </Dropdown>
                 </div>
-              </div>
+              {/* </div> */}
             </>
           )
           }
@@ -315,7 +315,7 @@ function Dashboard() {
                                   <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                                   <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
                                   <button
-                                    className="Edit-button"
+                                    className="download-button"
                                     onClick={() => openUpdateCompanyModal(company)} // Pass company info here
                                   >
                                     <EditOutlined />
