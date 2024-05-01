@@ -246,11 +246,11 @@ const Profile = () => {
                                     <br />
                                     {/* code para */}
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
-                                    <div className='download-qr-code-btn'>
+                                    {/* <div className='download-qr-code-btn'>
                                         <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
                                             {t("Download QR Code")}
                                         </Button>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div>
 
