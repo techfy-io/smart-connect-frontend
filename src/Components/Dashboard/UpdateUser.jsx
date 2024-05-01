@@ -344,7 +344,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
-                                label={<>{t("Additional Social link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Social link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
@@ -365,7 +365,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
-                                label={<>{t("Additional Social link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Social Link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
