@@ -151,7 +151,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     ]}
                 >
                     <Input.Password
-                        placeholder="Password"
+                        placeholder={t("Password")}
                         iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                 </Form.Item>
