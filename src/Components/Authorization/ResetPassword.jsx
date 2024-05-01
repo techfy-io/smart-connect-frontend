@@ -85,6 +85,7 @@ const ResetPassword = () => {
     };
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
+        form.resetFields();
     };
     const menu = (
         <Menu>
