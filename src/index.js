@@ -141,7 +141,7 @@ i18n.init({
         "Login": "Se connecter",
         "Please enter your email and password": "Veuillez entrer votre email et votre mot de passe",
         "Enter the email address you used when joining, and we’ll send reset instructions to reset your password.": "Entrez l'adresse e-mail que vous avez utilisée lors de votre inscription et nous vous enverrons des instructions de réinitialisation pour réinitialiser votre mot de passe.",
-        "Email": "E-mail",
+        "Email": "E-Mail",
         "Submit": "Soumettre",
         "Reset Password": "réinitialiser le mot de passe",
         "New Password": "nouveau mot de passe",
