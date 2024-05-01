@@ -60,6 +60,8 @@ const ForgetPassword = () => {
     };
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
+        form.resetFields();
+
     };
     const menu = (
         <Menu>
@@ -107,7 +109,7 @@ const ForgetPassword = () => {
                                 {
                                     required: true,
                                     type: 'email',
-                                    message: 'Please input a valid email!',
+                                    message: (t('Please input a valid email!')),
                                 },
                             ]}
                         >
