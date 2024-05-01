@@ -21,7 +21,7 @@
             color: white;
         }
 
-        .content-header-logo {
+        .content-company-name {
             width: 20%;
             height: 50px;
             padding: 20px;
@@ -29,14 +29,23 @@
             /* Increase font size for emphasis */
             font-weight: bold;
             color: white;
-            // text-decoration: underline;
             /* Remove unwanted text decoration */
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 
             /* Add a subtle text shadow for depth */
-            font-family: Nunito Sans,
-          
+            font-family: Nunito Sans;
         }
+
+        @media only screen and (max-width: 768px) {
+            .content-company-name {
+                width: 200px;
+                /* Adjust the width as needed */
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
         .company-actions {
             width: 80%;
             text-align: right;
@@ -73,14 +82,9 @@
             th,
             td {
                 border: 1px solid #e8e8e8;
-                padding: 20px;
-                text-align: center;
-
-                &:last-child {
-                    .Actions-btns {
-                        margin-right: 0;
-                    }
-                }
+        padding: 20px;
+        text-align: center;
+        width: 10%;
             }
 
             th {
@@ -93,47 +97,36 @@
             }
 
             .Actions-btns {
+                .view-eye-btn,
+                .Delete-button,
+                .Edit-button,.download-button {
+                  font-size: 20px;
+                  border: none;
+                  background-color: transparent;
+                  cursor: pointer;
+                  text-decoration: underline;
+                  margin-left: 14px;
+              
+                  &:hover {
+                    color: #40a9ff;
+                  }
+                }
+              
                 .view-eye-btn {
-                    font-size: 20px;
-                    border: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                    color: #2d8ed4;
-                    text-decoration: underline;
-                    margin-right: 14px;
-
-                    &:hover {
-                        color: #40a9ff;
-                    }
+                  color: #2d8ed4;
                 }
-
+              
                 .Delete-button {
-                    font-size: 20px;
-                    border: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                    color: #ff8000;
-                    text-decoration: underline;
-
-                    &:hover {
-                        color: #40a9ff;
-                    }
+                  color: #ff8000;
                 }
-
+              
                 .Edit-button {
-                    font-size: 20px;
-                    border: none;
-                    background-color: transparent;
-                    cursor: pointer;
-                    color: rgb(25, 172, 192);
-                    text-decoration: underline;
-                    margin-left: 14px;
-
-                    &:hover {
-                        color: #40a9ff;
-                    }
+                  color: #19acc0;
                 }
-            }
+                .download-button{
+                    color: #073907;
+                }
+              }
         }
 
         &::-webkit-scrollbar {
