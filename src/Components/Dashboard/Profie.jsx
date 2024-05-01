@@ -238,7 +238,7 @@ const Profile = () => {
                                     </div>
                                     <div className='profile-login-btn'>
                                         <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
-                                            <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>Login</Link></Button>
+                                            <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
                                         </Tooltip>                                    </div>
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
@@ -246,11 +246,11 @@ const Profile = () => {
                                     <br />
                                     {/* code para */}
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
-                                    <div className='download-qr-code-btn'>
+                                    {/* <div className='download-qr-code-btn'>
                                         <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
                                             {t("Download QR Code")}
                                         </Button>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div>
 
