@@ -208,8 +208,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
                         </Upload>
                     </Form.Item>
-
-
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={`${t("First Name")}*`}

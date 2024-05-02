@@ -237,37 +237,37 @@ function Dashboard() {
           {userType === "SuperAdmin" ? (
             <>
               {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-                {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
-                {/* <div className='content-header-companyName'> */}
-                <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
+              {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
+              {/* <div className='content-header-companyName'> */}
+              <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
+              {/* </div> */}
+              <div className='AddUser-action'>
+                <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
+                {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
+                <Dropdown overlay={menu} trigger={['click']} >
+                  <Button className='language-change-btn' type="primary" style={{ marginLeft: "4px" }}>
+                    {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                  </Button>
+                </Dropdown>
+
+
                 {/* </div> */}
-                <div className='AddUser-action'>
-                  <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
-                  {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}> */}
-                  <Dropdown overlay={menu} trigger={['click']} >
-                    <Button className='language-change-btn' type="primary" style={{ marginLeft: "4px" }}>
-                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                    </Button>
-                  </Dropdown>
-
-
-                  {/* </div> */}
-                </div>
+              </div>
               {/* </div> */}
             </>) : (
             <>
               {/* <div className='content-company-header'> */}
-                <div className='content-company-name'>
-                  {companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName}
-                </div>
-                <div className='AddUser-action'>
-                  <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
-                  <Dropdown overlay={menu} trigger={['click']} >
-                    <Button type="primary" style={{ marginLeft: "4px" }}>
-                      {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                    </Button>
-                  </Dropdown>
-                </div>
+              <div className='content-company-name'>
+                {companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName}
+              </div>
+              <div className='AddUser-action'>
+                <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
+                <Dropdown overlay={menu} trigger={['click']} >
+                  <Button type="primary" style={{ marginLeft: "4px" }}>
+                    {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
+                  </Button>
+                </Dropdown>
+              </div>
               {/* </div> */}
             </>
           )
@@ -309,8 +309,9 @@ function Dashboard() {
                           <> {
                             companiesData.map((company, key) => (
                               <tr key={key}>
-                                <td>{company.name}</td>
-                                <td>{company.email}</td>
+                                <td>{`${company.name?.slice(0, 35)}${company.name?.length > 35 ? '...' : ''}`}</td>
+                                <td>{`${company.email?.slice(0, 35)}${company.email?.length > 35 ? '...' : ''}`}</td>
+
                                 <td className='Actions-btns'>
                                   <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
                                   <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
@@ -339,9 +340,10 @@ function Dashboard() {
                         {userData && userData.length > 0 ? (
                           userData.map((user, key) => (
                             <tr key={key}>
-                              <td>{user.first_name + " " + user.last_name}</td>
-                              <td>{user.email}</td>
-                              <td>{user.job_title}</td>
+                              <td>{`${user.first_name?.slice(0, 25)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 15 ? '...' : ''}`}</td>
+                              <td>{`${user.email?.slice(0, 25)}${user.email?.length > 25 ? '...' : ''}`}</td>
+                              <td>{`${user.job_title?.slice(0, 25)}${user.job_title?.length > 25 ? '...' : ''}`}</td>
+
                               <td className='Actions-btns'>
                                 <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />

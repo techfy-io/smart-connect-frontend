@@ -278,10 +278,13 @@ const Profile = () => {
                                             )}
                                         </div>
                                         <div className="profile-details">
-                                            <p className="profile-name">{`${userData?.first_name} ${userData?.last_name}`}</p>
-                                            <p className="profile-designation">{userData?.job_title}</p>
-                                            <p className="profile-designation">{userData?.company_name}</p>
+                                            <p className="profile-name">{`${userData?.first_name?.slice(0, 13)} ${userData?.last_name?.slice(0, 13)}`.length > 23 ?
+                                                `${`${userData?.first_name?.slice(0, 13)} ${userData?.last_name?.slice(0, 13)}`.slice(0, 20)}...` :
+                                                `${userData?.first_name?.slice(0, 11)} ${userData?.last_name?.slice(0, 11)}`}</p>  <p className="profile-designation">{userData?.job_title?.length > 23 ? `${userData?.job_title?.slice(0, 20)}...` : userData?.job_title}</p>
+                                            <p className="profile-designation">{userData?.company_name?.length > 23 ? `${userData?.company_name?.slice(0, 20)}...` : userData?.company_name}</p>
                                         </div>
+
+
                                     </div>
                                     <div className='profile-action'>
                                         <button className='save-button' onClick={downloadUserData} disabled={loading}>

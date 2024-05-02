@@ -1,337 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+// .user-profile-card {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh; /* Center the card vertically */
+//   background-color: #f0f0f0; /* Add a background color for the page */
 
-.user-profile {
-  position: relative;
+//   .card {
+//     width: 90%; /* Adjust the width of the card */
+//     max-width: 600px; /* Set a maximum width for the card */
+//     background-color: #fff;
+//     border-radius: 8px;
+//     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+//     overflow: hidden; /* Hide overflow content */
+//   }
 
-  .burger-icon {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-    z-index: 1001;
-  }
+//   .cover-photo {
+//     position: relative;
+//     width: 100%;
+//     height: 200px; /* Adjust the height of the cover photo */
+//     background-size: cover;
+//     background-position: center;
+//     border-top-left-radius: 8px;
+//     border-top-right-radius: 8px;
 
-  .sidebar {
-    position: fixed;
-    top: 0;
-    right: -100%; // Initially hidden off-screen
-    height: 100%;
-    width: 350px;
-    background-color: #f0f2f5;
-    transition: right 0.9s ease;
-    z-index: 1000;
+//     .avatar {
+//       position: absolute;
+//       left: 50%;
+//       bottom: -50%;
+//       transform: translate(-50%, 50%);
+//       width: 120px;
+//       height: 120px;
+//       border-radius: 50%;
+//       border: 4px solid #fff;
+//       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//     }
+//   }
 
-    &.open {
-      right: 0;
-    }
+//   .user-details {
+//     padding: 20px;
+//     text-align: center;
 
-    .sidebar-content {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
+//     h2 {
+//       margin-bottom: 10px;
+//       font-size: 1.5rem;
+//     }
 
-    .QR-user-details {
-      margin: 0 auto;
-      background-color: #ffffff;
-      margin-top: 20%;
-      border-radius: 50%;
-      text-align: center;
-      width: 80%;
+//     p {
+//       margin-bottom: 5px;
+//       font-size: 1rem;
+//     }
 
-      // height: 40%;
-      .qr-code {
-        width: 60%;
-        padding: 10px;
-      }
-    }
+//     .contact-info {
+//       margin-top: 10px;
+//       font-size: 0.9rem;
 
-    .qr-code-para {
-      // padding: 20px;
-      text-align: center;
-      font-family: Raleway;
-      font-weight: 400;
-      font-size: 0.875rem;
-      line-height: 1.43;
-    }
-  }
-
-  .user-profile-content {
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
-    padding-top: 20px; // Adjust as needed
-  }
-
-  .user-image {
-    width: 30%;
-    height: 10%;
-  }
-
-  .gradient-box {
-    margin: 0 auto;
-    height: 240px;
-    width: 35%;
-    background: rgb(255, 236, 106);
-    background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
-
-    @media (max-width: 768px) {
-      width: 70%;
-    }
-  }
-
-  .user-detail-cover-image {
-    width: 35%;
-    margin: 0 auto;
-    height: 240px;
-    width: 35%;
-    text-align: center;
-
-    img {
-      width: 100%;
-      height: 240px;
-    }
-  }
-
-  .user-details {
-    padding: 10px;
-
-    .user-details-image {
-      margin: 0 auto;
-      width: 150px;
-
-      .user-profile-image {
-        width: 150px;
-        height: 120px;
-
-        img {
-          width: 120px;
-          height: 120px;
-          border-radius: 50%;
-        }
-      }
-
-      .user-profile-box {
-        width: 100px;
-        margin: 0 auto;
-        text-align: center;
-        background: rgb(255, 236, 106);
-        background: linear-gradient(90deg, rgb(107, 253, 255) 0%, rgb(115, 229, 255) 1%, rgb(255, 183, 48) 100%);
-
-        .user-image-box {
-          height: 70px;
-          font-size: 24px;
-        }
-      }
-
-    }
-
-
-
-    border-radius: 5px;
-    cursor: pointer;
-
-    .user-image {
-      padding: 30px;
-      font-size: 35px;
-    }
-
-  }
-
-  .username {
-    margin-top: 0.5em;
-    font-size: 28px;
-    font-weight: 700;
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.2;
-  }
-
-  .email,
-  .jobtitle {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    /* Changed font to Google's Roboto */
-    font-weight: 600;
-    font-size: 1;
-    line-height: 1.5;
-    color: #000000;
-  }
-
-  .jobtitle {
-    font-weight: 600;
-    /* Adjusted font weight to be slightly heavier */
-  }
-
-  .company {
-    display: inline-block;
-    /* Ensure the border only wraps around the text */
-    padding: 0 0.25em;
-    /* Add padding to create space between text and border */
-    margin-top: 0.5em;
-    /* Adjust margin for spacing */
-    font-family: 'Roboto', sans-serif;
-    /* Changed font to Google's Roboto */
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-left: 2px solid #FF8000;
-    /* Yellow border on the left */
-    border-right: 2px solid #FF8000;
-    /* Yellow border on the right */
-    color: #000000;
-    /* Google Blue color for text */
-  }
-
-
-  .profile-actions-buttuns {
-    display: flex;
-    justify-content: center;
-
-    .download-btn {
-      width: 172px;
-      margin-right: 25px;
-      display: inline-flex;
-      -webkit-box-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      justify-content: center;
-      position: relative;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      outline: 0px;
-      border: 0px;
-      cursor: pointer;
-      user-select: none;
-      vertical-align: middle;
-      appearance: none;
-      text-decoration: none;
-      text-transform: none;
-      font-family: Raleway;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      line-height: 1.75;
-      min-width: 64px;
-      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-      color: rgb(255, 255, 255);
-      box-shadow: none;
-      background: #FF8000;
-      padding: 13px 22px;
-      border-radius: 25px
-    }
-
-    .Exchange-btn {
-      margin-left: 50px;
-      width: 172px;
-      display: inline-flex;
-      -webkit-box-align: center;
-      align-items: center;
-      -webkit-box-pack: center;
-      justify-content: center;
-      position: relative;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-      outline: 0px;
-      border: 0px;
-      margin: 0px;
-      cursor: pointer;
-      user-select: none;
-      vertical-align: middle;
-      appearance: none;
-      text-decoration: none;
-      text-transform: none;
-      font-family: Raleway;
-      font-weight: 600;
-      font-size: 0.9375rem;
-      line-height: 1.75;
-      min-width: 64px;
-      // transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-      color: #1B1232;
-      box-shadow: none;
-      background: #EBECF0;
-      padding: 13px 22px;
-      border-radius: 25px
-    }
-
-    .download-btn:hover {
-      background: #FF8000;
-    }
-  }
-
-
-  .smart-connect-profile-logo {
-    margin: 0 auto;
-    margin-bottom: 20px;
-
-    img {
-      width: 160.506px;
-      height: 55.167px;
-      border-radius: 50%;
-      box-shadow: 0px 0px 5px rgba(255, 183, 48, 0.355);
-    }
-  }
-
-  .social-icons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* Center align items horizontally */
-    padding: 25px;
-  }
-
-  .social-icons-para {
-    width: 100%;
-    /* Ensure the paragraph takes full width */
-    text-align: center;
-    font-family: Raleway;
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #333;
-  }
-
-  .icon-box {
-    margin: 10px;
-    background-color: #e6f7ff;
-    border-radius: 10px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .icon {
-    font-size: 40px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    padding: 5px;
-  }
-
-  .icon:hover {
-    color: #1890ff;
-  }
-
-  .facebook-icon {
-    color: #3b5998;
-    text-decoration: none;
-  }
-
-  .instagram-icon {
-    background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-decoration: none;
-  }
-
-  .linkedin-icon {
-    color: #0e76a8;
-    text-decoration: none;
-  }
-
-
-
-  .custom-spin .ant-spin-dot {
-    color: #ffffff;
-  }
-}
+//       p {
+//         margin: 5px 0;
+//       }
+//     }
+//   }
+// }
