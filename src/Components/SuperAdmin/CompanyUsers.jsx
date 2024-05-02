@@ -149,9 +149,10 @@ const CompanyUsers = () => {
                             ) : (
                                 companyUserList.map((user, key) => (
                                     <tr key={key}>
-                                        <td>{user.first_name + " " + user.last_name}</td>
-                                        <td>{user.email}</td>
-                                        <td>{user.job_title}</td>
+                                        <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td>
+                                        <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
+                                        <td>{`${user.job_title?.slice(0, 30)}${user.job_title?.length > 30 ? '...' : ''}`}</td>
+
                                         <td className='Actions-btns'>
                                             <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
                                             <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
