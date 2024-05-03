@@ -21,7 +21,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkAccessToken());
 
   useEffect(() => {
-    // Update the isLoggedIn state when the component mounts
     setIsLoggedIn(checkAccessToken());
   }, []);
 
@@ -50,7 +49,7 @@ function App() {
         <Route path="/profile/:userId" element={<Profie />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
-        <Route path="/userProfile" element={<UserProfile />} />
+        {/* <Route path="/userProfile" element={<UserProfile />} /> */}
       </Routes>
     </Router>
   );

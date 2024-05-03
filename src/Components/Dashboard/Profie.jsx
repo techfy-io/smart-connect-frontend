@@ -63,10 +63,8 @@ const Profile = () => {
                 const reader = new FileReader();
                 reader.onload = () => {
                     let vcfData = reader.result;
-
                     // Extract profile picture URL from the VCF data
                     const profilePicUrl = `${userData.profile_picture}`;
-
                     // Convert the profile picture to Base64 data
                     fetch(profilePicUrl)
                         .then(response => response.blob())
@@ -75,7 +73,7 @@ const Profile = () => {
                             reader.onload = () => {
                                 const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
                                 // Replace PHOTO property with Base64 encoded image data
-                                vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b;TYPE=JPEG:${profilePicBase64}`);
+                                vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b:${profilePicBase64}`);
                                 const blob = new Blob([vcfData], { type: 'text/vcard' });
                                 const url = window.URL.createObjectURL(blob);
                                 const link = document.createElement('a');
