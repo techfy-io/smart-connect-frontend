@@ -281,7 +281,7 @@ const Profile = () => {
 
                                 </div>
                                 <div className="cover-picture-card">
-                                    {userData && userData.profile_picture ? (
+                                    { userData?.cover_image ? (
                                         <>
                                             <img src={userData.cover_image} alt="" />
                                         </>) : (
@@ -293,7 +293,7 @@ const Profile = () => {
                                 <div className="profile-card">
                                     <div className="profile-info">
                                         <div className='profile-image'>
-                                            {userData && userData.profile_picture ? (
+                                            {userData?.profile_picture ? (
                                                 <>
                                                     <img src={userData.profile_picture} alt="Profile" />
                                                 </>) : (
