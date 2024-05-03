@@ -52,79 +52,82 @@ const Profile = () => {
         return window.location.href
     };
 
-    // const downloadUserData = () => {
-    //     if (!userData) return;
-
-    //     setLoading(true);
-    //     axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
-    //         responseType: 'blob'
-    //     })
-    //         .then(response => {
-    //             const reader = new FileReader();
-    //             reader.onload = () => {
-    //                 let vcfData = reader.result;
-    //                 // Extract profile picture URL from the VCF data
-    //                 const profilePicUrl = `${userData.profile_picture}`;
-    //                 // Convert the profile picture to Base64 data
-    //                 fetch(profilePicUrl)
-    //                     .then(response => response.blob())
-    //                     .then(blob => {
-    //                         const reader = new FileReader();
-    //                         reader.onload = () => {
-    //                             const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
-    //                             // Replace PHOTO property with Base64 encoded image data
-    //                             vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b:${profilePicBase64}`);
-    //                             const blob = new Blob([vcfData], { type: 'text/vcard' });
-    //                             const url = window.URL.createObjectURL(blob);
-    //                             const link = document.createElement('a');
-    //                             link.href = url;
-    //                             link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
-    //                             document.body.appendChild(link);
-    //                             link.click();
-    //                             document.body.removeChild(link);
-    //                             window.URL.revokeObjectURL(url);
-    //                             message.success("Download Successful");
-    //                         };
-    //                         reader.readAsDataURL(blob); // Read the blob as data URL
-    //                     });
-    //             };
-    //             reader.readAsText(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error("Failed to download user data:", error);
-    //             message.error("Failed to download");
-    //         })
-    //         .finally(() => {
-    //             setLoading(false);
-    //         });
-    // };
     const downloadUserData = () => {
         if (!userData) return;
-    
+
         setLoading(true);
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
             responseType: 'blob'
         })
-        .then(response => {
-            const blob = new Blob([response.data], { type: 'text/vcard' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-            message.success("Download Successful");
-        })
-        .catch(error => {
-            console.error("Failed to download user data:", error);
-            message.error("Failed to download");
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+            .then(response => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    let vcfData = reader.result;
+                    // Extract profile picture URL from the VCF data
+                    const profilePicUrl = `${userData.profile_picture}`;
+                    // Convert the profile picture to Base64 data
+                    fetch(profilePicUrl)
+                        .then(response => response.blob())
+                        .then(blob => {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                                const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
+                                // Replace PHOTO property with Base64 encoded image data
+                                vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b:${profilePicBase64}`);
+                                const blob = new Blob([vcfData], { type: 'text/vcard' });
+                                const url = window.URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(url);
+                                message.success("Download Successful");
+                            };
+                            reader.readAsDataURL(blob); // Read the blob as data URL
+                        });
+                };
+                reader.readAsText(response.data);
+            })
+            .catch(error => {
+                console.error("Failed to download user data:", error);
+                message.error("Failed to download");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
+
+
+
+    // const downloadUserData = () => {
+    //     if (!userData) return;
+    
+    //     setLoading(true);
+    //     axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
+    //         responseType: 'blob'
+    //     })
+    //     .then(response => {
+    //         const blob = new Blob([response.data], { type: 'text/vcard' });
+    //         const url = window.URL.createObjectURL(blob);
+    //         const link = document.createElement('a');
+    //         link.href = url;
+    //         link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
+    //         document.body.appendChild(link);
+    //         link.click();
+    //         document.body.removeChild(link);
+    //         window.URL.revokeObjectURL(url);
+    //         message.success("Download Successful");
+    //     })
+    //     .catch(error => {
+    //         console.error("Failed to download user data:", error);
+    //         message.error("Failed to download");
+    //     })
+    //     .finally(() => {
+    //         setLoading(false);
+    //     });
+    // };
     
 
     const handleOpenExchangeModal = () => {
@@ -409,7 +412,7 @@ const Profile = () => {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input  maxLength={30}/>
                             </Form.Item>
                             <label htmlFor="lastname">{t("Last Name")}*</label>
                             <Form.Item
@@ -421,7 +424,7 @@ const Profile = () => {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input maxLength={30} />
                             </Form.Item>
                             <label htmlFor="companyname">{t("Company Name")}</label>
                             <Form.Item
