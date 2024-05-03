@@ -7,6 +7,7 @@ import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 import FormItem from 'antd/es/form/FormItem';
 import Men1 from "../../Inspect/Men1.png";
 import { useTranslation } from "react-i18next";
+import { info } from 'sass';
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
     const { t, i18n } = useTranslation('translation');
@@ -41,7 +42,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             biography: user?.bio_graphy,
         });
     }, [openEditModal, user]);
-
+    console.log("userdata", user)
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -56,7 +57,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('phone_number_type', phone_number_type || "");
         formData.append('company_name', company_name || "");
         formData.append('job_title', job_title || "");
-        formData.append('zip_code', zip_code||"");
+        formData.append('zip_code', zip_code || "");
         formData.append('postal_code', postal_code || "");
         formData.append('country', country || "");
         formData.append('city', city || "");
@@ -68,15 +69,15 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('linkedin_url', linkedin_url || "");
         formData.append('user', user.id);
 
-        // Check if profile picture is provided and different from current user's profile picture
-        if (profile_picture && profile_picture !== user.profile_picture) {
+        if (profile_picture !== user.profile_picture) {
             formData.append('profile_picture', profile_picture);
+            console.log("profile_picture", profile_picture)
         }
-
-        // Check if cover image is provided and different from current user's cover image
-        if (cover_image && cover_image !== user.cover_image) {
-            formData.append('cover_image', cover_image);
+        if (cover_image !== user.cover_image) {
+            formData.append('cover_image', cover_image || "");
         }
+        console.log("profile_picture", profile_picture);
+        console.log("cover_image", cover_image);
 
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
@@ -103,12 +104,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             .catch(error => {
                 console.log("error", error);
                 if (error.response) {
-                    // The request was made and the server responded with a status code
                     if (error.response.status === 404 || error.response.status === 500) {
-                        // Handle 404 or 500 error
                         message.error("Failed: Something went wrong with the server.");
                     } else {
-                        // Handle other errors with response data
                         const responseData = error.response.data;
                         let errorMessage = '';
 
@@ -123,11 +121,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                         message.error(errorMessage);
                     }
                 } else if (error.request) {
-                    // The request was made but no response was received
                     console.error("No response received from the server:", error.request);
                     message.error("Failed: No response received from the server.");
                 } else {
-                    // Something happened in setting up the request that triggered an error
                     console.error("Error setting up the request:", error.message);
                     message.error("Failed: Error setting up the request.");
                 }
@@ -187,68 +183,64 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     form={form}
                     layout="vertical"
                     onFinish={onFinish}
+                    enctype="multipart/form-data"
+
                 >
                     <Form.Item label={t("Profile Picture")} name="profile_picture">
-                        {user && user.profile_picture ? (
-                            <Upload
-                                listType="picture-circle"
-                                maxCount={1}
-                                beforeUpload={() => false}
-                                showUploadList={true}
-                                onChange={(info) => {
-                                    const { file } = info;
+                        <Upload
+                            listType="picture-circle"
+                            maxCount={1}
+                            beforeUpload={() => false}
+                            showUploadList={true}
+                            onChange={(info) => {
+                                const { file } = info;
+                                if (file?.status == "removed") {
+                                    form.setFieldsValue({ profile_picture: new File([], '') });
+
+                                }
+                                else{
                                     form.setFieldsValue({ profile_picture: file });
-                                }}
-                                defaultFileList={[{ uid: '-1', name: 'profile_picture', status: 'done', url: user.profile_picture }]}
-                            >
-                                <Button shape="default" icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
-                            </Upload>
-                        ) : (
-                            <Upload
-                                listType="picture-circle"
-                                maxCount={1}
-                                beforeUpload={() => false}
-                                showUploadList={true}
-                                onChange={(info) => {
-                                    const { file } = info;
-                                    form.setFieldsValue({ profile_picture: file });
-                                }}
-                                defaultFileList={[]}
-                            >
-                                <Button shape="default" icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
-                            </Upload>
-                        )}
+
+                                }
+                            }}
+                            // onRemove={(e)=>{
+                            //     console.log("remoce imge "  , e)
+                            //     form.setFieldsValue({ profile_picture: new File([], '') });
+                            //     // formData.append('image', new File([], ''));
+                            // }}
+                            defaultFileList={user?.profile_picture ? [{
+                                uid: '-1', name: 'profile_picture', status: 'done', url: user?.profile_picture
+                            }] : null}
+                        >
+                            <Button shape="default" icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
+                        </Upload>
                     </Form.Item>
 
+
                     <Form.Item label={t("Cover Picture")} name="cover_image">
-                        {user && user.cover_image ? (
-                            <Upload
-                                listType="picture-circle"
-                                maxCount={1}
-                                beforeUpload={() => false}
-                                onChange={(info) => {
-                                    const { file } = info;
+                        <Upload
+                            listType="picture-circle"
+                            maxCount={1}
+                            beforeUpload={() => false}
+                            onChange={(info) => {
+                                const { file } = info;
+                                if (file?.status == "removed") {
+                                    form.setFieldsValue({ cover_image: new File([], '') });
+
+                                }
+                                else{
                                     form.setFieldsValue({ cover_image: file });
-                                }}
-                                defaultFileList={[{ uid: '-1', name: 'cover_image', status: 'done', url: user.cover_image }]}
-                            >
-                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
-                            </Upload>
-                        ) : (
-                            <Upload
-                                listType="picture-circle"
-                                maxCount={1}
-                                beforeUpload={() => false}
-                                onChange={(info) => {
-                                    const { file } = info;
-                                    form.setFieldsValue({ cover_image: file });
-                                }}
-                                defaultFileList={[]}
-                            >
-                                <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
-                            </Upload>
-                        )}
+
+                                }
+                            }}
+                            defaultFileList={user && user.cover_image ? [{ uid: '-1', name: 'cover_image', status: 'done', url: user.cover_image }] : []}
+                        >
+                            <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
+                        </Upload>
                     </Form.Item>
+
+
+
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={`${t("First Name")}*`}
@@ -263,7 +255,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             <Input />
                         </Form.Item>
                         <Form.Item
-                        style={{width:"200px"}}
+                            style={{ width: "200px" }}
                             label={`${t("Last Name")}*`}
                             name="lastname"
                             rules={[
@@ -461,36 +453,36 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     )}
 
                     {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-                        <Form.Item
-                            label={`${t("Phone")}*`}
-                            name="phone_number"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: (t('Please enter a phone number')),
-                                },
-                                {
-                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                    message: (t('Invalid phone number format')),
-                                },
-                            ]}
-                        >
-                            <InputMask
-                                style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
-                                mask="+33 9 99 99 99 99"
-                                maskChar=""
-                                placeholder="+33 1 23 45 67 89"
-                            />
-                        </Form.Item>
-                        <Form.Item
-                            label={t("Phone Type")}
-                            name="phone_number_type"
-                        >
-                            <Radio.Group>
-                                <Radio name='phone_number_professional' value="PROFESSIONNEL">{t("Professionnel")}</Radio>
-                                <Radio name='phone_number_personal' value="PERSONAL">{t("Personal")}</Radio>
-                            </Radio.Group>
-                        </Form.Item>
+                    <Form.Item
+                        label={`${t("Phone")}*`}
+                        name="phone_number"
+                        rules={[
+                            {
+                                required: true,
+                                message: (t('Please enter a phone number')),
+                            },
+                            {
+                                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                message: (t('Invalid phone number format')),
+                            },
+                        ]}
+                    >
+                        <InputMask
+                            style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
+                            mask="+33 9 99 99 99 99"
+                            maskChar=""
+                            placeholder="+33 1 23 45 67 89"
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        label={t("Phone Type")}
+                        name="phone_number_type"
+                    >
+                        <Radio.Group>
+                            <Radio name='phone_number_professional' value="PROFESSIONNEL">{t("Professionnel")}</Radio>
+                            <Radio name='phone_number_personal' value="PERSONAL">{t("Personal")}</Radio>
+                        </Radio.Group>
+                    </Form.Item>
                     {/* </div> */}
                     {user && user.phone_number_1 ? (
                         <>
