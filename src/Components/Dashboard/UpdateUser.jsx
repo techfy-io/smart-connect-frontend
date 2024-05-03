@@ -74,11 +74,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             console.log("profile_picture", profile_picture)
         }
         if (cover_image !== user.cover_image) {
-            formData.append('cover_image', cover_image || "");
+            formData.append('cover_image', cover_image);
         }
-        console.log("profile_picture", profile_picture);
-        console.log("cover_image", cover_image);
-
+      
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
 
@@ -195,7 +193,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             onChange={(info) => {
                                 const { file } = info;
                                 if (file?.status == "removed") {
-                                    form.setFieldsValue({ profile_picture: new File([], '') });
+                                    form.setFieldsValue({ profile_picture: new File([], "") });
 
                                 }
                                 else{
@@ -225,7 +223,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             onChange={(info) => {
                                 const { file } = info;
                                 if (file?.status == "removed") {
-                                    form.setFieldsValue({ cover_image: new File([], '') });
+                                    form.setFieldsValue({ cover_image: new File([], "") });
 
                                 }
                                 else{
