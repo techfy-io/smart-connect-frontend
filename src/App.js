@@ -21,7 +21,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(checkAccessToken());
 
   useEffect(() => {
-    // Update the isLoggedIn state when the component mounts
     setIsLoggedIn(checkAccessToken());
   }, []);
 

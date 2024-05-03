@@ -43,7 +43,7 @@ const CompanyUsers = () => {
         getCompanyUser();
     }, []);
     const getCompanyUser = () => {
-
+console.log("company", company)
         const accessToken = localStorage.getItem('accessToken');
         localStorage.setItem('userid', company.id);
         axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
