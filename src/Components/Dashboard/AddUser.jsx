@@ -219,7 +219,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input maxLength={30} />
                         </Form.Item>
                         <Form.Item
                             label={`${t("Last Name")}*`}
@@ -231,7 +231,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input maxLength={30} />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>

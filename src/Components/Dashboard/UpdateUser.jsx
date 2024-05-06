@@ -250,7 +250,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input  maxLength={30}/>
                         </Form.Item>
                         <Form.Item
                             style={{ width: "200px" }}
@@ -263,7 +263,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 },
                             ]}
                         >
-                            <Input />
+                            <Input  maxLength={30}/>
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
