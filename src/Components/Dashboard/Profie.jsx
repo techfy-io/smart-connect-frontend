@@ -100,32 +100,32 @@ const Profile = () => {
     // };
     const downloadUserData = () => {
         if (!userData) return;
-    
+
         setLoading(true);
         axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
             responseType: 'blob'
         })
-        .then(response => {
-            const blob = new Blob([response.data], { type: 'text/vcard' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-            message.success("Download Successful");
-        })
-        .catch(error => {
-            console.error("Failed to download user data:", error);
-            message.error("Failed to download");
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+            .then(response => {
+                const blob = new Blob([response.data], { type: 'text/vcard' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                message.success("Download Successful");
+            })
+            .catch(error => {
+                console.error("Failed to download user data:", error);
+                message.error("Failed to download");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
-    
+
 
     const handleOpenExchangeModal = () => {
         setExchangeModal(prev => !prev);
@@ -188,16 +188,16 @@ const Profile = () => {
     };
 
 
-    const downloadQRCode = () => {
-        html2canvas(qrCodeRef.current).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `${userData?.first_name}_${userData?.last_name}.png`;
-            link.href = canvas.toDataURL();
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-    };
+    // const downloadQRCode = () => {
+    //     html2canvas(qrCodeRef.current).then(canvas => {
+    //         const link = document.createElement('a');
+    //         link.download = `${userData?.first_name}_${userData?.last_name}.png`;
+    //         link.href = canvas.toDataURL();
+    //         document.body.appendChild(link);
+    //         link.click();
+    //         document.body.removeChild(link);
+    //     });
+    // };
     const handleSocialIconClick = (url) => {
         if (!url) {
             message.error(t("No media available, please add one."));
@@ -281,7 +281,7 @@ const Profile = () => {
 
                                 </div>
                                 <div className="cover-picture-card">
-                                    { userData?.cover_image ? (
+                                    {userData?.cover_image ? (
                                         <>
                                             <img src={userData.cover_image} alt="" />
                                         </>) : (
@@ -303,9 +303,15 @@ const Profile = () => {
                                             )}
                                         </div>
                                         <div className="profile-details">
-                                            <p className="profile-name">{`${userData?.first_name?.slice(0, 13)} ${userData?.last_name?.slice(0, 13)}`.length > 23 ?
-                                                `${`${userData?.first_name?.slice(0, 13)} ${userData?.last_name?.slice(0, 13)}`.slice(0, 20)}...` :
-                                                `${userData?.first_name?.slice(0, 11)} ${userData?.last_name?.slice(0, 11)}`}</p>  <p className="profile-designation">{userData?.job_title?.length > 23 ? `${userData?.job_title?.slice(0, 20)}...` : userData?.job_title}</p>
+                                            <p className="profile-name">
+                                                {userData?.first_name?.length + userData?.last_name?.length <= 50
+                                                    ? `${userData?.first_name} ${userData?.last_name}`
+                                                    : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 50 - userData?.first_name?.length))}...`
+                                                }
+                                            </p>
+
+
+                                            <p className="profile-designation">{userData?.job_title?.length > 23 ? `${userData?.job_title?.slice(0, 20)}...` : userData?.job_title}</p>
                                             <p className="profile-designation">{userData?.company_name?.length > 23 ? `${userData?.company_name?.slice(0, 20)}...` : userData?.company_name}</p>
                                         </div>
 
@@ -409,7 +415,7 @@ const Profile = () => {
                                     },
                                 ]}
                             >
-                                <Input  maxLength={30}/>
+                                <Input maxLength={30} />
                             </Form.Item>
                             <label htmlFor="lastname">{t("Last Name")}*</label>
                             <Form.Item
