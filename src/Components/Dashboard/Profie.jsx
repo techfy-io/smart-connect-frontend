@@ -311,8 +311,8 @@ const Profile = () => {
                                             </p>
 
 
-                                            <p className="profile-designation">{userData?.job_title?.length > 23 ? `${userData?.job_title?.slice(0, 20)}...` : userData?.job_title}</p>
-                                            <p className="profile-designation">{userData?.company_name?.length > 23 ? `${userData?.company_name?.slice(0, 20)}...` : userData?.company_name}</p>
+                                            <p className="profile-designation">{userData?.job_title?.length > 35 ? `${userData?.job_title?.slice(0, 35)}...` : userData?.job_title}</p>
+                                            <p className="profile-designation">{userData?.company_name?.length >35 ? `${userData?.company_name?.slice(0, 35)}...` : userData?.company_name}</p>
                                         </div>
 
 
