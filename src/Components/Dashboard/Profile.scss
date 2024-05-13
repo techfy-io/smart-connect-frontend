@@ -85,7 +85,7 @@
  
     .cover-picture-card {
         position: absolute;
-        top: 5%;
+        top: 2%;
         // left: 50%;
         // transform: translateX(-50%);
         z-index: 1;
@@ -109,7 +109,7 @@
             width: 100%; // Adjust width for smaller screens
             max-width: none; // Remove max-width restriction
             // border-radius: 0px;
-            top:8%;
+            top:4%;
             overflow: hidden; // Ensure border-radius is applied correctly
 
             img {
