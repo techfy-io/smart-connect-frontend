@@ -10,16 +10,18 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined, DownOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
+import AvatarEditor from 'react-avatar-editor';
 
 const Profile = () => {
     const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
+    const editorRef = useRef(null);
     const [loading, setLoading] = useState(false);
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
@@ -27,7 +29,12 @@ const Profile = () => {
     const [openExchangeModal, setExchangeModal] = useState(false);
     const { userId } = useParams();
     const qrCodeRef = useRef(null); // Ref for QR code element
-
+    const [editingCover, setEditingCover] = useState(false);
+    const [coverImage, setCoverImage] = useState(null);
+    const [editor, setEditor] = useState(null);
+    const [scale, setScale] = useState(1);
+    const [rotate, setRotate] = useState(0);
+    const [angle, setAngle] = useState(0);
 
     useEffect(() => {
         if (userId) {
@@ -43,61 +50,14 @@ const Profile = () => {
             setpageloading(false);
         } catch (error) {
             console.error("Failed to fetch user data:", error);
-            // message.error("Failed to fetch user data:", error);
             setpageloading(false);
         }
     };
 
     const formatUserData = () => {
-        return window.location.href
+        return window.location.href;
     };
 
-    // const downloadUserData = () => {
-    //     if (!userData) return;
-
-    //     setLoading(true);
-    //     axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
-    //         responseType: 'blob'
-    //     })
-    //         .then(response => {
-    //             const reader = new FileReader();
-    //             reader.onload = () => {
-    //                 let vcfData = reader.result;
-    //                 // Extract profile picture URL from the VCF data
-    //                 const profilePicUrl = `${userData.profile_picture}`;
-    //                 // Convert the profile picture to Base64 data
-    //                 fetch(profilePicUrl)
-    //                     .then(response => response.blob())
-    //                     .then(blob => {
-    //                         const reader = new FileReader();
-    //                         reader.onload = () => {
-    //                             const profilePicBase64 = reader.result.split(',')[1]; // Extract Base64 data
-    //                             // Replace PHOTO property with Base64 encoded image data
-    //                             vcfData = vcfData.replace(/PHOTO;VALUE=uri:.*/, `PHOTO;ENCODING=b:${profilePicBase64}`);
-    //                             const blob = new Blob([vcfData], { type: 'text/vcard' });
-    //                             const url = window.URL.createObjectURL(blob);
-    //                             const link = document.createElement('a');
-    //                             link.href = url;
-    //                             link.download = `${userData?.first_name}_${userData?.last_name}.vcf`;
-    //                             document.body.appendChild(link);
-    //                             link.click();
-    //                             document.body.removeChild(link);
-    //                             window.URL.revokeObjectURL(url);
-    //                             message.success("Download Successful");
-    //                         };
-    //                         reader.readAsDataURL(blob); // Read the blob as data URL
-    //                     });
-    //             };
-    //             reader.readAsText(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error("Failed to download user data:", error);
-    //             message.error("Failed to download");
-    //         })
-    //         .finally(() => {
-    //             setLoading(false);
-    //         });
-    // };
     const downloadUserData = () => {
         if (!userData) return;
 
@@ -126,7 +86,6 @@ const Profile = () => {
             });
     };
 
-
     const handleOpenExchangeModal = () => {
         setExchangeModal(prev => !prev);
     };
@@ -134,10 +93,11 @@ const Profile = () => {
     const handleCancel = () => {
         handleOpenExchangeModal();
         form.resetFields();
-    }
+    };
+
     const onFinish = async (values) => {
         const formData = new FormData();
-        setLoading(true); // Set loading state to true while submitting
+        setLoading(true);
 
         formData.append('first_name', values.first_name);
         formData.append('last_name', values.last_name);
@@ -155,12 +115,9 @@ const Profile = () => {
         } catch (error) {
             console.log("error", error);
             if (error.response) {
-                // The request was made and the server responded with a status code
                 if (error.response.status === 404 || error.response.status === 500) {
-                    // Handle 404 or 500 error
                     message.error("Failed: Something went wrong with the server.");
                 } else {
-                    // Handle other errors with response data
                     const responseData = error.response.data;
                     let errorMessage = '';
 
@@ -174,30 +131,46 @@ const Profile = () => {
                     message.error(errorMessage);
                 }
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error("No response received from the server:", error.request);
                 message.error("Failed: No response received from the server.");
             } else {
-                // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error("Failed: Error setting up the request.");
             }
         } finally {
-            setLoading(false); // Reset loading state after submission
+            setLoading(false);
         }
     };
+    const handleZoom = (value) => {
+        setScale(value);
+    };
 
+    const handleRotate = () => {
+        setAngle(angle + 90);
+        document.getElementById("image").style.transform = `rotate(${angle + 90}deg)`;
+    };
 
-    // const downloadQRCode = () => {
-    //     html2canvas(qrCodeRef.current).then(canvas => {
-    //         const link = document.createElement('a');
-    //         link.download = `${userData?.first_name}_${userData?.last_name}.png`;
-    //         link.href = canvas.toDataURL();
-    //         document.body.appendChild(link);
-    //         link.click();
-    //         document.body.removeChild(link);
-    //     });
-    // };
+    const handleSave = () => {
+        if (editorRef.current) {
+            const canvas = editorRef.current.getImage();
+            console.log(canvas,"canvas")
+        }
+    };
+    const handleCoverEdit = () => {
+        setEditingCover(true);
+    };
+
+    const handleCoverSave = () => {
+        const canvas = editor.getImage();
+        const editedCoverImage = canvas.toDataURL();
+        setCoverImage(editedCoverImage);
+        setEditingCover(false);
+    };
+
+    const handleCoverCancel = () => {
+        setEditingCover(false);
+    };
+
     const handleSocialIconClick = (url) => {
         if (!url) {
             message.error(t("No media available, please add one."));
@@ -223,9 +196,11 @@ const Profile = () => {
             );
         }
     };
+
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
     };
+
     const menu = (
         <Menu>
             <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
@@ -236,6 +211,7 @@ const Profile = () => {
             </Menu.Item>
         </Menu>
     );
+
     return (
         <>
             {pageloading ? (
@@ -264,31 +240,16 @@ const Profile = () => {
                                     <div className='profile-login-btn'>
                                         <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
                                             <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
-                                        </Tooltip>                                    </div>
+                                        </Tooltip>
+                                    </div>
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
                                     </div>
                                     <br />
-                                    {/* code para */}
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
-                                    {/* <div className='download-qr-code-btn'>
-                                        <Button icon={<DownloadOutlined />} onClick={downloadQRCode}>
-                                            {t("Download QR Code")}
-                                        </Button>
-                                    </div> */}
                                 </div>
-                                <div>
-
-                                </div>
-                                <div className="cover-picture-card">
-                                    {userData?.cover_image ? (
-                                        <>
-                                            <img src={userData.cover_image} alt="" />
-                                        </>) : (
-                                        <>
-                                            <img src={coverpic} alt="" />
-                                        </>
-                                    )}
+                                <div className="cover-picture-card" onClick={handleCoverEdit}>
+                                    <img src={coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
                                 <div className="profile-card">
                                     <div className="profile-info">
@@ -310,7 +271,7 @@ const Profile = () => {
                                                 }
                                             </p>
                                             <p className="profile-designation">{userData?.job_title?.length > 50 ? `${userData?.job_title?.slice(0, 50)}...` : userData?.job_title}</p>
-                                            <p className="profile-designation">{userData?.company_name?.length >50 ? `${userData?.company_name?.slice(0, 50)}...` : userData?.company_name}</p>
+                                            <p className="profile-designation">{userData?.company_name?.length > 50 ? `${userData?.company_name?.slice(0, 50)}...` : userData?.company_name}</p>
                                         </div>
 
 
@@ -481,6 +442,36 @@ const Profile = () => {
                         </Form>
                     </Modal>
                 </>
+            )}
+            {editingCover && (
+                
+                <Modal
+                    title="Edit Cover Photo"
+                    open={editingCover}
+                    onOk={handleCoverSave}
+                    onCancel={handleCoverCancel}
+                    width={600}
+                    height={500}
+                >
+                    <AvatarEditor
+                    id="image"
+                        ref={editorRef}
+                        image={coverImage || userData?.cover_image || coverpic} // Pass initial cover image here
+                        width={480}
+                        height={390}
+                        border={50}
+                        color={[255, 255, 255, 0.6]}
+                        scale={scale}
+                        rotate={rotate}
+                    />
+                    <div>
+                        <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />}>Zoom In</Button>
+                        <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />}>Zoom Out</Button>
+                        <Button onClick={handleRotate} icon={<RedoOutlined />}>Rotate</Button>
+
+                        <Button onClick={handleSave}>Save</Button>
+                    </div>
+                </Modal>
             )}
         </>
     );
