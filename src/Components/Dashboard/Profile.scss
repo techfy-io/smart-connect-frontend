@@ -127,8 +127,8 @@
     .profile-card {
         position: relative; // Position profile card relative to allow z-index to work
         z-index: 2; // Set z-index to 2, higher than cover card
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
-            // background: transparent 20%;
+        // background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
+            background:white;
         width: 370px;
         height: 350px;
         display: flex;

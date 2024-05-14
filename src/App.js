@@ -32,6 +32,7 @@ function App() {
           <>
             {/* Routes accessible only when logged in */}
             <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="*" element={<Navigate to="/dashboard" />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/usersetting" element={<UserSetting />} />
             <Route path="/companyuser" element={<CompanyUsers />} />
@@ -41,6 +42,7 @@ function App() {
           <>
             {/* Routes accessible only when logged out */}
             <Route path="/" element={<Login />} />
+            <Route path="*" element={<Login />} />
           </>
         )}
         {/* Common routes accessible in both states */}
