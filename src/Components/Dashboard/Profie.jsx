@@ -248,7 +248,7 @@ const Profile = () => {
                                     <br />
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                 </div>
-                                <div className="cover-picture-card" onClick={handleCoverEdit}>
+                                <div className="cover-picture-card" contentEditable="true" onClick={handleCoverEdit}>
                                     <img src={coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
                                 <div className="profile-card">
@@ -426,15 +426,13 @@ const Profile = () => {
                     open={editingCover}
                     onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
-                    width={600}
-                    height={500}
+                    style={{width:"800px", height:"300px" , textAlign:"center"}}
                 >
                     <AvatarEditor
                     id="image"
                         ref={editorRef}
                         image={coverImage || userData?.cover_image || coverpic} // Pass initial cover image here
-                        width={480}
-                        height={390}
+                        style={{width:"400px", height:"400px" , margin:"0 auto"}}
                         border={50}
                         color={[255, 255, 255, 0.6]}
                         scale={scale}
