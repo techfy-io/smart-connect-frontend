@@ -22,7 +22,7 @@
         }
 
         .content-company-name {
-            width: 40%;
+            width: 20%;
             height: 50px;
             padding: 20px;
             font-size: 24px;
@@ -47,10 +47,14 @@
                 overflow: hidden;
                 text-overflow: ellipsis;
             }
+
+            .company-actions {
+                width: 600px;
+            }
         }
 
         .company-actions {
-            width: 60%;
+            width: 700px;
             text-align: right;
             margin-right: 5px;
             padding: 18px;
@@ -85,9 +89,9 @@
             th,
             td {
                 border: 1px solid #e8e8e8;
-        padding: 20px;
-        text-align: center;
-        width: 10%;
+                padding: 20px;
+                text-align: center;
+                width: 10%;
             }
 
             th {
@@ -100,36 +104,39 @@
             }
 
             .Actions-btns {
+
                 .view-eye-btn,
                 .Delete-button,
-                .Edit-button,.download-button {
-                  font-size: 20px;
-                  border: none;
-                  background-color: transparent;
-                  cursor: pointer;
-                  text-decoration: underline;
-                  margin-left: 14px;
-              
-                  &:hover {
-                    color: #40a9ff;
-                  }
+                .Edit-button,
+                .download-button {
+                    font-size: 20px;
+                    border: none;
+                    background-color: transparent;
+                    cursor: pointer;
+                    text-decoration: underline;
+                    margin-left: 14px;
+
+                    &:hover {
+                        color: #40a9ff;
+                    }
                 }
-              
+
                 .view-eye-btn {
-                  color: #2d8ed4;
+                    color: #2d8ed4;
                 }
-              
+
                 .Delete-button {
-                  color: #ff8000;
+                    color: #ff8000;
                 }
-              
+
                 .Edit-button {
-                  color: #19acc0;
+                    color: #19acc0;
                 }
-                .download-button{
+
+                .download-button {
                     color: #073907;
                 }
-              }
+            }
         }
 
         &::-webkit-scrollbar {
