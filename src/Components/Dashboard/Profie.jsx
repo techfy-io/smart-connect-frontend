@@ -10,7 +10,7 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined,EditOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
@@ -153,7 +153,8 @@ const Profile = () => {
     const handleSave = () => {
         if (editorRef.current) {
             const canvas = editorRef.current.getImage();
-            console.log(canvas,"canvas")
+            setEditor(canvas)
+            console.log(canvas, "canvas")
         }
     };
     const handleCoverEdit = () => {
@@ -161,9 +162,12 @@ const Profile = () => {
     };
 
     const handleCoverSave = () => {
-        const canvas = editor.getImage();
-        const editedCoverImage = canvas.toDataURL();
+        const canvas = editorRef.current?.getImage();
+        console.log(canvas, "canvas")
+        const editedCoverImage = canvas?.toDataURL();
+        console.log(editedCoverImage, "editedCoverImage")
         setCoverImage(editedCoverImage);
+        console.log("editedCoverImage", editedCoverImage)
         setEditingCover(false);
     };
 
@@ -420,19 +424,20 @@ const Profile = () => {
                 </>
             )}
             {editingCover && (
-                
+
                 <Modal
                     title="Edit Cover Photo"
                     open={editingCover}
                     onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
-                    style={{width:"800px", height:"300px" , textAlign:"center"}}
+                    style={{ width: "800px", height: "300px", textAlign: "center" }}
                 >
                     <AvatarEditor
-                    id="image"
+                        id="image"
                         ref={editorRef}
-                        image={coverImage || userData?.cover_image || coverpic} // Pass initial cover image here
-                        style={{width:"400px", height:"400px" , margin:"0 auto"}}
+                        image={coverImage || userData?.cover_image || coverpic}
+                        crossOrigin='anonymous'
+                        style={{ width: "400px", height: "400px", margin: "0 auto" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}
                         scale={scale}
