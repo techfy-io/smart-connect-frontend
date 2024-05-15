@@ -255,14 +255,7 @@ const Profile = () => {
                                     <div className="profile-info">
                                         <div className='profile-image'>
                                             <img src={userData?.profile_picture || Men1} alt="" />
-                                            {/* {userData?.profile_picture ? (
-                                                <>
-                                                    <img src={userData.profile_picture} alt="Profile" />
-                                                </>) : (
-                                                <>
-                                                    <img src={Men1} alt="Profile" />
-                                                </>
-                                            )} */}
+
                                         </div>
                                         <div className="profile-details">
                                             <p className="profile-name">
