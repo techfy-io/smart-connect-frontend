@@ -267,8 +267,6 @@ const Profile = () => {
                                             <p className="profile-designation">{userData?.job_title?.length > 50 ? `${userData?.job_title?.slice(0, 50)}...` : userData?.job_title}</p>
                                             <p className="profile-designation">{userData?.company_name?.length > 50 ? `${userData?.company_name?.slice(0, 50)}...` : userData?.company_name}</p>
                                         </div>
-
-
                                     </div>
                                     <div className='profile-action'>
                                         <button className='save-button' onClick={downloadUserData} disabled={loading}>
