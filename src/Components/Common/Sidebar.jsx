@@ -12,7 +12,7 @@ const Sidebar = () => {
     const [usertype, setUserType] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true');
     const [showLeadsMenu, setShowLeadsMenu] = useState(false);
 
     const toggleSidebar = () => {
@@ -49,6 +49,9 @@ const Sidebar = () => {
         }
     }, [location.pathname]);
 
+    useEffect(() => {
+        localStorage.setItem('sidebarCollapsed', isSidebarCollapsed);
+    }, [isSidebarCollapsed]);
 
     return (
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
@@ -62,7 +65,7 @@ const Sidebar = () => {
                             <li className="menu-item" onClick={() => navigate('/')}><TeamOutlined /> {t("Companies")}</li>
                             {showLeadsMenu ? (
                                 <>
-                                    <Link  to='/leads' style={{ textDecoration: "none"  }}>
+                                    <Link to='/leads' style={{ textDecoration: "none" }}>
                                         <li className='menu-item' style={{ color: "black" }}><UsergroupAddOutlined /> {t("Leads")}</li>
                                     </Link>
                                 </>
@@ -71,7 +74,6 @@ const Sidebar = () => {
                             <li className="menu-item" onClick={Logoutuser}><LogoutOutlined />  {t("Logout")}</li>
                         </ul>
                     ) : (
-
                         <ul className='menu'>
                             <li className='menu-item' onClick={() => navigate('/')}><UserOutlined />{t("Users")}</li>
                             <Link to='/usersetting' style={{ textDecoration: "none" }}>
