@@ -14,21 +14,25 @@
     background: rgb(215, 170, 130);
     background: linear-gradient(127deg, rgba(215, 170, 130, 1) 0%, rgba(153, 204, 204, 1) 100%);
     gap: 14px;
+
     .burger-icon {
         position: absolute;
         top: 20px;
         right: 20px;
         cursor: pointer;
     }
-    .profile-login-btn{
+
+    .profile-login-btn {
         position: absolute;
         top: 15px;
         right: 60px;
         cursor: pointer;
-        .profile-action-login-btn{
+
+        .profile-action-login-btn {
             background-color: #F47122;
         }
     }
+
     .sidebar {
         position: fixed;
         top: 0;
@@ -65,7 +69,7 @@
                 width: 60%;
                 padding: 10px;
             }
-           
+
         }
 
         .qr-code-para {
@@ -77,18 +81,19 @@
             font-size: 0.875rem;
             line-height: 1.43;
         }
-        .download-qr-code-btn{
+
+        .download-qr-code-btn {
             margin-top: 5%;
             text-align: center;
         }
     }
- 
+
     .cover-picture-card {
         position: absolute;
         top: 2%;
         z-index: 1;
         width: 90%;
-        width: 704px; 
+        width: 704px;
         height: 320.252px;
         overflow: hidden;
 
@@ -98,20 +103,20 @@
             display: block;
             border-radius: 20px;
         }
-        
+
     }
 
     @media screen and (max-width: 768px) {
         .cover-picture-card {
-            width: 99%;
-            max-width: none; 
-            top:3%;
+            width: 95%;
+            max-width: none;
+            top: 3%;
             overflow: hidden;
 
             img {
-                width: 98%;
-                height: 281.252px;
-                display: block;
+                width: 95%;
+                height: 177.252px;
+                                display: block;
                 margin: 0 auto;
                 border-radius: 10px;
             }
@@ -124,7 +129,7 @@
         position: relative; // Position profile card relative to allow z-index to work
         z-index: 2; // Set z-index to 2, higher than cover card
         // background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8));
-            background:white;
+        background: white;
         width: 370px;
         height: 350px;
         display: flex;
@@ -137,8 +142,8 @@
 
     @media screen and (max-width: 768px) {
         .profile-card {
-            max-width: 96%; 
-            margin-top: 60%;
+            max-width: 82%;
+            margin-top: 49%;
         }
     }
 
@@ -172,11 +177,11 @@
     .profile-name {
         color: #546467;
         font-family: Inter;
-        font-size:18.693px;
+        font-size: 18.693px;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
-      
+
     }
 
     .profile-designation {
@@ -230,6 +235,10 @@
         background-color: #ffff;
         width: 360px;
         height: 100px;
+        @media screen and (max-width: 768px) {
+            width: 82%;
+         
+        }
     }
 
     .social-icons {
@@ -284,7 +293,11 @@
         height: auto;
         background-color: #ffff;
         border-radius: 8px;
-        word-wrap: break-word; 
+        word-wrap: break-word;
+        @media screen and (max-width: 768px) {
+            width: 82%;
+         
+        }
         .bio-heading {
             text-align: center;
             color: #546467;
@@ -295,7 +308,7 @@
             line-height: normal;
             padding: 10px;
         }
-    
+
         .bio-para {
             text-align: center;
             color: #546467;
@@ -308,7 +321,7 @@
             padding: 10px;
         }
     }
-    
+
 }
 
 .SC-logo {
