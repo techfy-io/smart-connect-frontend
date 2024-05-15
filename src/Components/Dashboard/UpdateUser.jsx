@@ -77,7 +77,6 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
       
         formData.append('bio_graphy', biography || "");
         const accessToken = localStorage.getItem('accessToken');
-
         axios.patch(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
             formData,
