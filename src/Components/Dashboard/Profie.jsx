@@ -10,7 +10,7 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined,EditOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import html2canvas from 'html2canvas';
@@ -254,14 +254,15 @@ const Profile = () => {
                                 <div className="profile-card">
                                     <div className="profile-info">
                                         <div className='profile-image'>
-                                            {userData?.profile_picture ? (
+                                            <img src={userData?.profile_picture || Men1} alt="" />
+                                            {/* {userData?.profile_picture ? (
                                                 <>
                                                     <img src={userData.profile_picture} alt="Profile" />
                                                 </>) : (
                                                 <>
                                                     <img src={Men1} alt="Profile" />
                                                 </>
-                                            )}
+                                            )} */}
                                         </div>
                                         <div className="profile-details">
                                             <p className="profile-name">
@@ -292,22 +293,6 @@ const Profile = () => {
                                         </button>
                                     </div>
                                 </div>
-                                {/* <Card className='social-links-card'>
-                                    <div className="social-icons">
-                                        <div className="icon-box">
-                                            <a href={userData?.facebook_url} target="_blank" rel="noopener noreferrer" className="fa fa-facebook icon facebook-icon"></a>
-                                        </div>
-                                        <div className="icon-box">
-                                            <a href={userData?.instagram_url} target="_blank" rel="noopener noreferrer" className="fa fa-instagram icon instagram-icon"></a>
-                                        </div>
-                                        <div className="icon-box">
-                                            <a href={userData?.linkedin_url} target="_blank" rel="noopener noreferrer" className="fa fa-linkedin icon linkedin-icon"></a>
-                                        </div>
-                                        <div className="icon-box">
-                                            <a href={userData?.other_link_1} target="_blank" rel="noopener noreferrer" className="fa fa-globe icon linkedin-icon"></a>
-                                        </div>
-                                    </div>
-                                </Card> */}
                                 <Card className='social-links-card'>
                                     <div className="social-icons">
                                         {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
