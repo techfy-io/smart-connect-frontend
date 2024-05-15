@@ -4,10 +4,8 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 import './Dashboard.scss';
 import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
-import FormItem from 'antd/es/form/FormItem';
-import Men1 from "../../Inspect/Men1.png";
+
 import { useTranslation } from "react-i18next";
-import { info } from 'sass';
 
 const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
     const { t, i18n } = useTranslation('translation');
@@ -92,7 +90,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         )
             .then(response => {
                 console.log("response", response);
-                message.success("User Update Successfully");
+                message.success(t("User Update Successfully"));
                 setLoading(false)
                 UpdatemodalHideShow();
                 setTimeout(() => {
