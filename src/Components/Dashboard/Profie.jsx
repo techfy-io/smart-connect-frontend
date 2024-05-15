@@ -12,11 +12,10 @@ import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
 import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import InputMask from "react-input-mask";
-import html2canvas from 'html2canvas';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import AvatarEditor from 'react-avatar-editor';
+import ExchangeModal from './ExchangeModal'; // Import the new component
 
 const Profile = () => {
     const { t, i18n } = useTranslation('translation');
@@ -26,7 +25,7 @@ const Profile = () => {
     const [pageloading, setpageloading] = useState(false);
     const [userData, setUserData] = useState(null);
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [openExchangeModal, setExchangeModal] = useState(false);
+    const [openExchangeModal, setOpenExchangeModal] = useState(false);
     const { userId } = useParams();
     const qrCodeRef = useRef(null); // Ref for QR code element
     const [editingCover, setEditingCover] = useState(false);
@@ -87,15 +86,14 @@ const Profile = () => {
     };
 
     const handleOpenExchangeModal = () => {
-        setExchangeModal(prev => !prev);
+        setOpenExchangeModal(true);
     };
 
-    const handleCancel = () => {
-        handleOpenExchangeModal();
-        form.resetFields();
+    const handleCloseExchangeModal = () => {
+        setOpenExchangeModal(false);
     };
 
-    const onFinish = async (values) => {
+    const handleSubmitExchangeModal = async (values) => {
         const formData = new FormData();
         setLoading(true);
 
@@ -109,8 +107,8 @@ const Profile = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, formData);
             console.log("Response:", response);
-            message.success("Data exchanged successfully");
-            setExchangeModal(false);
+            message.success(t("Data exchanged successfully"));
+            setOpenExchangeModal(false);
             form.resetFields();
         } catch (error) {
             console.log("error", error);
@@ -252,7 +250,7 @@ const Profile = () => {
                                     <br />
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                 </div>
-                                <div className="cover-picture-card" contentEditable="true" onClick={handleCoverEdit}>
+                                <div className="cover-picture-card"  onClick={handleCoverEdit}>
                                     <img src={coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
                                 <div className="profile-card">
@@ -320,138 +318,41 @@ const Profile = () => {
                             </div>
                         )
                     }
-                    <Modal
-                        title={t("Exchange")}
-                        open={openExchangeModal}
-                        onCancel={handleCancel}
-                        footer={[
-                            <Button onClick={handleCancel}>
-                                {t("Cancel")}
-                            </Button>,
-                            <Button
-                                onClick={() => form.submit()} // Trigger form submission
-                                type="primary"
-                                htmlType="submit"
-                                style={{ background: "#ff8000" }}
-                                loading={loading}
-                            >
-                                {t("Submit")}
-                            </Button>
-                        ]}
-                    >
-                        <Form
-                            name="exchange Form"
-                            form={form}
-                            onFinish={onFinish}
-                        >
-                            <label htmlFor="firstname">{t("First Name")}*</label>
-                            <Form.Item
-                                name="first_name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please input your first name!')),
-                                    },
-                                ]}
-                            >
-                                <Input maxLength={30} />
-                            </Form.Item>
-                            <label htmlFor="lastname">{t("Last Name")}*</label>
-                            <Form.Item
-                                name="last_name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please input your last name!')),
-                                    },
-                                ]}
-                            >
-                                <Input maxLength={30} />
-                            </Form.Item>
-                            <label htmlFor="companyname">{t("Company Name")}</label>
-                            <Form.Item
-                                name="company_name">
-                                <Input />
-                            </Form.Item>
-                            <label htmlFor="email">{t("Email")}*</label>
-                            <Form.Item
-                                name="email"
-                                rules={[
-                                    {
-                                        type: 'email',
-                                        message: (t('Please input a valid email!')),
-                                    },
-                                    {
-                                        required: true,
-                                        message: (t('Please enter an email')),
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <label htmlFor="phone">{t("Phone")}*</label>
-                            <Form.Item
-                                name="phone_number"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please enter a phone number')),
-                                    },
-                                    {
-                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                        message: (t('Invalid phone number format')),
-                                    },
-                                ]}
-                            >
-                                <InputMask
-                                    style={{
-                                        width: "98.1%",
-                                        height: "30px",
-                                        borderRadius: "5px",
-                                        border: "1px solid #d9d9d9",
-                                        paddingLeft: "8px",
-                                        color: "black",
-                                        transition: "border-color 0.3s",
-                                    }}
-                                    mask="+33 9 99 99 99 99"
-                                    maskChar=""
-                                    placeholder="+33 1 23 45 67 89"
-                                >
-                                </InputMask>
-                            </Form.Item>
-                        </Form>
-                    </Modal>
+                 
                 </>
             )}
             {editingCover && (
-
                 <Modal
                     title="Edit Cover Photo"
-                    open={editingCover}
+                    visible={editingCover}
                     onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
-                    style={{ width: "800px", height: "300px", textAlign: "center" }}
+                    style={{ textAlign: "center", height: "281.252px" }}
+                    width={700}
                 >
                     <AvatarEditor
                         id="image"
                         ref={editorRef}
                         image={coverImage || userData?.cover_image || coverpic}
                         crossOrigin='anonymous'
-                        style={{ width: "400px", height: "400px", margin: "0 auto" }}
+                        style={{ width: "100%", height: "400px", margin: "0 auto" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}
                         scale={scale}
-                        rotate={rotate}
                     />
                     <div>
                         <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />}>Zoom In</Button>
                         <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />}>Zoom Out</Button>
-                        <Button onClick={handleRotate} icon={<RedoOutlined />}>Rotate</Button>
-
                         <Button onClick={handleSave}>Save</Button>
                     </div>
                 </Modal>
             )}
+            <ExchangeModal
+                open={openExchangeModal}
+                onClose={handleCloseExchangeModal}
+                onSubmit={handleSubmitExchangeModal}
+                loading={loading}
+            />
         </>
     );
 }
