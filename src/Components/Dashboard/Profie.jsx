@@ -187,11 +187,11 @@ const Profile = () => {
     };
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-       setSelectedImage(file)
-       console.log(file)
+        setSelectedImage(file)
+        console.log(file)
     };
-    
-    
+
+
     const renderSocialIcon = (url, iconClass, tooltipTitle) => {
         if (!url) {
             return (
@@ -267,7 +267,7 @@ const Profile = () => {
                                             <EditOutlined />
                                         </Button>
                                     ) : null}
-<img src={selectedImage ? URL.createObjectURL(selectedImage) : coverImage || userData?.cover_image || coverpic} alt="" />
+                                    <img src={selectedImage ? URL.createObjectURL(selectedImage) : coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
                                 <div className="profile-card">
                                     <div className="profile-info">
