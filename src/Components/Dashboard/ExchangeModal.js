@@ -22,7 +22,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     return (
         <Modal
             title="Exchange"
-            visible={open}
+            open={open}
             onCancel={handleCancel}
             footer={[
                 <Button key="cancel" onClick={handleCancel}>
