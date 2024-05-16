@@ -10,7 +10,7 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, DownloadOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, FileImageOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
@@ -162,13 +162,17 @@ const Profile = () => {
 
     const handleCoverSave = () => {
         const canvas = editorRef.current?.getImage();
-        console.log(canvas, "canvas")
         const editedCoverImage = canvas?.toDataURL();
-        console.log(editedCoverImage, "editedCoverImage")
-        setCoverImage(editedCoverImage);
-        console.log("editedCoverImage", editedCoverImage)
+        if (selectedImage) {
+            setCoverImage(editedCoverImage);
+            setSelectedImage(null);
+        } else {
+            setCoverImage(editedCoverImage);
+        }
+
         setEditingCover(false);
     };
+
 
     const handleCoverCancel = () => {
         setEditingCover(false);
@@ -263,7 +267,7 @@ const Profile = () => {
                                 </div>
                                 <div className="cover-picture-card"  >
                                     {coverImage || userData?.cover_image || coverpic ? (
-                                        <Button className="hover-button" type="primary" onClick={handleCoverEdit}>
+                                        <Button className="cover-image-edit-button" type="primary" onClick={handleCoverEdit}>
                                             <EditOutlined />
                                         </Button>
                                     ) : null}
@@ -273,7 +277,6 @@ const Profile = () => {
                                     <div className="profile-info">
                                         <div className='profile-image'>
                                             <img src={userData?.profile_picture || Men1} alt="" />
-
                                         </div>
                                         <div className="profile-details">
                                             <p className="profile-name">
@@ -349,7 +352,7 @@ const Profile = () => {
                     <AvatarEditor
                         id="image"
                         ref={editorRef}
-                        image={selectedImage || coverImage || userData?.cover_image || coverpic}
+                        image={selectedImage ? URL.createObjectURL(selectedImage) : (coverImage || userData?.cover_image || coverpic)}
                         crossOrigin='anonymous'
                         style={{ width: "100%", height: "400px", margin: "0 auto" }}
                         border={50}
@@ -357,17 +360,14 @@ const Profile = () => {
                         scale={scale}
                     />
 
-                    <div>
-                        <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />}>Zoom In</Button>
-                        {
-                            scale > 1 ? <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />}>Zoom Out</Button>
-                                : null
-                        }
+                    <div style={{ display: 'flex' }}>
+                        <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>
+                        {scale > 1 && <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>}
                         <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-                        <Button onClick={handleImageUpload}>Upload New Image</Button>
-
-                        <Button onClick={handleSave}>Save</Button>
+                        <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button>
+                        <Button onClick={handleSave}>Save </Button>
                     </div>
+
                 </Modal>
             )}
             <ExchangeModal
