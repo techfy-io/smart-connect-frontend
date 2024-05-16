@@ -105,6 +105,17 @@
         }
 
     }
+    .cover-picture-card:hover .hover-button {
+        display: block;
+    }
+    
+    .hover-button {
+        display: none;
+        position: absolute;
+        bottom: 50px;
+        right: 10px;
+        z-index: 2; /* Ensure it's above the cover image */
+    }
 
     @media screen and (max-width: 768px) {
         .cover-picture-card {

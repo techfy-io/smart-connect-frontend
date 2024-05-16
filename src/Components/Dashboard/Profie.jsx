@@ -34,6 +34,7 @@ const Profile = () => {
     const [scale, setScale] = useState(1);
     const [rotate, setRotate] = useState(0);
     const [angle, setAngle] = useState(0);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         if (userId) {
@@ -180,7 +181,17 @@ const Profile = () => {
             window.open(url, "_blank");
         }
     };
-
+    const handleImageUpload = () => {
+        const fileInput = document.getElementById('fileInput');
+        fileInput.click();
+    };
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+       setSelectedImage(file)
+       console.log(file)
+    };
+    
+    
     const renderSocialIcon = (url, iconClass, tooltipTitle) => {
         if (!url) {
             return (
@@ -250,8 +261,13 @@ const Profile = () => {
                                     <br />
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                 </div>
-                                <div className="cover-picture-card"  onClick={handleCoverEdit}>
-                                    <img src={coverImage || userData?.cover_image || coverpic} alt="" />
+                                <div className="cover-picture-card"  >
+                                    {coverImage || userData?.cover_image || coverpic ? (
+                                        <Button className="hover-button" type="primary" onClick={handleCoverEdit}>
+                                            <EditOutlined />
+                                        </Button>
+                                    ) : null}
+<img src={selectedImage ? URL.createObjectURL(selectedImage) : coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
                                 <div className="profile-card">
                                     <div className="profile-info">
@@ -313,36 +329,43 @@ const Profile = () => {
                                 <div>
                                     {/* <img src={Emptyicon} alt="" />
                                     <h5 sty>The User is no longer availible</h5> */}
-                                    <Empty Size="Large" description={t("The User is no longer available")} />
+                                    <Empty size="Large" description={t("The User is no longer available")} />
                                 </div>
                             </div>
                         )
                     }
-                 
+
                 </>
             )}
             {editingCover && (
                 <Modal
                     title="Edit Cover Photo"
-                    visible={editingCover}
+                    open={editingCover}
                     onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
-                    style={{ textAlign: "center", height: "281.252px" }}
-                    width={700}
+                    style={{ textAlign: "center", height: "281.252px", margin: "0 auto" }}
+                    width={710}
                 >
                     <AvatarEditor
                         id="image"
                         ref={editorRef}
-                        image={coverImage || userData?.cover_image || coverpic}
+                        image={selectedImage || coverImage || userData?.cover_image || coverpic}
                         crossOrigin='anonymous'
                         style={{ width: "100%", height: "400px", margin: "0 auto" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}
                         scale={scale}
                     />
+
                     <div>
                         <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />}>Zoom In</Button>
-                        <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />}>Zoom Out</Button>
+                        {
+                            scale > 1 ? <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />}>Zoom Out</Button>
+                                : null
+                        }
+                        <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
+                        <Button onClick={handleImageUpload}>Upload New Image</Button>
+
                         <Button onClick={handleSave}>Save</Button>
                     </div>
                 </Modal>
