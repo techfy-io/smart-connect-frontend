@@ -35,8 +35,11 @@ const Profile = () => {
     const [rotate, setRotate] = useState(0);
     const [angle, setAngle] = useState(0);
     const [selectedImage, setSelectedImage] = useState(null);
-
+    const [checkLoginUser, SetCheckLoginuser] = useState('')
     useEffect(() => {
+        const loginathentication = localStorage.getItem('accessToken')
+        SetCheckLoginuser(loginathentication)
+        console.log(checkLoginUser)
         if (userId) {
             fetchUserData();
         }
@@ -160,17 +163,48 @@ const Profile = () => {
         setEditingCover(true);
     };
 
+    // const handleCoverSave = () => {
+    //     const canvas = editorRef.current?.getImage();
+    //     const editedCoverImage = canvas?.toDataURL();
+    //     if (selectedImage) {
+    //         setCoverImage(editedCoverImage);
+    //         setSelectedImage(null);
+    //     } else {
+    //         setCoverImage(editedCoverImage);
+    //     }
+    //     setEditingCover(false);
+    // };
+
+
     const handleCoverSave = () => {
         const canvas = editorRef.current?.getImage();
         const editedCoverImage = canvas?.toDataURL();
-        if (selectedImage) {
-            setCoverImage(editedCoverImage);
-            setSelectedImage(null);
-        } else {
-            setCoverImage(editedCoverImage);
+
+        const imageToSend = selectedImage ? selectedImage : editedCoverImage;
+        if (imageToSend) {
+            fetch(imageToSend)
+                .then(res => res.blob())
+                .then(blob => {
+                    const formData = new FormData();
+                    formData.append("cover_image", blob, "cover_image.png");
+
+                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/`, formData, {
+                        headers: {
+                            'Authorization': `Bearer ${checkLoginUser}`,
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                        .then(response => {
+                            message.success("Image Update successfully:", response);
+                        })
+                        .catch(error => {
+                            message.error("Error saving image:", error);
+                        });
+                });
         }
 
         setEditingCover(false);
+        setSelectedImage(null);
     };
 
 
@@ -254,11 +288,17 @@ const Profile = () => {
                                     <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
                                         <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                     </div>
-                                    <div className='profile-login-btn'>
-                                        <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
-                                            <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
-                                        </Tooltip>
-                                    </div>
+                                    {
+                                        checkLoginUser == null ? (
+                                            <div className='profile-login-btn'>
+                                                <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
+                                                    <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
+                                                </Tooltip>
+                                            </div>
+                                        ) : (<>
+                                        </>)
+                                    }
+
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
                                     </div>
@@ -266,7 +306,7 @@ const Profile = () => {
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                 </div>
                                 <div className="cover-picture-card"  >
-                                    {coverImage || userData?.cover_image || coverpic ? (
+                                    {checkLoginUser != null ? (
                                         <Button className="cover-image-edit-button" type="primary" onClick={handleCoverEdit}>
                                             <EditOutlined />
                                         </Button>
