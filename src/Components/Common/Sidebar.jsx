@@ -21,6 +21,8 @@ const Sidebar = () => {
 
     const Logoutuser = () => {
         localStorage.removeItem("accessToken");
+        localStorage.removeItem('sidebarCollapsed');
+        localStorage.removeItem('accessToken')
         window.location.reload();
         setTimeout(() => {
             message.success("User logout");
