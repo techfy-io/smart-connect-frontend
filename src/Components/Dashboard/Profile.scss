@@ -93,18 +93,20 @@
         top: 2%;
         z-index: 1;
         width: 90%;
-        width: 704px;
+        max-width: 704px;
         height: 320.252px;
         overflow: hidden;
-
+        border-radius: 20px; /* Apply border-radius to the container if needed */
+    
         img {
-            width: 100%;
-            height: 281.252px;
             display: block;
-            border-radius: 20px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: inherit; /* Inherit border-radius from the container */
         }
-
     }
+    
     .cover-picture-card:hover .cover-image-edit-button {
         display: block;
     }
