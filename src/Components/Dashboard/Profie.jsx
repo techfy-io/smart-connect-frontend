@@ -196,6 +196,9 @@ const Profile = () => {
                     })
                         .then(response => {
                             message.success("Image Update successfully:", response);
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 2000)
                         })
                         .catch(error => {
                             message.error("Error saving image:", error);
