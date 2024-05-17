@@ -188,7 +188,7 @@ const Profile = () => {
                     const formData = new FormData();
                     formData.append("cover_image", blob, "cover_image.png");
 
-                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/`, formData, {
+                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/${userData.id}/`, formData, {
                         headers: {
                             'Authorization': `Bearer ${checkLoginUser}`,
                             'Content-Type': 'multipart/form-data'
@@ -404,7 +404,7 @@ const Profile = () => {
                         <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>
                         {scale > 1 && <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>}
                         <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-                        <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button>
+                        {/* <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button> */}
                         <Button onClick={handleSave}>Save </Button>
                     </div>
 
