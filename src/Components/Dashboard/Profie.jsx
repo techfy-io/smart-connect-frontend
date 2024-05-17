@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import AvatarEditor from 'react-avatar-editor';
-import ExchangeModal from './ExchangeModal'; 
+import ExchangeModal from './ExchangeModal';
 
 const Profile = () => {
     const { t, i18n } = useTranslation('translation');
@@ -405,7 +405,14 @@ const Profile = () => {
 
                     <div style={{ display: 'flex' }}>
                         <Button onClick={() => handleZoom(scale + 0.1)} icon={<ZoomInOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>
-                        {scale > 1 && <Button onClick={() => handleZoom(scale - 0.1)} icon={<ZoomOutOutlined />} style={{ marginRight: '10px' }}>Zoom</Button>}
+                        <Button
+                            disabled={scale <= 1}
+                            onClick={() => handleZoom(scale - 0.1)}
+                            icon={<ZoomOutOutlined />}
+                            style={{ marginRight: '10px' }}
+                        >
+                            Zoom
+                        </Button>
                         <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
                         {/* <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button> */}
                         <Button onClick={handleSave}>Save </Button>
