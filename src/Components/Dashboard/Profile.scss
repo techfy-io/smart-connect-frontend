@@ -104,7 +104,6 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-
             border-radius: inherit; 
         }
     }
@@ -134,10 +133,12 @@
 
             img {
                 width: 95%;
-                height: 177.252px;
-                   display: block;
-                margin: 0 auto;
-                border-radius: 10px;
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+                border-radius: inherit; 
             }
         }
     }

@@ -15,7 +15,7 @@ import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import AvatarEditor from 'react-avatar-editor';
-import ExchangeModal from './ExchangeModal'; // Import the new component
+import ExchangeModal from './ExchangeModal'; 
 
 const Profile = () => {
     const { t, i18n } = useTranslation('translation');
@@ -397,7 +397,7 @@ const Profile = () => {
                         ref={editorRef}
                         image={selectedImage ? URL.createObjectURL(selectedImage) : (coverImage || userData?.cover_image || coverpic)}
                         crossOrigin='anonymous'
-                        style={{ width: "100%", height: "400px", margin: "0 auto" }}
+                        style={{ width: "100%", height: "400px", margin: "0 auto", objectFit: "cover" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}
                         scale={scale}
