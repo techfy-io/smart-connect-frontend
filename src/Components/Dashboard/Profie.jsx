@@ -180,7 +180,7 @@ const Profile = () => {
         const canvas = editorRef.current?.getImage();
         const editedCoverImage = canvas?.toDataURL();
 
-        const imageToSend = selectedImage ? selectedImage : editedCoverImage;
+        const imageToSend = editedCoverImage;
         if (imageToSend) {
             fetch(imageToSend)
                 .then(res => res.blob())
@@ -188,20 +188,20 @@ const Profile = () => {
                     const formData = new FormData();
                     formData.append("cover_image", blob, "cover_image.png");
 
-                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/${userData.id}/`, formData, {
+                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/${userData.id}/`, formData ? formData : selectedImage, {
                         headers: {
                             'Authorization': `Bearer ${checkLoginUser}`,
                             'Content-Type': 'multipart/form-data'
                         }
                     })
                         .then(response => {
-                            message.success("Image Update successfully:", response);
+                            message.success(t("Image Update successfully"));
                             setTimeout(() => {
                                 window.location.reload();
                             }, 2000)
                         })
                         .catch(error => {
-                            message.error("Error saving image:", error);
+                            message.error(t("Error saving image"));
                         });
                 });
         }
@@ -385,12 +385,22 @@ const Profile = () => {
             )}
             {editingCover && (
                 <Modal
-                    title="Edit Cover Photo"
+                    title={t("Edit Cover Photo")}
                     open={editingCover}
-                    onOk={handleCoverSave}
+                    // onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
                     style={{ textAlign: "center", height: "281.252px", margin: "0 auto" }}
                     width={710}
+                    footer={[
+                        <>
+                            <Button type='primary' onClick={handleCoverCancel}>
+                            {t("Cancel")}
+                            </Button>
+                            <Button type='primary' onClick={handleCoverSave}>
+                                {("Ok")}
+                            </Button>
+                        </>
+                    ]}
                 >
                     <AvatarEditor
                         id="image"
@@ -411,11 +421,11 @@ const Profile = () => {
                             icon={<ZoomOutOutlined />}
                             style={{ marginRight: '10px' }}
                         >
-                            Zoom
+                            {t("Zoom")}
                         </Button>
                         <input id="fileInput" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-                        {/* <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button> */}
-                        <Button onClick={handleSave}>Save </Button>
+                        <Button onClick={handleImageUpload} style={{ marginRight: '5px' }}><span style={{ color: "green" }} className={`fa fa-image icon`} /></Button>
+                        {/* <Button onClick={handleSave}>{t("Save")} </Button> */}
                     </div>
 
                 </Modal>
