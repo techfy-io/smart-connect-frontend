@@ -142,7 +142,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     rules={[
                         {
                             required: true,
-                            message: "Password must be required",
+                            message: (t("Password must be required")),
                         },
                         {
                             pattern: /(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})/,
