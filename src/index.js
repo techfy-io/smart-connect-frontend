@@ -136,6 +136,7 @@ i18n.init({
         "Edit Cover Photo": "Edit Cover Photo",
         "Zoom": "Zoom",
         "User Added Successfully":"User Added Successfully",
+        "Company added successfully":"Company added successfully",
       }
     },
     fr: {
@@ -261,6 +262,7 @@ i18n.init({
         "User Update Successfully": "Mise à jour utilisateur réussie",
         "error saving image": "erreur lors de l'enregistrement de l'image",
         "Edit Cover Photo": "Modifier la photo de couverture",
+        "Company added successfully":"Entreprise ajoutée avec succès",
         "Zoom": "Zoom",
         "Company": "Entreprise",
         "Date": "Date",
