@@ -50,6 +50,7 @@ i18n.init({
         "Failed: Something went wrong with the server.": "Failed: Something went wrong with the server.",
         "Failed: No response received from the server.": "Failed: No response received from the server.",
         "Failed: Error setting up the request.": "Failed: Error setting up the request.",
+        "Data exchanged successfully": "Data exchanged successfully",
         "Purchase New Card": "Purchase New Card",
         "No Company found": "No Company found",
         "No users found": "No users found",
@@ -134,7 +135,7 @@ i18n.init({
         "Image Update successfully": "Image Update successfully",
         "Edit Cover Photo": "Edit Cover Photo",
         "Zoom": "Zoom",
-
+        "User Added Successfully":"User Added Successfully",
       }
     },
     fr: {
@@ -195,6 +196,7 @@ i18n.init({
         "Please input a valid email!": "Veuillez saisir une adresse e-mail valide !",
         "Please enter an email": "Veuillez saisir une adresse e-mail",
         "Company Deleted Successfully": "Société supprimée avec succès",
+        "User Added Successfully":"Utilisateur ajouté avec succès",
         "Name": "Nom",
         "Owner Name": "Propriétaire de la carte",
         "No Leads found": "Vous n'avez pas encore de prospects",
@@ -207,6 +209,7 @@ i18n.init({
         "Please input your company name!": "Veuillez entrer le nom de votre entreprise !",
         "Please input your password!": "Veuillez entrer votre mot de passe !",
         "Company name is required!": "Le nom de l'entreprise est requis !",
+        "Data exchanged successfully": "Données échangées avec succès",
         "Phone": "Téléphone",
         "Companies": "Entreprises",
         "Logout": "Se déconnecter",

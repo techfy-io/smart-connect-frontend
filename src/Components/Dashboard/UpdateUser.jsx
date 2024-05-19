@@ -100,7 +100,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                 console.log("error", error);
                 if (error.response) {
                     if (error.response.status === 404 || error.response.status === 500) {
-                        message.error("Failed: Something went wrong with the server.");
+                        message.error(t("Failed: Something went wrong with the server."));
                     } else {
                         const responseData = error.response.data;
                         let errorMessage = '';
@@ -117,10 +117,10 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     }
                 } else if (error.request) {
                     console.error("No response received from the server:", error.request);
-                    message.error("Failed: No response received from the server.");
+                    message.error(t("Failed: No response received from the server."));
                 } else {
                     console.error("Error setting up the request:", error.message);
-                    message.error("Failed: Error setting up the request.");
+                    message.error(t("Failed: Error setting up the request."));
                 }
                 setLoading(false);
             });
