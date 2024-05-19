@@ -27,7 +27,7 @@ const Profile = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [openExchangeModal, setOpenExchangeModal] = useState(false);
     const { userId } = useParams();
-    const qrCodeRef = useRef(null); // Ref for QR code element
+    const qrCodeRef = useRef(null); 
     const [editingCover, setEditingCover] = useState(false);
     const [coverImage, setCoverImage] = useState(null);
     const [editor, setEditor] = useState(null);
@@ -118,7 +118,7 @@ const Profile = () => {
             console.log("error", error);
             if (error.response) {
                 if (error.response.status === 404 || error.response.status === 500) {
-                    message.error("Failed: Something went wrong with the server.");
+                    message.error(t("Failed: Something went wrong with the server."));
                 } else {
                     const responseData = error.response.data;
                     let errorMessage = '';
@@ -134,10 +134,10 @@ const Profile = () => {
                 }
             } else if (error.request) {
                 console.error("No response received from the server:", error.request);
-                message.error("Failed: No response received from the server.");
+                message.error(t("Failed: No response received from the server."));
             } else {
                 console.error("Error setting up the request:", error.message);
-                message.error("Failed: Error setting up the request.");
+                message.error(t("Failed: Error setting up the request."));
             }
         } finally {
             setLoading(false);
@@ -389,7 +389,7 @@ const Profile = () => {
                     open={editingCover}
                     // onOk={handleCoverSave}
                     onCancel={handleCoverCancel}
-                    style={{ textAlign: "center", height: "281.252px", margin: "0 auto" }}
+                    style={{ height: "281.252px", margin: "0 auto" }}
                     width={710}
                     footer={[
                         <>
