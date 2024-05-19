@@ -141,12 +141,12 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     name="password"
                     rules={[
                         {
-                            type: "password",
+                            required: true,
+                            message: "Password must be required",
                         },
                         {
                             pattern: /(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})/,
-                            required: true,
-                            message: (t('Password must be at least eight characters long and include both letters and numbers.')),
+                            message: t('Password must be at least eight characters long and include both letters and numbers.'),
                         },
                     ]}
                 >
@@ -155,6 +155,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                         iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                     />
                 </Form.Item>
+
                 <label htmlFor="phone">{t("Phone")}</label>
                 <Form.Item
                     name="phone_number"
