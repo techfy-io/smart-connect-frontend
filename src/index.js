@@ -137,6 +137,7 @@ i18n.init({
         "Zoom": "Zoom",
         "User Added Successfully":"User Added Successfully",
         "Company added successfully":"Company added successfully",
+        "Password must be at least eight characters long and include both letters and numbers.":"Password must be at least eight characters long and include both letters and numbers.",
       }
     },
     fr: {
@@ -263,6 +264,7 @@ i18n.init({
         "error saving image": "erreur lors de l'enregistrement de l'image",
         "Edit Cover Photo": "Modifier la photo de couverture",
         "Company added successfully":"Entreprise ajoutée avec succès",
+        "Password must be at least eight characters long and include both letters and numbers.":"Le mot de passe doit comporter au moins huit caractères et inclure à la fois des lettres et des chiffres.",
         "Zoom": "Zoom",
         "Company": "Entreprise",
         "Date": "Date",

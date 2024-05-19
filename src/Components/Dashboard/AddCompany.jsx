@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
     const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
 
     const handleCancel = () => {
         toggleAddCompanyModal();
@@ -17,7 +17,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
 
     const onFinish = async (values) => {
         try {
-            setLoading(true); 
+            setLoading(true);
             const accessToken = localStorage.getItem('accessToken');
             const response = await axios.post(
                 `${process.env.REACT_APP_BASE_API_URL}/companies/add/`,
@@ -30,10 +30,10 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
             );
             message.success(t("Company added successfully"))
             toggleAddCompanyModal();
-              setTimeout(() => {
+            setTimeout(() => {
                 window.location.reload();
             }, 2000);
-        } 
+        }
         catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -45,14 +45,14 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     // Handle other errors with response data
                     const responseData = error.response.data;
                     let errorMessage = '';
-    
+
                     for (const prop in responseData) {
                         if (responseData.hasOwnProperty(prop)) {
                             errorMessage = responseData[prop][0];
                             break;
                         }
                     }
-    
+
                     message.error(errorMessage);
                 }
             } else if (error.request) {
@@ -63,10 +63,10 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                 // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error(t("Failed: Error setting up the request."));
-            } 
+            }
             setLoading(false)
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
 
@@ -144,8 +144,9 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                             type: "password",
                         },
                         {
+                            pattern: /(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})/,
                             required: true,
-                            message: (t('Please input your password!')),
+                            message: (t('Password must be at least eight characters long and include both letters and numbers.')),
                         },
                     ]}
                 >
