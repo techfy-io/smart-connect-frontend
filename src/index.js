@@ -135,7 +135,7 @@ i18n.init({
         "Image Update successfully": "Image Update successfully",
         "Edit Cover Photo": "Edit Cover Photo",
         "Zoom": "Zoom",
-
+        "User Added Successfully":"User Added Successfully",
       }
     },
     fr: {
@@ -196,6 +196,7 @@ i18n.init({
         "Please input a valid email!": "Veuillez saisir une adresse e-mail valide !",
         "Please enter an email": "Veuillez saisir une adresse e-mail",
         "Company Deleted Successfully": "Société supprimée avec succès",
+        "User Added Successfully":"Utilisateur ajouté avec succès",
         "Name": "Nom",
         "Owner Name": "Propriétaire de la carte",
         "No Leads found": "Vous n'avez pas encore de prospects",
