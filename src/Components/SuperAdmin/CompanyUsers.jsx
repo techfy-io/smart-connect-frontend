@@ -151,7 +151,7 @@ console.log("company", company)
                                     <tr key={key}>
                                         <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td>
                                         <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
-                                        <td>{`${user.job_title?.slice(0, 30)}${user.job_title?.length > 30 ? '...' : ''}`}</td>
+                                        <td>{`${user?.job_title?.slice(0, 30)}${user.job_title?.length > 30 ? '...' : ''}`}</td>
 
                                         <td className='Actions-btns'>
                                             <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>

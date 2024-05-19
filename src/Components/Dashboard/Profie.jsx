@@ -195,10 +195,10 @@ const Profile = () => {
                         }
                     })
                         .then(response => {
+                            // window.location.reload();
+                            fetchUserData();
                             message.success(t("Image Update successfully"));
-                            setTimeout(() => {
-                                window.location.reload();
-                            }, 2000)
+
                         })
                         .catch(error => {
                             message.error(t("Error saving image"));
@@ -397,7 +397,7 @@ const Profile = () => {
                             {t("Cancel")}
                             </Button>
                             <Button type='primary' onClick={handleCoverSave}>
-                                {("Ok")}
+                                {t("Save")}
                             </Button>
                         </>
                     ]}

@@ -30,7 +30,6 @@ const CoverPicEditModal = ({ imageUrl, onSave, onCancel }) => {
   };
 
   const handleSave = () => {
-    // Call onSave callback with cropped image URL
     onSave(croppedImageUrl);
   };
 
@@ -41,10 +40,10 @@ const CoverPicEditModal = ({ imageUrl, onSave, onCancel }) => {
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>
-          Cancel
+          {t("Cancel")}
         </Button>,
         <Button key="save" type="primary" onClick={handleSave}>
-          Save
+          {t("Save")}
         </Button>,
       ]}
     >

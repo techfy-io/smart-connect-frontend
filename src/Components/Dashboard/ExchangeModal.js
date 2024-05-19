@@ -21,12 +21,12 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
 
     return (
         <Modal
-            title="Exchange"
+            title={t("Exchange")}
             open={open}
             onCancel={handleCancel}
             footer={[
                 <Button key="cancel" onClick={handleCancel}>
-                    Cancel
+                    {t("Cancel")}
                 </Button>,
                 <Button
                     key="submit"
@@ -34,7 +34,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                     onClick={() => form.submit()}
                     loading={loading}
                 >
-                    Submit
+                    {t("Submit")}
                 </Button>,
             ]}
         >
