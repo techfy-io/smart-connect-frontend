@@ -233,19 +233,20 @@ const Profile = () => {
     };
 
 
-    const renderSocialIcon = (url, iconClass, tooltipTitle) => {
-        if (!url) {
+    const renderSocialIcon = (url, iconClass) => {
+        // Inline check and formatting of the URL
+        const formattedUrl = url && !/^https?:\/\//i.test(url) ? `https://${url}` : url;
+
+        if (!formattedUrl) {
             return (
-                <Tooltip title={t("No media available, please add one.")}>
-                    <div className="icon-box disabled">
-                        <span className={`fa ${iconClass} icon`} />
-                    </div>
-                </Tooltip>
+                <div className="icon-box disabled" title="No media available, please add one.">
+                    <span className={`fa ${iconClass} icon`} />
+                </div>
             );
         } else {
             return (
-                <div className="icon-box" onClick={() => handleSocialIconClick(url)}>
-                    <a href={url} target="_blank" rel="noopener noreferrer" className={`fa ${iconClass} icon`}></a>
+                <div className="icon-box">
+                    <a href={formattedUrl} target="_blank" rel="noopener noreferrer" className={`fa ${iconClass} icon`} />
                 </div>
             );
         }
