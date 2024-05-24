@@ -28,11 +28,19 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                     }
                 }
             );
-            message.success(t("Company added successfully"))
+
+            message.success({
+                content: t("Company added successfully. Please check your email, including the Spam folder."),
+                style: {
+                    width: '23rem', 
+                    margin:"0 auto",// Smaller font size
+                },
+                duration: 10, 
+            });
             toggleAddCompanyModal();
             setTimeout(() => {
                 window.location.reload();
-            }, 2000);
+            }, 4000);
         }
         catch (error) {
             console.log("error", error);
