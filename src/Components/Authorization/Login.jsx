@@ -14,12 +14,12 @@ function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [company, setCompany] = useState("");
-  const [phone, setPhone] = useState("");
-  const [registerEmail, setRegisterEmail] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
+  // const [firstName, setFirstName] = useState("");
+  // const [lastName, setLastName] = useState("");
+  // const [company, setCompany] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [registerEmail, setRegisterEmail] = useState('');
+  // const [registerPassword, setRegisterPassword] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleTabChange = (formType) => {
