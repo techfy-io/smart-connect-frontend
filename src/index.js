@@ -139,6 +139,8 @@ i18n.init({
         "Company added successfully": "Company added successfully",
         "Password must be required": "Password must be required",
         "Password must be at least eight characters long and include both letters and numbers.": "Password must be at least eight characters long and include both letters and numbers.",
+        "Company added successfully. Please check your email, including the Spam folder..":"Company added successfully. Please check your email, including the Spam folder.",
+
       }
     },
     fr: {
@@ -266,6 +268,7 @@ i18n.init({
         "Edit Cover Photo": "Modifier la photo de couverture",
         "Company added successfully": "Entreprise ajoutée avec succès",
         "Password must be required": "Le mot de passe doit être requis",
+        "Company added successfully. Please check your email, including the Spam folder.":"Entreprise ajoutée avec succès. Vérifiez votre courrier électronique, y compris le spam.",
         "Password must be at least eight characters long and include both letters and numbers.": "Le mot de passe doit comporter au moins huit caractères et inclure à la fois des lettres et des chiffres.",
         "Zoom": "Zoom",
         "Company": "Entreprise",
