@@ -10,42 +10,57 @@ import ResetPassword from './Components/Authorization/ResetPassword';
 import Profie from './Components/Dashboard/Profie';
 import Leads from './Components/Dashboard/Leads';
 import ScrollToTop from './Components/Common/Scrolltop';
-function App() {
-  const checkAccessToken = () => {
-    return localStorage.getItem('accessToken') !== null;
-  };
+import { Spin } from 'antd'; // Assuming you're using Ant Design for the spinner
 
-  const [isLoggedIn, setIsLoggedIn] = useState(checkAccessToken());
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [validUser, setValidUser] = useState(false);
 
   useEffect(() => {
-    setIsLoggedIn(checkAccessToken());
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      setValidUser(true);
+    } else {
+      setValidUser(false);
+    }
+    setLoading(false);
   }, []);
+
+  if (loading) {
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh'
+      }}>
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <Router>
       <ScrollToTop />
       <Routes>
-        {isLoggedIn ? (
-          <>
-            {/* 1logged in routs*/}
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            <Route path="*" element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/usersetting" element={<UserSetting />} />
-            <Route path="/companyuser" element={<CompanyUsers />} />
-            <Route path="/leads" element={<Leads />} />
-          </>
-        ) : (
-          <>
-            {/* 1logged in routs*/}
-            <Route path="/" element={<Login />} />
-            <Route path="*" element={<Login />} />
-          </>
-        )}
+        {/* Redirect based on authentication status */}
+        <Route path="/" element={validUser ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+        
+        {/* Public routes */}
+        <Route path="/login" element={validUser ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/forgetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ForgetPassword />} />
+        <Route path="/resetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ResetPassword />} />
+        <Route path="/profile/:userId" element= {<Profie />} />
+
+        {/* Protected routes */}
+        <Route path="/dashboard" element={validUser ? <Dashboard /> : <Navigate to="/login" />} />
+        <Route path="/usersetting" element={validUser ? <UserSetting /> : <Navigate to="/login" />} />
+        <Route path="/companyuser" element={validUser ? <CompanyUsers /> : <Navigate to="/login" />} />
+        <Route path="/leads" element={validUser ? <Leads /> : <Navigate to="/login" />} />
+        <Route path="/profile/:userId" element={validUser ? <Profie /> : <Navigate to="/login" />} />
+
+        {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" />} />
-        <Route path="/profile/:userId" element={<Profie />} />
-        <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
     </Router>
   );
