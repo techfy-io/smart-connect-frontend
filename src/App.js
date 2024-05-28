@@ -10,7 +10,7 @@ import ResetPassword from './Components/Authorization/ResetPassword';
 import Profie from './Components/Dashboard/Profie';
 import Leads from './Components/Dashboard/Leads';
 import ScrollToTop from './Components/Common/Scrolltop';
-import { Spin } from 'antd'; // Assuming you're using Ant Design for the spinner
+import { Spin } from 'antd';
 
 function App() {
   const [loading, setLoading] = useState(true);

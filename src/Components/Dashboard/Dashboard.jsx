@@ -30,9 +30,9 @@ function Dashboard() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [openUserEditModal, setOpenUserEditModal] = useState(false);
   const [addCompanyModalVisible, setAddCompanyModalVisible] = useState(false);
-  const [updateCompanyModalVisible, setUpdateCompanyModalVisible] = useState(false); 
+  const [updateCompanyModalVisible, setUpdateCompanyModalVisible] = useState(false);
   const [companyName, setCompanyName] = useState('')
-  const [companyInfo, setCompanyInfo] = useState({}); 
+  const [companyInfo, setCompanyInfo] = useState({});
 
   const updateUser = (user) => {
     setSelectedUser(user);
@@ -40,7 +40,7 @@ function Dashboard() {
   };
 
   const toggleUpdateUserModal = () => setOpenUserEditModal(prev => !prev);
-  const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev); 
+  const toggleAddCompanyModal = () => setAddCompanyModalVisible(prev => !prev);
   const toggleUpdateCompanyModal = () => setUpdateCompanyModalVisible(prev => !prev);
 
   useEffect(() => {
@@ -95,10 +95,10 @@ function Dashboard() {
 
   const deleteCompany = (id) => {
     Modal.confirm({
-      title: t('Confirm'), 
-      content: t('Are you sure you want to delete this Company?'), 
-      okText: t('OK'), 
-      cancelText: t('Cancel'), 
+      title: t('Confirm'),
+      content: t('Are you sure you want to delete this Company?'),
+      okText: t('OK'),
+      cancelText: t('Cancel'),
       onOk() {
         const accessToken = localStorage.getItem('accessToken');
         axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
@@ -130,7 +130,7 @@ function Dashboard() {
     form.validateFields().then((values) => {
       setupdateCompanyloading(true);
       const accessToken = localStorage.getItem('accessToken');
-      const { id } = companyInfo; 
+      const { id } = companyInfo;
       axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
@@ -138,10 +138,10 @@ function Dashboard() {
           console.log(response);
           message.success(t('Company Updated Successfully'));
           toggleUpdateCompanyModal();
-          fetchCompanies(); 
+          fetchCompanies();
           setupdateCompanyloading(false);
         })
-        .catch((error) => { 
+        .catch((error) => {
           console.log("error", error);
           if (error.response) {
             if (error.response.status === 404 || error.response.status === 500) {
@@ -313,8 +313,15 @@ function Dashboard() {
                             <tr key={key}>
                               <td>{`${user.first_name?.slice(0, 25)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 15 ? '...' : ''}`}</td>
                               <td>{`${user.email?.slice(0, 25)}${user.email?.length > 25 ? '...' : ''}`}</td>
-                              <td>{`${user.job_title?.slice(0, 25)}${user.job_title?.length > 25 ? '...' : ''}`}</td>
-
+                              <td>
+                                {user.job_title
+                                  ? (user.job_title.length > 25
+                                    ? `${user.job_title.slice(0, 25)}...`
+                                    : user.job_title
+                                  )
+                                  : ""
+                                }
+                              </td>
                               <td className='Actions-btns'>
                                 <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />

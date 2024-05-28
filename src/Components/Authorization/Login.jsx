@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Layout, Card, Button, Input, message, Spin, Menu, Dropdown } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { DownOutlined } from '@ant-design/icons';
@@ -113,6 +113,19 @@ function App() {
   //     });
   // };
 
+  const getToken = () => {
+    axios.get(`https://www.zauqcooking.com/gettoken/`)
+      .then((resp) => {
+        console.log(resp)
+      })
+      .catch((error) => {
+        console.log(error, "error to get tocken")
+      })
+  }
+
+  useEffect(()=>{
+    getToken()
+  },[]);
   const menu = (
     <Menu>
       <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
