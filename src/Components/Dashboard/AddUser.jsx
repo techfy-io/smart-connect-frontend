@@ -374,7 +374,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             },
                         ]}
                     >
-                        <Input />
+                        <Input placeholder="" />
                     </Form.Item>
                     {additionalEmails.map((email, index) => (
                         <Form.Item
@@ -396,6 +396,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                         onClick={() => handleRemoveEmail(index)}
                                     />
                                 }
+                                placeholder=""
                             />
                         </Form.Item>
                     ))}
