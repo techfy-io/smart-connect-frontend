@@ -396,7 +396,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             },
                         ]}
                     >
-                        <Input placeholder={t('Additional email')} />
+                        <Input placeholder="" />
                     </Form.Item>
                     {user && user.email_1 ? (
                         <>
@@ -410,7 +410,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                     },
                                 ]}
                             >
-                                <Input />
+                                <Input placeholder='' />
                             </Form.Item>
                         </>
                     ) : null}
@@ -427,7 +427,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 ]}
                             >
                                 <Input
-                                    placeholder={t(`Additional email`)}
+                                    placeholder=""
                                     suffix={
                                         <Button
                                             type="text"
