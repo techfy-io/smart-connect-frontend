@@ -140,7 +140,7 @@ i18n.init({
         "Password must be required": "Password must be required",
         "Password must be at least eight characters long and include both letters and numbers.": "Password must be at least eight characters long and include both letters and numbers.",
         "Company added successfully. Please check your email, including the Spam folder..":"Company added successfully. Please check your email, including the Spam folder.",
-
+        "Social Link":"Social Link",
       }
     },
     fr: {
@@ -233,6 +233,7 @@ i18n.init({
         "Facebook": "Lien Facebook",
         "Instagram": "Lien Instagram",
         "Linkedin": "Lien Linkedin",
+        "Social Link":"Lien social",
         "Social Link type": "Type de lien social",
         "Additional Social link": "Lien social supplémentaire",
         "Additional Email": "E-mail supplémentaire",
