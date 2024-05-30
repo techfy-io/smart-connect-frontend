@@ -322,12 +322,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
                         <>
-                            <Form.Item label={t("Social Link type")} name="other_link_media">
+                            <Form.Item label={t("Site internet type")} name="other_link_media">
                                 <Input placeholder={t("Twitter Tiktok")} />
                             </Form.Item>
                             <Form.Item
                                 key={index}
-                                label={<>{t("Additional Social link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Additional Site internet")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
@@ -337,7 +337,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 ]}
                             >
                                 <Input
-                                    placeholder={t(`Enter you social media link`)}
+                                    placeholder={t(`Enter your site internet url`)}
                                     suffix={
                                         <Button
                                             type="text"
@@ -354,7 +354,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         additionalSocialMediaLinks.length < 1 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                    {t("Social Link")}
+                                    {t("Site internet")}
                                 </Button>
                             </Form.Item>
                         )
