@@ -327,11 +327,11 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     </Form.Item>
                     {user && user.other_link_1 ? (
                         <>
-                            <Form.Item label={t("Social Link type")} name="other_link_media">
+                            <Form.Item label={t("Site internet type")} name="other_link_media">
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
-                                label={<>{t("Social Link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Site internet")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
@@ -341,18 +341,18 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 ]}
                             >
                                 <Input
-                                    placeholder={t("Enter your social media link")}
+                                    placeholder={t("Enter your site internet url")}
                                 />
                             </Form.Item>
                         </>
                     ) : null}
                     {additionalSocialMediaLinks.map((link, index) => (
                         <div key={index}>
-                            <Form.Item label={t("Social Link type")} name="other_link_media">
+                            <Form.Item label={t("Site internet type")} name="other_link_media">
                                 <Input placeholder="Twitter Tiktok" />
                             </Form.Item>
                             <Form.Item
-                                label={<>{t("Social Link")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                                label={<>{t("Site internet")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                                 name="other_link_1"
                                 rules={[
                                     {
@@ -362,7 +362,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                                 ]}
                             >
                                 <Input
-                                    placeholder={t(`Enter your social media link`)}
+                                    placeholder={t(`Enter your site internet url`)}
                                     suffix={
                                         <Button
                                             type="text"
@@ -377,7 +377,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                     {user && !user.other_link_1 && additionalSocialMediaLinks.length < 1 && (
                         <Form.Item>
                             <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                {t("Add Another Social Link")}
+                                {t("Add Another Site internet")}
                             </Button>
                         </Form.Item>
                     )}

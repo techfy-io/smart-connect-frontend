@@ -140,7 +140,11 @@ i18n.init({
         "Password must be required": "Password must be required",
         "Password must be at least eight characters long and include both letters and numbers.": "Password must be at least eight characters long and include both letters and numbers.",
         "Company added successfully. Please check your email, including the Spam folder..":"Company added successfully. Please check your email, including the Spam folder.",
-        "Social Link":"Social Link",
+        "Site internet":"Site internet",
+        "Site internet type":"Site internet type",
+        "Enter your site internet url":"Enter your site internet url",
+        "Additional Site internet":"Additional site internet",
+        
       }
     },
     fr: {
@@ -274,6 +278,10 @@ i18n.init({
         "Zoom": "Zoom",
         "Company": "Entreprise",
         "Date": "Date",
+        "Site internet":"Internet du site",
+        "Site internet type":"Type Internet du site",
+        "Enter your site internet url":"Entrez le lien Internet de votre site",
+        "Additional Site internet":"Site Internet supplémentaire",
         "French": "Français",
         "English": "Anglais",
       }
