@@ -144,7 +144,8 @@ i18n.init({
         "Site internet type":"Site internet type",
         "Enter your site internet url":"Enter your site internet url",
         "Additional Site internet":"Additional site internet",
-        
+        "Download QR Code":"Download QR Code",
+        "QR Code":"QR Code",
       }
     },
     fr: {
@@ -282,6 +283,8 @@ i18n.init({
         "Site internet type":"Type Internet du site",
         "Enter your site internet url":"Entrez le lien Internet de votre site",
         "Additional Site internet":"Site Internet supplémentaire",
+        "Download QR Code":"Télécharger le code QR",
+        "QR Code":"QR Code",
         "French": "Français",
         "English": "Anglais",
       }
