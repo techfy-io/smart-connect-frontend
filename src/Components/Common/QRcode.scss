@@ -1,0 +1,33 @@
+.qrCodeContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.download-qr-code-action-btn {
+    display: flex;
+    justify-content: space-between;
+
+    .qr-code-cancle-btn {
+        margin-bottom: 10px;
+    }
+
+    .qr-code-download-btn {
+        background-color: #ff8000;
+        width: auto;
+        max-width: 300px;
+        color: white;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .download-qr-code-action-btn {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .qr-code-cancle-btn {
+            margin-bottom: 10px;
+        }
+    }
+}
