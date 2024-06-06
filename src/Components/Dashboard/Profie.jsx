@@ -275,7 +275,7 @@ const Profile = () => {
 
         if (!formattedUrl) {
             return (
-                <div className="icon-box disabled" title="No media available, please add one.">
+                <div className="icon-box disabled" title={t("No media available please add one")}>
                     <span className={`fa ${iconClass} icon`} />
                 </div>
             );
