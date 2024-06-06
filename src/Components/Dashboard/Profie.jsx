@@ -60,56 +60,38 @@ const Profile = () => {
     const formatUserData = () => {
         return window.location.href;
     };
-
     const downloadUserData = async (userData) => {
         if (!userData) return;
-
+    
         setLoading(true);
-
+    
         try {
-            // Fetch the vCard data
             const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
                 responseType: 'text'
             });
-
+    
             let vCardData = vcfResponse.data;
-
-            // Extract the photo URL from the vCard
-            const photoUrlMatch = vCardData.match(/PHOTO;VALUE=uri:(.+)/);
-            if (!photoUrlMatch) throw new Error("Photo URL not found in vCard");
-
-            // const photoUrl ='https://picsum.photos/200/300';
+                const photoUrlMatch = vCardData.match(/PHOTO;VALUE=uri:(.+)/);
+            
+            if (!photoUrlMatch) {
+                console.warn("Photo URL not found in vCard");
+                downloadVCard(vCardData, userData);
+                return;
+            }
+    
             const photoUrl = photoUrlMatch[1].trim();
-
-            // Fetch the image as a Blob
-            const imageResponse = await axios.get(photoUrl, {
+                const imageResponse = await axios.get(photoUrl, {
                 responseType: 'blob'
             });
-
-            // Convert the image Blob to a base64 string
-            const reader = new FileReader();
+                const reader = new FileReader();
             reader.readAsDataURL(imageResponse.data);
             reader.onloadend = () => {
                 const base64Image = reader.result.split(',')[1];
-
-                // Replace the PHOTO line in the vCard with the base64-encoded image
-                vCardData = vCardData.replace(photoUrlMatch[0], `PHOTO;ENCODING=b;TYPE=JPEG:${base64Image}`);
-
-                // Create a Blob from the updated vCard data
-                const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `${userData.first_name}_${userData.last_name}.vcf`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                window.URL.revokeObjectURL(url);
-                message.success("Download Successful");
-                setLoading(false);
-
+                    const mimeType = imageResponse.data.type;
+                    vCardData = vCardData.replace(photoUrlMatch[0], `PHOTO;ENCODING=b;TYPE=${mimeType.toUpperCase()}:${base64Image}`);
+                    downloadVCard(vCardData, userData);
             };
-
+    
             reader.onerror = () => {
                 console.error("Failed to convert image to base64");
                 message.error("Failed to convert image");
@@ -126,6 +108,22 @@ const Profile = () => {
             setLoading(false);
         }
     };
+    
+    const downloadVCard = (vCardData, userData) => {
+        const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${userData.first_name}_${userData.last_name}.vcf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        message.success("Download Successful");
+        setLoading(false);
+    };
+    
+
 
     const handleOpenExchangeModal = () => {
         setOpenExchangeModal(true);
@@ -372,7 +370,7 @@ const Profile = () => {
                                         </div>
                                     </div>
                                     <div className='profile-action'>
-                                        <button className='save-button' onClick={()=>downloadUserData(userData)} disabled={loading}>
+                                        <button className='save-button' onClick={() => downloadUserData(userData)} disabled={loading}>
                                             {loading ? (
                                                 <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
                                             ) : (
