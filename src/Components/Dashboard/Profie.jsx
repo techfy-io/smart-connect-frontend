@@ -39,7 +39,6 @@ const Profile = () => {
     useEffect(() => {
         const loginathentication = localStorage.getItem('accessToken')
         SetCheckLoginuser(loginathentication)
-        console.log(checkLoginUser)
         if (userId) {
             fetchUserData();
         }
@@ -60,43 +59,103 @@ const Profile = () => {
     const formatUserData = () => {
         return window.location.href;
     };
+
+
+    //  download vcf file with image 
+
+    // const downloadUserData = async (userData) => {
+    //     if (!userData) return;
+
+    //     setLoading(true);
+
+    //     try {
+    //         const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
+    //             responseType: 'text'
+    //         });
+
+    //         let vCardData = vcfResponse.data;
+    //         const photoUrlMatch = vCardData.match(/PHOTO;VALUE=uri:(.+)/);
+
+    //         if (!photoUrlMatch) {
+    //             console.warn("Photo URL not found in vCard");
+    //             downloadVCard(vCardData, userData);
+    //             return;
+    //         }
+
+    //         const photoUrl = photoUrlMatch[1].trim();
+    //         const imageResponse = await axios.get(photoUrl, {
+    //             responseType: 'blob',
+    //             headers: {
+    //                 'Content-Type': 'image/jpeg',
+    //                 'Authorization': `Bearer ${checkLoginUser}`
+    //             }
+    //         });
+
+    //         const reader = new FileReader();
+    //         reader.readAsDataURL(imageResponse.data);
+    //         reader.onloadend = () => {
+    //             const base64Image = reader.result.split(',')[1];
+    //             const mimeType = imageResponse.data.type;
+    //             vCardData = vCardData.replace(photoUrlMatch[0], `PHOTO;ENCODING=b;TYPE=${mimeType.toUpperCase()}:${base64Image}`);
+    //             downloadVCard(vCardData, userData);
+    //         };
+
+    //         reader.onerror = () => {
+    //             console.error("Failed to convert image to base64");
+    //             message.error("Failed to convert image");
+    //             setLoading(false);
+    //         };
+    //     } catch (error) {
+    //         if (error.response && error.response.status === 404) {
+    //             console.error("Photo URL not found:", error);
+    //             message.error("Photo URL not found");
+    //         } else {
+    //             console.error("Failed to download user data:", error);
+    //             message.error("Failed to download");
+    //         }
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const downloadVCard = (vCardData, userData) => {
+    //     const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+    //     const url = window.URL.createObjectURL(blob);
+    //     const link = document.createElement('a');
+    //     link.href = url;
+    //     link.download = `${userData.first_name}_${userData.last_name}.vcf`;
+    //     document.body.appendChild(link);
+    //     link.click();
+    //     document.body.removeChild(link);
+    //     window.URL.revokeObjectURL(url);
+    //     message.success("Download Successful");
+    //     setLoading(false);
+    // };
+
     const downloadUserData = async (userData) => {
         if (!userData) return;
-    
         setLoading(true);
-    
+
         try {
             const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
-                responseType: 'text'
+                responseType: 'text',
+                headers: {
+                    'Authorization': `Bearer ${checkLoginUser}`,
+                    'Accept': 'application/json'
+
+                }
             });
-    
+
             let vCardData = vcfResponse.data;
-                const photoUrlMatch = vCardData.match(/PHOTO;VALUE=uri:(.+)/);
-            
-            if (!photoUrlMatch) {
-                console.warn("Photo URL not found in vCard");
-                downloadVCard(vCardData, userData);
-                return;
-            }
-    
-            const photoUrl = photoUrlMatch[1].trim();
-                const imageResponse = await axios.get(photoUrl, {
-                responseType: 'blob'
-            });
-                const reader = new FileReader();
-            reader.readAsDataURL(imageResponse.data);
-            reader.onloadend = () => {
-                const base64Image = reader.result.split(',')[1];
-                    const mimeType = imageResponse.data.type;
-                    vCardData = vCardData.replace(photoUrlMatch[0], `PHOTO;ENCODING=b;TYPE=${mimeType.toUpperCase()}:${base64Image}`);
-                    downloadVCard(vCardData, userData);
-            };
-    
-            reader.onerror = () => {
-                console.error("Failed to convert image to base64");
-                message.error("Failed to convert image");
-                setLoading(false);
-            };
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${userData.first_name}_${userData.last_name}.vcf`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+            message.success("Download Successful");
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 console.error("Photo URL not found:", error);
@@ -105,24 +164,10 @@ const Profile = () => {
                 console.error("Failed to download user data:", error);
                 message.error("Failed to download");
             }
+        } finally {
             setLoading(false);
         }
     };
-    
-    const downloadVCard = (vCardData, userData) => {
-        const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${userData.first_name}_${userData.last_name}.vcf`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-        message.success("Download Successful");
-        setLoading(false);
-    };
-    
 
 
     const handleOpenExchangeModal = () => {
@@ -183,23 +228,23 @@ const Profile = () => {
         setScale(value);
     };
 
-    const handleRotate = () => {
-        setAngle(angle + 90);
-        document.getElementById("image").style.transform = `rotate(${angle + 90}deg)`;
-    };
+    // const handleRotate = () => {
+    //     setAngle(angle + 90);
+    //     document.getElementById("image").style.transform = `rotate(${angle + 90}deg)`;
+    // };
 
-    const handleSave = () => {
-        if (editorRef.current) {
-            const canvas = editorRef.current.getImage();
-            setEditor(canvas)
-            console.log(canvas, "canvas")
-        }
-    };
+    // const handleSave = () => {
+    //     if (editorRef.current) {
+    //         const canvas = editorRef.current.getImage();
+    //         setEditor(canvas)
+    //         console.log(canvas, "canvas")
+    //     }
+    // };
     const handleCoverEdit = () => {
         setEditingCover(true);
     };
 
-    // const handleCoverSave = () => {
+
     //     const canvas = editorRef.current?.getImage();
     //     const editedCoverImage = canvas?.toDataURL();
     //     if (selectedImage) {
