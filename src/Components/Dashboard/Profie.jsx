@@ -138,11 +138,6 @@ const Profile = () => {
         try {
             const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
                 responseType: 'text',
-                headers: {
-                    'Authorization': `Bearer ${checkLoginUser}`,
-                    'Accept': 'application/json'
-
-                }
             });
 
             let vCardData = vcfResponse.data;
@@ -245,16 +240,6 @@ const Profile = () => {
     };
 
 
-    //     const canvas = editorRef.current?.getImage();
-    //     const editedCoverImage = canvas?.toDataURL();
-    //     if (selectedImage) {
-    //         setCoverImage(editedCoverImage);
-    //         setSelectedImage(null);
-    //     } else {
-    //         setCoverImage(editedCoverImage);
-    //     }
-    //     setEditingCover(false);
-    // };
 
 
     const handleCoverSave = () => {
