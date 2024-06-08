@@ -12,7 +12,6 @@
     "html2canvas": "^1.4.1",
     "i18next": "^23.11.2",
     "react": "^18.2.0",
-    "react-advanced-cropper": "^0.19.6",
     "react-avatar-editor": "^13.0.2",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -23,7 +22,6 @@
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "sass": "^1.71.1",
-    "vcf": "^2.1.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
