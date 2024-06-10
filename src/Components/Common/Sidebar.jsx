@@ -78,7 +78,7 @@ const Sidebar = () => {
                     ) : (
                         <ul className='menu'>
                             <li className='menu-item' onClick={() => navigate('/')}><UserOutlined />{t("Users")}</li>
-                            <Link to='/usersetting' style={{ textDecoration: "none" }}>
+                            <Link to='/usersetting' style={{ textDecoration: "none", color:"black" }}>
                                 <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> {t("Settings")}</li>
                             </Link>
                             {showLeadsMenu ? (
