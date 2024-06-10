@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useTransition } from 'react';
-import { Layout, Input, Button, Form, message,Menu , Dropdown } from 'antd';
+import { Layout, Input, Button, Form, message, Menu, Dropdown } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 import './UserSetting.scss';
@@ -67,28 +68,28 @@ const UserSetting = () => {
         setFormChanged(true);
     };
 
-    const menu = (
-        <Menu>
-          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-            French
-          </Menu.Item>
-          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-            English
-          </Menu.Item>
-        </Menu>
-      );
-      const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-      };
+    // const menu = (
+    //     <Menu>
+    //       <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+    //         French
+    //       </Menu.Item>
+    //       <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+    //         English
+    //       </Menu.Item>
+    //     </Menu>
+    //   );
+    //   const changeLanguage = (lng) => {
+    //     i18n.changeLanguage(lng);
+    //   };
     return (
         <div className='setting-main-layout'>
-             <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <Dropdown overlay={menu} trigger={['click']} >
-          <Button type="primary" style={{ width: "100px" }}>
-            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
-          </Button>
-        </Dropdown>
-      </div>
+            {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+                <Dropdown overlay={menu} trigger={['click']} >
+                    <Button type="primary" style={{ width: "100px" }}>
+                        {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
+                    </Button>
+                </Dropdown>
+            </div> */}
             <div className='setting-custom-card'>
                 <div className='setting-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
@@ -134,49 +135,49 @@ const UserSetting = () => {
                             </Form.Item>
                         </div>
                         {/* <div style={{ display: "flex" }}> */}
-                            <Form.Item
-                                name="company_name"
-                                label={t("Company")}
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Company name is required!')),
-                                    },
-                                ]}
+                        <Form.Item
+                            name="company_name"
+                            label={t("Company")}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: (t('Company name is required!')),
+                                },
+                            ]}
+                        >
+                            <Input placeholder={t("Company")} />
+                        </Form.Item>
+                        <Form.Item
+                            // style={{ marginLeft: "15px" }}
+                            label={t("Phone")}
+                            name="phone_number"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: (t('Please enter a phone number')),
+                                },
+                                {
+                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    message: (t('Invalid phone number format')),
+                                },
+                            ]}
+                        >
+                            <InputMask
+                                style={{
+                                    width: "98%",
+                                    height: "42px",
+                                    borderRadius: '0.625rem',
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 1 23 45 67 89"
                             >
-                                <Input placeholder={t("Company")} />
-                            </Form.Item>
-                            <Form.Item
-                                // style={{ marginLeft: "15px" }}
-                                label={t("Phone")}
-                                name="phone_number"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please enter a phone number')),
-                                    },
-                                    {
-                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                        message: (t('Invalid phone number format')),
-                                    },
-                                ]}
-                            >
-                                <InputMask
-                                    style={{
-                                        width: "98%",
-                                        height: "42px",
-                                        borderRadius: '0.625rem',
-                                        border: "1px solid #d9d9d9",
-                                        paddingLeft: "8px",
-                                        color: "black",
-                                        transition: "border-color 0.3s",
-                                    }}
-                                    mask="+33 9 99 99 99 99"
-                                    maskChar=""
-                                    placeholder="+33 1 23 45 67 89"
-                                >
-                                </InputMask>
-                            </Form.Item>
+                            </InputMask>
+                        </Form.Item>
                         {/* </div> */}
                         <Form.Item
                             name="email"
@@ -194,6 +195,7 @@ const UserSetting = () => {
                         >
                             <Input placeholder={t("Email")} />
                         </Form.Item>
+                        <p style={{textAlign:"right"}}> <Link to="/dashboard">{t("Back now?")}</Link></p>
                         <Form.Item>
                             <Button
                                 type="primary"

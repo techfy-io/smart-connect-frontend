@@ -10,7 +10,7 @@ import EmptyImage from "../../Inspect/EmptyImage.jpg";
 import Emptyicon from "../../Inspect/Emptyicon.png";
 import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, FileImageOutlined, DownOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
+import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
@@ -60,76 +60,6 @@ const Profile = () => {
         return window.location.href;
     };
 
-
-    //  download vcf file with image 
-
-    // const downloadUserData = async (userData) => {
-    //     if (!userData) return;
-
-    //     setLoading(true);
-
-    //     try {
-    //         const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
-    //             responseType: 'text'
-    //         });
-
-    //         let vCardData = vcfResponse.data;
-    //         const photoUrlMatch = vCardData.match(/PHOTO;VALUE=uri:(.+)/);
-
-    //         if (!photoUrlMatch) {
-    //             console.warn("Photo URL not found in vCard");
-    //             downloadVCard(vCardData, userData);
-    //             return;
-    //         }
-
-    //         const photoUrl = photoUrlMatch[1].trim();
-    //         const imageResponse = await axios.get(photoUrl, {
-    //             responseType: 'blob',
-    //             headers: {
-    //                 'Content-Type': 'image/jpeg',
-    //                 'Authorization': `Bearer ${checkLoginUser}`
-    //             }
-    //         });
-
-    //         const reader = new FileReader();
-    //         reader.readAsDataURL(imageResponse.data);
-    //         reader.onloadend = () => {
-    //             const base64Image = reader.result.split(',')[1];
-    //             const mimeType = imageResponse.data.type;
-    //             vCardData = vCardData.replace(photoUrlMatch[0], `PHOTO;ENCODING=b;TYPE=${mimeType.toUpperCase()}:${base64Image}`);
-    //             downloadVCard(vCardData, userData);
-    //         };
-
-    //         reader.onerror = () => {
-    //             console.error("Failed to convert image to base64");
-    //             message.error("Failed to convert image");
-    //             setLoading(false);
-    //         };
-    //     } catch (error) {
-    //         if (error.response && error.response.status === 404) {
-    //             console.error("Photo URL not found:", error);
-    //             message.error("Photo URL not found");
-    //         } else {
-    //             console.error("Failed to download user data:", error);
-    //             message.error("Failed to download");
-    //         }
-    //         setLoading(false);
-    //     }
-    // };
-
-    // const downloadVCard = (vCardData, userData) => {
-    //     const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-    //     const url = window.URL.createObjectURL(blob);
-    //     const link = document.createElement('a');
-    //     link.href = url;
-    //     link.download = `${userData.first_name}_${userData.last_name}.vcf`;
-    //     document.body.appendChild(link);
-    //     link.click();
-    //     document.body.removeChild(link);
-    //     window.URL.revokeObjectURL(url);
-    //     message.success("Download Successful");
-    //     setLoading(false);
-    // };
 
     const downloadUserData = async (userData) => {
         if (!userData) return;
@@ -300,7 +230,6 @@ const Profile = () => {
 
 
     const renderSocialIcon = (url, iconClass) => {
-        // Inline check and formatting of the URL
         const formattedUrl = url && !/^https?:\/\//i.test(url) ? `https://${url}` : url;
 
         if (!formattedUrl) {
@@ -318,20 +247,20 @@ const Profile = () => {
         }
     };
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
+    // const changeLanguage = (lng) => {
+    //     i18n.changeLanguage(lng);
+    // };
 
-    const menu = (
-        <Menu>
-            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-                French
-            </Menu.Item>
-            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-                English
-            </Menu.Item>
-        </Menu>
-    );
+    // const menu = (
+    //     <Menu>
+    //         <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+    //             French
+    //         </Menu.Item>
+    //         <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+    //             English
+    //         </Menu.Item>
+    //     </Menu>
+    // );
 
     return (
         <>
@@ -344,13 +273,13 @@ const Profile = () => {
                     {
                         userData ? (
                             <div className="profile-container">
-                                <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
+                                {/* <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
                                     <Dropdown overlay={menu} trigger={['click']} >
                                         <Button type="primary" style={{ width: "100px" }}>
                                             {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
                                         </Button>
                                     </Dropdown>
-                                </div>
+                                </div> */}
                                 <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
                                     <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
                                 </div>

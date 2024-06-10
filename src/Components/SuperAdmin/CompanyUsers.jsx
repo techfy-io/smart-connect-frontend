@@ -92,19 +92,19 @@ const CompanyUsers = () => {
     const closeModal = () => {
         setQRModalVisible(false);
     };
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
-    const menu = (
-        <Menu>
-            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-                French
-            </Menu.Item>
-            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-                English
-            </Menu.Item>
-        </Menu>
-    );
+    // const changeLanguage = (lng) => {
+    //     i18n.changeLanguage(lng);
+    // };
+    // const menu = (
+    //     <Menu>
+    //         <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+    //             French
+    //         </Menu.Item>
+    //         <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+    //             English
+    //         </Menu.Item>
+    //     </Menu>
+    // );
     return (
         <div className='companyusers-container'>
             <Sidebar />
@@ -117,11 +117,11 @@ const CompanyUsers = () => {
 
                     <div className='company-actions'>
                         <Button className='Add-company-btn' onClick={modalHideShow}>{t("Add User")}</Button>
-                        <Dropdown overlay={menu} trigger={['click']} >
+                        {/* <Dropdown overlay={menu} trigger={['click']} >
                             <Button type="primary" style={{ marginLeft: "4px" }}>
                                 {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                             </Button>
-                        </Dropdown>
+                        </Dropdown> */}
                     </div>
                 </div>
                 <div className="table-container">

@@ -118,19 +118,19 @@ const Leads = () => {
         }
         return color;
     };
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-      };
-      const menu = (
-        <Menu>
-          <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-            French
-          </Menu.Item>
-          <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-            English
-          </Menu.Item>
-        </Menu>
-      );
+    // const changeLanguage = (lng) => {
+    //     i18n.changeLanguage(lng);
+    //   };
+    //   const menu = (
+    //     <Menu>
+    //       <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+    //         French
+    //       </Menu.Item>
+    //       <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+    //         English
+    //       </Menu.Item>
+    //     </Menu>
+    //   );
     return (
         <div className='leads'>
             <Sidebar />
@@ -143,13 +143,13 @@ const Leads = () => {
                             </span>
                         </h2>
                     </div>
-                    <div className='language-translate-btn'>
+                    {/* <div className='language-translate-btn'>
                     <Dropdown overlay={menu} trigger={['click']} >
                     <Button type="primary" style={{ width: "100px", marginLeft: "4px" }}>
                       {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                     </Button>
                   </Dropdown>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="table-container">
                     {loading ? (

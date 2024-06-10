@@ -43,11 +43,9 @@ const ForgetPassword = () => {
                     message.error(errorMessage);
                 }
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error("No response received from the server:", error.request);
                 message.error("Failed: No response received from the server.");
             } else {
-                // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error("Failed: Error setting up the request.");
 
@@ -58,30 +56,30 @@ const ForgetPassword = () => {
             setLoading(false);
         }
     };
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-        form.resetFields();
+    // const changeLanguage = (lng) => {
+    //     i18n.changeLanguage(lng);
+    //     form.resetFields();
 
-    };
-    const menu = (
-        <Menu>
-            <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-                French
-            </Menu.Item>
-            <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-                English
-            </Menu.Item>
-        </Menu>
-    );
+    // };
+    // const menu = (
+    //     <Menu>
+    //         <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+    //             French
+    //         </Menu.Item>
+    //         <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+    //             English
+    //         </Menu.Item>
+    //     </Menu>
+    // );
     return (
         <div className='ResetPassword-main-layout'>
-            <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
                 <Dropdown overlay={menu} trigger={['click']} >
                     <Button type="primary" style={{ width: "100px" }}>
                         {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
                     </Button>
                 </Dropdown>
-            </div>
+            </div> */}
             <div className='ResetPassword-custom-card'>
                 <div className='ResetPassword-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
