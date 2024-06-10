@@ -49,12 +49,9 @@ function App() {
         })
         .catch(error => {
           if (error.response) {
-            // The request was made and the server responded with a status code
             if (error.response.status === 404 || error.response.status === 500) {
-                // Handle 404 or 500 error
                 message.error(t("Failed: Something went wrong with the server."));
             } else {
-                // Handle other errors with response data
                 const responseData = error.response.data;
                 let errorMessage = '';
 
@@ -68,11 +65,9 @@ function App() {
                 message.error(errorMessage);
             }
         } else if (error.request) {
-            // The request was made but no response was received
             console.error("No response received from the server:", error.request);
             message.error(t("Failed: No response received from the server."));
         } else {
-            // Something happened in setting up the request that triggered an error
             console.error("Error setting up the request:", error.message);
             message.error(t("Failed: Error setting up the request."))
         }
@@ -126,28 +121,28 @@ function App() {
   useEffect(()=>{
     getToken()
   },[]);
-  const menu = (
-    <Menu>
-      <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-        French
-      </Menu.Item>
-      <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-        English
-      </Menu.Item>
-    </Menu>
-  );
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
+  // const menu = (
+  //   <Menu>
+  //     <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+  //       French
+  //     </Menu.Item>
+  //     <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+  //       English
+  //     </Menu.Item>
+  //   </Menu>
+  // );
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  // };
   return (
     <Layout className='main-layout' style={{ width: '100%', height: '100vh' }}>
-      <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+      {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
         <Dropdown overlay={menu} trigger={['click']} >
           <Button type="primary" style={{ width: "100px" }}>
             {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined/>
           </Button>
         </Dropdown>
-      </div>
+      </div> */}
       <Content className="content" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Card className="custom-card" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
           <div className='custom-title'>

@@ -147,6 +147,7 @@ i18n.init({
         "No media available please add one":"No media available please add one",
         "Download QR Code":"Download QR Code",
         "QR Code":"QR Code",
+        "Back now?":"Back now?"
       }
     },
     fr: {
@@ -286,6 +287,7 @@ i18n.init({
         "Additional Site internet":"Site Internet supplémentaire",
         "Download QR Code":"Télécharger le code QR",
         "No media available please add one":"aucun média disponible veuillez en ajouter un",
+        "Back now?":"En arrière maintenant?",
         "QR Code":"QR Code",
         "French": "Français",
         "English": "Anglais",

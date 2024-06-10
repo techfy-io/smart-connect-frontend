@@ -176,11 +176,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         >
             <div className='custom-scrollbar' style={{ overflowX: 'auto', height: '450px' }}>
                 <Form
-                    form={form} // Binding form instance to the form component
+                    form={form} 
                     layout="vertical"
-                    onFinish={onFinish} // Callback function when form is submitted
+                    onFinish={onFinish}
                 >
-                    {/* Profile Picture Upload */}
                     <Form.Item label={t("Profile Picture")} name="profile_picture">
                         <Upload
                             listType="picture-circle"
@@ -198,10 +197,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Upload
                             listType="picture-circle"
                             maxCount={1}
-                            beforeUpload={() => false} // Prevent default upload behavior
+                            beforeUpload={() => false} 
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ cover_image: file }); // Set form field value to the uploaded file object
+                                form.setFieldsValue({ cover_image: file }); 
                             }}
                         >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>

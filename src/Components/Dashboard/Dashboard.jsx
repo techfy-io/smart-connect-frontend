@@ -188,19 +188,19 @@ function Dashboard() {
   const closeModal = () => {
     setQRModalVisible(false);
   };
-  const changeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
-  };
-  const menu = (
-    <Menu>
-      <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-        French
-      </Menu.Item>
-      <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-        English
-      </Menu.Item>
-    </Menu>
-  );
+  // const changeLanguage = (lng) => {
+  //   i18n.changeLanguage(lng);
+  // };
+  // const menu = (
+  //   <Menu>
+  //     <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
+  //       French
+  //     </Menu.Item>
+  //     <Menu.Item key="en" onClick={() => changeLanguage('en')}>
+  //       English
+  //     </Menu.Item>
+  //   </Menu>
+  // );
   return (
     <div className="dashboard">
       <Sidebar />
@@ -215,11 +215,11 @@ function Dashboard() {
               {/* </div> */}
               <div className='AddUser-action'>
                 <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
-                <Dropdown overlay={menu} trigger={['click']} >
+                {/* <Dropdown overlay={menu} trigger={['click']} >
                   <Button className='language-change-btn' type="primary" style={{ marginLeft: "4px" }}>
                     {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                   </Button>
-                </Dropdown>
+                </Dropdown> */}
 
 
                 {/* </div> */}
@@ -233,11 +233,11 @@ function Dashboard() {
               </div>
               <div className='AddUser-action'>
                 <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
-                <Dropdown overlay={menu} trigger={['click']} >
+                {/* <Dropdown overlay={menu} trigger={['click']} >
                   <Button type="primary" style={{ marginLeft: "4px" }}>
                     {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
                   </Button>
-                </Dropdown>
+                </Dropdown> */}
               </div>
               {/* </div> */}
             </>
