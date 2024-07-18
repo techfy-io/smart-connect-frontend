@@ -1,9 +1,7 @@
-import React, { useState,useEffect } from 'react';
-import { Layout, Card, Button, Input, message, Spin, Menu, Dropdown } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Card, Button, Input, message, Spin } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { DownOutlined } from '@ant-design/icons';
 import Smartlogo from "../../Inspect/Smart-logo.png";
-import InputMask from "react-input-mask";
 import './Login.scss'
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
@@ -11,15 +9,8 @@ const { Content } = Layout;
 
 function App() {
   const { t, i18n } = useTranslation('translation')
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [activeForm, setActiveForm] = useState('login');
-  // const [firstName, setFirstName] = useState("");
-  // const [lastName, setLastName] = useState("");
-  // const [company, setCompany] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [registerEmail, setRegisterEmail] = useState('');
-  // const [registerPassword, setRegisterPassword] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleTabChange = (formType) => {
@@ -75,65 +66,7 @@ function App() {
         })
     }
   };
-  // const registerUser = () => {
-  //   setLoading(true);
-  //   if (!firstName || !lastName || !company || !phone || !registerEmail || !registerPassword) {
-  //     message.error("Please fill in all fields");
-  //     setLoading(false);
-  //     return;
-  //   }
-
-  //   const registerPayload = {
-  //     first_name: firstName,
-  //     last_name: lastName,
-  //     company_name: company,
-  //     phone_number: phone,
-  //     email: registerEmail,
-  //     password: registerPassword,
-  //     is_active: "true",
-  //   };
-  //   axios.post(`${process.env.REACT_APP_BASE_API_URL}/register/`, registerPayload)
-  //     .then(resp => {
-  //       console.log(resp)
-  //       message.success("Registration successful");
-  //       setLoading(false)
-  //       setTimeout(() => {
-  //         handleTabChange('login')
-  //       }, 2000);
-  //     })
-  //     .catch(error => {
-  //       console.log(error?.response?.data?.email)
-  //       message.error(error?.response?.data?.email)
-  //       setLoading(false)
-  //     });
-  // };
-
-  const getToken = () => {
-    axios.get(`https://www.zauqcooking.com/gettoken/`)
-      .then((resp) => {
-        console.log(resp)
-      })
-      .catch((error) => {
-        console.log(error, "error to get tocken")
-      })
-  }
-
-  useEffect(()=>{
-    getToken()
-  },[]);
-  // const menu = (
-  //   <Menu>
-  //     <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-  //       French
-  //     </Menu.Item>
-  //     <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-  //       English
-  //     </Menu.Item>
-  //   </Menu>
-  // );
-  // const changeLanguage = (lng) => {
-  //   i18n.changeLanguage(lng);
-  // };
+  
   return (
     <Layout className='main-layout' style={{ width: '100%', height: '100vh' }}>
       {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
