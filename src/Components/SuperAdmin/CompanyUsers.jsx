@@ -45,7 +45,7 @@ const CompanyUsers = () => {
     const getCompanyUser = () => {
         const accessToken = localStorage.getItem('accessToken');
         localStorage.setItem('userid', company.id);
-        axios.get(`https://api.smartconnect.cards/api/user/?company_id=${company.id}`, {
+        axios.get(`${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${company.id}`, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
             }
