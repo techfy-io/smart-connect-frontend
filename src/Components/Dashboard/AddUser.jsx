@@ -92,11 +92,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     message.error(errorMessage);
                 }
             } else if (error.request) {
-                // The request was made but no response was received
                 console.error("No response received from the server:", error.request);
                 message.error(t("Failed: No response received from the server."));
             } else {
-                // Something happened in setting up the request that triggered an error
                 console.error("Error setting up the request:", error.message);
                 message.error(t("Failed: Error setting up the request."));
             }

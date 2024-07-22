@@ -63,7 +63,6 @@ function Dashboard() {
     })
       .then((response) => {
         setUserType("SuperAdmin")
-        console.log(response);
         setCompaniesData(response.data.results);
         setLoading(false);
       })
@@ -81,9 +80,8 @@ function Dashboard() {
     })
       .then((response) => {
         setUserType("User")
-        console.log(response.data.results);
-        setCompanyName(response.data.results[0].company_name);
-        console.log(companyName)
+        // console.log(response.data.results);
+        setCompanyName(response.data.results[0].company);
         setUserData(response.data.results);
         setLoading(false);
       })
@@ -105,7 +103,6 @@ function Dashboard() {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
-            console.log(response, "delete Company resp")
             message.success(t('Company Deleted Successfully'));
             fetchCompanies();
           })
@@ -135,7 +132,6 @@ function Dashboard() {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
         .then((response) => {
-          console.log(response);
           message.success(t('Company Updated Successfully'));
           toggleUpdateCompanyModal();
           fetchCompanies();
@@ -229,7 +225,7 @@ function Dashboard() {
             <>
               {/* <div className='content-company-header'> */}
               <div className='content-company-name'>
-                {companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName}
+                {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName :""}
               </div>
               <div className='AddUser-action'>
                 <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
