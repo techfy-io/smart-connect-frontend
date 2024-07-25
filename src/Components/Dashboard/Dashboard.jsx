@@ -379,7 +379,7 @@ function Dashboard() {
                 message: (t("Please input your company name!")),
               }
             ]}>
-            <Input />
+            <Input  maxLength={100}/>
           </Form.Item>
           <Form.Item
             label={t('Email')}

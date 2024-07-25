@@ -163,7 +163,7 @@
 
     @media screen and (max-width: 768px) {
         .profile-card {
-            max-width: 82%;
+            max-width: 98%;
             margin-top: 49%;
         }
     }
@@ -206,8 +206,15 @@
         font-weight: 600;
         line-height: normal;
         word-wrap: break-word;
+       
+    
     }
 
+    @media screen and (max-width: 768px) {
+        .profile-name {
+            word-wrap: break-word;
+        }
+    }
     .profile-designation {
         color: #546467;
         font-family: Inter;
