@@ -109,7 +109,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input maxLength={30}/>
                 </Form.Item>
                 <label htmlFor="company_name">{t("Company Name")}*</label>
                 <Form.Item

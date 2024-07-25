@@ -22,7 +22,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const {
             first_name, last_name, email, email_1, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_media, company_name, profile_picture, cover_image, user_id
+            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_media, company, profile_picture, cover_image, user_id
         } = values;
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
@@ -233,7 +233,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={`${t("Company")}*`}
-                            name="company_name"
+                            name="company"
                         // rules={[
                         //     {
                         //         required: true,

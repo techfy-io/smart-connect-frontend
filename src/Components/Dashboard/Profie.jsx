@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip, Menu, Dropdown } from 'antd';
+import { Row, Col, Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip, Menu, Dropdown } from 'antd';
 import './Profile.scss';
 import coverpic from "../../Inspect/coverpic.png";
 import SClogo from "../../Inspect/SClogo.png";
@@ -312,6 +312,7 @@ const Profile = () => {
                                     ) : null}
                                     <img src={selectedImage ? URL.createObjectURL(selectedImage) : coverImage || userData?.cover_image || coverpic} alt="" />
                                 </div>
+
                                 <div className="profile-card">
                                     <div className="profile-info">
                                         <div className='profile-image'>
@@ -319,14 +320,16 @@ const Profile = () => {
                                         </div>
                                         <div className="profile-details">
                                             <p className="profile-name">
-                                                {userData?.first_name?.length + userData?.last_name?.length <= 50
+                                                {userData?.first_name?.length + userData?.last_name?.length <= 100
                                                     ? `${userData?.first_name} ${userData?.last_name}`
-                                                    : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 50 - userData?.first_name?.length))}...`
+                                                    : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 100 - userData?.first_name?.length))}...`
                                                 }
                                             </p>
-                                            <p className="profile-designation">{userData?.job_title?.length > 50 ? `${userData?.job_title?.slice(0, 50)}...` : userData?.job_title}</p>
-                                            <p className="profile-designation">{userData?.company_name?.length > 50 ? `${userData?.company_name?.slice(0, 50)}...` : userData?.company_name}</p>
+                                            <p className="profile-designation">{userData?.job_title?.length > 150 ? `${userData?.job_title?.slice(0, 150)}...` : userData?.job_title}</p>
+                                            <p className="profile-company-name">{userData?.company?.length > 150 ? `${userData?.company?.slice(0, 150)}...` : userData?.company}</p>
+                                            
                                         </div>
+
                                     </div>
                                     <div className='profile-action'>
                                         <button className='save-button' onClick={() => downloadUserData(userData)} disabled={loading}>
@@ -344,6 +347,8 @@ const Profile = () => {
                                         </button>
                                     </div>
                                 </div>
+
+
                                 <Card className='social-links-card'>
                                     <div className="social-icons">
                                         {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
@@ -369,8 +374,6 @@ const Profile = () => {
                         ) : (
                             <div className='profile-container' style={{ height: "100vh" }}>
                                 <div>
-                                    {/* <img src={Emptyicon} alt="" />
-                                    <h5 sty>The User is no longer availible</h5> */}
                                     <Empty size="Large" description={t("The User is no longer available")} />
                                 </div>
                             </div>
