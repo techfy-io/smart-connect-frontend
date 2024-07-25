@@ -67,7 +67,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                             </Form.Item>
                             <label htmlFor="companyname">{t("Company Name")}</label>
                             <Form.Item
-                                name="company_name">
+                                name="company">
                                 <Input />
                             </Form.Item>
                             <label htmlFor="email">{t("Email")}*</label>

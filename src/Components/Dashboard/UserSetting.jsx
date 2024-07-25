@@ -28,7 +28,7 @@ const UserSetting = () => {
                 form.setFieldsValue({
                     first_name: data.first_name,
                     last_name: data.last_name,
-                    company_name: data.company_name,
+                    company: data.company,
                     phone_number: data.phone_number,
                     email: data.email,
                 });
@@ -136,7 +136,7 @@ const UserSetting = () => {
                         </div>
                         {/* <div style={{ display: "flex" }}> */}
                         <Form.Item
-                            name="company_name"
+                            name="company"
                             label={t("Company")}
                             rules={[
                                 {

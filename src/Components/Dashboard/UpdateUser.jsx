@@ -23,7 +23,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user ,Companyid}) => {
             email: user?.email,
             email_1: user?.email_1,
             phone_number: user?.phone_number,
-            company_name: user?.company,
+            company: user?.company,
             job_title: user?.job_title,
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
@@ -44,7 +44,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user ,Companyid}) => {
 
     const onFinish = (values) => {
         setLoading(true);
-        const { firstname, lastname, email, email_1, phone_number_1, other_link_media, other_link_1, phone_number_type, phone_number, company_name, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
+        const { firstname, lastname, email, email_1, phone_number_1, other_link_media, other_link_1, phone_number_type, phone_number, company, job_title, zip_code, postal_code, country, city, facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography } = values;
         const formData = new FormData();
         formData.append('first_name', firstname);
         formData.append('last_name', lastname);
@@ -265,7 +265,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user ,Companyid}) => {
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={t("Company Name")}
-                            name="company_name"
+                            name="company"
                         >
                             <Input disabled />
                         </Form.Item>
