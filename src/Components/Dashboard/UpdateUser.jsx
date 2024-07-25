@@ -52,7 +52,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user ,Companyid}) => {
         formData.append('phone_number', phone_number);
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_type', phone_number_type || "");
-        formData.append('company_name',Companyid  || "");
+        formData.append('company',Companyid  || "");
         formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code || "");
         formData.append('postal_code', postal_code || "");
