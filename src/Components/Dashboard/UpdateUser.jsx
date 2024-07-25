@@ -7,7 +7,7 @@ import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { useTranslation } from "react-i18next";
 
-const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
+const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user ,Companyid}) => {
     const { t, i18n } = useTranslation('translation');
     const [loading, setLoading] = useState(false);
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
@@ -23,7 +23,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             email: user?.email,
             email_1: user?.email_1,
             phone_number: user?.phone_number,
-            company_name: user?.company_name,
+            company_name: user?.company,
             job_title: user?.job_title,
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
@@ -40,7 +40,6 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
             biography: user?.bio_graphy,
         });
     }, [openEditModal, user]);
-    console.log("userdata", user)
     const [form] = Form.useForm();
 
     const onFinish = (values) => {
@@ -53,7 +52,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
         formData.append('phone_number', phone_number);
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_type', phone_number_type || "");
-        formData.append('company_name', company_name || "");
+        formData.append('company_name',Companyid  || "");
         formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code || "");
         formData.append('postal_code', postal_code || "");
@@ -274,7 +273,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user }) => {
                             label={t("Job title")}
                             name="job_title"
                         >
-                            <Input />
+                            <Input maxLength={100} />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>

@@ -111,7 +111,7 @@ const CompanyUsers = () => {
                 <div className='content-header'>
                     <div className='content-company-name'>
                         {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
-                         {company.name? company.name.length > 30 ? `${company.name.substring(0, 30)}...` : company.name :""}
+                         {company?.name? company?.name.length > 40 ? `${company.name.substring(0, 40)}...` : company.name :""}
                     </div>
 
                     <div className='company-actions'>
@@ -170,7 +170,7 @@ const CompanyUsers = () => {
                 isModalVisible={isModalVisible}
                 modalHideShow={modalHideShow}
             />
-            <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+            <UpdateUser Companyid={company.id} openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
             <QRCodeModal
                 visible={qrModalVisible}
                 onClose={closeModal}
