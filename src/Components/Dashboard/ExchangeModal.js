@@ -7,9 +7,7 @@ import InputMask from "react-input-mask";
 
 const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     const { t, i18n } = useTranslation('translation');
-
     const [form] = Form.useForm();
-
     const handleCancel = () => {
         onClose();
         form.resetFields();
