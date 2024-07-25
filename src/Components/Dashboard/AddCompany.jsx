@@ -111,9 +111,9 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                 >
                     <Input maxLength={30}/>
                 </Form.Item>
-                <label htmlFor="company_name">{t("Company Name")}*</label>
+                <label htmlFor="company">{t("Company Name")}*</label>
                 <Form.Item
-                    name="company_name"
+                    name="company"
                     rules={[
                         {
                             required: true,
