@@ -111,7 +111,7 @@ const CompanyUsers = () => {
                 <div className='content-header'>
                     <div className='content-company-name'>
                         {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
-                         {company?.name? company?.name.length > 40 ? `${company.name.substring(0, 40)}...` : company.name :""}
+                         {company.name? company.name.length > 30 ? `${company.name.substring(0, 30)}...` : company.name :""}
                     </div>
 
                     <div className='company-actions'>
