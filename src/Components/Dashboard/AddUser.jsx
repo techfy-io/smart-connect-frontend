@@ -247,7 +247,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             label={t("Job title")}
                             name="job_title"
                         >
-                            <Input />
+                            <Input  maxLength={100}/>
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
