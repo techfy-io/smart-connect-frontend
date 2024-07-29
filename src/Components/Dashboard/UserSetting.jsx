@@ -145,7 +145,7 @@ const UserSetting = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder={t("Company")} />
+                            <Input placeholder={t("Company")} disabled />
                         </Form.Item>
                         <Form.Item
                             // style={{ marginLeft: "15px" }}
