@@ -102,7 +102,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 </div>
                 <div className="form-item">
                     <label>{`${t("Phone")}*`}</label>
-                    <InputMask
+                    {/* <InputMask
                         mask="+33 9 99 99 99 99"
                         maskChar=""
                         placeholder="+33 1 23 45 67 89"
@@ -110,6 +110,15 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                         onChange={(e) => setPhoneNumber(e.target.value)} 
                         required 
                         autoComplete="tel"
+                        className="form-input"
+                    /> */}
+                     <input
+                        type="phone"
+                        placeholder="+33 1 23 45 67 89"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)} 
+                        required 
+                        autoComplete="phone"
                         className="form-input"
                     />
                 </div>
