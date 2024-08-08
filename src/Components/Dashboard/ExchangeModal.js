@@ -1,13 +1,19 @@
 // ExchangeModal.js
 import { useTranslation } from "react-i18next";
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Modal, Form, Input, Button } from 'antd';
 import InputMask from "react-input-mask";
 
 const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
-    const { t, i18n } = useTranslation('translation');
+    const { t } = useTranslation('translation');
     const [form] = Form.useForm();
+
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [company, setCompany] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
     const handleCancel = () => {
         onClose();
         form.resetFields();
@@ -18,7 +24,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     };
 
     return (
-        // exchange Modal 
+        // Exchange Modal 
         <Modal
             title={t("Exchange")}
             open={open}
@@ -55,7 +61,9 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 >
                     <Input
                         maxLength={30}
-                        autoComplete="first_name" 
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)} 
+                        autoComplete="given-name" 
                     />
                 </Form.Item>
                 <Form.Item
@@ -70,7 +78,9 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 >
                     <Input
                         maxLength={30}
-                        autoComplete="last_name-name" 
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        autoComplete="family-name" 
                     />
                 </Form.Item>
                 <Form.Item
@@ -78,7 +88,9 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                     name="company"
                 >
                     <Input
-                        autoComplete="company" 
+                        value={company}
+                        onChange={(e) => setCompany(e.target.value)} 
+                        autoComplete="organization" 
                     />
                 </Form.Item>
                 <Form.Item
@@ -96,6 +108,8 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                     ]}
                 >
                     <Input
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
                         autoComplete="email" 
                     />
                 </Form.Item>
@@ -126,11 +140,12 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                         mask="+33 9 99 99 99 99"
                         maskChar=""
                         placeholder="+33 1 23 45 67 89"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)} 
                         autoComplete="tel" 
                     />
                 </Form.Item>
             </Form>
-
         </Modal>
     );
 };
