@@ -8,7 +8,6 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     const { t } = useTranslation('translation');
     const [form] = Form.useForm();
 
-    // State for controlled inputs
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [company, setCompany] = useState('');
@@ -63,7 +62,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                     <Input
                         maxLength={30}
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)} // Controlled input
+                        onChange={(e) => setFirstName(e.target.value)} 
                         autoComplete="given-name" 
                     />
                 </Form.Item>
@@ -80,7 +79,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                     <Input
                         maxLength={30}
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value)} // Controlled input
+                        onChange={(e) => setLastName(e.target.value)}
                         autoComplete="family-name" 
                     />
                 </Form.Item>
@@ -90,7 +89,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 >
                     <Input
                         value={company}
-                        onChange={(e) => setCompany(e.target.value)} // Controlled input
+                        onChange={(e) => setCompany(e.target.value)} 
                         autoComplete="organization" 
                     />
                 </Form.Item>
@@ -110,7 +109,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 >
                     <Input
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)} // Controlled input
+                        onChange={(e) => setEmail(e.target.value)} 
                         autoComplete="email" 
                     />
                 </Form.Item>
