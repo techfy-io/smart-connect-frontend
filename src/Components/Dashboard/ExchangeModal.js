@@ -121,6 +121,26 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                             required: true,
                             message: t('Please enter a phone number'),
                         },
+                        // {
+                        //     pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                        //     message: t('Invalid phone number format'),
+                        // },
+                    ]}
+                >
+                    <Input
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)} 
+                        autoComplete="phone" 
+                    />
+                </Form.Item>
+                {/* <Form.Item
+                    label={`${t("Phone")}*`}
+                    name="phone_number"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('Please enter a phone number'),
+                        },
                         {
                             pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
                             message: t('Invalid phone number format'),
@@ -144,7 +164,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                         onChange={(e) => setPhoneNumber(e.target.value)} 
                         autoComplete="tel" 
                     />
-                </Form.Item>
+                </Form.Item> */}
             </Form>
         </Modal>
     );
