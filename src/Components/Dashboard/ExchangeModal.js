@@ -1,12 +1,13 @@
+// ExchangeModal.js
 import { useTranslation } from "react-i18next";
+
 import React from 'react';
 import { Modal, Form, Input, Button } from 'antd';
-import { PatternFormat, NumericFormat } from 'react-number-format';
+import InputMask from "react-input-mask";
 
 const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
-    const { t } = useTranslation('translation');
+    const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
-
     const handleCancel = () => {
         onClose();
         form.resetFields();
@@ -17,6 +18,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     };
 
     return (
+        // exchange Modal 
         <Modal
             title={t("Exchange")}
             open={open}
@@ -68,7 +70,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 >
                     <Input
                         maxLength={30}
-                        autoComplete="last_name" 
+                        autoComplete="last_name-name" 
                     />
                 </Form.Item>
                 <Form.Item
@@ -105,16 +107,15 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                             required: true,
                             message: t('Please enter a phone number'),
                         },
+                        // {
+                        //     pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                        //     message: t('Invalid phone number format'),
+                        // },
                     ]}
                 >
-                    <PatternFormat
-                        format="+33 # ## ## ## ##"
-                        allowEmptyFormatting
-                        mask="_"
-                        placeholder="+33 1 23 45 67 89"
-                        data-cy="phone"
+                    <Input
                         style={{
-                            width: "100%",
+                            width: "100%", 
                             height: "30px",
                             borderRadius: "5px",
                             border: "1px solid #d9d9d9",
@@ -122,10 +123,14 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                             color: "black",
                             transition: "border-color 0.3s",
                         }}
+                        // mask="+33 9 99 99 99 99"
+                        maskChar=""
+                        placeholder="+33 1 23 45 67 89"
+                        autoComplete="tel" 
                     />
                 </Form.Item>
-            
             </Form>
+
         </Modal>
     );
 };
