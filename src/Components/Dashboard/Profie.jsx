@@ -153,18 +153,7 @@ const Profile = () => {
         setScale(value);
     };
 
-    // const handleRotate = () => {
-    //     setAngle(angle + 90);
-    //     document.getElementById("image").style.transform = `rotate(${angle + 90}deg)`;
-    // };
-
-    // const handleSave = () => {
-    //     if (editorRef.current) {
-    //         const canvas = editorRef.current.getImage();
-    //         setEditor(canvas)
-    //         console.log(canvas, "canvas")
-    //     }
-    // };
+   
     const handleCoverEdit = () => {
         setEditingCover(true);
     };

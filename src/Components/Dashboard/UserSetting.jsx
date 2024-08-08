@@ -134,7 +134,6 @@ const UserSetting = () => {
                                 <Input placeholder={t("Last Name")} />
                             </Form.Item>
                         </div>
-                        {/* <div style={{ display: "flex" }}> */}
                         <Form.Item
                             name="company"
                             label={t("Company")}
@@ -145,10 +144,9 @@ const UserSetting = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder={t("Company")} />
+                            <Input placeholder={t("Company")} disabled />
                         </Form.Item>
                         <Form.Item
-                            // style={{ marginLeft: "15px" }}
                             label={t("Phone")}
                             name="phone_number"
                             rules={[
@@ -162,6 +160,7 @@ const UserSetting = () => {
                                 },
                             ]}
                         >
+                        // input mask 
                             <InputMask
                                 style={{
                                     width: "98%",

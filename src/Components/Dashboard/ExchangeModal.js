@@ -18,6 +18,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     };
 
     return (
+        // exchange Modal 
         <Modal
             title={t("Exchange")}
             open={open}
@@ -36,87 +37,100 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                 </Button>,
             ]}
         >
-               <Form
-                            name="exchange Form"
-                            form={form}
-                            onFinish={onFinish}
-                        >
-                            <label htmlFor="firstname">{t("First Name")}*</label>
-                            <Form.Item
-                                name="first_name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please input your first name!')),
-                                    },
-                                ]}
-                            >
-                                <Input maxLength={30} />
-                            </Form.Item>
-                            <label htmlFor="lastname">{t("Last Name")}*</label>
-                            <Form.Item
-                                name="last_name"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please input your last name!')),
-                                    },
-                                ]}
-                            >
-                                <Input maxLength={30} />
-                            </Form.Item>
-                            <label htmlFor="companyname">{t("Company Name")}</label>
-                            <Form.Item
-                                name="company">
-                                <Input />
-                            </Form.Item>
-                            <label htmlFor="email">{t("Email")}*</label>
-                            <Form.Item
-                                name="email"
-                                rules={[
-                                    {
-                                        type: 'email',
-                                        message: (t('Please input a valid email!')),
-                                    },
-                                    {
-                                        required: true,
-                                        message: (t('Please enter an email')),
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                            <label htmlFor="phone">{t("Phone")}*</label>
-                            <Form.Item
-                                name="phone_number"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: (t('Please enter a phone number')),
-                                    },
-                                    {
-                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                        message: (t('Invalid phone number format')),
-                                    },
-                                ]}
-                            >
-                                <InputMask
-                                    style={{
-                                        width: "98.1%",
-                                        height: "30px",
-                                        borderRadius: "5px",
-                                        border: "1px solid #d9d9d9",
-                                        paddingLeft: "8px",
-                                        color: "black",
-                                        transition: "border-color 0.3s",
-                                    }}
-                                    mask="+33 9 99 99 99 99"
-                                    maskChar=""
-                                    placeholder="+33 1 23 45 67 89"
-                                >
-                                </InputMask>
-                            </Form.Item>
-                        </Form>
+            <Form
+                name="exchangeForm"
+                form={form}
+                onFinish={onFinish}
+                layout="vertical"
+            >
+                <Form.Item
+                    label={`${t("First Name")}*`}
+                    name="first_name"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('Please input your first name!'),
+                        },
+                    ]}
+                >
+                    <Input
+                        maxLength={30}
+                        autoComplete="first_name" 
+                    />
+                </Form.Item>
+                <Form.Item
+                    label={`${t("Last Name")}*`}
+                    name="last_name"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('Please input your last name!'),
+                        },
+                    ]}
+                >
+                    <Input
+                        maxLength={30}
+                        autoComplete="last_name-name" 
+                    />
+                </Form.Item>
+                <Form.Item
+                    label={t("Company Name")}
+                    name="company"
+                >
+                    <Input
+                        autoComplete="company" 
+                    />
+                </Form.Item>
+                <Form.Item
+                    label={`${t("Email")}*`}
+                    name="email"
+                    rules={[
+                        {
+                            type: 'email',
+                            message: t('Please input a valid email!'),
+                        },
+                        {
+                            required: true,
+                            message: t('Please enter an email'),
+                        },
+                    ]}
+                >
+                    <Input
+                        autoComplete="email" 
+                    />
+                </Form.Item>
+                <Form.Item
+                    label={`${t("Phone")}*`}
+                    name="phone_number"
+                    rules={[
+                        {
+                            required: true,
+                            message: t('Please enter a phone number'),
+                        },
+                        {
+                            pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                            message: t('Invalid phone number format'),
+                        },
+                    ]}
+                >
+                    <InputMask
+                        style={{
+                            width: "100%", 
+                            height: "30px",
+                            borderRadius: "5px",
+                            border: "1px solid #d9d9d9",
+                            paddingLeft: "8px",
+                            color: "black",
+                            transition: "border-color 0.3s",
+                        }}
+                        mask="+33 9 99 99 99 99"
+                        maskChar=""
+                        placeholder="+33 1 23 45 67 89"
+                        autoComplete="tel" 
+                    />
+                </Form.Item>
+            </Form>
+
         </Modal>
     );
 };
