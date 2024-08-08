@@ -1,0 +1,25 @@
+.exchange-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Adjust spacing between form items */
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+}
+
+.form-input {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #d9d9d9;
+    padding: 8px;
+    transition: border-color 0.3s;
+    font-size: 14px;
+}
+
+.form-input:focus {
+    border-color: #3F51B5; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
