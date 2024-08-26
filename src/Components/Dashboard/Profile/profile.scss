@@ -4,16 +4,14 @@
 
 }
 
-.profile-container {
+.profile-main-wrapper{
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+    width: 100%;
     height: 100%;
-    background: rgb(215, 170, 130);
-    background: linear-gradient(127deg, rgba(215, 170, 130, 1) 0%, rgba(153, 204, 204, 1) 100%);
-    gap: 14px;
+    background-color: #F7F7F7;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
 
     .burger-icon {
         position: absolute;
@@ -32,15 +30,16 @@
             background-color: #F47122;
         }
     }
-
-    .sidebar {
+    
+    .ecard-sidebar {
         position: fixed;
         top: 0;
         right: -100%; // Initially hidden off-screen
         height: 100%;
         width: 350px;
         background-color: #f0f2f5;
-        transition: right 0.9s ease;
+        transition: right 0.5s ease;
+        box-shadow:  0 0 10px rgba(#000000, 0.1);
         z-index: 1000;
 
         &.open {
@@ -101,6 +100,18 @@
             text-align: center;
         }
     }
+}
+
+.profile-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+    background: rgb(215, 170, 130);
+    background: linear-gradient(127deg, rgba(215, 170, 130, 1) 0%, rgba(153, 204, 204, 1) 100%);
+    gap: 14px;
 
     .cover-picture-card {
         position: absolute;
@@ -339,6 +350,7 @@
 
     .instagram-icon {
         background: linear-gradient(45deg, #515BD4, #8134AF, #DD2A7B, #FEDA77, #F58529);
+        background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         text-decoration: none;

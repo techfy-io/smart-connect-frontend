@@ -1,24 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Row, Col, Card, message, Spin, Modal, Form, Input, Button, Empty, Avatar, Tooltip, Menu, Dropdown } from 'antd';
-import './Profile.scss';
-import coverpic from "../../Inspect/coverpic.png";
-import SClogo from "../../Inspect/SClogo.png";
-import Men from "../../Inspect/Men.png";
-import Men1 from "../../Inspect/Men1.png";
-import SCBLACKV3 from "../../Inspect/SCBLACKV3.png";
-import EmptyImage from "../../Inspect/EmptyImage.jpg";
-import Emptyicon from "../../Inspect/Emptyicon.png";
-import { useParams } from 'react-router-dom';
-import QRCode from 'react-qr-code';
-import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
-import axios from 'axios';
-import { useTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import AvatarEditor from 'react-avatar-editor';
-import ExchangeModal from './ExchangeModal';
+import { useParams } from 'react-router-dom';
+import QRCode from 'react-qr-code';
+import axios from 'axios';
+import { useTranslation } from "react-i18next";
+import { Card, message, Spin, Modal, Form, Button, Empty, Tooltip } from 'antd';
+import { CloseOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
+import coverpic from "../../../Inspect/coverpic.png";
+import Men1 from "../../../Inspect/Men1.png";
+import SCBLACKV3 from "../../../Inspect/SCBLACKV3.png";
+import ExchangeModal from '../ExchangeModal';
+import ECard from './ECard';
+import './profile.scss';
 
 const Profile = () => {
-    const { t, i18n } = useTranslation('translation');
+    const { t } = useTranslation('translation');
     const [form] = Form.useForm();
     const editorRef = useRef(null);
     const [loading, setLoading] = useState(false);
@@ -29,13 +26,10 @@ const Profile = () => {
     const { userId } = useParams();
     const qrCodeRef = useRef(null);
     const [editingCover, setEditingCover] = useState(false);
-    const [coverImage, setCoverImage] = useState(null);
-    const [editor, setEditor] = useState(null);
     const [scale, setScale] = useState(1);
-    const [rotate, setRotate] = useState(0);
-    const [angle, setAngle] = useState(0);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [checkLoginUser, SetCheckLoginuser] = useState('')
+    const [checkLoginUser, SetCheckLoginuser] = useState('');
+
     useEffect(() => {
         const loginathentication = localStorage.getItem('accessToken')
         SetCheckLoginuser(loginathentication)
@@ -106,7 +100,6 @@ const Profile = () => {
     const handleSubmitExchangeModal = async (values) => {
         const formData = new FormData();
         setLoading(true);
-
         formData.append('first_name', values.first_name);
         formData.append('last_name', values.last_name);
         formData.append('company', values.company || "");
@@ -116,12 +109,10 @@ const Profile = () => {
 
         try {
             const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, formData);
-            console.log("Response:", response);
             message.success(t("Data exchanged successfully"));
             setOpenExchangeModal(false);
             form.resetFields();
         } catch (error) {
-            console.log("error", error);
             if (error.response) {
                 if (error.response.status === 404 || error.response.status === 500) {
                     message.error(t("Failed: Something went wrong with the server."));
@@ -157,9 +148,6 @@ const Profile = () => {
     const handleCoverEdit = () => {
         setEditingCover(true);
     };
-
-
-
 
     const handleCoverSave = () => {
         const canvas = editorRef.current?.getImage();
@@ -214,7 +202,6 @@ const Profile = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedImage(file)
-        console.log(file)
     };
 
 
@@ -236,142 +223,140 @@ const Profile = () => {
         }
     };
 
-    // const changeLanguage = (lng) => {
-    //     i18n.changeLanguage(lng);
-    // };
-
-    // const menu = (
-    //     <Menu>
-    //         <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-    //             French
-    //         </Menu.Item>
-    //         <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-    //             English
-    //         </Menu.Item>
-    //     </Menu>
-    // );
-
     return (
-        <>
+        <div className='profile-main-wrapper'>
             {pageloading ? (
-                <div style={{ height: "100vh", width: "100%", margin: "0 auto", textAlign: "center", background: "rgb(215, 170, 130)", background: 'linear-gradient(127deg, rgba(215, 170, 130, 1) 0%, rgba(153, 204, 204, 1) 100%)' }}>
-                    <Spin size='large' style={{ marginTop: "10%" }} />
-                </div>
-            ) : (
+                <Spin size='large' style={{ margin: "auto" }} />
+            ) : userData ? (
                 <>
-                    {
-                        userData ? (
-                            <div className="profile-container">
-                                {/* <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
-                                    <Dropdown overlay={menu} trigger={['click']} >
-                                        <Button type="primary" style={{ width: "100px" }}>
-                                            {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
-                                        </Button>
-                                    </Dropdown>
-                                </div> */}
-                                <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                                    <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
-                                </div>
-                                <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                                    <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                                        <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
-                                    </div>
-                                    {
-                                        checkLoginUser == null ? (
-                                            <div className='profile-login-btn'>
-                                                <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
-                                                    <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
-                                                </Tooltip>
-                                            </div>
-                                        ) : (<>
-                                        </>)
-                                    }
-
-                                    <div className='QR-user-details' ref={qrCodeRef}>
-                                        <QRCode value={formatUserData()} className='qr-code' />
-                                    </div>
-                                    <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
-                                    <div className='shope-link'>
-                                        {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
-                                    </div>
-                                </div>
-                                <div className="cover-picture-card"  >
-                                    {checkLoginUser != null ? (
-                                        <Button className="cover-image-edit-button" type="primary" onClick={handleCoverEdit}>
-                                            <EditOutlined />
-                                        </Button>
-                                    ) : null}
-                                    <img src={selectedImage ? URL.createObjectURL(selectedImage) : coverImage || userData?.cover_image || coverpic} alt="" />
-                                </div>
-
-                                <div className="profile-card">
-                                    <div className="profile-info">
-                                        <div className='profile-image'>
-                                            <img src={userData?.profile_picture || Men1} alt="" />
-                                        </div>
-                                        <div className="profile-details">
-                                            <p className="profile-name">
-                                                {userData?.first_name?.length + userData?.last_name?.length <= 100
-                                                    ? `${userData?.first_name} ${userData?.last_name}`
-                                                    : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 100 - userData?.first_name?.length))}...`
-                                                }
-                                            </p>
-                                            <p className="profile-designation">{userData?.job_title?.length > 150 ? `${userData?.job_title?.slice(0, 150)}...` : userData?.job_title}</p>
-                                            <p className="profile-company-name">{userData?.company?.length > 150 ? `${userData?.company?.slice(0, 150)}...` : userData?.company}</p>
-
-                                        </div>
-
-                                    </div>
-                                    <div className='profile-action'>
-                                        <button className='save-button' onClick={() => downloadUserData(userData)} disabled={loading}>
-                                            {loading ? (
-                                                <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
-                                            ) : (
-                                                <>
-                                                    <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Save Contact")}
-                                                </>
-                                            )}
-                                        </button>
-
-                                        <button className='exchange-button' onClick={handleOpenExchangeModal}>
-                                            <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Exchange")}
-                                        </button>
-                                    </div>
-                                </div>
-
-
-                                <Card className='social-links-card'>
-                                    <div className="social-icons">
-                                        {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
-                                        {renderSocialIcon(userData?.instagram_url, 'fa-instagram', 'Instagram')}
-                                        {renderSocialIcon(userData?.linkedin_url, 'fa-linkedin', 'LinkedIn')}
-                                        {renderSocialIcon(userData?.other_link_1, 'fa-globe', 'Other Link')}
-                                    </div>
-                                </Card>
-                                {
-                                    userData && userData.bio_graphy && (
-                                        <>
-                                            <div className='bio-data-card'>
-                                                <h2 className='bio-heading'>{t("Biography")}</h2>
-                                                <p className='bio-para'>{userData.bio_graphy}</p>
-                                            </div>
-                                        </>
-                                    )
-                                }
-                                <div className='SC-logo'>
-                                    <img src={SCBLACKV3} alt="" srcSet="" />
-                                </div>
+                    <ECard
+                        user={userData}
+                        fetchUserData={fetchUserData}
+                        handleOpenQRCode={() => setSidebarOpen(!sidebarOpen)}
+                        handleOpenExchangeModal={handleOpenExchangeModal}
+                    />
+                    <div className={`ecard-sidebar ${sidebarOpen ? 'open' : ''}`}>
+                        <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                            <CloseOutlined style={{ fontSize: '18px' }} />
+                        </div>
+                        {checkLoginUser == null ? (
+                            <div className='profile-login-btn'>
+                                <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
+                                    <Button
+                                        className='profile-action-login-btn'
+                                        type='primary'
+                                    >
+                                        <Link to={'/'}>{t("Login")}</Link>
+                                    </Button>
+                                </Tooltip>
                             </div>
-                        ) : (
-                            <div className='profile-container' style={{ height: "100vh" }}>
-                                <div>
-                                    <Empty size="Large" description={t("The User is no longer available")} />
-                                </div>
-                            </div>
-                        )
-                    }
+                        ) : (<>
+                        </>)}
 
+                        <div className='QR-user-details' ref={qrCodeRef}>
+                            <QRCode value={formatUserData()} className='qr-code' />
+                        </div>
+                        <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
+                        <div className='shope-link'>
+                            {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
+                        </div>
+                    </div>
                 </>
+                // <div className="profile-container">
+                //     <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+                //         <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                //             <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
+                //         </div>
+                //         {
+                //             checkLoginUser == null ? (
+                //                 <div className='profile-login-btn'>
+                //                     <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
+                //                         <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
+                //                     </Tooltip>
+                //                 </div>
+                //             ) : (<>
+                //             </>)
+                //         }
+
+                //         <div className='QR-user-details' ref={qrCodeRef}>
+                //             <QRCode value={formatUserData()} className='qr-code' />
+                //         </div>
+                //         <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
+                //         <div className='shope-link'>
+                //             {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
+                //         </div>
+                //     </div>
+                //     <div className="cover-picture-card"  >
+                //         {checkLoginUser != null ? (
+                //             <Button className="cover-image-edit-button" type="primary" onClick={handleCoverEdit}>
+                //                 <EditOutlined />
+                //             </Button>
+                //         ) : null}
+                //         <img src={selectedImage ? URL.createObjectURL(selectedImage) : userData?.cover_image || coverpic} alt="" />
+                //     </div>
+
+                //     <div className="profile-card">
+                //         <div className="profile-info">
+                //             <div className='profile-image'>
+                //                 <img src={userData?.profile_picture || Men1} alt="" />
+                //             </div>
+                //             <div className="profile-details">
+                //                 <p className="profile-name">
+                //                     {userData?.first_name?.length + userData?.last_name?.length <= 100
+                //                         ? `${userData?.first_name} ${userData?.last_name}`
+                //                         : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 100 - userData?.first_name?.length))}...`
+                //                     }
+                //                 </p>
+                //                 <p className="profile-designation">{userData?.job_title?.length > 150 ? `${userData?.job_title?.slice(0, 150)}...` : userData?.job_title}</p>
+                //                 <p className="profile-company-name">{userData?.company?.length > 150 ? `${userData?.company?.slice(0, 150)}...` : userData?.company}</p>
+
+                //             </div>
+
+                //         </div>
+                //         <div className='profile-action'>
+                //             <button className='save-button' onClick={() => downloadUserData(userData)} disabled={loading}>
+                //                 {loading ? (
+                //                     <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
+                //                 ) : (
+                //                     <>
+                //                         <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Save Contact")}
+                //                     </>
+                //                 )}
+                //             </button>
+
+                //             <button className='exchange-button' onClick={handleOpenExchangeModal}>
+                //                 <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Exchange")}
+                //             </button>
+                //         </div>
+                //     </div>
+
+
+                //     <Card className='social-links-card'>
+                //         <div className="social-icons">
+                //             {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
+                //             {renderSocialIcon(userData?.instagram_url, 'fa-instagram', 'Instagram')}
+                //             {renderSocialIcon(userData?.linkedin_url, 'fa-linkedin', 'LinkedIn')}
+                //             {renderSocialIcon(userData?.other_link_1, 'fa-globe', 'Other Link')}
+                //         </div>
+                //     </Card>
+                //     {
+                //         userData && userData.bio_graphy && (
+                //             <>
+                //                 <div className='bio-data-card'>
+                //                     <h2 className='bio-heading'>{t("Biography")}</h2>
+                //                     <p className='bio-para'>{userData.bio_graphy}</p>
+                //                 </div>
+                //             </>
+                //         )
+                //     }
+                //     <div className='SC-logo'>
+                //         <img src={SCBLACKV3} alt="" srcSet="" />
+                //     </div>
+                // </div>
+            ) : (
+                <div style={{ margin: 'auto' }}>
+                    <Empty size="Large" description={t("The User is no longer available")} />
+                </div>
             )}
             {editingCover && (
                 <Modal
@@ -395,7 +380,7 @@ const Profile = () => {
                     <AvatarEditor
                         id="image"
                         ref={editorRef}
-                        image={selectedImage ? URL.createObjectURL(selectedImage) : (coverImage || userData?.cover_image || coverpic)}
+                        image={selectedImage ? URL.createObjectURL(selectedImage) : (userData?.cover_image || coverpic)}
                         crossOrigin='anonymous'
                         style={{ width: "100%", height: "400px", margin: "0 auto", objectFit: "cover" }}
                         border={50}
@@ -426,7 +411,7 @@ const Profile = () => {
                 onSubmit={handleSubmitExchangeModal}
                 loading={loading}
             />
-        </>
+        </div>
     );
 }
 
