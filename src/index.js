@@ -289,6 +289,7 @@ i18n.init({
         "No media available please add one":"aucun média disponible veuillez en ajouter un",
         "Back now?":"En arrière maintenant?",
         "QR Code":"QR Code",
+        "Shope Link":"Lien boutique",
         "French": "Français",
         "English": "Anglais",
       }
