@@ -290,6 +290,9 @@ const Profile = () => {
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
                                     </div>
+                                    <div className='shope-link'>
+                                    {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
+                                    </div>
                                     <br />
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                 </div>
