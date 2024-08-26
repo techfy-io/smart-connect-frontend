@@ -225,7 +225,7 @@ function Dashboard() {
             <>
               {/* <div className='content-company-header'> */}
               <div className='content-company-name'>
-                {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName :""}
+                {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName : ""}
               </div>
               <div className='AddUser-action'>
                 <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
@@ -319,9 +319,12 @@ function Dashboard() {
                                 }
                               </td>
                               <td className='Actions-btns'>
-                                <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                <a href={`/profile/${user.id}`}>
+                                  <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                </a>
+                                {/* <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />
-                                </button>
+                                </button> */}
                                 <button className="Edit-button" onClick={() => updateUser(user)}>
                                   <EditOutlined />
                                 </button>
@@ -379,7 +382,7 @@ function Dashboard() {
                 message: (t("Please input your company name!")),
               }
             ]}>
-            <Input  maxLength={100}/>
+            <Input maxLength={100} />
           </Form.Item>
           <Form.Item
             label={t('Email')}

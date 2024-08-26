@@ -11,7 +11,7 @@
 
 .form-input {
     width: 100%;
-    height: 30px;
+    height: 20px;
     border-radius: 5px;
     border: 1px solid #d9d9d9;
     padding: 8px;
@@ -20,6 +20,6 @@
 }
 
 .form-input:focus {
-    border-color: #3F51B5; /* Change border color on focus */
+    border-color: #65b6df; /* Change border color on focus */
     outline: none; /* Remove default outline */
 }
