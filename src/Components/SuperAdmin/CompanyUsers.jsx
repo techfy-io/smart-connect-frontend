@@ -111,7 +111,7 @@ const CompanyUsers = () => {
                 <div className='content-header'>
                     <div className='content-company-name'>
                         {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
-                         {company.name? company.name.length > 30 ? `${company.name.substring(0, 30)}...` : company.name :""}
+                        {company.name ? company.name.length > 30 ? `${company.name.substring(0, 30)}...` : company.name : ""}
                     </div>
 
                     <div className='company-actions'>
@@ -151,7 +151,9 @@ const CompanyUsers = () => {
                                         <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
                                         <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td>
                                         <td className='Actions-btns'>
-                                            <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                            <a href={`/profile/${user.id}`}>
+                                                <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                            </a>
                                             <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
                                             <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
                                             <button className="download-button" onClick={() => handleDownloadClick(user)}>
