@@ -153,7 +153,7 @@ const Profile = () => {
         setScale(value);
     };
 
-   
+
     const handleCoverEdit = () => {
         setEditingCover(true);
     };
@@ -290,11 +290,10 @@ const Profile = () => {
                                     <div className='QR-user-details' ref={qrCodeRef}>
                                         <QRCode value={formatUserData()} className='qr-code' />
                                     </div>
-                                    <div className='shope-link'>
-                                    {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
-                                    </div>
-                                    <br />
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
+                                    <div className='shope-link'>
+                                        {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
+                                    </div>
                                 </div>
                                 <div className="cover-picture-card"  >
                                     {checkLoginUser != null ? (
@@ -319,7 +318,7 @@ const Profile = () => {
                                             </p>
                                             <p className="profile-designation">{userData?.job_title?.length > 150 ? `${userData?.job_title?.slice(0, 150)}...` : userData?.job_title}</p>
                                             <p className="profile-company-name">{userData?.company?.length > 150 ? `${userData?.company?.slice(0, 150)}...` : userData?.company}</p>
-                                            
+
                                         </div>
 
                                     </div>
