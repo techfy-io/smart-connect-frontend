@@ -292,7 +292,7 @@ const Profile = () => {
                                     </div>
                                     <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
                                     <div className='shope-link'>
-                                        {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
+                                        {t("Shope Link")} <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
                                     </div>
                                 </div>
                                 <div className="cover-picture-card"  >
