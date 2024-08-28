@@ -22,7 +22,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const {
             first_name, last_name, email, email_1, phone_number, phone_number_1, phone_number_2,
             phone_number_personal, phone_number_professional, job_title, biography, postal_code, zip_code,
-            country, city, facebook_url, instagram_url, linkedin_url, other_link_1, other_link_media, company, profile_picture, cover_image, user_id
+            country, city, facebook_url, instagram_url, linkedin_url, company, profile_picture, cover_image, user_id,
+            other_link_media_1, other_link_media_2, other_link_media_3, other_link_media_4, other_link_media_5,
+            other_link_1, other_link_2, other_link_3, other_link_4, other_link_5,
         } = values;
         const accessToken = localStorage.getItem('accessToken');
         const formData = new FormData();
@@ -32,7 +34,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         if (email_1) { formData.append('email_1', email_1 || ""); }
         formData.append('phone_number', phone_number || "");
         if (phone_number_1) {
-            formData.append('phone_number_1', phone_number_1 ||"");
+            formData.append('phone_number_1', phone_number_1 || "");
         }
         formData.append('phone_number_2', phone_number_2 || "");
         formData.append('phone_number_personal', phone_number_personal || "");
@@ -43,11 +45,19 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('zip_code', zip_code || "");
         formData.append('country', country || "");
         formData.append('city', city || "");
-        formData.append('facebook_url', facebook_url||"");
-        formData.append('instagram_url', instagram_url ||"");
-        formData.append('linkedin_url', linkedin_url||"");
+        formData.append('facebook_url', facebook_url || "");
+        formData.append('instagram_url', instagram_url || "");
+        formData.append('linkedin_url', linkedin_url || "");
+        formData.append('other_link_media_1', other_link_media_1 || "");
+        formData.append('other_link_media_2', other_link_media_2 || "");
+        formData.append('other_link_media_3', other_link_media_3 || "");
+        formData.append('other_link_media_4', other_link_media_4 || "");
+        formData.append('other_link_media_5', other_link_media_5 || "");
         formData.append('other_link_1', other_link_1 || "");
-        formData.append('other_link_media', other_link_media || "");
+        formData.append('other_link_2', other_link_2 || "");
+        formData.append('other_link_3', other_link_3 || "");
+        formData.append('other_link_4', other_link_4 || "");
+        formData.append('other_link_5', other_link_5 || "");
         formData.append('company', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
@@ -67,28 +77,25 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             message.success(t("User Added Successfully"));
             setLoading(false)
             modalHideShow();
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
         } catch (error) {
             console.log("error", error);
             if (error.response) {
-                // The request was made and the server responded with a status code
                 if (error.response.status === 404 || error.response.status === 500) {
-                    // Handle 404 or 500 error
                     message.error(t("Failed: Something went wrong with the server."));
                 } else {
-                    // Handle other errors with response data
                     const responseData = error.response.data;
                     let errorMessage = '';
-    
+
                     for (const prop in responseData) {
                         if (responseData.hasOwnProperty(prop)) {
                             errorMessage = responseData[prop][0];
                             break;
                         }
                     }
-    
+
                     message.error(errorMessage);
                 }
             } else if (error.request) {
@@ -130,7 +137,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         setAdditionalEmails(updatedEmails);
     };
     const handleAddSocialMediaLink = () => {
-        if (additionalSocialMediaLinks.length < 2) {
+        if (additionalSocialMediaLinks.length < 5) {
             setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
         }
     };
@@ -138,6 +145,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const handleRemoveSocialMediaLink = (index) => {
         const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
         setAdditionalSocialMediaLinks(updatedLinks);
+        setAdditionalSocialMediaLinks({
+            ...additionalSocialMediaLinks,
+            [key]: "", 
+        });
+            form.setFieldsValue({
+            [key]: "", 
+        });
     };
     useEffect(() => {
         setCurrentCompany(CompaniesDate)
@@ -147,6 +161,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             title={t("Add User")}
             width={450}
             open={isModalVisible}
+
             onCancel={handleCancel}
             footer={[
                 <Button key="cancel" onClick={handleCancel}>
@@ -174,9 +189,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         >
             <div className='custom-scrollbar' style={{ overflowX: 'auto', height: '450px' }}>
                 <Form
-                    form={form} 
+                    form={form}
                     layout="vertical"
                     onFinish={onFinish}
+                    autoComplete='off'
                 >
                     <Form.Item label={t("Profile Picture")} name="profile_picture">
                         <Upload
@@ -195,10 +211,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Upload
                             listType="picture-circle"
                             maxCount={1}
-                            beforeUpload={() => false} 
+                            beforeUpload={() => false}
                             onChange={(info) => {
                                 const { file } = info;
-                                form.setFieldsValue({ cover_image: file }); 
+                                form.setFieldsValue({ cover_image: file });
                             }}
                         >
                             <Button icon={<UploadOutlined style={{ fontSize: "20px", color: "#40a9ff" }} />}></Button>
@@ -247,7 +263,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             label={t("Job title")}
                             name="job_title"
                         >
-                            <Input  maxLength={100}/>
+                            <Input maxLength={100} />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -319,13 +335,21 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
                         <>
-                            <Form.Item label={t("Site internet type")} name="other_link_media">
+                            <Form.Item label={t("Site internet type")} name={`social_media_type_${index+1}`}>
                                 <Input placeholder={t("Twitter Tiktok")} />
                             </Form.Item>
                             <Form.Item
-                                key={index}
-                                label={<>{t("Additional Site internet")} <i className="fa fa-globe icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
-                                name="other_link_1"
+                                key={index + 1}
+                                label={
+                                    <>
+                                    {`${t("Additional Site internet")} ${index + 1}`}
+                                    <i 
+                                      className="fa fa-globe icon linkedin-icon" 
+                                      style={{ fontSize: "24px", marginLeft: "5px" }}
+                                    ></i>
+                                  </>
+                                 }
+                                name={`other_link_${index + 1}`}
                                 rules={[
                                     {
                                         type: 'url',
@@ -348,7 +372,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     ))}
 
                     {
-                        additionalSocialMediaLinks.length < 1 && (
+                        additionalSocialMediaLinks.length < 5 && (
                             <Form.Item>
                                 <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
                                     {t("Site internet")}
@@ -410,45 +434,45 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     }
 
                     {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-                        <Form.Item
-                            label={`${t("Phone")}*`}
-                            name="phone_number"
-                            rules={[
-                                {
-                                    required: true,
-                                    message: (t('Please enter a phone number')),
-                                },
-                                {
-                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                                    message: (t('Invalid phone number format'))
-                                },
-                            ]}
+                    <Form.Item
+                        label={`${t("Phone")}*`}
+                        name="phone_number"
+                        rules={[
+                            {
+                                required: true,
+                                message: (t('Please enter a phone number')),
+                            },
+                            {
+                                pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                message: (t('Invalid phone number format'))
+                            },
+                        ]}
+                    >
+                        <InputMask
+                            style={{
+                                width: "95%",
+                                height: "30px",
+                                borderRadius: "5px",
+                                border: "1px solid #d9d9d9",
+                                paddingLeft: "8px",
+                                color: "black",
+                                transition: "border-color 0.3s",
+                            }}
+                            mask="+33 9 99 99 99 99"
+                            maskChar=""
+                            placeholder="+33 1 23 45 67 89"
                         >
-                            <InputMask
-                                style={{
-                                    width: "95%",
-                                    height: "30px",
-                                    borderRadius: "5px",
-                                    border: "1px solid #d9d9d9",
-                                    paddingLeft: "8px",
-                                    color: "black",
-                                    transition: "border-color 0.3s",
-                                }}
-                                mask="+33 9 99 99 99 99"
-                                maskChar=""
-                                placeholder="+33 1 23 45 67 89"
-                                >
-                            </InputMask>
-                        </Form.Item>
-                        <Form.Item
-                            label={t("Phone Type")}
-                            name="phoneType"
-                        >
-                            <Radio.Group>
-                                <Radio name='phone_number_professional' value="Professionnel">{t("Professionnel")}</Radio>
-                                <Radio name='phone_number_personal' value="Personal">{t("Personal")}</Radio>
-                            </Radio.Group>
-                        </Form.Item>
+                        </InputMask>
+                    </Form.Item>
+                    <Form.Item
+                        label={t("Phone Type")}
+                        name="phoneType"
+                    >
+                        <Radio.Group>
+                            <Radio name='phone_number_professional' value="Professionnel">{t("Professionnel")}</Radio>
+                            <Radio name='phone_number_personal' value="Personal">{t("Personal")}</Radio>
+                        </Radio.Group>
+                    </Form.Item>
                     {/* </div> */}
                     {additionalPhones.map((phone, index) => (
                         <Form.Item

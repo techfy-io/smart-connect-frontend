@@ -151,8 +151,15 @@ const CompanyUsers = () => {
                                         <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
                                         <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td>
                                         <td className='Actions-btns'>
-                                            <a href={`/profile/${user.id}`}>
-                                                <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                            <a
+                                                href={`/profile/${user.id}`}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    GetUserProfile(user.id);
+                                                }}
+                                                className="view-eye-btn"
+                                            >
+                                                <EyeOutlined />
                                             </a>
                                             <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
                                             <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>

@@ -160,7 +160,6 @@ const UserSetting = () => {
                                 },
                             ]}
                         >
-                        // input mask 
                             <InputMask
                                 style={{
                                     width: "98%",
