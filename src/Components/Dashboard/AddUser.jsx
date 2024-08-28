@@ -136,7 +136,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
     };
-    const handleAddSocialMediaLink = () => {
+  const handleAddSocialMediaLink = () => {
         if (additionalSocialMediaLinks.length < 5) {
             setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
         }
@@ -145,13 +145,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const handleRemoveSocialMediaLink = (index) => {
         const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
         setAdditionalSocialMediaLinks(updatedLinks);
-        setAdditionalSocialMediaLinks({
-            ...additionalSocialMediaLinks,
-            [key]: "", 
-        });
-            form.setFieldsValue({
-            [key]: "", 
-        });
     };
     useEffect(() => {
         setCurrentCompany(CompaniesDate)
