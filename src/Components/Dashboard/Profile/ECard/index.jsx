@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Cover from './comps/Cover';
 import ProfileActions from './comps/ProfileActions';
 import placholder from '../../../../Inspect/Men1.png'
+import logo from '../../../../Inspect/icons/logo-smartconnect.png'
 import './ecard.scss';
+import Social from './comps/Social';
+import { t } from 'i18next';
 
 const ECard = (props) => {
     const { user } = props
+    const [showmore, setShowmore] = useState(true);
 
-    const sliceText = (text, max) => {
+    const sliceText = (text, max, showbtn, state) => {
         if (text.length <= max) {
             return text
         }
-        return text.slice(0, max) + '...'
+        if (showbtn) {
+            return (
+                <>
+                    {state ? text.slice(0, max) : text}{' '}
+                    {(<span style={{ whiteSpace: 'nowrap' }} onClick={() => setShowmore(!showmore)}>
+                        {state
+                            ? 'read more'
+                            : 'show less'
+                        }
+                    </span>)}
+                </>
+            )
+        }
+        return text.slice(0, max) + '...';
     }
 
     return (
@@ -27,6 +44,17 @@ const ECard = (props) => {
                     <p>{sliceText(user?.company, 150)}</p>
                 </div>
                 <ProfileActions {...props} />
+                <Social {...props} />
+                {user?.bio_graphy ? (
+                    <div className="about-wrapper">
+                        <h5>{t('Biography')}</h5>
+                        <p>{sliceText(user?.bio_graphy, 96, true, showmore)}
+                        </p>
+                    </div>
+                ) : null}
+                <div className="logo">
+                    <img src={logo} alt="Smart Connect logo" />
+                </div>
             </div>
         </div>
     )

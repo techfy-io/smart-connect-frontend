@@ -5,11 +5,9 @@ import { useParams } from 'react-router-dom';
 import QRCode from 'react-qr-code';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
-import { Card, message, Spin, Modal, Form, Button, Empty, Tooltip } from 'antd';
-import { CloseOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
+import { message, Spin, Modal, Form, Button, Empty, Tooltip } from 'antd';
+import { CloseOutlined, ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
 import coverpic from "../../../Inspect/coverpic.png";
-import Men1 from "../../../Inspect/Men1.png";
-import SCBLACKV3 from "../../../Inspect/SCBLACKV3.png";
 import ExchangeModal from '../ExchangeModal';
 import ECard from './ECard';
 import './profile.scss';
@@ -53,41 +51,6 @@ const Profile = () => {
     const formatUserData = () => {
         return window.location.href;
     };
-
-
-    const downloadUserData = async (userData) => {
-        if (!userData) return;
-        setLoading(true);
-
-        try {
-            const vcfResponse = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/contacts/${userData.id}/vcf/`, {
-                responseType: 'text',
-            });
-
-            let vCardData = vcfResponse.data;
-            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${userData.first_name}_${userData.last_name}.vcf`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-            message.success("Download Successful");
-        } catch (error) {
-            if (error.response && error.response.status === 404) {
-                console.error("Photo URL not found:", error);
-                message.error("Photo URL not found");
-            } else {
-                console.error("Failed to download user data:", error);
-                message.error("Failed to download");
-            }
-        } finally {
-            setLoading(false);
-        }
-    };
-
 
     const handleOpenExchangeModal = () => {
         setOpenExchangeModal(true);
@@ -144,11 +107,6 @@ const Profile = () => {
         setScale(value);
     };
 
-
-    const handleCoverEdit = () => {
-        setEditingCover(true);
-    };
-
     const handleCoverSave = () => {
         const canvas = editorRef.current?.getImage();
         const editedCoverImage = canvas?.toDataURL();
@@ -187,14 +145,6 @@ const Profile = () => {
     const handleCoverCancel = () => {
         setEditingCover(false);
     };
-
-    const handleSocialIconClick = (url) => {
-        if (!url) {
-            message.error(t("No media available, please add one."));
-        } else {
-            window.open(url, "_blank");
-        }
-    };
     const handleImageUpload = () => {
         const fileInput = document.getElementById('fileInput');
         fileInput.click();
@@ -202,25 +152,6 @@ const Profile = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         setSelectedImage(file)
-    };
-
-
-    const renderSocialIcon = (url, iconClass) => {
-        const formattedUrl = url && !/^https?:\/\//i.test(url) ? `https://${url}` : url;
-
-        if (!formattedUrl) {
-            return (
-                <div className="icon-box disabled" title={t("No media available please add one")}>
-                    <span className={`fa ${iconClass} icon`} />
-                </div>
-            );
-        } else {
-            return (
-                <div className="icon-box">
-                    <a href={formattedUrl} target="_blank" rel="noopener noreferrer" className={`fa ${iconClass} icon`} />
-                </div>
-            );
-        }
     };
 
     return (
@@ -262,97 +193,6 @@ const Profile = () => {
                         </div>
                     </div>
                 </>
-                // <div className="profile-container">
-                //     <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-                //         <div className="burger-icon" onClick={() => setSidebarOpen(!sidebarOpen)}>
-                //             <MenuOutlined style={{ fontSize: '24px', color: 'black' }} />
-                //         </div>
-                //         {
-                //             checkLoginUser == null ? (
-                //                 <div className='profile-login-btn'>
-                //                     <Tooltip title={t("Are you the owner of the file? Click here to login?")}>
-                //                         <Button className='profile-action-login-btn' type='primary' ><Link to={'/'}>{t("Login")}</Link></Button>
-                //                     </Tooltip>
-                //                 </div>
-                //             ) : (<>
-                //             </>)
-                //         }
-
-                //         <div className='QR-user-details' ref={qrCodeRef}>
-                //             <QRCode value={formatUserData()} className='qr-code' />
-                //         </div>
-                //         <p className='qr-code-para'>{t("Show QRCode to share your profile")}</p>
-                //         <div className='shope-link'>
-                //             {t("Shope Link")}: <a href="https://smartconnect.cards/"> https://smartconnect.cards</a>
-                //         </div>
-                //     </div>
-                //     <div className="cover-picture-card"  >
-                //         {checkLoginUser != null ? (
-                //             <Button className="cover-image-edit-button" type="primary" onClick={handleCoverEdit}>
-                //                 <EditOutlined />
-                //             </Button>
-                //         ) : null}
-                //         <img src={selectedImage ? URL.createObjectURL(selectedImage) : userData?.cover_image || coverpic} alt="" />
-                //     </div>
-
-                //     <div className="profile-card">
-                //         <div className="profile-info">
-                //             <div className='profile-image'>
-                //                 <img src={userData?.profile_picture || Men1} alt="" />
-                //             </div>
-                //             <div className="profile-details">
-                //                 <p className="profile-name">
-                //                     {userData?.first_name?.length + userData?.last_name?.length <= 100
-                //                         ? `${userData?.first_name} ${userData?.last_name}`
-                //                         : `${userData?.first_name} ${userData?.last_name?.slice(0, Math.max(0, 100 - userData?.first_name?.length))}...`
-                //                     }
-                //                 </p>
-                //                 <p className="profile-designation">{userData?.job_title?.length > 150 ? `${userData?.job_title?.slice(0, 150)}...` : userData?.job_title}</p>
-                //                 <p className="profile-company-name">{userData?.company?.length > 150 ? `${userData?.company?.slice(0, 150)}...` : userData?.company}</p>
-
-                //             </div>
-
-                //         </div>
-                //         <div className='profile-action'>
-                //             <button className='save-button' onClick={() => downloadUserData(userData)} disabled={loading}>
-                //                 {loading ? (
-                //                     <Spin indicator={<SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} spin />} />
-                //                 ) : (
-                //                     <>
-                //                         <SaveOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Save Contact")}
-                //                     </>
-                //                 )}
-                //             </button>
-
-                //             <button className='exchange-button' onClick={handleOpenExchangeModal}>
-                //                 <SyncOutlined style={{ fontSize: "18px", marginRight: "4px" }} /> {t("Exchange")}
-                //             </button>
-                //         </div>
-                //     </div>
-
-
-                //     <Card className='social-links-card'>
-                //         <div className="social-icons">
-                //             {renderSocialIcon(userData?.facebook_url, 'fa-facebook', 'Facebook')}
-                //             {renderSocialIcon(userData?.instagram_url, 'fa-instagram', 'Instagram')}
-                //             {renderSocialIcon(userData?.linkedin_url, 'fa-linkedin', 'LinkedIn')}
-                //             {renderSocialIcon(userData?.other_link_1, 'fa-globe', 'Other Link')}
-                //         </div>
-                //     </Card>
-                //     {
-                //         userData && userData.bio_graphy && (
-                //             <>
-                //                 <div className='bio-data-card'>
-                //                     <h2 className='bio-heading'>{t("Biography")}</h2>
-                //                     <p className='bio-para'>{userData.bio_graphy}</p>
-                //                 </div>
-                //             </>
-                //         )
-                //     }
-                //     <div className='SC-logo'>
-                //         <img src={SCBLACKV3} alt="" srcSet="" />
-                //     </div>
-                // </div>
             ) : (
                 <div style={{ margin: 'auto' }}>
                     <Empty size="Large" description={t("The User is no longer available")} />

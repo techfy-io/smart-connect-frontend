@@ -48,6 +48,7 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
                 icon={<i class="fa-solid fa-address-card"></i>}
                 loading={loading}
                 onClick={() => downloadUserData(user)}
+                title={t('Save Contact')}
             >
                 Save Contact
             </Button>
@@ -57,6 +58,7 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
                 icon={<i class="fa-solid fa-arrows-rotate"></i>}
                 className="right"
                 onClick={handleOpenExchangeModal}
+                title={t('Exchange')}
             >
                 Exchange
             </Button>
