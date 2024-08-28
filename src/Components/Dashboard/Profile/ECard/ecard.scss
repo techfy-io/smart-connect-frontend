@@ -1,0 +1,219 @@
+.ecard-wrapper{
+    width: 100%;
+    max-width: 754px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 24px;
+    padding-bottom: 16px;
+    margin-inline: auto;
+    font-family: "Inter", sans-serif;
+    box-sizing: border-box;
+    *{
+        box-sizing: border-box;
+    }
+    @media (max-width: 754px){
+        padding-top: 0;
+    }
+    .ecard-cover{
+        width: 100%;
+        height: 230px;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e3e6eb;
+        @media (max-width: 754px){
+            border-radius: 0;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .buttons{
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 10;
+            display: flex;
+            gap: 12px;
+            .ant-btn{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+        .edit-btn{
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            @media (max-width: 754px){
+                opacity: 1;
+            }
+        }
+        
+        &:hover{
+            .edit-btn{
+                opacity: 1;
+            }
+        }
+    }
+
+    // Profile
+    .profile-wrapper{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-inline: auto;
+        max-width: 430px;
+        padding: 8px 16px;
+        margin-top: -80px;
+        z-index: 99;
+        .profile-photo{
+            width: 140px;
+            height: 140px;
+            background-color: #fff;
+            border: 4px solid #fff;
+            box-shadow:  0 4px 17px rgba(#000000, 0.25);
+            border-radius: 50%;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        // Name & Role & Company
+        .profile-name{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #546467;
+            margin-block: 24px;
+            h3{
+                line-height: 1;
+                font-size: 28px;
+                font-weight: 600;
+            }
+            small{
+                font-size: 16px;
+                font-weight: 400;
+            }
+            p{
+                margin: 0;
+                line-height: 1;
+                font-size: 18px;
+                font-weight: 400;
+            }
+        }
+        // Actions
+        .profile-actions{
+            width: 100%;
+            .ant-btn{
+                width: 100%;
+                max-width: 50%;
+                min-height: 68px;
+                border-radius: 0;
+                font-size: 20px;
+                font-weight: 700;
+                background-color: #FF8000;
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                span{
+                    &:not(.ant-btn-icon){
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        margin-bottom: 4px;
+                    }
+                }
+                
+                &.left{
+                    border-top-left-radius: 16px;
+                    border-bottom-left-radius: 16px;
+                }
+                &.right{
+                    background-color: #546467;
+                    border-top-right-radius: 16px;
+                    border-bottom-right-radius: 16px;
+                }
+                
+                @media (max-width: 420px){
+                    min-height: 52px;
+                    font-size: 18px;
+                    font-weight: 600;
+                    &.left{
+                        border-top-left-radius: 12px;
+                        border-bottom-left-radius: 12px;
+                    }
+                    &.right{
+                        border-top-right-radius: 12px;
+                        border-bottom-right-radius: 12px;
+                    }
+                }
+            }
+        }
+        // Social
+        .social-wrapper{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            padding: 16px 24px;
+            border-radius: 16px;
+            box-sizing: border-box;
+            margin-block: 24px;
+            a{
+                display: block;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: all 0.3s ease-in-out;
+                &:hover{
+                    background-color: rgba(#f0f2f5, 0.5);
+                }
+                img{
+                    width: 62px;
+                    height: 62px;
+                }
+            }
+        }
+        // About
+        .about-wrapper{
+            width: 100%;
+            padding: 16px 24px;
+            border-radius: 16px;
+            box-sizing: border-box;
+            margin-bottom: 24px;
+            background-color: #fff;
+            color: #546467;
+            font-size: 20px;
+            transition: all 0.3s ease-in-out;
+            h5{
+                font-size: inherit;
+                font-weight: 700;
+                margin: 0 0 10px;
+            }
+            p{
+                font-weight: 400;
+                line-height: 28px;
+                font-size: 18px;
+                span{
+                    text-decoration: underline;
+                    color: #00A3FF;
+                    cursor: pointer;
+                }
+            }
+        }
+        .logo{
+            margin-inline: auto;
+            img{
+                width: 72px;
+                height: auto;
+            }
+        }
+    }
+}

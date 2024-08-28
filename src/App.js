@@ -7,7 +7,7 @@ import UserSetting from './Components/Dashboard/UserSetting';
 import ForgetPassword from './Components/Authorization/ForgetPassword';
 import CompanyUsers from './Components/SuperAdmin/CompanyUsers';
 import ResetPassword from './Components/Authorization/ResetPassword';
-import Profie from './Components/Dashboard/Profie';
+import Profie from './Components/Dashboard/Profile';
 import Leads from './Components/Dashboard/Leads';
 import ScrollToTop from './Components/Common/Scrolltop';
 import { Spin } from 'antd';
@@ -45,12 +45,12 @@ function App() {
       <Routes>
         {/* Redirect based on authentication status */}
         <Route path="/" element={validUser ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
-        
+
         {/* Public routes */}
         <Route path="/login" element={validUser ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/forgetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ForgetPassword />} />
         <Route path="/resetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ResetPassword />} />
-        <Route path="/profile/:userId" element= {<Profie />} />
+        <Route path="/profile/:userId" element={<Profie />} />
 
         {/* Protected routes */}
         <Route path="/dashboard" element={validUser ? <Dashboard /> : <Navigate to="/login" />} />
