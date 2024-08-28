@@ -282,7 +282,7 @@ i18n.init({
         "Company": "Entreprise",
         "Date": "Date",
         "Site internet":"Internet du site",
-        "Site internet type":"Type Internet du site",
+        "Site internet type":"Nom du lien",
         "Enter your site internet url":"Entrez le lien Internet de votre site",
         "Additional Site internet":"Site Internet supplémentaire",
         "Download QR Code":"Télécharger le code QR",
