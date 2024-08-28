@@ -319,8 +319,19 @@ function Dashboard() {
                                 }
                               </td>
                               <td className='Actions-btns'>
-                                <a href={`/profile/${user.id}`}>
+                                {/* <a href={`/profile/${user.id}`}>
                                   <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                                </a> */}
+
+                                <a
+                                  href={`/profile/${user.id}`}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    GetUserProfile(user.id);
+                                  }}
+                                  className="view-eye-btn"
+                                >
+                                  <EyeOutlined />
                                 </a>
                                 {/* <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />
