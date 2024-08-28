@@ -14,7 +14,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
-    const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
+    const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState(['']);
     const [currentCompany, setCurrentCompany] = useState('')
     const [loading, setLoading] = useState(false);
 
@@ -136,14 +136,15 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
     };
-  const handleAddSocialMediaLink = () => {
+    const handleAddSocialMediaLink = () => {
         if (additionalSocialMediaLinks.length < 5) {
+            // Add a new empty string to represent a new input field
             setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
         }
     };
-
     const handleRemoveSocialMediaLink = (index) => {
-        const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
+        // Correctly remove the input at the specified index
+        const updatedLinks = additionalSocialMediaLinks.filter((_, i) => i !== index);
         setAdditionalSocialMediaLinks(updatedLinks);
     };
     useEffect(() => {
@@ -327,31 +328,30 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <Input />
                     </Form.Item>
                     {additionalSocialMediaLinks.map((link, index) => (
-                        <>
-                            <Form.Item label={t("Site internet type")} name={`social_media_type_${index+1}`}>
-                            <Input placeholder={`Website${index + 1}`} />
+                        <div key={index}> 
+                            <Form.Item label={t("Site internet type")} name={`social_media_type_${index + 1}`}>
+                                <Input placeholder={`Website ${index + 1}`} />
                             </Form.Item>
                             <Form.Item
-                                key={index + 1}
                                 label={
                                     <>
-                                    {`${t("Additional Site internet")} ${index + 1}`}
-                                    <i 
-                                      className="fa fa-globe icon linkedin-icon" 
-                                      style={{ fontSize: "24px", marginLeft: "5px" }}
-                                    ></i>
-                                  </>
-                                 }
+                                        {`${t("Additional Site internet")} ${index + 1}`}
+                                        <i
+                                            className="fa fa-globe icon linkedin-icon"
+                                            style={{ fontSize: "24px", marginLeft: "5px" }}
+                                        ></i>
+                                    </>
+                                }
                                 name={`other_link_${index + 1}`}
                                 rules={[
                                     {
                                         type: 'url',
-                                        message: (t("Invalid URL format")),
+                                        message: t("Invalid URL format"),
                                     },
                                 ]}
                             >
                                 <Input
-                                    placeholder={t(`Enter your site internet url`)}
+                                    placeholder={t("Enter your site internet url")}
                                     suffix={
                                         <Button
                                             type="text"
@@ -361,7 +361,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                     }
                                 />
                             </Form.Item>
-                        </>
+                        </div>
                     ))}
 
                     {
