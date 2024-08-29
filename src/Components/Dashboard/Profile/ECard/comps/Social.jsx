@@ -2,7 +2,7 @@ import React from 'react';
 import facebook from '../../../../../Inspect/icons/facebook.svg';
 import instagram from '../../../../../Inspect/icons/instagram.svg';
 import linkedin from '../../../../../Inspect/icons/linkedin.svg';
-import glob from '../../../../../Inspect/icons/glob.svg';
+import glob from '../../../../../Inspect/icons/glob.png';
 
 const Social = ({ user }) => {
     const links = [

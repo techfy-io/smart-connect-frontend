@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cover from './comps/Cover';
 import ProfileActions from './comps/ProfileActions';
 import placholder from '../../../../Inspect/Men1.png'
@@ -10,6 +10,17 @@ import { t } from 'i18next';
 const ECard = (props) => {
     const { user } = props
     const [showmore, setShowmore] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 365px)');
+        setIsMobile(mediaQuery.matches);
+        const handleResize = (e) => setIsMobile(e.matches);
+        mediaQuery.addEventListener('change', handleResize);
+        return () => {
+            mediaQuery.removeEventListener('change', handleResize);
+        };
+    }, []);
 
     const sliceText = (text, max, showbtn, state) => {
         if (text.length <= max) {
@@ -18,7 +29,7 @@ const ECard = (props) => {
         if (showbtn) {
             return (
                 <>
-                    {state ? text.slice(0, max) : text}{' '}
+                    {state ? text.slice(0, max) : text}{' '}{' '}
                     {(<span style={{ whiteSpace: 'nowrap' }} onClick={() => setShowmore(!showmore)}>
                         {state
                             ? 'read more'
@@ -40,7 +51,7 @@ const ECard = (props) => {
                 </div>
                 <div className="profile-name">
                     <h3>{sliceText(`${user?.first_name} ${user?.last_name || ''}`, 100)}</h3>
-                    {user?.job_title && (<small>({sliceText(user?.job_title, 150)})</small>)}
+                    {user?.job_title && (<small>{sliceText(user?.job_title, 150)}</small>)}
                     <p>{sliceText(user?.company, 150)}</p>
                 </div>
                 <ProfileActions {...props} />
@@ -48,8 +59,7 @@ const ECard = (props) => {
                 {user?.bio_graphy ? (
                     <div className="about-wrapper">
                         <h5>{t('Biography')}</h5>
-                        <p>{sliceText(user?.bio_graphy, 96, true, showmore)}
-                        </p>
+                        <p>{sliceText(user?.bio_graphy, isMobile ? 75 : 96, true, showmore)}</p>
                     </div>
                 ) : null}
                 <div className="logo">
