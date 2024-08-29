@@ -50,7 +50,7 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
                 onClick={() => downloadUserData(user)}
                 title={t('Save Contact')}
             >
-                Save Contact
+                {t('Save Contact')}
             </Button>
             <Button
                 type='primary'
@@ -60,7 +60,7 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
                 onClick={handleOpenExchangeModal}
                 title={t('Exchange')}
             >
-                Exchange
+                {t('Exchange')}
             </Button>
         </Flex>
     )
