@@ -13,6 +13,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
     const [additionalPhones, setAdditionalPhones] = useState([]);
+    const [socialLinks, setSocialLinks] = useState([]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -46,12 +47,13 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
             user?.other_link_5 || "",
         ].filter(link => link !== "");
 
-        setAdditionalSocialMediaLinks(initialLinks);
+        setSocialLinks(initialLinks);
         form.setFieldsValue({
             ...initialLinks.reduce((acc, link, index) => {
                 acc[`other_link_${index + 1}`] = link;
                 return acc;
             }, {}),
+            ...user,
         });
     }, [openEditModal, user]);
 
@@ -83,11 +85,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         // formData.append('other_link_media_3', other_link_media_3 || "");
         // formData.append('other_link_media_4', other_link_media_4 || "");
         // formData.append('other_link_media_5', other_link_media_5 || "");
-        formData.append('other_link_1', other_link_1 || "");
-        formData.append('other_link_2', other_link_2 || "");
-        formData.append('other_link_3', other_link_3 || "");
-        formData.append('other_link_4', other_link_4 || "");
-        formData.append('other_link_5', other_link_5 || "");
+        socialLinks.forEach((link, index) => {
+            formData.append(`other_link_${index + 1}`, link || "");
+        });
         formData.append('email_1', email_1 || "");
         formData.append('facebook_url', facebook_url || "");
         formData.append('instagram_url', instagram_url || "");
@@ -119,9 +119,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                 message.success(t("User Update Successfully"));
                 setLoading(false)
                 UpdatemodalHideShow();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000)
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2000)
             })
             .catch(error => {
                 console.log("error", error);
@@ -159,29 +159,20 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         form.resetFields();
     };
 
-    const handleAddSocialMediaLink = () => {
-        if (additionalSocialMediaLinks.length < 5) {
-            setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, ""]);
+
+    const handleAddLink = () => {
+        if (socialLinks.length < 5) {
+            setSocialLinks([...socialLinks, '']);
         }
     };
 
-    const handleRemoveSocialMediaLink = (index) => {
-        const updatedLinks = additionalSocialMediaLinks.filter((_, i) => i !== index);
-        setAdditionalSocialMediaLinks(updatedLinks);
-        form.setFieldsValue({
-            [`other_link_${index + 1}`]: "",
-        });
+    const handleRemoveLink = (index) => {
+        const newLinks = socialLinks.filter((_, i) => i !== index);
+        setSocialLinks(newLinks);
     };
-
-
-
-
-
-
     const handleAddAdditionalEmail = () => {
         setAdditionalEmails([...additionalEmails, '']);
     };
-
     const handleRemoveAdditionalEmail = (index) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
@@ -362,46 +353,48 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                     >
                         <Input />
                     </Form.Item>
-                    {additionalSocialMediaLinks.map((link, index) => (
-                    <div key={`social_link_${index}`}>
-                          <Form.Item
-                                // key={index+1}
+                    {socialLinks.map((link, index) => (
+                        <div key={`social_link_${index}`}>
+                            <Form.Item
                                 label={t("Site internet type")}
                                 name={`social_media_type_${index + 1}`}
                             >
                                 <Input placeholder={`Website${index + 1}`} />
                             </Form.Item>
-                        <Form.Item
-                            label= {`${t("Additional Site internet")} ${index + 1}`}
-                            name={`other_link_${index + 1}`}
-                            rules={[{ type: 'url', message: t('Invalid URL format') }]}
-                        >
-                            <Input
-                                placeholder={t("Enter your site internet url")}
-                                value={link}
-                                onChange={(e) => {
-                                    const updatedLinks = [...additionalSocialMediaLinks];
-                                    updatedLinks[index] = e.target.value; // Update the link
-                                    setAdditionalSocialMediaLinks(updatedLinks);
-                                }}
-                                suffix={
-                                    <Button
-                                        type="text"
-                                        icon={<DeleteOutlined />}
-                                        onClick={() => handleRemoveSocialMediaLink(index)}
-                                    />
-                                }
-                            />
+                            <Form.Item
+                                label={`${t("Additional Site internet")} ${index + 1}`}
+                                name={`other_link_${index + 1}`}
+                                // rules={[{ type: 'url', message: t('Invalid URL format') }]}
+
+                            >
+                                <Input
+                                    placeholder={t("Enter your site internet url")}
+                                    value={link}
+                                    style={{ width: '90%' }}  
+                                    onChange={(e) => {
+                                        const updatedLinks = [...socialLinks];
+                                        updatedLinks[index] = e.target.value;
+                                        setSocialLinks(updatedLinks);
+                                    }}
+                                   
+                                />
+                                 <Button
+                                  style={{marginLeft:"6px"}}
+                                  icon={<DeleteOutlined style={{ color: 'red'}} />}
+                                            type="text"
+                                            onClick={() => handleRemoveLink(index)}
+                                        />
+                            </Form.Item>
+                        </div>
+                    ))}
+                    {socialLinks.length < 5 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddLink} icon={<PlusOutlined />}>
+                                {t("Add Another Site internet")}
+                            </Button>
                         </Form.Item>
-                    </div>
-                ))}
-            {additionalSocialMediaLinks.length < 5 && (
-                <Form.Item>
-                    <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                        {t("Add Another Site internet")}
-                    </Button>
-                </Form.Item>
-            )}
+                    )}
+
 
             {/* email input */}
             <Form.Item
