@@ -76,9 +76,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
             message.success(t("User Added Successfully"));
             setLoading(false)
             modalHideShow();
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 2000);
         } catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -330,7 +330,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         <>
                             <Form.Item
                                 label={t("Site internet type")}
-                                name={`social_media_type_${index + 1}`}
+                                name={`other_link_media_${index + 1}`}
                             >
                                 <Input placeholder={`Website ${index + 1}`} />
                             </Form.Item>
