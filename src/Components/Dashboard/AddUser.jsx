@@ -14,7 +14,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
-    const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
+    const [socialLinks, setSocialLinks] = useState([]);
+
     const [currentCompany, setCurrentCompany] = useState('')
     const [loading, setLoading] = useState(false);
 
@@ -53,11 +54,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('other_link_media_3', other_link_media_3 || "");
         formData.append('other_link_media_4', other_link_media_4 || "");
         formData.append('other_link_media_5', other_link_media_5 || "");
-        formData.append('other_link_1', other_link_1 || "");
-        formData.append('other_link_2', other_link_2 || "");
-        formData.append('other_link_3', other_link_3 || "");
-        formData.append('other_link_4', other_link_4 || "");
-        formData.append('other_link_5', other_link_5 || "");
+        socialLinks.forEach((link, index) => {
+            formData.append(`other_link_${index + 1}`, link || "");
+        }); 
         formData.append('company', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
@@ -136,16 +135,17 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
     };
-  const handleAddSocialMediaLink = () => {
-        if (additionalSocialMediaLinks.length < 5) {
-            setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, '']);
+    const handleAddLink = () => {
+        if (socialLinks.length < 5) {
+            setSocialLinks([...socialLinks, '']);
         }
     };
 
-    const handleRemoveSocialMediaLink = (index) => {
-        const updatedLinks = additionalSocialMediaLinks.filter((link, i) => i !== index);
-        setAdditionalSocialMediaLinks(updatedLinks);
+    const handleRemoveLink = (index) => {
+        const newLinks = socialLinks.filter((_, i) => i !== index);
+        setSocialLinks(newLinks);
     };
+
     useEffect(() => {
         setCurrentCompany(CompaniesDate)
     }, [CompaniesDate])
@@ -326,53 +326,61 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     >
                         <Input />
                     </Form.Item>
-                    {additionalSocialMediaLinks.map((link, index) => (
+                    {socialLinks.map((_, index) => (
                         <>
-                            <Form.Item label={t("Site internet type")} name={`social_media_type_${index+1}`}>
-                            <Input placeholder={`Website${index + 1}`} />
-                            </Form.Item>
                             <Form.Item
-                                key={index + 1}
+                                label={t("Site internet type")}
+                                name={`other_link_media_${index + 1}`}
+                            >
+                                <Input placeholder={`Website ${index + 1}`} />
+                            </Form.Item>
+                            <Form.Item key={index}
                                 label={
                                     <>
-                                    {`${t("Additional Site internet")} ${index + 1}`}
-                                    <i 
-                                      className="fa fa-globe icon linkedin-icon" 
-                                      style={{ fontSize: "24px", marginLeft: "5px" }}
-                                    ></i>
-                                  </>
-                                 }
+                                        {`${t("Additional Site internet")} ${index + 1}`}
+                                        <i
+                                            className="fa fa-globe icon linkedin-icon"
+                                            style={{ fontSize: "24px", marginLeft: "5px" }}
+                                        ></i>
+                                    </>
+                                }
                                 name={`other_link_${index + 1}`}
                                 rules={[
                                     {
                                         type: 'url',
-                                        message: (t("Invalid URL format")),
+                                        message: t("Invalid URL format"),
                                     },
                                 ]}
                             >
                                 <Input
-                                    placeholder={t(`Enter your site internet url`)}
-                                    suffix={
-                                        <Button
-                                            type="text"
-                                            icon={<DeleteOutlined />}
-                                            onClick={() => handleRemoveSocialMediaLink(index)}
-                                        />
-                                    }
+                                    placeholder={t("Enter your site internet url")}
+                                    style={{ width: '90%' }}  
+                                    value={socialLinks[index]}
+                                    onChange={(e) => {
+                                        const newLinks = [...socialLinks];
+                                        newLinks[index] = e.target.value;
+                                        setSocialLinks(newLinks);
+                                    }}
+                                  
                                 />
+                                <Button
+                                style={{marginLeft:"6px"}}
+                                    icon={<DeleteOutlined style={{ color: 'red'}} />}
+                                    onClick={() => handleRemoveLink(index)}
+                                />
+
                             </Form.Item>
                         </>
+
                     ))}
 
-                    {
-                        additionalSocialMediaLinks.length < 5 && (
-                            <Form.Item>
-                                <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                                    {t("Site internet")}
-                                </Button>
-                            </Form.Item>
-                        )
-                    }
+                    {socialLinks.length < 5 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddLink} icon={<PlusOutlined />}>
+                                {t("Add Site internet")}
+                            </Button>
+                        </Form.Item>
+                    )}
 
                     <Form.Item
                         label={`${t("Email")}*`}

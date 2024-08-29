@@ -13,6 +13,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
     const [additionalPhones, setAdditionalPhones] = useState([]);
+    const [socialLinks, setSocialLinks] = useState([]);
 
     useEffect(() => {
         form.setFieldsValue({
@@ -36,6 +37,11 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
             instagram_url: user?.instagram_url,
             linkedin_url: user?.linkedin_url,
             biography: user?.bio_graphy,
+            other_link_media_1: user?.other_link_media_1,
+            other_link_media_2: user?.other_link_media_2,
+            other_link_media_3: user?.other_link_media_3,
+            other_link_media_4: user?.other_link_media_4,
+            other_link_media_5: user?.other_link_media_5,
         });
 
         const initialLinks = [
@@ -44,14 +50,15 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
             user?.other_link_3 || "",
             user?.other_link_4 || "",
             user?.other_link_5 || "",
-        ].filter(link => link !== "");
+        ].filter(link => link !== "" || null);
 
-        setAdditionalSocialMediaLinks(initialLinks);
+        setSocialLinks(initialLinks);
         form.setFieldsValue({
             ...initialLinks.reduce((acc, link, index) => {
                 acc[`other_link_${index + 1}`] = link;
                 return acc;
             }, {}),
+            ...user,
         });
     }, [openEditModal, user]);
 
@@ -62,7 +69,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         const { firstname, lastname, email, email_1, phone_number_1, phone_number_type,
             phone_number, company, job_title, zip_code, postal_code, country, city,
             facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography,
-            // other_link_media_1, other_link_media_2, other_link_media_3, other_link_media_4, other_link_media_5,
+            other_link_media_1, other_link_media_2, other_link_media_3, other_link_media_4, other_link_media_5,
             other_link_1, other_link_2, other_link_3, other_link_4, other_link_5,
         } = values;
         const formData = new FormData();
@@ -78,16 +85,14 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         formData.append('postal_code', postal_code || "");
         formData.append('country', country || "");
         formData.append('city', city || "");
-        // formData.append('other_link_media_1', other_link_media_1 || "");
-        // formData.append('other_link_media_2', other_link_media_2 || "");
-        // formData.append('other_link_media_3', other_link_media_3 || "");
-        // formData.append('other_link_media_4', other_link_media_4 || "");
-        // formData.append('other_link_media_5', other_link_media_5 || "");
-        formData.append('other_link_1', other_link_1 || "");
-        formData.append('other_link_2', other_link_2 || "");
-        formData.append('other_link_3', other_link_3 || "");
-        formData.append('other_link_4', other_link_4 || "");
-        formData.append('other_link_5', other_link_5 || "");
+        formData.append('other_link_media_1', other_link_media_1 || "");
+        formData.append('other_link_media_2', other_link_media_2 || "");
+        formData.append('other_link_media_3', other_link_media_3 || "");
+        formData.append('other_link_media_4', other_link_media_4 || "");
+        formData.append('other_link_media_5', other_link_media_5 || "");
+        socialLinks.forEach((link, index) => {
+            formData.append(`other_link_${index + 1}`, link || "");
+        });
         formData.append('email_1', email_1 || "");
         formData.append('facebook_url', facebook_url || "");
         formData.append('instagram_url', instagram_url || "");
@@ -159,29 +164,26 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         form.resetFields();
     };
 
-    const handleAddSocialMediaLink = () => {
-        if (additionalSocialMediaLinks.length < 5) {
-            setAdditionalSocialMediaLinks([...additionalSocialMediaLinks, ""]);
+
+    const handleAddLink = () => {
+        if (socialLinks.length < 5) {
+            setSocialLinks([...socialLinks, '']);
         }
     };
 
-    const handleRemoveSocialMediaLink = (index) => {
-        const updatedLinks = additionalSocialMediaLinks.filter((_, i) => i !== index);
-        setAdditionalSocialMediaLinks(updatedLinks);
+    const handleRemoveLink = (index) => {
         form.setFieldsValue({
-            [`other_link_${index + 1}`]: "",
+            [`other_link_${index}`]: "",
         });
+        const newLinks = [...socialLinks];
+        newLinks[index] = ""; 
+        newLinks.splice(index, 1);
+        setSocialLinks(newLinks);
     };
-
-
-
-
-
 
     const handleAddAdditionalEmail = () => {
         setAdditionalEmails([...additionalEmails, '']);
     };
-
     const handleRemoveAdditionalEmail = (index) => {
         const updatedEmails = additionalEmails.filter((email, i) => i !== index);
         setAdditionalEmails(updatedEmails);
@@ -346,12 +348,24 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         <Form.Item
                             label={<>{t("Facebook")} < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
                             name="facebook_url"
+                            rules={[
+                                {
+                                    pattern: /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/,
+                                    message: (t("Invalid URL format")),
+                                },
+                            ]}
                         >
                             <Input />
                         </Form.Item>
                         <Form.Item
                             label={<>{t("Instagram")} <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                             name="instagram_url"
+                            rules={[
+                                {
+                                    pattern: /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/,
+                                    message: (t("Invalid URL format")),
+                                },
+                            ]}
                         >
                             <Input />
                         </Form.Item>
@@ -359,154 +373,151 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                     <Form.Item
                         label={<>{t("Linkedin")} <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
                         name="linkedin_url"
+                        rules={[
+                            {
+                                pattern: /^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
+                                message: (t("Invalid URL format")),
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>
-                    {additionalSocialMediaLinks.map((link, index) => (
-                    <div key={`social_link_${index}`}>
-                          <Form.Item
-                                // key={index+1}
+                    {socialLinks.map((_, index) => (
+                        // <div key={`social_link_${index}`}>
+                        <>
+
+                            <Form.Item
                                 label={t("Site internet type")}
-                                name={`social_media_type_${index + 1}`}
+                                name={`other_link_media_${index + 1}`}
                             >
                                 <Input placeholder={`Website${index + 1}`} />
                             </Form.Item>
-                        <Form.Item
-                            label= {`${t("Additional Site internet")} ${index + 1}`}
-                            name={`other_link_${index + 1}`}
-                            rules={[{ type: 'url', message: t('Invalid URL format') }]}
-                        >
-                            <Input
-                                placeholder={t("Enter your site internet url")}
-                                value={link}
-                                onChange={(e) => {
-                                    const updatedLinks = [...additionalSocialMediaLinks];
-                                    updatedLinks[index] = e.target.value; // Update the link
-                                    setAdditionalSocialMediaLinks(updatedLinks);
-                                }}
-                                suffix={
-                                    <Button
-                                        type="text"
-                                        icon={<DeleteOutlined />}
-                                        onClick={() => handleRemoveSocialMediaLink(index)}
-                                    />
+                            <Form.Item
+                                key={index}
+                                label={
+                                    <>
+                                        {`${t("Additional Site internet")} ${index + 1}`}
+                                        <i
+                                            className="fa fa-globe icon linkedin-icon"
+                                            style={{ fontSize: "24px", marginLeft: "5px" }}
+                                        ></i>
+                                    </>
                                 }
-                            />
-                        </Form.Item>
-                    </div>
-                ))}
-            {additionalSocialMediaLinks.length < 5 && (
-                <Form.Item>
-                    <Button type="dashed" onClick={handleAddSocialMediaLink} icon={<PlusOutlined />}>
-                        {t("Add Another Site internet")}
-                    </Button>
-                </Form.Item>
-            )}
 
-            {/* email input */}
-            <Form.Item
-                label={t("Email")}
-                name="email"
-                rules={[
-                    {
-                        required: true,
-                        message: (t('Please enter an email')),
-                    },
-                    {
-                        type: 'email',
-                        message: (t("Please input a valid email!")),
-                    },
-                ]}
-            >
-                <Input placeholder="" />
-            </Form.Item>
-            {user && user.email_1 ? (
-                <>
-                    <Form.Item
-                        label={t("Additional Email")}
-                        name="email_1"
-                        rules={[
-                            {
-                                type: 'email',
-                                message: (t("Please input a valid email!")),
-                            },
-                        ]}
-                    >
-                        <Input placeholder='' />
-                    </Form.Item>
-                </>
-            ) : null}
-            {additionalEmails.map((email, index) => (
-                <div key={index}>
-                    <Form.Item
-                        label={t(`Additional Email`)}
-                        name="email_1"
-                        rules={[
-                            {
-                                type: 'email',
-                                message: (t("Please input a valid email!")),
-                            },
-                        ]}
-                    >
-                        <Input
-                            placeholder=""
-                            suffix={
+                                name={`other_link_${index + 1}`}
+                                rules={[{ type: 'url', message: t('Invalid URL format') }]}
+                            >
+                                <Input
+                                    placeholder={t("Enter your site internet url")}
+                                    value={socialLinks[index]}
+                                    style={{ width: '90%' }}
+                                    onChange={(e) => {
+                                        const updatedLinks = [...socialLinks];
+                                        updatedLinks[index] = e.target.value;
+                                        setSocialLinks(updatedLinks);
+                                        form.setFieldsValue({
+                                            [`other_link_${index + 1}`]: e.target.value,
+                                        });
+                                    }}
+
+                                />
                                 <Button
+                                    style={{ marginLeft: "6px" }}
+                                    icon={<DeleteOutlined style={{ color: 'red' }} />}
                                     type="text"
-                                    icon={<DeleteOutlined />}
+                                    onClick={() => handleRemoveLink(index)}
+                                />
+                            </Form.Item>
+                        </>
+                        // </div>
+                    ))}
+                    {socialLinks.length < 5 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddLink} icon={<PlusOutlined />}>
+                                {t("Add Another Site internet")}
+                            </Button>
+                        </Form.Item>
+                    )}
+
+
+                    {/* email input */}
+                    <Form.Item
+                        label={t("Email")}
+                        name="email"
+                        rules={[
+                            {
+                                required: true,
+                                message: (t('Please enter an email')),
+                            },
+                            {
+                                type: 'email',
+                                message: (t("Please input a valid email!")),
+                            },
+                        ]}
+                    >
+                        <Input placeholder="" />
+                    </Form.Item>
+                    {user && user.email_1 ? (
+                        <>
+                            <Form.Item
+                                label={t("Additional Email")}
+                                name="email_1"
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: (t("Please input a valid email!")),
+                                    },
+                                ]}
+                            >
+                                <Input placeholder='' />
+                            </Form.Item>
+                        </>
+                    ) : null}
+                    {additionalEmails.map((email, index) => (
+                        <div key={index}>
+                            <Form.Item
+
+                                label={t(`Additional Email`)}
+                                name="email_1"
+                                rules={[
+                                    {
+                                        type: 'email',
+                                        message: (t("Please input a valid email!")),
+                                    },
+                                ]}
+                            >
+                                <Input
+                                    style={{ width: '90%' }}
+
+                                    placeholder=""
+
+                                />
+                                <Button
+                                    style={{ marginLeft: "6px" }}
+                                    icon={<DeleteOutlined style={{ color: 'red' }} />}
+                                    type="text"
                                     onClick={() => handleRemoveAdditionalEmail(index)}
                                 />
-                            }
-                        />
-                    </Form.Item>
-                </div>
-            ))}
-            {user && !user.email_1 && additionalEmails.length < 1 && (
-                <Form.Item>
-                    <Button type="dashed" onClick={handleAddAdditionalEmail} icon={<PlusOutlined />}>
-                        {t("Email")}
-                    </Button>
-                </Form.Item>
-            )}
+                            </Form.Item>
+                        </div>
+                    ))}
+                    {user && !user.email_1 && additionalEmails.length < 1 && (
+                        <Form.Item>
+                            <Button type="dashed" onClick={handleAddAdditionalEmail} icon={<PlusOutlined />}>
+                                {t("Email")}
+                            </Button>
+                        </Form.Item>
+                    )}
 
-            {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-            <Form.Item
-                label={`${t("Phone")}*`}
-                name="phone_number"
-                rules={[
-                    {
-                        required: true,
-                        message: (t('Please enter a phone number')),
-                    },
-                    {
-                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                        message: (t('Invalid phone number format')),
-                    },
-                ]}
-            >
-                <InputMask
-                    style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
-                    mask="+33 9 99 99 99 99"
-                    maskChar=""
-                    placeholder="+33 1 23 45 67 89"
-                />
-            </Form.Item>
-            <Form.Item
-                label={t("Phone Type")}
-                name="phone_number_type"
-            >
-                <Radio.Group>
-                    <Radio name='phone_number_professional' value="PROFESSIONNEL">{t("Professionnel")}</Radio>
-                    <Radio name='phone_number_personal' value="PERSONAL">{t("Personal")}</Radio>
-                </Radio.Group>
-            </Form.Item>
-            {/* </div> */}
-            {user && user.phone_number_1 ? (
-                <>
+                    {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
                     <Form.Item
-                        label={t("Another Phone")}
-                        name="phone_number_1"
+                        label={`${t("Phone")}*`}
+                        name="phone_number"
                         rules={[
+                            {
+                                required: true,
+                                message: (t('Please enter a phone number')),
+                            },
                             {
                                 pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
                                 message: (t('Invalid phone number format')),
@@ -520,56 +531,91 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                             placeholder="+33 1 23 45 67 89"
                         />
                     </Form.Item>
-                </>
-            ) :
-                null}
-            {additionalPhones.map((phone, index) => (
-                <Form.Item
-                    key={index}
-                    label={t(`Another Phone`)}
-                    name={`phone_number_${index + 1}`}
-                    rules={[
-                        {
-                            pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
-                            message: (t('Invalid phone number format')),
-                        },
-                    ]}
-                >
-                    <InputMask
-                        style={{
-                            width: "97%",
-                            height: "30px",
-                            borderRadius: "5px",
-                            border: "1px solid #d9d9d9",
-                            paddingLeft: "8px",
-                            color: "black",
-                            transition: "border-color 0.3s",
-                        }}
-                        mask="+33 9 99 99 99 99"
-                        maskChar=""
-                        placeholder="+33 9 99 99 99 99"
+                    <Form.Item
+                        label={t("Phone Type")}
+                        name="phone_number_type"
                     >
-                    </InputMask>
-                </Form.Item>
-            ))}
-            {
-                user && !user.phone_number_1 && additionalPhones.length < 1 && (
-                    <>
-                        <Form.Item>
-                            <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>
-                                {t("Phone")}
-                            </Button>
+                        <Radio.Group>
+                            <Radio name='phone_number_professional' value="PROFESSIONNEL">{t("Professionnel")}</Radio>
+                            <Radio name='phone_number_personal' value="PERSONAL">{t("Personal")}</Radio>
+                        </Radio.Group>
+                    </Form.Item>
+                    {/* </div> */}
+                    {user && user.phone_number_1 ? (
+                        <>
+                            <Form.Item
+                                label={t("Another Phone")}
+                                name="phone_number_1"
+                                rules={[
+                                    {
+                                        pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                        message: (t('Invalid phone number format')),
+                                    },
+                                ]}
+                            >
+                                <InputMask
+                                    style={{ width: "97%", height: "30px", borderRadius: "5px", border: "1px solid #d9d9d9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s", }}
+                                    mask="+33 9 99 99 99 99"
+                                    maskChar=""
+                                    placeholder="+33 1 23 45 67 89"
+                                />
+                            </Form.Item>
+                        </>
+                    ) :
+                        null}
+                    {additionalPhones.map((phone, index) => (
+                        <Form.Item
+                            key={index}
+                            label={t(`Another Phone`)}
+                            name={`phone_number_${index + 1}`}
+                            rules={[
+                                {
+                                    pattern: /\+\d{2} \d{1,2} \d{2} \d{2} \d{2} \d{2}/,
+                                    message: (t('Invalid phone number format')),
+                                },
+                            ]}
+                        >
+                            <InputMask
+                                style={{
+                                    width: "85%",
+                                    height: "30px",
+                                    borderRadius: "5px",
+                                    border: "1px solid #d9d9d9",
+                                    paddingLeft: "8px",
+                                    color: "black",
+                                    transition: "border-color 0.3s",
+                                }}
+                                mask="+33 9 99 99 99 99"
+                                maskChar=""
+                                placeholder="+33 9 99 99 99 99"
+                            >
+                            </InputMask>
+                            <Button
+                                    style={{ marginLeft: "6px" }}
+                                    icon={<DeleteOutlined style={{ color: 'red' }} />}
+                                    type="text"
+                                    onClick={() => handleRemovePhone(index)}
+                                />
                         </Form.Item>
-                    </>
-                )
-            }
-            <Form.Item
-                label={t("Biography")}
-                name="biography"
-            >
-                <Input />
-            </Form.Item>
-        </Form>
+                    ))}
+                    {
+                        user && !user.phone_number_1 && additionalPhones.length < 1 && (
+                            <>
+                                <Form.Item>
+                                    <Button type="dashed" onClick={handleAddPhone} icon={<PlusOutlined />}>
+                                        {t("Phone")}
+                                    </Button>
+                                </Form.Item>
+                            </>
+                        )
+                    }
+                    <Form.Item
+                        label={t("Biography")}
+                        name="biography"
+                    >
+                        <Input />
+                    </Form.Item>
+                </Form>
             </div >
         </Modal >
     );
