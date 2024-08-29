@@ -387,7 +387,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         <>
 
                             <Form.Item
-                                label={t(`Site internet type ${index + 1}`)}
+                                label={`${t("Site internet type")} ${index + 1}`}
                                 name={`other_link_media_${index + 1}`}
                             >
                                 <Input placeholder={`Siteweb ${index + 1}`} />
