@@ -7,12 +7,25 @@
 
 .leads-header {
     display: flex;
-    justify-content: space-between;
-    flex: 100%;
+    padding-left: 16px;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;
     height: 70px;
     background-color: #100739;
     position: sticky;
     top: 0;
+    
+    .sidebar-toggler{
+        padding: 6px 16px 6px 4px;
+        margin-right: 10px;
+        cursor: pointer;
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        background-color: transparent;
+        border-right: 1px solid rgba(#f0f2f5, 0.3);
+      }
     .language-translate-btn{
         padding: 18px;
     }
@@ -22,11 +35,11 @@
     overflow: hidden;
     /* Hide overflow from the content beneath the header */
 }
+.scrollable-wrapper{
+    height: 100%;
+}
 
 .table-container {
-    overflow-x: auto;
-    max-height: calc(100vh - 70px);
-
     /* Adjust max-height based on fixed header height */
     /* Customizing scrollbar */
     &::-webkit-scrollbar {
@@ -50,6 +63,7 @@
     }
 
     .table {
+        min-width: 800px;
         width: 100%;
         border-collapse: collapse;
         background-color: #ffffff;

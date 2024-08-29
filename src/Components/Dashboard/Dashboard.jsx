@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DeleteOutlined, EditOutlined, EyeOutlined, DownOutlined, DownloadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, MenuOutlined, MenuFoldOutlined, DownloadOutlined } from '@ant-design/icons';
 import { message, Spin, Button, Modal, Avatar, Form, Input, Empty, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './Dashboard.scss';
@@ -18,9 +18,9 @@ import QRCodeModal from "../Common/QRCodeModals";
 
 function Dashboard() {
   const { t, i18n } = useTranslation('translation');
-
   const [form] = Form.useForm();
   const navigate = useNavigate();
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true');
   const [userType, setUserType] = useState("");
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
@@ -199,9 +199,12 @@ function Dashboard() {
   // );
   return (
     <div className="dashboard">
-      <Sidebar />
+      <Sidebar isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} />
       <div className="content">
         <div className='content-header'>
+          <button className="sidebar-toggler" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+            {isSidebarCollapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
+          </button>
           {userType === "SuperAdmin" ? (
             <>
               {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
@@ -240,129 +243,129 @@ function Dashboard() {
           )
           }
         </div>
-        {/* <div className="scrollable-table "> */}
-        <table className="table">
-          <thead>
-            {userType === "SuperAdmin" ? (
-              <tr>
-                <th>{t('Company Name')}</th>
-                <th>{t('Email')}</th>
-                <th>{t('Action')}</th>
-              </tr>
-            ) : (
-              <tr>
-                <th>{t('User Name')}</th>
-                <th>{t('Email')}</th>
-                <th>{t('Role')}</th>
-                <th>{t('Action')}</th>
-              </tr>
-            )}
-          </thead>
-          {
-            loading ? (
-              <>
-                <tbody>
-                  <tr>
-                    <td colSpan="4"> <Spin /></td></tr>
-                </tbody>
-              </>
-            ) : (
-              <>
-                {
-                  userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
-                    <>
-                      <tbody>
-                        {companiesData.length ? (
-                          <> {
-                            companiesData.map((company, key) => (
-                              <tr key={key}>
-                                <td>{`${company.name?.slice(0, 35)}${company.name?.length > 35 ? '...' : ''}`}</td>
-                                <td>{`${company.email?.slice(0, 35)}${company.email?.length > 35 ? '...' : ''}`}</td>
+        <div className="scrollable-wrapper">
+          <table className="table">
+            <thead>
+              {userType === "SuperAdmin" ? (
+                <tr>
+                  <th>{t('Company Name')}</th>
+                  <th>{t('Email')}</th>
+                  <th>{t('Action')}</th>
+                </tr>
+              ) : (
+                <tr>
+                  <th>{t('User Name')}</th>
+                  <th>{t('Email')}</th>
+                  <th>{t('Role')}</th>
+                  <th>{t('Action')}</th>
+                </tr>
+              )}
+            </thead>
+            {
+              loading ? (
+                <>
+                  <tbody>
+                    <tr>
+                      <td colSpan="4"> <Spin /></td></tr>
+                  </tbody>
+                </>
+              ) : (
+                <>
+                  {
+                    userType === "SuperAdmin" && companiesData && companiesData.length > 0 ? (
+                      <>
+                        <tbody>
+                          {companiesData.length ? (
+                            <> {
+                              companiesData.map((company, key) => (
+                                <tr key={key}>
+                                  <td>{`${company.name?.slice(0, 35)}${company.name?.length > 35 ? '...' : ''}`}</td>
+                                  <td>{`${company.email?.slice(0, 35)}${company.email?.length > 35 ? '...' : ''}`}</td>
 
-                                <td className='Actions-btns'>
-                                  <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
-                                  <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
-                                  <button
-                                    className="download-button"
-                                    onClick={() => openUpdateCompanyModal(company)} // Pass company info here
-                                  >
-                                    <EditOutlined />
-                                  </button>
-                                </td>
-                              </tr>
-                            ))}
-                          </>
-                        ) : (
-                          <>
-                            <td colSpan="4">
-                              <Empty description={t('No Company found')} />
-                            </td>
-                          </>
-                        )}
-                      </tbody>
-                    </>
-                  ) : (
-                    <>
-                      <tbody>
-                        {userData && userData.length > 0 ? (
-                          userData.map((user, key) => (
-                            <tr key={key}>
-                              <td>{`${user.first_name?.slice(0, 25)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 15 ? '...' : ''}`}</td>
-                              <td>{`${user.email?.slice(0, 25)}${user.email?.length > 25 ? '...' : ''}`}</td>
-                              <td>
-                                {user.job_title
-                                  ? (user.job_title.length > 25
-                                    ? `${user.job_title.slice(0, 25)}...`
-                                    : user.job_title
-                                  )
-                                  : ""
-                                }
+                                  <td className='Actions-btns'>
+                                    <button className='view-eye-btn' onClick={() => getCompanyUsers(company)}><EyeOutlined /></button>
+                                    <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
+                                    <button
+                                      className="download-button"
+                                      onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                    >
+                                      <EditOutlined />
+                                    </button>
+                                  </td>
+                                </tr>
+                              ))}
+                            </>
+                          ) : (
+                            <>
+                              <td colSpan="4">
+                                <Empty description={t('No Company found')} />
                               </td>
-                              <td className='Actions-btns'>
-                                {/* <a href={`/profile/${user.id}`}>
+                            </>
+                          )}
+                        </tbody>
+                      </>
+                    ) : (
+                      <>
+                        <tbody>
+                          {userData && userData.length > 0 ? (
+                            userData.map((user, key) => (
+                              <tr key={key}>
+                                <td>{`${user.first_name?.slice(0, 25)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 15 ? '...' : ''}`}</td>
+                                <td>{`${user.email?.slice(0, 25)}${user.email?.length > 25 ? '...' : ''}`}</td>
+                                <td>
+                                  {user.job_title
+                                    ? (user.job_title.length > 25
+                                      ? `${user.job_title.slice(0, 25)}...`
+                                      : user.job_title
+                                    )
+                                    : ""
+                                  }
+                                </td>
+                                <td className='Actions-btns'>
+                                  {/* <a href={`/profile/${user.id}`}>
                                   <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
                                 </a> */}
 
-                                <a
-                                  href={`/profile/${user.id}`}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    GetUserProfile(user.id);
-                                  }}
-                                  className="view-eye-btn"
-                                >
-                                  <EyeOutlined />
-                                </a>
-                                {/* <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
+                                  <a
+                                    href={`/profile/${user.id}`}
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      GetUserProfile(user.id);
+                                    }}
+                                    className="view-eye-btn"
+                                  >
+                                    <EyeOutlined />
+                                  </a>
+                                  {/* <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
                                   <EyeOutlined />
                                 </button> */}
-                                <button className="Edit-button" onClick={() => updateUser(user)}>
-                                  <EditOutlined />
-                                </button>
-                                {/* <button className="Delete-button" onClick={() => deleteUser(user.id)}>
+                                  <button className="Edit-button" onClick={() => updateUser(user)}>
+                                    <EditOutlined />
+                                  </button>
+                                  {/* <button className="Delete-button" onClick={() => deleteUser(user.id)}>
                                   <DeleteOutlined />
                                 </button> */}
-                                <button className="Edit-button" onClick={() => handleDownloadClick(user)}>
-                                  <DownloadOutlined />
-                                </button>
+                                  <button className="Edit-button" onClick={() => handleDownloadClick(user)}>
+                                    <DownloadOutlined />
+                                  </button>
 
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <td colSpan="4">
-                            <Empty description={t('No users found')} />
-                          </td>
-                        )}
-                      </tbody>
-                    </>
-                  )
-                }
-              </>
-            )
-          }
-        </table>
-        {/* </div> */}
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <td colSpan="4">
+                              <Empty description={t('No users found')} />
+                            </td>
+                          )}
+                        </tbody>
+                      </>
+                    )
+                  }
+                </>
+              )
+            }
+          </table>
+        </div>
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />

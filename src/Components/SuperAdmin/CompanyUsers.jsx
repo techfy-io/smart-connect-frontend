@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DeleteOutlined, UserOutlined, EyeOutlined, EditOutlined, DownOutlined, DownloadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined, EditOutlined, MenuOutlined, MenuFoldOutlined, DownloadOutlined } from '@ant-design/icons';
 import { Spin, Button, Modal, Avatar, message, Empty, Menu, Dropdown } from 'antd';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 // import CompanyLogo from '../../Inspect/CompanyLogo.png';
@@ -18,6 +18,7 @@ const CompanyUsers = () => {
     const location = useLocation();
     const { state } = location;
     const { company } = state || {};
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [companyUserList, setCompanyUserList] = useState([]);
     const [selectedUser, setSelectedUser] = useState(null);
@@ -106,9 +107,12 @@ const CompanyUsers = () => {
     // );
     return (
         <div className='companyusers-container'>
-            <Sidebar />
+            <Sidebar isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} />
             <div className='compnayusers-content'>
                 <div className='content-header'>
+                    <button className="sidebar-toggler" onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}>
+                        {isSidebarCollapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
+                    </button>
                     <div className='content-company-name'>
                         {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
                         {company.name ? company.name.length > 30 ? `${company.name.substring(0, 30)}...` : company.name : ""}
@@ -123,55 +127,57 @@ const CompanyUsers = () => {
                         </Dropdown> */}
                     </div>
                 </div>
-                <div className="table-container">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>{t("User Name")}</th>
-                                <th>{t("Email")}</th>
-                                <th>{t("Role")}</th>
-                                <th>{t("Action")}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {loading ? (
+                <div className='scrollable-wrapper'>
+                    <div className="table-container">
+                        <table className="table">
+                            <thead>
                                 <tr>
-                                    <td colSpan="4"><Spin /></td>
+                                    <th>{t("User Name")}</th>
+                                    <th>{t("Email")}</th>
+                                    <th>{t("Role")}</th>
+                                    <th>{t("Action")}</th>
                                 </tr>
-                            ) : companyUserList.length === 0 ? (
-                                <tr>
-                                    <td colSpan="4">
-                                        <Empty description={t("No users found")} />
-                                    </td>
-                                </tr>
-                            ) : (
-                                companyUserList.map((user, key) => (
-                                    <tr key={key}>
-                                        <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td>
-                                        <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
-                                        <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td>
-                                        <td className='Actions-btns'>
-                                            <a
-                                                href={`/profile/${user.id}`}
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    GetUserProfile(user.id);
-                                                }}
-                                                className="view-eye-btn"
-                                            >
-                                                <EyeOutlined />
-                                            </a>
-                                            <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
-                                            <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
-                                            <button className="download-button" onClick={() => handleDownloadClick(user)}>
-                                                <DownloadOutlined />
-                                            </button>
+                            </thead>
+                            <tbody>
+                                {loading ? (
+                                    <tr>
+                                        <td colSpan="4"><Spin /></td>
+                                    </tr>
+                                ) : companyUserList.length === 0 ? (
+                                    <tr>
+                                        <td colSpan="4">
+                                            <Empty description={t("No users found")} />
                                         </td>
                                     </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
+                                ) : (
+                                    companyUserList.map((user, key) => (
+                                        <tr key={key}>
+                                            <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td>
+                                            <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
+                                            <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td>
+                                            <td className='Actions-btns'>
+                                                <a
+                                                    href={`/profile/${user.id}`}
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        GetUserProfile(user.id);
+                                                    }}
+                                                    className="view-eye-btn"
+                                                >
+                                                    <EyeOutlined />
+                                                </a>
+                                                <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
+                                                <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                                                <button className="download-button" onClick={() => handleDownloadClick(user)}>
+                                                    <DownloadOutlined />
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
             <AddUser

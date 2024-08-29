@@ -2,12 +2,24 @@
 .sidebar-container {
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100svh;
     z-index: 1;
     background-color: #ffffff;
 
     &.collapsed .sider {
-        width:30px;
+        width: 0px;
+    }
+    
+    @media (max-width: 992px){
+        position: fixed;
+        left: 0;
+        transition: left 0.8s ease;
+        &.collapsed {
+            left: -100%;
+        }
+        &.collapsed .sider {
+            width: auto;
+        }
     }
 }
 
@@ -15,8 +27,23 @@
     width: 240px;
     background-color: #f0f2f5;
     transition: width 0.8s ease;
-    height: 100vh;
+    height: 100svh;
     overflow-x: hidden;
+
+    .close-btn{
+        position: absolute;
+        right: 8px;
+        top: 4px;
+        padding: 8px;
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        display: none;
+        @media (max-width: 992px){
+            display: block;
+        }
+    }
 
     .sider-content {
         padding: 35px;
@@ -30,11 +57,11 @@
     .menu {
         list-style: none;
         margin-top: 15%;
-        width: 150px;
         // font-family: 'Roboto', sans-serif;;
         .menu-item {
-            // width: 150px;
+            width: 100%;
             padding: 10px 0;
+            white-space: nowrap;
             cursor: pointer;
             font-size: 18px; /* Increased font size */
             transition: color 0.3s ease; /* Smooth color transition */
@@ -60,11 +87,10 @@
         border: none;
         border-radius: 5px;
         font-size: 20px; /* Increased font size */
-        transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+        transition: background-color 0.3s ease;
 
         &:hover {
             background-color: #FFA94D; /* Lighter shade on hover */
-            transform: scale(1.1); /* Slightly scale up on hover */
         }
     }
 }
