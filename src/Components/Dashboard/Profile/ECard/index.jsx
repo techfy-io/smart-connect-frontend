@@ -32,8 +32,8 @@ const ECard = (props) => {
                     {state ? text.slice(0, max) : text}{' '}{' '}
                     {(<span style={{ whiteSpace: 'nowrap' }} onClick={() => setShowmore(!showmore)}>
                         {state
-                            ? 'read more'
-                            : 'show less'
+                            ? t('read more')
+                            : t('show less')
                         }
                     </span>)}
                 </>
@@ -59,7 +59,7 @@ const ECard = (props) => {
                 {user?.bio_graphy ? (
                     <div className="about-wrapper">
                         <h5>{t('Biography')}</h5>
-                        <p>{sliceText(user?.bio_graphy, isMobile ? 75 : 96, true, showmore)}</p>
+                        <p>{sliceText(user?.bio_graphy, isMobile ? 70 : 90, true, showmore)}</p>
                     </div>
                 ) : null}
                 <div className="logo">

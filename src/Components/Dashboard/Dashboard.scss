@@ -1,28 +1,46 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito Sans");
+.scrollable-wrapper {
+  width: 100%;
+  height: auto;
+  overflow: auto;
+}
 
 .dashboard {
   display: flex;
+  width: 100%;
 
   .content {
     flex: 1;
+  width: 100%;
 
     .content-header {
       display: flex;
-      justify-content: space-between;
-      flex: 100%;
+      padding-left: 16px;
+      width: 100%;
+      box-sizing: border-box;
       height: 70px;
       background-color: #100739;
       position: sticky;
+      align-items: center;
       top: 0;
+      .sidebar-toggler{
+        padding: 6px 16px 6px 4px;
+        margin-right: 10px;
+        cursor: pointer;
+        color: #fff;
+        border: none;
+        font-size: 18px;
+        background-color: transparent;
+        border-right: 1px solid rgba(#f0f2f5, 0.3);
+      }
 
       .content-header-logo {
         height: 50px;
         width: 60px;
-        padding: 10px;
+        padding-left: 10px;
       }
 
       .content-company-name {
-        width: 30%;
         height: 50px;
         padding: 20px;
         font-size: 24px;
@@ -42,9 +60,8 @@
       }
 
       .AddUser-action {
-        width: 70%;
+        flex-grow: 1;
         text-align: right;
-        margin-right: 5px;
         padding: 18px;
 
         .Add-user-btn {
@@ -61,11 +78,6 @@
           }
         }
       }
-    }
-
-    .scrollable-table {
-      max-height: 100vh;
-      overflow-x: auto;
     }
 
     .table {
@@ -95,6 +107,7 @@
       }
 
       .Actions-btns {
+        min-width: 143px;
         .view-eye-btn,
         .Delete-button,
         .Edit-button,.download-button {
@@ -151,7 +164,7 @@
 
 .instagram-icon {
   background: linear-gradient(45deg, #515bd4, #8134af, #dd2a7b, #feda77, #f58529);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

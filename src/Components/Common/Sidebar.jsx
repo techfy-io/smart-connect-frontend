@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserOutlined, SettingOutlined, TeamOutlined, LeftOutlined, RightOutlined, LogoutOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { UserOutlined, SettingOutlined, TeamOutlined, CloseCircleOutlined, LogoutOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { message } from 'antd';
 import axios from 'axios';
 import './Sidebar.scss';
@@ -7,13 +7,22 @@ import Smartlogo from "../../Inspect/Smart-logo.png";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarCollapsed, setIsSidebarCollapsed }) => {
     const { t, i18n } = useTranslation('translation');
     const [usertype, setUserType] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(localStorage.getItem('sidebarCollapsed') === 'true');
     const [showLeadsMenu, setShowLeadsMenu] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 992px)');
+        setIsSidebarCollapsed(mediaQuery.matches);
+        const handleResize = (e) => setIsSidebarCollapsed(e.matches);
+        mediaQuery.addEventListener('change', handleResize);
+        return () => {
+            mediaQuery.removeEventListener('change', handleResize);
+        };
+    }, []);
 
     const toggleSidebar = () => {
         setIsSidebarCollapsed(!isSidebarCollapsed);
@@ -58,6 +67,9 @@ const Sidebar = () => {
     return (
         <div className={`sidebar-container ${isSidebarCollapsed ? 'collapsed' : ''}`}>
             <div className="sider">
+                <button className='close-btn' onClick={() => setIsSidebarCollapsed('false')}>
+                    <CloseCircleOutlined />
+                </button>
                 <div className='sider-content'>
                     <Link to='/'>
                         <img className='logo-image' src={Smartlogo} alt="" />
@@ -78,7 +90,7 @@ const Sidebar = () => {
                     ) : (
                         <ul className='menu'>
                             <li className='menu-item' onClick={() => navigate('/')}><UserOutlined />{t("Users")}</li>
-                            <Link to='/usersetting' style={{ textDecoration: "none", color:"black" }}>
+                            <Link to='/usersetting' style={{ textDecoration: "none", color: "black" }}>
                                 <li className='menu-item'><SettingOutlined style={{ color: "black" }} /> {t("Settings")}</li>
                             </Link>
                             {showLeadsMenu ? (
@@ -92,9 +104,9 @@ const Sidebar = () => {
                             <li className="menu-item" onClick={Logoutuser}><LogoutOutlined /> {t("Logout")}</li>
                         </ul>
                     )}
-                    <button className="collabs-button" onClick={toggleSidebar}>
+                    {/* <button className="collabs-button" onClick={toggleSidebar}>
                         {isSidebarCollapsed ? <RightOutlined /> : <LeftOutlined />}
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </div>

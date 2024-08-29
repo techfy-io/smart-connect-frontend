@@ -1,20 +1,37 @@
 .companyusers-container {
     display: flex;
-    // height: 100vh;
+    width: 100%;
+    min-height: 100svh;
 
 }
 
 .compnayusers-content {
     flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
 
     .content-header {
         display: flex;
-        justify-content: space-between;
-        flex: 100%;
+        padding-left: 16px;
+        box-sizing: border-box;
+        width: 100%;
+        align-items: center;
         height: 70px;
         background-color: #100739;
         position: sticky;
         top: 0;
+    
+        .sidebar-toggler{
+            padding: 6px 16px 6px 4px;
+            margin-right: 10px;
+            cursor: pointer;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            background-color: transparent;
+            border-right: 1px solid rgba(#f0f2f5, 0.3);
+          }
 
         .content-header-headings {
             padding: 20px;
@@ -22,9 +39,7 @@
         }
 
         .content-company-name {
-            width: 30%;
-            height: 50px;
-            padding: 20px;
+            padding-left: 14px;
             font-size: 24px;
             /* Increase font size for emphasis */
             font-weight: bold;
@@ -54,7 +69,7 @@
         }
 
         .company-actions {
-            width: 700px;
+            flex-grow: 1;
             text-align: right;
             margin-right: 5px;
             padding: 18px;
@@ -75,16 +90,16 @@
             color: white;
         }
     }
-
+    .scrollable-wrapper{
+        flex-grow: 1;
+    }
     .table-container {
-        // max-height: 400px; // Adjust the height as needed
-        overflow-y: auto;
-        scrollbar-width: thin;
-        scrollbar-color: #888 transparent;
+        flex-grow: 1;
 
         .table {
             width: 100%;
             border-collapse: collapse;
+            min-width: 700px;
 
             th,
             td {
@@ -104,7 +119,7 @@
             }
 
             .Actions-btns {
-
+                min-width: 160px;
                 .view-eye-btn,
                 .Delete-button,
                 .Edit-button,
