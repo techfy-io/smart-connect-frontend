@@ -56,7 +56,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         formData.append('other_link_media_5', other_link_media_5 || "");
         socialLinks.forEach((link, index) => {
             formData.append(`other_link_${index + 1}`, link || "");
-        }); 
+        });
         formData.append('company', currentCompany || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
@@ -329,10 +329,10 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                     {socialLinks.map((_, index) => (
                         <>
                             <Form.Item
-                                label={t("Site internet type")}
+                                label={t(`Site internet type${index + 1}`)}
                                 name={`other_link_media_${index + 1}`}
                             >
-                                <Input placeholder={`Website ${index + 1}`} />
+                                <Input placeholder={`Siteweb ${index + 1}`} />
                             </Form.Item>
                             <Form.Item key={index}
                                 label={
@@ -352,22 +352,25 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                     },
                                 ]}
                             >
-                                <Input
-                                    placeholder={t("Enter your site internet url")}
-                                    style={{ width: '90%' }}  
-                                    value={socialLinks[index]}
-                                    onChange={(e) => {
-                                        const newLinks = [...socialLinks];
-                                        newLinks[index] = e.target.value;
-                                        setSocialLinks(newLinks);
-                                    }}
-                                  
-                                />
-                                <Button
-                                style={{marginLeft:"6px"}}
-                                    icon={<DeleteOutlined style={{ color: 'red'}} />}
-                                    onClick={() => handleRemoveLink(index)}
-                                />
+                                <div style={{ display: "flex" }}>
+                                    <Input
+                                        placeholder={t("Enter your site internet url")}
+                                        style={{ width: '90%' }}
+                                        value={socialLinks[index]}
+                                        onChange={(e) => {
+                                            const newLinks = [...socialLinks];
+                                            newLinks[index] = e.target.value;
+                                            setSocialLinks(newLinks);
+                                        }}
+
+                                    />
+                                    <Button
+                                        style={{ marginLeft: "6px" }}
+                                        icon={<DeleteOutlined style={{ color: 'red' }} />}
+                                        onClick={() => handleRemoveLink(index)}
+                                    />
+                                </div>
+
 
                             </Form.Item>
                         </>
@@ -410,16 +413,19 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                                 },
                             ]}
                         >
-                            <Input
-                                suffix={
-                                    <Button
-                                        type="text"
-                                        icon={<DeleteOutlined />}
-                                        onClick={() => handleRemoveEmail(index)}
-                                    />
-                                }
-                                placeholder=""
-                            />
+                            <div style={{ display: "flex" }}>
+                                <Input
+                                    style={{ width: '90%' }}
+                                    placeholder=""
+                                />
+                                <Button
+                                    style={{ marginLeft: "6px" }}
+                                    icon={<DeleteOutlined style={{ color: 'red' }} />}
+                                    type="text"
+                                    onClick={() => handleRemoveEmail(index)}
+                                />
+                            </div>
+
                         </Form.Item>
                     ))}
                     {
@@ -481,21 +487,30 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                             label={t(`Another Phone`)}
                             name={`phone_number_${index + 1}`}
                         >
-                            <InputMask
-                                style={{
-                                    width: "95%",
-                                    height: "30px",
-                                    borderRadius: "5px",
-                                    border: "1px solid #d9d9d9",
-                                    paddingLeft: "8px",
-                                    color: "black",
-                                    transition: "border-color 0.3s",
-                                }}
-                                mask="+33 9 99 99 99 99"
-                                maskChar=""
-                                placeholder="+33 9 99 99 99 99"
-                            >
-                            </InputMask>
+                            <div style={{ display: "flex" }}>
+                                <InputMask
+                                    style={{
+                                        width: "95%",
+                                        height: "30px",
+                                        borderRadius: "5px",
+                                        border: "1px solid #d9d9d9",
+                                        paddingLeft: "8px",
+                                        color: "black",
+                                        transition: "border-color 0.3s",
+                                    }}
+                                    mask="+33 9 99 99 99 99"
+                                    maskChar=""
+                                    placeholder="+33 9 99 99 99 99"
+                                >
+                                </InputMask>
+                                <Button
+                                    style={{ marginLeft: "6px" }}
+                                    icon={<DeleteOutlined style={{ color: 'red' }} />}
+                                    type="text"
+                                    onClick={() => handleRemovePhone(index)}
+                                />
+                                
+                            </div>
 
                         </Form.Item>
                     ))}
