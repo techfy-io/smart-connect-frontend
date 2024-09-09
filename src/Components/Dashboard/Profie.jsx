@@ -396,7 +396,7 @@ const Profile = () => {
                         id="image"
                         ref={editorRef}
                         image={selectedImage ? URL.createObjectURL(selectedImage) : (coverImage || userData?.cover_image || coverpic)}
-                        crossOrigin='anonymous'
+                        // crossOrigin='anonymous'
                         style={{ width: "100%", height: "400px", margin: "0 auto", objectFit: "cover" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}

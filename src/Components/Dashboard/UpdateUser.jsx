@@ -140,7 +140,6 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         for (const prop in responseData) {
                             if (responseData.hasOwnProperty(prop)) {
                                 errorMessage = responseData[prop][0];
-                                // Exit the loop after finding the first error message
                                 break;
                             }
                         }
