@@ -13,6 +13,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
     const [scale, setScale] = useState(1);
     const [selectedImage, setSelectedImage] = useState(null);
     const [checkLoginUser, SetCheckLoginuser] = useState('');
+    const [uploadLoading, setUploadLoading] = useState(false);
 
     useEffect(() => {
         const loginathentication = localStorage.getItem('accessToken')
@@ -27,43 +28,39 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
         setEditingCover(true);
     };
 
-    const handleCoverSave = () => {
-        const canvas = editorRef.current?.getImage();
-        const editedCoverImage = canvas?.toDataURL();
+    const handleCoverSave = async () => {
+        if (!editorRef.current) return;
+        const canvas = editorRef?.current?.getImage();
+        try {
+            setUploadLoading(true);
+            const imageToSend = canvas?.toDataURL();
+            const res = await fetch(imageToSend);
+            const blob = await res.blob();
 
-        const imageToSend = editedCoverImage;
-        if (imageToSend) {
-            fetch(imageToSend)
-                .then(res => res.blob())
-                .then(blob => {
-                    const formData = new FormData();
-                    formData.append("cover_image", blob, "cover_image.png");
+            const formData = new FormData();
+            formData.append("cover_image", blob, "cover_image.png");
 
-                    axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/${user.id}/`, formData ? formData : selectedImage, {
-                        headers: {
-                            'Authorization': `Bearer ${checkLoginUser}`,
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
-                        .then(response => {
-                            // window.location.reload();
-                            fetchUserData();
-                            message.success(t("Image Update successfully"));
+            await axios.put(`${process.env.REACT_APP_BASE_API_URL}/user/image/${user.id}/`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${checkLoginUser}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
-                        })
-                        .catch(error => {
-                            message.error(t("Error saving image"));
-                        });
-                });
+            fetchUserData();
+        } catch (error) {
+            console.error("Error saving image:", error);
+        } finally {
+            // Clean up
+            setUploadLoading(false);
+            setEditingCover(false);
+            setSelectedImage(null);
         }
-
-        setEditingCover(false);
-        setSelectedImage(null);
     };
-
 
     const handleCoverCancel = () => {
         setEditingCover(false);
+        setSelectedImage(null);
     };
 
     const handleImageUpload = () => {
@@ -79,7 +76,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
         <>
             <div className="ecard-cover">
                 <img
-                    src={selectedImage ? URL.createObjectURL(selectedImage) : user?.cover_image || coverPhoto}
+                    src={user?.cover_image || coverPhoto}
                     alt="User cover photo"
                 />
                 <div className="buttons">
@@ -109,40 +106,31 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                     width={710}
                     footer={[
                         <>
-                            <Button type='primary' onClick={handleCoverCancel}>
+                            <Button onClick={handleCoverCancel}>
                                 {t("Cancel")}
                             </Button>
-                            <Button type='primary' onClick={handleCoverSave}>
+                            <Button type='primary' loading={uploadLoading} onClick={handleCoverSave}>
                                 {t("Save")}
                             </Button>
                         </>
                     ]}
                 >
-                    <AvatarEditor
-                        id="image"
-                        ref={editorRef}
-                        image={selectedImage ? URL.createObjectURL(selectedImage) : (user?.cover_image || coverPhoto)}
-                        style={{ width: "100%", height: "400px", margin: "0 auto", objectFit: "cover" }}
-                        border={50}
-                        color={[255, 255, 255, 0.6]}
-                        scale={scale}
-                    />
+                    <div className="cover-editor-wrapper">
+                        <AvatarEditor
+                            id="image"
+                            ref={editorRef}
+                            image={selectedImage ? URL?.createObjectURL(selectedImage) : user?.cover_image}
+                            style={{ margin: '0 auto', objectFit: 'cover' }}
+                            border={16}
+                            width={630}
+                            height={191}
+                            color={[0, 0, 0, 0.3]}
+                            scale={scale}
+                            crossOrigin="anonymous"
+                        />
+                    </div>
 
-                    <div style={{ display: 'flex' }}>
-                        <Button
-                            onClick={() => handleZoom(scale + 0.1)}
-                            icon={<ZoomInOutlined />}
-                            style={{ marginRight: '10px' }}>
-                            Zoom
-                        </Button>
-                        <Button
-                            disabled={scale <= 1}
-                            onClick={() => handleZoom(scale - 0.1)}
-                            icon={<ZoomOutOutlined />}
-                            style={{ marginRight: '10px' }}
-                        >
-                            {t("Zoom")}
-                        </Button>
+                    <div style={{ display: 'flex', gap: 8 }}>
                         <input
                             id="fileInput"
                             type="file"
@@ -151,8 +139,22 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                         />
                         <Button
                             onClick={handleImageUpload}
-                            style={{ marginRight: '5px' }}>
+                        >
                             <span style={{ color: "green" }} className={`fa fa-image icon`} />
+                            {t("Upload New")}
+                        </Button>
+                        <Button
+                            disabled={scale <= 1}
+                            onClick={() => handleZoom(scale - 0.1)}
+                            icon={<ZoomOutOutlined />}
+                        >
+                            {t("Zoom Out")}
+                        </Button>
+                        <Button
+                            onClick={() => handleZoom(scale + 0.1)}
+                            icon={<ZoomInOutlined />}
+                        >
+                            {t("Zoom In")}
                         </Button>
                     </div>
                 </Modal>
