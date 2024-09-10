@@ -234,9 +234,15 @@
     border-radius: 12px;
     overflow: hidden;
     width: 100%;
-    height: 223px;
+    height: auto;
     border: 1px solid #d9d9d9;
     margin-top: 24px;
     margin-bottom: 16px;
     background-color: #F7F7F7;
+    aspect-ratio: 662/223;
+    canvas{
+        width: 100% !important;
+        height: auto !important;
+        margin-inline: auto;
+    }
 }

@@ -120,7 +120,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                             id="image"
                             ref={editorRef}
                             image={selectedImage ? URL?.createObjectURL(selectedImage) : user?.cover_image}
-                            style={{ margin: '0 auto', objectFit: 'cover' }}
+                            style={{ objectFit: 'cover', }}
                             border={16}
                             width={630}
                             height={191}
@@ -130,7 +130,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                         />
                     </div>
 
-                    <div style={{ display: 'flex', gap: 8 }}>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                         <input
                             id="fileInput"
                             type="file"
