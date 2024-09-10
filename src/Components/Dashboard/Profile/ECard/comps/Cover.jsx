@@ -122,6 +122,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                         id="image"
                         ref={editorRef}
                         image={selectedImage ? URL.createObjectURL(selectedImage) : (user?.cover_image || coverPhoto)}
+                        // crossOrigin='anonymous'
                         style={{ width: "100%", height: "400px", margin: "0 auto", objectFit: "cover" }}
                         border={50}
                         color={[255, 255, 255, 0.6]}
