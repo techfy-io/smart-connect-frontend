@@ -80,14 +80,20 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                     alt="User cover photo"
                 />
                 <div className="buttons">
-                    <Tooltip title={t("Edit Cover Photo")}>
-                        <Button
-                            className="edit-btn"
-                            shape="circle"
-                            icon={<EditOutlined />}
-                            onClick={handleCoverEdit}
-                        />
-                    </Tooltip>
+                    {
+                        checkLoginUser &&
+                        (
+                            <Tooltip title={t("Edit Cover Photo")}>
+                            <Button
+                                className="edit-btn"
+                                shape="circle"
+                                icon={<EditOutlined />}
+                                onClick={handleCoverEdit}
+                            />
+                        </Tooltip> 
+                        )
+                    }
+                   
                     <Button
                         className="qr-btn"
                         shape="circle"
@@ -120,7 +126,7 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                             id="image"
                             ref={editorRef}
                             image={selectedImage ? URL?.createObjectURL(selectedImage) : user?.cover_image}
-                            style={{ margin: '0 auto', objectFit: 'cover' }}
+                            style={{ objectFit: 'cover', }}
                             border={16}
                             width={630}
                             height={191}
@@ -130,24 +136,20 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                         />
                     </div>
 
-                    <div
-                        // style={{ display: 'flex', gap: 8 }} 
-                        className='cover-editor-action-btns'>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                         <input
                             id="fileInput"
                             type="file"
                             style={{ display: 'none' }}
                             onChange={handleFileChange}
                         />
-                        <Button className='edit-btns'
+                        <Button
                             onClick={handleImageUpload}
                         >
                             <span style={{ color: "green" }} className={`fa fa-image icon`} />
                             {t("Upload New")}
                         </Button>
-                        <div className='zoom-action-btns'>
                         <Button
-                            className='zoom-button'
                             disabled={scale <= 1}
                             onClick={() => handleZoom(scale - 0.1)}
                             icon={<ZoomOutOutlined />}
@@ -155,14 +157,11 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                             {t("Zoom Out")}
                         </Button>
                         <Button
-                            className='zoom-button'
                             onClick={() => handleZoom(scale + 0.1)}
                             icon={<ZoomInOutlined />}
                         >
                             {t("Zoom In")}
                         </Button>
-                        </div>
-                       
                     </div>
                 </Modal>
             )}
