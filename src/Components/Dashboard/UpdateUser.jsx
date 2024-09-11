@@ -25,6 +25,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
             email_1: user?.email_1,
             phone_number: user?.phone_number,
             company: user?.company,
+            subcompany: user?.sub_company?.trim() ? user.sub_company : user?.company            ,
             job_title: user?.job_title,
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
@@ -67,7 +68,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
     const onFinish = (values) => {
         setLoading(true);
         const { firstname, lastname, email, email_1, phone_number_1, phone_number_type,
-            phone_number, company, job_title, zip_code, postal_code, country, city,
+            phone_number, company, subcompany, job_title, zip_code, postal_code, country, city,
             facebook_url, instagram_url, linkedin_url, profile_picture, cover_image, biography,
             other_link_media_1, other_link_media_2, other_link_media_3, other_link_media_4, other_link_media_5,
             other_link_1, other_link_2, other_link_3, other_link_4, other_link_5,
@@ -80,6 +81,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_type', phone_number_type || "");
         formData.append('company', Companyid || "");
+        formData.append('sub_company', subcompany || "");
         formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code || "");
         formData.append('postal_code', postal_code || "");
@@ -302,12 +304,25 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Form.Item
-                            label={t("Company Name")}
-                            name="company"
-                        >
-                            <Input disabled />
-                        </Form.Item>
+                        {Companyid && Companyid == 307 ? (
+                            <>
+                                <Form.Item
+                                    label={t("Company Name")}
+                                    name="subcompany"
+                                >
+                                    <Input />
+                                </Form.Item>
+                            </>
+                        ) : (
+                            <>
+                                <Form.Item
+                                    label={t("Company Name")}
+                                    name="company"
+                                >
+                                    <Input disabled />
+                                </Form.Item>
+                            </>
+                        )}
                         <Form.Item
                             label={t("Job title")}
                             name="job_title"

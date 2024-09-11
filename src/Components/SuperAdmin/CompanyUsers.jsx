@@ -181,7 +181,7 @@ const CompanyUsers = () => {
                 </div>
             </div>
             <AddUser
-                CompaniesDate={company.id}
+                CompaniesData={company}
                 isModalVisible={isModalVisible}
                 modalHideShow={modalHideShow}
             />
