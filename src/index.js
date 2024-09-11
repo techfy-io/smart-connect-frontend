@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
@@ -150,6 +150,9 @@ i18n.init({
         "Back now?": "Back now?",
         "read more": "read more",
         "show less": "show less",
+        "Zoom In": "Zoom In",
+        "Zoom Out": "Zoom Out",
+        "Upload New": "Upload New",
       }
     },
     fr: {
@@ -296,6 +299,9 @@ i18n.init({
         "English": "Anglais",
         "read more": "En savoir plus",
         "show less": "montrer moins",
+        "Zoom In": "Zoomer",
+        "Zoom Out": "Zoom arrière",
+        "Upload New": "Télécharger nouveau",
       }
     }
   }
