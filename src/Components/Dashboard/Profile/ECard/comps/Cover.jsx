@@ -80,14 +80,20 @@ const Cover = ({ user, fetchUserData, handleOpenQRCode }) => {
                     alt="User cover photo"
                 />
                 <div className="buttons">
-                    <Tooltip title={t("Edit Cover Photo")}>
-                        <Button
-                            className="edit-btn"
-                            shape="circle"
-                            icon={<EditOutlined />}
-                            onClick={handleCoverEdit}
-                        />
-                    </Tooltip>
+                    {
+                        checkLoginUser &&
+                        (
+                            <Tooltip title={t("Edit Cover Photo")}>
+                            <Button
+                                className="edit-btn"
+                                shape="circle"
+                                icon={<EditOutlined />}
+                                onClick={handleCoverEdit}
+                            />
+                        </Tooltip> 
+                        )
+                    }
+                   
                     <Button
                         className="qr-btn"
                         shape="circle"
