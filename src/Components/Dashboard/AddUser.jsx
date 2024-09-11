@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
 import { useTranslation } from "react-i18next";
 
-const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
+const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
     const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
@@ -57,7 +57,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
         socialLinks.forEach((link, index) => {
             formData.append(`other_link_${index + 1}`, link || "");
         });
-        formData.append('company', currentCompany || "");
+        formData.append('company', currentCompany?.id || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
 
@@ -147,8 +147,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
     };
 
     useEffect(() => {
-        setCurrentCompany(CompaniesDate)
-    }, [CompaniesDate])
+        setCurrentCompany(CompaniesData)
+    }, [CompaniesData])
     return (
         <Modal
             title={t("Add User")}
@@ -250,7 +250,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesDate }) => {
                         //     }
                         // ]}
                         >
-                            <Input defaultValue={CompaniesDate} disabled />
+                            <Input defaultValue={currentCompany?.name} disabled />
                         </Form.Item>
                         <Form.Item
                             label={t("Job title")}

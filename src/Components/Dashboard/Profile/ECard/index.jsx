@@ -52,7 +52,7 @@ const ECard = (props) => {
                 <div className="profile-name">
                     <h3>{sliceText(`${user?.first_name} ${user?.last_name || ''}`, 100)}</h3>
                     {user?.job_title && (<small>{sliceText(user?.job_title, 150)}</small>)}
-                    <p>{sliceText(user?.company, 150)}</p>
+                    <p>{sliceText(user?.sub_company && user?.sub_company !=="" ?user?.sub_company : user?.company, 150)}</p>
                 </div>
                 <ProfileActions {...props} />
                 <Social {...props} />
