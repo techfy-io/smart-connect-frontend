@@ -22,25 +22,30 @@ const ECard = (props) => {
         };
     }, []);
 
-    const sliceText = (text, max, showbtn, state) => {
+    const sliceText = (text, max, showbtn, state, setShowmore) => {
+        if (!text) return ''; 
+    
+        console.log(text, "text");
+    
         if (text.length <= max) {
-            return text
+            return text; 
         }
+    
         if (showbtn) {
             return (
                 <>
-                    {state ? text.slice(0, max) : text}{' '}{' '}
-                    {(<span style={{ whiteSpace: 'nowrap' }} onClick={() => setShowmore(!showmore)}>
-                        {state
-                            ? t('read more')
-                            : t('show less')
-                        }
-                    </span>)}
+                    {state ? text.slice(0, max) : text}{' '}
+                    <span style={{ whiteSpace: 'nowrap', cursor: 'pointer' }} onClick={() => setShowmore(!state)}>
+                        {state ? 'read more' : 'show less'}
+                    </span>
                 </>
-            )
+            );
         }
+    
+        // If no show button, just return truncated text with ellipsis
         return text.slice(0, max) + '...';
-    }
+    };
+    
 
     return (
         <div className="ecard-wrapper">
