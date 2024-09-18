@@ -1,0 +1,35 @@
+.profile-actions {
+    display: flex;
+    align-items: center;
+
+    .save-button, .exchange-button {
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        margin: 0 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+
+    .save-button {
+        // Add specific styles for save button
+        &.save-button {
+            // Custom background color for the save button
+        }
+    }
+
+    .exchange-button {
+        // Add specific styles for exchange button
+        &.exchange-button {
+            // Custom background color for the exchange button
+        }
+    }
+}

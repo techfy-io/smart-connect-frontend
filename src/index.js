@@ -153,6 +153,9 @@ i18n.init({
         "Zoom In": "Zoom In",
         "Zoom Out": "Zoom Out",
         "Upload New": "Upload New",
+        "Save Button Theme": "Save Button Theme",
+        "Exchange Button Theme": "Exchange Button Theme",
+        "Background Theme": "Background Theme"
       }
     },
     fr: {
@@ -302,6 +305,9 @@ i18n.init({
         "Zoom In": "Zoomer",
         "Zoom Out": "Zoom arrière",
         "Upload New": "Télécharger nouveau",
+        "Save Button Theme": "Bouton Enregistrer Thème",
+        "Exchange Button Theme": "Thème du bouton d'échange",
+        "Background Theme": "Thème d'arrière-plan"
       }
     }
   }

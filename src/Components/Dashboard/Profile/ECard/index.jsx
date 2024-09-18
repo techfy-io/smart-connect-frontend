@@ -6,6 +6,7 @@ import logo from '../../../../Inspect/icons/logo-smartconnect.png'
 import './ecard.scss';
 import Social from './comps/Social';
 import { t } from 'i18next';
+import './index.scss'
 
 const ECard = (props) => {
     const { user } = props
@@ -50,18 +51,37 @@ const ECard = (props) => {
                     <img src={user?.profile_picture || placholder} alt="profile" />
                 </div>
                 <div className="profile-name">
-                    <h3>{sliceText(`${user?.first_name} ${user?.last_name || ''}`, 100)}</h3>
-                    {user?.job_title && (<small>{sliceText(user?.job_title, 150)}</small>)}
+                    <h3>{
+                        (user?.first_name || user?.last_name) && (
+                            <span 
+                                dangerouslySetInnerHTML={{
+                                    __html: sliceText(`${user?.first_name || ''} ${user?.last_name || ''}`, 100)
+                                }} 
+                            />
+                        )
+                    }</h3>
+                        {
+                            user?.job_title && (
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: sliceText(user.job_title, 150)
+                                    }}
+                                />
+                            )
+                        }
+
                     <p>{sliceText(user?.sub_company && user?.sub_company !=="" ?user?.sub_company : user?.company, 150)}</p>
                 </div>
                 <ProfileActions {...props} />
                 <Social {...props} />
                 {user?.bio_graphy ? (
-                    <div className="about-wrapper">
-                        <h5>{t('Biography')}</h5>
-                        <p>{sliceText(user?.bio_graphy, isMobile ? 70 : 90, true, showmore)}</p>
-                    </div>
+                <div>
+                    <h5 className="bio-heading">Biographie</h5>
+                    <p className="bio-para" dangerouslySetInnerHTML={{ __html: user?.bio_graphy }}></p>
+                </div>
                 ) : null}
+
+
                 <div className="logo">
                     <img src={logo} alt="Smart Connect logo" />
                 </div>

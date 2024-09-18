@@ -1,10 +1,42 @@
-import React, { useState } from 'react'
+
+
+import React, { useState, useEffect} from 'react'
+import { useParams } from 'react-router-dom';
+import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useTranslation } from "react-i18next";
-import { message, Button, Flex } from 'antd';
+import { message, Button, Flex, Spin } from 'antd';
+import './ProfileActions.scss'
 const ProfileActions = ({ user, handleOpenExchangeModal }) => {
     const { t } = useTranslation('translation');
     const [loading, setLoading] = useState(false);
+    const { userId } = useParams();
+    const [pageloading, setpageloading] = useState(false);
+    const [userData, setUserData] = useState(null);
+    const [saveButtonColor, setSaveButtonColor] = useState(''); // Default color
+    const [exchangeButtonColor, setExchangeButtonColor] = useState('');
+
+    useEffect(() => {
+        if (userId) {
+            fetchUserData();
+        }
+    }, []);
+
+
+    const fetchUserData = async () => {
+        try {
+            setpageloading(true);
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
+            setUserData(response.data);
+            setSaveButtonColor(response.data.save_button_value || '#F47122');
+            setExchangeButtonColor(response.data.exchange_button_value || '#616569');
+            console.log(response.data);
+            setpageloading(false);
+        } catch (error) {
+            console.error("Failed to fetch user data:", error);
+            setpageloading(false);
+        }
+    };
 
     const downloadUserData = async (userData) => {
         if (!userData) return;
@@ -26,6 +58,7 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
             message.success("Download Successful");
+            
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 console.error("Photo URL not found:", error);
@@ -40,29 +73,32 @@ const ProfileActions = ({ user, handleOpenExchangeModal }) => {
     };
 
     return (
-        <Flex align="center" className="profile-actions">
-            <Button
-                type='primary'
-                size='large'
-                className="left"
-                icon={<i class="fa-solid fa-address-card"></i>}
-                loading={loading}
-                onClick={() => downloadUserData(user)}
-                title={t('Save Contact')}
-            >
-                {t('Save Contact')}
-            </Button>
-            <Button
-                type='primary'
-                size='large'
-                icon={<i class="fa-solid fa-arrows-rotate"></i>}
-                className="right"
-                onClick={handleOpenExchangeModal}
-                title={t('Exchange')}
-            >
-                {t('Exchange')}
-            </Button>
-        </Flex>
+        <div className="profile-actions ant-flex ant-flex-align-center">
+        <Button
+            className="left"
+            type="primary"
+            size="large"
+            icon={loading ? <Spin indicator={<SyncOutlined spin />} /> : <SaveOutlined />}
+            onClick={() => downloadUserData(userData)}
+            disabled={loading}
+            style={{ backgroundColor: saveButtonColor }}
+            title={t('Save Contact')}
+        >
+            {t('Save Contact')}
+        </Button>
+        <Button
+            className="right"
+            type="primary"
+            size="large"
+            icon={<SyncOutlined />}
+            onClick={handleOpenExchangeModal}
+            style={{ backgroundColor: exchangeButtonColor }}
+            title={t('Exchange')}
+        >
+            {t('Exchange')}
+        </Button>
+    </div>
     )
 }
 export default ProfileActions
+
