@@ -131,9 +131,9 @@ const Leads = () => {
         }
     };
 
-    const handleCheckboxChange = (checkedValues) => {
-        setCheckboxOptions(checkedValues);
-    };
+    // const handleCheckboxChange = (checkedValues) => {
+    //     setCheckboxOptions(checkedValues);
+    // };
     // const changeLanguage = (lng) => {
     //     i18n.changeLanguage(lng);
     //   };

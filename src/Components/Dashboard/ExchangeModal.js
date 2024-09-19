@@ -221,7 +221,7 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading, userData }) => {
             extra_fields: formattedExtraFields,
         };
         try {
-            const response = await axios.post(`http://localhost:8000/api/exchange/`, requestData);
+            const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, requestData);
             console.log('Response:', response.data);
             onClose(); 
             form.resetFields()
