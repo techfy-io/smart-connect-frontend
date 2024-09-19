@@ -1,0 +1,16 @@
+
+.social-icons {
+    display: flex;
+    gap: 50px; /* Increased spacing between icons */
+    justify-content: center; /* Centers the icons horizontally */
+    flex-wrap: wrap; /* Allows wrapping if the icons overflow */
+}
+
+.icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ant-card-bordered {
+    margin-top: 20px;
+}
