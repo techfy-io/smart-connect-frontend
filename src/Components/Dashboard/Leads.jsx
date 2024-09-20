@@ -16,6 +16,7 @@ const Leads = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [updating, setUpdating] = useState(false);
+    const [checkboxOptions, setCheckboxOptions] = useState({}); 
 
     useEffect(() => {
         getExchangeUser();
@@ -365,6 +366,18 @@ const Leads = () => {
                             placeholder="+33 1 23 45 67 89"
                         />
                     </Form.Item>
+                     {/* Dynamic Checkboxes */}
+                        {checkboxOptions && (
+                        <Form.Item
+                            name="checkboxes"
+                            label={t('Checkboxes')}
+                        >
+                            <Checkbox.Group
+                                options={checkboxOptions}
+                                onChange={handleCheckboxChange}
+                            />
+                        </Form.Item>
+                    )}
                 </Form>
             </Modal>
         </div>
