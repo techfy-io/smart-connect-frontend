@@ -135,47 +135,112 @@ const CompanyUsers = () => {
                                     <th>{t("User Name")}</th>
                                     <th>{t("Email")}</th>
                                     <th>{t("Role")}</th>
+                                    <th>{t("Text Field")}</th> {/* New header for Text Field */}
+                            <th>{t("Checkbox Group")}</th> {/* New header for Checkbox Group */}
                                     <th>{t("Action")}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {loading ? (
-                                    <tr>
-                                        <td colSpan="4"><Spin /></td>
-                                    </tr>
-                                ) : companyUserList.length === 0 ? (
-                                    <tr>
-                                        <td colSpan="4">
-                                            <Empty description={t("No users found")} />
-                                        </td>
-                                    </tr>
-                                ) : (
-                                    companyUserList.map((user, key) => (
-                                        <tr key={key}>
-                                            <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td>
-                                            <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
-                                            <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td>
-                                            <td className='Actions-btns'>
-                                                <a
-                                                    href={`/profile/${user.id}`}
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        GetUserProfile(user.id);
-                                                    }}
-                                                    className="view-eye-btn"
-                                                >
-                                                    <EyeOutlined />
-                                                </a>
-                                                <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
-                                                <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
-                                                <button className="download-button" onClick={() => handleDownloadClick(user)}>
-                                                    <DownloadOutlined />
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))
-                                )}
-                            </tbody>
+                    {loading ? (
+                        <tr>
+                            <td colSpan="6"><Spin /></td>
+                        </tr>
+                    ) : companyUserList.length === 0 ? (
+                        <tr>
+                            <td colSpan="6">
+                                <Empty description={t("No users found")} />
+                            </td>
+                        </tr>
+                    ) : (
+                        companyUserList.map((user, key) => {
+                            const formData = JSON.parse(user.form_builder_data || "[]");
+                            const textField = formData.filter(field => field.type === "text");
+                            const checkboxGroup = formData.filter(field => field.type === "checkbox-group");
+
+                            return (    
+                <tr key={key}>
+                    <td>
+
+                    <div dangerouslySetInnerHTML={{ __html: user.first_name }} />
+                    <div dangerouslySetInnerHTML={{ __html: user.last_name }} />
+                    </td>
+                    {/* <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td> */}
+                    <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? '...' : ''}`}</td>
+                    {/* <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td> */}
+                    <td>
+                        {user?.job_title && (
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: user.job_title
+                                }}
+                            />
+                        )}
+                    </td>
+                {/* Display Text Field with Label on Top */}
+                <td>
+                    {textField.length > 0 ? (
+                    <div>
+                        {textField.map((textField, index) => (
+                        <div key={index}>
+                            <div style={{ fontWeight: 'bold', marginBottom: '2px' }}>
+                            <span dangerouslySetInnerHTML={{ __html: textField.label }} />
+                            </div>
+                            <div style={{ marginBottom:'8px'}}>{textField.value}</div>
+                        </div>
+                        ))}
+                    </div>
+                    ) : (
+                    '-'
+                    )}
+                </td>
+
+                    
+                    {/* Display Checkbox Group with Label on Top and Selected State */}
+                   
+                    <td style={{ textAlign: 'center' }}>
+                        {checkboxGroup.length > 0 ? (
+                        <div>
+                            {checkboxGroup.map((checkboxGroup, index) => (
+                            <div key={index} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '5px'}}>
+                                <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+                                <span dangerouslySetInnerHTML={{ __html: checkboxGroup.label }} />
+                                </div>
+                                {checkboxGroup.values.map((item, idx) => (
+                                <div key={idx} style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}>
+                                    <input
+                                    type="checkbox"
+                                    checked={item.selected}
+                                    readOnly
+                                    style={{ marginRight: '10px' }}
+                                    />
+                                    <span style={{ display: 'inline-block', width: '100px', textAlign: 'left' }}>
+                                    {item.label}
+                                    </span>
+                                </div>
+                                ))}
+                            </div>
+                            ))}
+                        </div>
+                        ) : (
+                        '-'
+                        )}
+                    </td>
+
+
+
+                    <td className='Actions-btns'>
+                        <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
+                        <button className="Delete-button" onClick={() => deleteUser(user.id)}><DeleteOutlined /></button>
+                        <button className="Edit-button" onClick={() => updateUser(user)}><EditOutlined /></button>
+                        <button className="download-button" onClick={() => handleDownloadClick(user)}>
+                            <DownloadOutlined />
+                        </button>
+                    </td>
+                </tr>
+            );
+        })
+    )}
+</tbody>
                         </table>
                     </div>
                 </div>
