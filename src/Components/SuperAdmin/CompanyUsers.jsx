@@ -52,6 +52,7 @@ const CompanyUsers = () => {
             }
         })
             .then((response) => {
+                console.log("Fetched company users:", response.data); 
                 setCompanyUserList(response.data.results);
             })
             .catch((error) => {
@@ -136,7 +137,7 @@ const CompanyUsers = () => {
                                     <th>{t("Email")}</th>
                                     <th>{t("Role")}</th>
                                     <th>{t("Text Field")}</th> {/* New header for Text Field */}
-                            <th>{t("Checkbox Group")}</th> {/* New header for Checkbox Group */}
+                                    <th>{t("Checkbox Group")}</th> {/* New header for Checkbox Group */}
                                     <th>{t("Action")}</th>
                                 </tr>
                             </thead>
@@ -153,7 +154,15 @@ const CompanyUsers = () => {
                         </tr>
                     ) : (
                         companyUserList.map((user, key) => {
-                            const formData = JSON.parse(user.form_builder_data || "[]");
+                            let formData = [];
+
+    // Try to parse the form_builder_data for each user
+                                try {
+                                    formData = JSON.parse(user.form_builder_data || "[]");
+                                } catch (error) {
+                                    console.error("Error parsing JSON:", error);
+                                    console.log("Raw form_builder_data:", user.form_builder_data);
+                                }
                             const textField = formData.filter(field => field.type === "text");
                             const checkboxGroup = formData.filter(field => field.type === "checkbox-group");
 

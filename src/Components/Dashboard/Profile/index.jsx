@@ -41,8 +41,8 @@ const Profile = () => {
         try {
             setpageloading(true);
             const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
-            setbackgroundColor(response.data.background_button_value || '#FFFFFF');
             setUserData(response.data);
+            setbackgroundColor(response.data.background_button_value || '#FFFFFF');
             setpageloading(false);
         } catch (error) {
             console.error("Failed to fetch user data:", error);
