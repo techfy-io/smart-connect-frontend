@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
+
 import { DeleteOutlined, MenuOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar, Empty, Modal, Form, Input, Menu, Dropdown } from 'antd';
+import { message, Spin, Button, Avatar, Empty, Modal, Form, Input, Menu, Dropdown, Checkbox } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { useTranslation } from "react-i18next";
@@ -187,28 +188,28 @@ const Leads = () => {
                                         <th>{t("Email")}</th>
                                         <th>{t("Owner Name")}</th>
                                         <th>{t("Date")}</th>
-                                        <th>{t("Text Field")}</th>
-                                    <th>{t("Checkboxes")}</th> 
+                                        {/* <th>{t("Text Field")}</th>
+                                        <th>{t("Checkboxes")}</th>  */}
                                         <th>{t("Action")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 {exchangeData.length > 0 ? (
                                     exchangeData.map((user, index) => {
-                                        const extraFieldContent = user.extra_fields
-                                            .filter(field => field.field_type === 'text')
-                                            .map(field => `${field.label}: ${field.value}`)
-                                            .join(', ');
-
-                                        const checkboxGroups = user.extra_fields
-                                            .filter(field => field.field_type === 'checkbox-group')
-                                            .map(field => {
-                                                const options = parseCheckboxGroup(field.value);
-                                                return {
-                                                    label: field.label,
-                                                    options: options
-                                                };
-                                            });
+                                        const extraFieldContent = user.extra_fields && user.extra_fields
+                                        .filter(field => field.field_type === 'text')
+                                        .map(field => `${field.label}: ${field.value}`)
+                                        .join(', ');
+                                      
+                                      const checkboxGroups = user.extra_fields && user.extra_fields
+                                        .filter(field => field.field_type === 'checkbox-group')
+                                        .map(field => {
+                                          const options = parseCheckboxGroup(field.value);
+                                          return {
+                                            label: field.label,
+                                            options: options
+                                          };
+                                        });
 
                                         return (
                                             <tr key={index}>
@@ -243,35 +244,37 @@ const Leads = () => {
                                                         })()
                                                     }
                                                 </td>
-                                                <td>
+                                                {/* <td>
                                                 <div className="extra-fields" style={{ textAlign: 'left' }}>
-                                                    {user.extra_fields.filter(field => field.field_type === 'text').map((field, i) => (
+                                                    {Array.isArray(user.extra_fields) && user.extra_fields
+                                                        .filter(field => field.field_type === 'text')
+                                                        .map((field, i) => (
                                                         <div key={i} className="field-item" style={{ marginBottom: '12px' }}>
                                                             <div style={{ fontWeight: 'bold', marginBottom: '4px' }} className="field-label" dangerouslySetInnerHTML={{ __html: field.label }}></div>
                                                             <div className="field-value" dangerouslySetInnerHTML={{ __html: field.value }}></div>
                                                         </div>
-                                                    ))}
-                                                </div>
-
-                                                </td>
-                                                <td>
-                                                {checkboxGroups.map((group, i) => (
-                                                    <div key={i}>
-                                                        <h5 dangerouslySetInnerHTML={{__html:group.label}}></h5>
-                                                        {group.options.map((option, j) => (
-                                                            <label key={j} style={{ display: 'block', margin: '8px' }}>
-                                                                <input
-                                                                    type="checkbox"
-                                                                    checked={option.selected}
-                                                                    readOnly
-                                                                    style={{ marginRight: '8px' }} // Adds space between checkbox and label text
-                                                                />
-                                                                {option.label}
-                                                            </label>
                                                         ))}
                                                     </div>
-                                                ))}
-                                            </td>
+
+                                                </td> */}
+                                                {/* <td>
+                                                    {checkboxGroups && checkboxGroups.map((group, i) => (
+                                                        <div key={i}>
+                                                        <h5 dangerouslySetInnerHTML={{__html:group.label}}></h5>
+                                                        {group.options && group.options.map((option, j) => (
+                                                            <label key={j} style={{ display: 'block', margin: '8px' }}>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={option.selected}
+                                                                readOnly
+                                                                style={{ marginRight: '8px' }}
+                                                            />
+                                                            {option.label}
+                                                            </label>
+                                                        ))}
+                                                        </div>
+                                                    ))}
+                                                    </td> */}
 
                                                 <td>
                                                     <div className="Actions-btns">

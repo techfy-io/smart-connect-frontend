@@ -1,99 +1,88 @@
 import axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 import { Modal, Form, Input, Button } from 'antd';
-import $ from 'jquery';
 import { useTranslation } from "react-i18next";
+import $ from 'jquery';
+
+// Make jQuery available globally for formBuilder
 window.jQuery = $;
 window.$ = $;
 require("jquery-ui-sortable");
 require("formBuilder");
-const ExchangeModal = ({ open, onClose, onSubmit, loading, userData }) => {
+
+const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     const { t } = useTranslation('translation');
     const [form] = Form.useForm();
     const formBuilderRef = useRef(null);
-    useEffect(() => {
-        if (open) {
-            if (formBuilderRef.current) {
-                $('#form-builder').formBuilder('reset');  
-                $('#form-builder').formBuilder('setData', []); 
-            } else {
-                const options = {
-                    disableFields: [
-                        'autocomplete', 'button', 'paragraph', 'date',
-                        'header', 'hidden', 'number', 'radio-group', 'textarea',
-                        'select', 'file'
-                    ],
-                    onOpenFieldEdit: () => {
-                        $(`
-                        .description-wrap,
-                        .toggle-wrap,
-                        .inline-wrap,
-                        .className-wrap,
-                        .name-wrap,
-                        .access-wrap,
-                        .other-wrap,
-                        .subtype-wrap,
-                        .maxlength-wrap,
-                        .rows-wrap,
-                        .multiple-wrap
-                        `).hide();
-                    },
-                    controlOrder: [
-                        'text', 'checkbox-group'
-                    ],
-                    showActionButtons: false
-                };
-                formBuilderRef.current = $('#form-builder').formBuilder(options);
-            }
-        }
-    }, [open]);
+
+    // Initialize formBuilder when the modal opens
+    // useEffect(() => {
+    //     if (open) {
+    //         if (formBuilderRef.current) {
+    //             // Reset the formBuilder when modal is reopened
+    //             $('#form-builder').formBuilder('reset');
+    //             $('#form-builder').formBuilder('setData', []);
+    //         } else {
+    //             const options = {
+    //                 disableFields: [
+    //                     'autocomplete', 'button', 'paragraph', 'date',
+    //                     'header', 'hidden', 'number', 'radio-group', 'textarea',
+    //                     'select', 'file'
+    //                 ],
+
+    //                 onOpenFieldEdit: () => {
+    //                     $(`.description-wrap, .toggle-wrap, .inline-wrap, .className-wrap, 
+    //                       .name-wrap, .access-wrap, .other-wrap, .subtype-wrap, .maxlength-wrap,
+    //                       .rows-wrap, .multiple-wrap`).hide();
+    //                 },
+    //                 controlOrder: ['text', 'checkbox-group'],
+    //                 showActionButtons: false
+    //             };
+    //             formBuilderRef.current = $('#form-builder').formBuilder(options);
+    //         }
+    //     }
+    // }, [open]);
+
+    // Handle form cancellation
     const handleCancel = () => {
         onClose();
         form.resetFields();
-        // Optionally, reset the FormBuilder instance here if needed
     };
+
+    // Handle form submission
     const onFinish = async (values) => {
-        const formBuilderData = $('#form-builder').formBuilder('getData');
-        const formattedExtraFields = formBuilderData.map(field => {
-            if (field.type === 'checkbox-group') {
-                const options = field.values.map(option => ({
-                    label: option.label,
-                    value: option.value,
-                    selected: option.selected,  // Include the selected state
-                }));
-                return {
-                    field_type: field.type,
-                    label: field.label,
-                    name: field.name,
-                    value: options,  // Store the array of options with their selected state
-                };
-            } else {
-                return {
-                    field_type: field.type,
-                    label: field.label,
-                    name: field.name,
-                    value: values[field.name] || field.value || "",  // Handle other field types
-                };
-            }
-        });
+        // const formBuilderData = $('#form-builder').formBuilder('getData');
+        // const formattedExtraFields = formBuilderData.map(field => {
+        //     if (field.type === 'checkbox-group') {
+        //         const options = field.values.map(option => ({
+        //             label: option.label,
+        //             value: option.value,
+        //             selected: option.selected,
+        //         }));
+        //         return {
+        //             field_type: field.type,
+        //             label: field.label,
+        //             name: field.name,
+        //             value: options,
+        //         };
+        //     } else {
+        //         return {
+        //             field_type: field.type,
+        //             label: field.label,
+        //             name: field.name,
+        //             value: values[field.name] || field.value || "",
+        //         };
+        //     }
+        // });
+
         const requestData = {
             ...values,
-            owner: userData?.id, 
-            extra_fields: formattedExtraFields,
+            // extra_fields: formattedExtraFields,
         };
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_BASE_API_URL}/exchange/`, requestData);
-            console.log('Response:', response.data);
-            onClose(); 
-            form.resetFields()
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
+
+        onSubmit(requestData); // or directly handle it here
     };
-    // const onFinish = async (values) => {
-    //     onSubmit(values);
-    // };
-   
+
     return (
         <Modal
             title={t("Exchange")}
@@ -122,45 +111,32 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading, userData }) => {
                 <Form.Item
                     label={`${t("First Name")}*`}
                     name="first_name"
-                    rules={[
-                        {
-                            required: true,
-                            message: t('Please input your first name!'),
-                        },
-                    ]}
+                    rules={[{
+                        required: true,
+                        message: t('Please input your first name!'),
+                    }]}
                 >
                     <Input maxLength={30} autoComplete="first_name" />
                 </Form.Item>
                 <Form.Item
                     label={`${t("Last Name")}*`}
                     name="last_name"
-                    rules={[
-                        {
-                            required: true,
-                            message: t('Please input your last name!'),
-                        },
-                    ]}
+                    rules={[{
+                        required: true,
+                        message: t('Please input your last name!'),
+                    }]}
                 >
                     <Input maxLength={30} autoComplete="last_name" />
                 </Form.Item>
-                <Form.Item
-                    label={t("Company Name")}
-                    name="company"
-                >
+                <Form.Item label={t("Company Name")} name="company">
                     <Input autoComplete="company" />
                 </Form.Item>
                 <Form.Item
                     label={`${t("Email")}*`}
                     name="email"
                     rules={[
-                        {
-                            type: 'email',
-                            message: t('Please input a valid email!'),
-                        },
-                        {
-                            required: true,
-                            message: t('Please enter an email'),
-                        },
+                        { type: 'email', message: t('Please input a valid email!') },
+                        { required: true, message: t('Please enter an email') },
                     ]}
                 >
                     <Input autoComplete="email" />
@@ -168,31 +144,23 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading, userData }) => {
                 <Form.Item
                     label={`${t("Phone")}*`}
                     name="phone_number"
-                    rules={[
-                        {
-                            required: true,
-                            message: t('Please enter a phone number'),
-                        },
-                    ]}
+                    rules={[{
+                        required: true,
+                        message: t('Please enter a phone number'),
+                    }]}
                 >
                     <Input
-                        style={{
-                            width: "100%",
-                            height: "30px",
-                            borderRadius: "5px",
-                            border: "1px solid #D9D9D9",
-                            paddingLeft: "8px",
-                            color: "black",
-                            transition: "border-color 0.3s",
-                        }}
+                        style={{ width: "100%", height: "30px", borderRadius: "5px", border: "1px solid #D9D9D9", paddingLeft: "8px", color: "black", transition: "border-color 0.3s" }}
                         placeholder="+33 1 23 45 67 89"
                         autoComplete="tel"
                     />
                 </Form.Item>
-                {/* Add the FormBuilder here */}
-                <div id="form-builder"></div>
+
+                {/* FormBuilder Component */}
+                {/* <div id="form-builder"></div> */}
             </Form>
         </Modal>
     );
 };
+
 export default ExchangeModal;
