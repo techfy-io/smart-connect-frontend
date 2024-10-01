@@ -18,7 +18,7 @@ import insta3 from '../Dashboard/Instagram-Icons/instagram3.png'
 import linkedIn3 from '../Dashboard/LinkedIn-Icons/linkedin1.png'
 import linkedIn1 from '../Dashboard/LinkedIn-Icons/linkedin2.png'
 import linkedIn2 from '../Dashboard/LinkedIn-Icons/linkedin3.png'
-import web1 from '../Dashboard/Website-Icons/globe1.png'
+import web1 from '../Dashboard/Website-Icons/globe02.png'
 import web2 from '../Dashboard/Website-Icons/globe2.png'
 import web3 from '../Dashboard/Website-Icons/globe3.png'
 import SocialMediaIconSelector from './SocialMediaIconSelector';
