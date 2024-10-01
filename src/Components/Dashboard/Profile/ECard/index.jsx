@@ -56,27 +56,18 @@ const ECard = (props) => {
                     <img src={user?.profile_picture || placholder} alt="profile" />
                 </div>
                 <div className="profile-name">
-                    <h3>{
-                        (user?.first_name || user?.last_name) && (
-                            <span 
-                                dangerouslySetInnerHTML={{
-                                    __html: sliceText(`${user?.first_name || ''} ${user?.last_name || ''}`, 100)
-                                }} 
-                            />
-                        )
-                    }</h3>
-                        {
-                            user?.job_title && (
-                                <span
-                                    dangerouslySetInnerHTML={{
-                                        __html: sliceText(user.job_title, 150)
-                                    }}
-                                />
-                            )
-                        }
-
-                    <p>{sliceText(user?.sub_company && user?.sub_company !=="" ?user?.sub_company : user?.company, 150)}</p>
+                <div className="name-container">
+                    <span className="first-name" dangerouslySetInnerHTML={{ __html: user?.first_name }} />
+                    <span className="last-name" dangerouslySetInnerHTML={{ __html: user?.last_name }} />
                 </div>
+                {user?.job_title && (
+                    <span className="job-title" dangerouslySetInnerHTML={{ __html: sliceText(user.job_title, 150) }} />
+                )}
+                <p>{sliceText(user?.sub_company && user?.sub_company !== "" ? user?.sub_company : user?.company, 150)}</p>
+            </div>
+
+
+
                 <ProfileActions {...props} />
                 <Social {...props} />
                 {user?.bio_graphy ? (
