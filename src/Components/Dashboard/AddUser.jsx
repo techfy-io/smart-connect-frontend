@@ -207,7 +207,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
         formData.append('website_icon',selectedWebsiteIcon || "");
         
         const formBuilderData = $('#fb-editor').formBuilder('getData');
-        console.log('FormBuilder Data:', formBuilderData);
         formData.append('formBuilderData', JSON.stringify(formBuilderData));
 
         try {
