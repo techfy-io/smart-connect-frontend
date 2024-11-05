@@ -72,7 +72,6 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                     }
                 }
             );
-            console.log("response", response);
             message.success(t("User Added Successfully"));
             setLoading(false)
             modalHideShow();
