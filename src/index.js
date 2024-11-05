@@ -159,7 +159,7 @@ i18n.init({
       translation: {
         "Welcome": "Bienvenue",
         "Sign in to continue": "Connectez-vous pour continuer",
-        "Forgot Password": "Mot de passe oublié / Prememiére connection ?",
+        "Forgot Password": "Mot de passe oublié / Prememiére connection",
         "Password": "mot de passe",
         "Enter your email or username": "Entrez votre email ou votre nom d'utilisateur",
         "Login": "Se connecter",
