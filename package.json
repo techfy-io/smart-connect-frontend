@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.14.2",
     "axios": "^1.6.7",
+    "dotenv": "^16.4.7",
     "font-awesome": "^4.7.0",
     "formBuilder": "^3.19.12",
     "html2canvas": "^1.4.1",

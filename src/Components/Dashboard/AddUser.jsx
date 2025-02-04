@@ -392,14 +392,14 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                         <Form.Item
                             label={`${t("Company")}*`}
                             name="company"
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: 'Please enter a company',
-                        //     }
-                        // ]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter a company',
+                            }
+                        ]}
                         >
-                            <Input defaultValue={currentCompany?.name} disabled />
+                            <Input defaultValue={currentCompany?.name} />
                         </Form.Item>
                         <Form.Item
                             label={t("Job title")}

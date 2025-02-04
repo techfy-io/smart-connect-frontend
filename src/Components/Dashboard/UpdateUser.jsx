@@ -469,7 +469,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        {Companyid && Companyid == 307 ? (
+                        {Companyid ? (
                             <>
                                 <Form.Item
                                     label={t("Company Name")}
