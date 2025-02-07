@@ -144,7 +144,7 @@ const UserSetting = () => {
                                 },
                             ]}
                         >
-                            <Input placeholder={t("Company")} disabled />
+                            <Input placeholder={t("Company")} />
                         </Form.Item>
                         <Form.Item
                             label={t("Phone")}
@@ -202,7 +202,7 @@ const UserSetting = () => {
                                 // className={"setting-form-enable-button"}
                                 // onClick={Submitdata}
                                 loading={loading}
-                                disabled={!formChanged}
+                                // disabled={!formChanged}
                             >
                                 {t("Save")}
                             </Button>

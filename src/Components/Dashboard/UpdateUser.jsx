@@ -319,7 +319,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                                     label={t("Company Name")}
                                     name="company"
                                 >
-                                    <Input disabled />
+                                    <Input />
                                 </Form.Item>
                             </>
                         )}
