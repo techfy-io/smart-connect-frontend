@@ -37,7 +37,7 @@ const ECard = (props) => {
                         style={{ whiteSpace: 'nowrap', cursor: 'pointer' }} 
                         onClick={() => setShowmore(!state)}
                     >
-                        {state ? 'read more' : 'show less'}
+                        {state ? 'voir plus' : 'voir moins'}
                     </span>
                 </>
             );
