@@ -3,9 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
-
 const root = createRoot(document.getElementById('root'));
-
 i18n.init({
   lng: 'fr',
   debug: true,
@@ -162,7 +160,7 @@ i18n.init({
       translation: {
         "Welcome": "Bienvenue",
         "Sign in to continue": "Connectez-vous pour continuer",
-        "Forgot Password": "Mot de passe oublié",
+        "Forgot Password": "Mot de passe oublié / Première connexion",
         "Password": "mot de passe",
         "Enter your email or username": "Entrez votre email ou votre nom d'utilisateur",
         "Login": "Se connecter",
@@ -312,7 +310,6 @@ i18n.init({
     }
   }
 });
-
 root.render(
   <I18nextProvider i18n={i18n}>
     <React.StrictMode>
