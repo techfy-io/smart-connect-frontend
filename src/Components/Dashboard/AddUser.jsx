@@ -8,7 +8,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
 import { useTranslation } from "react-i18next";
-
+// add user 
 const AddUser = ({ isModalVisible, modalHideShow, CompaniesData ,getCompanyUser}) => {
     const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
