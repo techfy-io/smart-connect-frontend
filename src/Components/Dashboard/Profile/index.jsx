@@ -27,6 +27,7 @@ const Profile = () => {
     const [scale, setScale] = useState(1);
     const [selectedImage, setSelectedImage] = useState(null);
     const [checkLoginUser, SetCheckLoginuser] = useState('');
+    const [backgroundColor, setbackgroundColor] = useState('');
 
     useEffect(() => {
         const loginathentication = localStorage.getItem('accessToken')
@@ -41,6 +42,7 @@ const Profile = () => {
             setpageloading(true);
             const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
             setUserData(response.data);
+            setbackgroundColor(response.data.background_button_value || '#FFFFFF');
             setpageloading(false);
         } catch (error) {
             console.error("Failed to fetch user data:", error);
@@ -155,7 +157,7 @@ const Profile = () => {
     };
 
     return (
-        <div className='profile-main-wrapper'>
+        <div className='profile-main-wrapper ' style={{ backgroundColor: backgroundColor || '#FFFFFF' }}>
             {pageloading ? (
                 <Spin size='large' style={{ margin: "auto" }} />
             ) : userData ? (

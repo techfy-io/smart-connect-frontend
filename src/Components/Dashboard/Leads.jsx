@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './Leads.scss';
 import Sidebar from '../Common/Sidebar';
+
 import { DeleteOutlined, MenuOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import { message, Spin, Button, Avatar, Empty, Modal, Form, Input, Menu, Dropdown } from 'antd';
+import { message, Spin, Button, Avatar, Empty, Modal, Form, Input, Menu, Dropdown, Checkbox } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { useTranslation } from "react-i18next";
@@ -16,6 +17,7 @@ const Leads = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [updating, setUpdating] = useState(false);
+    const [checkboxOptions, setCheckboxOptions] = useState({}); 
 
     useEffect(() => {
         getExchangeUser();
@@ -119,6 +121,21 @@ const Leads = () => {
         }
         return color;
     };
+    const parseCheckboxGroup = (value) => {
+        let jsonString = value.replace(/'/g, '"').replace(/True/g, 'true').replace(/False/g, 'false');
+        jsonString = jsonString.replace(/,\s*([}\]])/g, '$1'); // Clean trailing commas
+
+        try {
+            return JSON.parse(jsonString);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return [];
+        }
+    };
+
+    const handleCheckboxChange = (checkedValues) => {
+        setCheckboxOptions(checkedValues);
+    };
     // const changeLanguage = (lng) => {
     //     i18n.changeLanguage(lng);
     //   };
@@ -171,21 +188,54 @@ const Leads = () => {
                                         <th>{t("Email")}</th>
                                         <th>{t("Owner Name")}</th>
                                         <th>{t("Date")}</th>
+                                        {/* <th>{t("Text Field")}</th>
+                                        <th>{t("Checkboxes")}</th>  */}
                                         <th>{t("Action")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {exchangeData.length > 0 ? (
-                                        exchangeData.map((user, index) => (
+                                {exchangeData.length > 0 ? (
+                                    exchangeData.map((user, index) => {
+                                        const extraFieldContent = user.extra_fields && user.extra_fields
+                                        .filter(field => field.field_type === 'text')
+                                        .map(field => `${field.label}: ${field.value}`)
+                                        .join(', ');
+                                      
+                                      const checkboxGroups = user.extra_fields && user.extra_fields
+                                        .filter(field => field.field_type === 'checkbox-group')
+                                        .map(field => {
+                                          const options = parseCheckboxGroup(field.value);
+                                          return {
+                                            label: field.label,
+                                            options: options
+                                          };
+                                        });
+
+                                        return (
                                             <tr key={index}>
-                                                <td>
-                                                    <Avatar size="small" style={{ backgroundColor: getRandomColor(), padding: "20px", marginRight: "10px", fontSize: "15px" }}> {`${user.first_name.charAt(0).toUpperCase()}${user.last_name.charAt(0).toUpperCase()}`}</Avatar>
-                                                    {`${user.first_name} ${user.last_name}`.slice(0, 25)}
+                                                <td style={{ textAlign: 'center', verticalAlign: 'middle' }}>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                                        <Avatar size="small" style={{ backgroundColor: getRandomColor(), padding: "20px", fontSize: "15px", marginBottom: "8px" }}>
+                                                            {`${user.first_name.charAt(0).toUpperCase()}${user.last_name.charAt(0).toUpperCase()}`}
+                                                        </Avatar>
+                                                        <div style={{ fontSize: "14px", fontWeight: "bold" }}>
+                                                            {`${user.first_name} ${user.last_name}`.slice(0, 25)}
+                                                        </div>
+                                                    </div>
                                                 </td>
+
                                                 <td>{user.company && user.company.length > 25 ? user.company.substring(0, 25) + '...' : user.company}</td>
                                                 <td>{user.phone_number}</td>
                                                 <td>{user.email && user.email.length > 30 ? user.email.substring(0, 30) + '...' : user.email}</td>
-                                                <td>{user.owner}</td>
+                                                <td>
+                                                    {user?.owner && (
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: user.owner
+                                                            }}
+                                                        />
+                                                    )}
+                                                </td>
                                                 <td>
                                                     {
                                                         (() => {
@@ -194,23 +244,54 @@ const Leads = () => {
                                                         })()
                                                     }
                                                 </td>
+                                                {/* <td>
+                                                <div className="extra-fields" style={{ textAlign: 'left' }}>
+                                                    {Array.isArray(user.extra_fields) && user.extra_fields
+                                                        .filter(field => field.field_type === 'text')
+                                                        .map((field, i) => (
+                                                        <div key={i} className="field-item" style={{ marginBottom: '12px' }}>
+                                                            <div style={{ fontWeight: 'bold', marginBottom: '4px' }} className="field-label" dangerouslySetInnerHTML={{ __html: field.label }}></div>
+                                                            <div className="field-value" dangerouslySetInnerHTML={{ __html: field.value }}></div>
+                                                        </div>
+                                                        ))}
+                                                    </div>
+
+                                                </td> */}
+                                                {/* <td>
+                                                    {checkboxGroups && checkboxGroups.map((group, i) => (
+                                                        <div key={i}>
+                                                        <h5 dangerouslySetInnerHTML={{__html:group.label}}></h5>
+                                                        {group.options && group.options.map((option, j) => (
+                                                            <label key={j} style={{ display: 'block', margin: '8px' }}>
+                                                            <input
+                                                                type="checkbox"
+                                                                checked={option.selected}
+                                                                readOnly
+                                                                style={{ marginRight: '8px' }}
+                                                            />
+                                                            {option.label}
+                                                            </label>
+                                                        ))}
+                                                        </div>
+                                                    ))}
+                                                    </td> */}
+
                                                 <td>
                                                     <div className="Actions-btns">
-                                                        {/* <button className="Edit-button" shape="circle" onClick={() => handleEdit(user)}><EditOutlined /></button> */}
                                                         <button className="Delete-button" shape="circle" onClick={() => handleDeleteConfirm(user.id)}><DeleteOutlined /></button>
                                                     </div>
                                                 </td>
-
                                             </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="7" tyle={{ textAlign: 'center' }}>
-                                                <Empty description={t("No Leads found")} />
-                                            </td>
-                                        </tr>
-                                    )}
-                                </tbody>
+                                        );
+                                    })
+                                ) : (
+                                    <tr>
+                                        <td colSpan="9" style={{ textAlign: 'center' }}>
+                                            <Empty description={<span>{t("No Records Found")}</span>} />
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
                             </table>
                         )}
                     </div>
@@ -288,6 +369,18 @@ const Leads = () => {
                             placeholder="+33 1 23 45 67 89"
                         />
                     </Form.Item>
+                     {/* Dynamic Checkboxes */}
+                        {checkboxOptions && (
+                        <Form.Item
+                            name="checkboxes"
+                            label={t('Checkboxes')}
+                        >
+                            <Checkbox.Group
+                                options={checkboxOptions}
+                                onChange={handleCheckboxChange}
+                            />
+                        </Form.Item>
+                    )}
                 </Form>
             </Modal>
         </div>
@@ -295,3 +388,5 @@ const Leads = () => {
 }
 
 export default Leads;
+
+

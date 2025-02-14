@@ -5,7 +5,7 @@ import InputMask from "react-input-mask";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { useTranslation } from "react-i18next";
 
-const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
+const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal,fetchCompanies }) => {
     const { t, i18n } = useTranslation('translation');
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
@@ -38,9 +38,7 @@ const AddCompany = ({ openAddcompanymodal, toggleAddCompanyModal }) => {
                 duration: 10, 
             });
             toggleAddCompanyModal();
-            setTimeout(() => {
-                window.location.reload();
-            }, 4000);
+            fetchCompanies();
         }
         catch (error) {
             console.log("error", error);

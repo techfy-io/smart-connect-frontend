@@ -1,0 +1,35 @@
+.social-icons {
+    display: flex;
+    flex-wrap: nowrap; /* Allow wrapping for better alignment */
+    justify-content: center; /* Center the icons */
+    gap: 70px; /* 70px gap between icons */
+}
+
+.icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.icon-box img,
+.icon-box i {
+    width: 30px; /* Icon width */
+    height: 30px; /* Icon height */
+}
+
+.icon-box a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the icon inside the anchor */
+}
+
+.ant-card-bordered {
+    margin-top: 20px;
+}
+.fa-linkedin  {
+    transform: translateY(-1px); /* Adjust the value as needed */
+}

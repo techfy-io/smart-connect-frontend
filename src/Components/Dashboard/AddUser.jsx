@@ -4,12 +4,12 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
-import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import 'font-awesome/css/font-awesome.min.css'; 
 import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
 import { useTranslation } from "react-i18next";
-
-const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
+// add user 
+const AddUser = ({ isModalVisible, modalHideShow, CompaniesData ,getCompanyUser}) => {
     const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
@@ -75,9 +75,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
             message.success(t("User Added Successfully"));
             setLoading(false)
             modalHideShow();
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000);
+            getCompanyUser();
+            form.resetFields();
         } catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -185,6 +184,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete='off'
+                    initialValues={{
+                        company: currentCompany?.name || "", 
+                    }}
                 >
                     <Form.Item label={t("Profile Picture")} name="profile_picture">
                         <Upload
@@ -242,14 +244,14 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                         <Form.Item
                             label={`${t("Company")}*`}
                             name="company"
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: 'Please enter a company',
-                        //     }
-                        // ]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter a company',
+                            }
+                        ]}
                         >
-                            <Input defaultValue={currentCompany?.name} disabled />
+                            <Input defaultValue={currentCompany?.name} />
                         </Form.Item>
                         <Form.Item
                             label={t("Job title")}

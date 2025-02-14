@@ -7,7 +7,7 @@ import { UploadOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { useTranslation } from "react-i18next";
 
-const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => {
+const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid, getCompanyUser }) => {
     const { t, i18n } = useTranslation('translation');
     const [loading, setLoading] = useState(false);
     const [additionalSocialMediaLinks, setAdditionalSocialMediaLinks] = useState([]);
@@ -24,8 +24,8 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
             email: user?.email,
             email_1: user?.email_1,
             phone_number: user?.phone_number,
-            company: user?.company,
-            subcompany: user?.sub_company?.trim() ? user.sub_company : user?.company            ,
+            company: user?.sub_company?.trim() ? user.sub_company : user?.company || user?.companies?.[0]?.company_name,
+            subcompany: user?.sub_company?.trim() ? user.sub_company : user?.company || user?.companies?.[0]?.company_name,
             job_title: user?.job_title,
             zip_code: user?.zip_code,
             phone_number_type: user?.phone_number_type,
@@ -81,7 +81,7 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
         formData.append('phone_number_1', phone_number_1 || "");
         formData.append('phone_number_type', phone_number_type || "");
         formData.append('company', Companyid || "");
-        formData.append('sub_company', subcompany || "");
+        formData.append('sub_company', company || subcompany);
         formData.append('job_title', job_title || "");
         formData.append('zip_code', zip_code || "");
         formData.append('postal_code', postal_code || "");
@@ -126,9 +126,9 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                 message.success(t("User Update Successfully"));
                 setLoading(false)
                 UpdatemodalHideShow();
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2000)
+                // getCompanyUser();
+                setTimeout(() => window.location.reload(), 2000);
+
             })
             .catch(error => {
                 console.log("error", error);
@@ -304,32 +304,20 @@ const UpdateUser = ({ openEditModal, UpdatemodalHideShow, user, Companyid }) => 
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        {Companyid && Companyid == 307 ? (
-                            <>
-                                <Form.Item
-                                    label={t("Company Name")}
-                                    name="subcompany"
-                                >
-                                    <Input />
-                                </Form.Item>
-                            </>
+                        {user?.sub_company?.trim() ? (
+                            <Form.Item label={t("Company Name")} name="subcompany">
+                                <Input defaultValue={user.sub_company} />
+                            </Form.Item>
                         ) : (
-                            <>
-                                <Form.Item
-                                    label={t("Company Name")}
-                                    name="company"
-                                >
-                                    <Input disabled />
-                                </Form.Item>
-                            </>
+                            <Form.Item label={t("Company Name")} name="company">
+                                <Input defaultValue={user?.company || user?.companies?.[0]?.company_name} />
+                            </Form.Item>
                         )}
-                        <Form.Item
-                            label={t("Job title")}
-                            name="job_title"
-                        >
+                        <Form.Item label={t("Job title")} name="job_title">
                             <Input maxLength={100} />
                         </Form.Item>
                     </div>
+
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={t("Zip Code")}
