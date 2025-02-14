@@ -4,7 +4,7 @@ import axios from 'axios';
 import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
-import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import 'font-awesome/css/font-awesome.min.css'; 
 import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
 import { useTranslation } from "react-i18next";
@@ -76,6 +76,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData ,getCompanyUser}
             setLoading(false)
             modalHideShow();
             getCompanyUser();
+            form.resetFields();
         } catch (error) {
             console.log("error", error);
             if (error.response) {
