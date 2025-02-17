@@ -137,8 +137,8 @@ const CompanyUsers = () => {
                                     <th>{t("User Name")}</th>
                                     <th>{t("Email")}</th>
                                     <th>{t("Role")}</th>
-                                    <th>{t("Text Field")}</th> {/* New header for Text Field */}
-                                    <th>{t("Checkbox Group")}</th> {/* New header for Checkbox Group */}
+                                    {/* <th>{t("Text Field")}</th> 
+                                    <th>{t("Checkbox Group")}</th>  */}
                                     <th>{t("Action")}</th>
                                 </tr>
                             </thead>
@@ -186,8 +186,7 @@ const CompanyUsers = () => {
                                                         />
                                                     )}
                                                 </td>
-                                                {/* Display Text Field with Label on Top */}
-                                                <td>
+                                                {/* <td>
                                                     {textField.length > 0 ? (
                                                         <div>
                                                             {textField.map((textField, index) => (
@@ -202,12 +201,12 @@ const CompanyUsers = () => {
                                                     ) : (
                                                         '-'
                                                     )}
-                                                </td>
+                                                </td> */}
 
 
                                                 {/* Display Checkbox Group with Label on Top and Selected State */}
 
-                                                <td style={{ textAlign: 'center' }}>
+                                                {/* <td style={{ textAlign: 'center' }}>
                                                     {checkboxGroup.length > 0 ? (
                                                         <div>
                                                             {checkboxGroup.map((checkboxGroup, index) => (
@@ -234,7 +233,7 @@ const CompanyUsers = () => {
                                                     ) : (
                                                         '-'
                                                     )}
-                                                </td>
+                                                </td> */}
 
 
 
