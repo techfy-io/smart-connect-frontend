@@ -186,7 +186,6 @@ const CompanyUsers = () => {
                                                         />
                                                     )}
                                                 </td>
-                                                {/* Display Text Field with Label on Top */}
                                                 {/* <td>
                                                     {textField.length > 0 ? (
                                                         <div>
