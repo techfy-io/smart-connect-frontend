@@ -6,7 +6,7 @@ import logo from '../../../../Inspect/icons/logo-smartconnect.png';
 import './ecard.scss';
 import Social from './comps/Social';
 import { t } from 'i18next';
-
+// e card
 const ECard = (props) => {
     const { user } = props;
     const [showmore, setShowmore] = useState(true);
@@ -69,10 +69,10 @@ const ECard = (props) => {
                 <div className="logo">
                     <img src={logo} alt="Smart Connect logo" />
                 </div>
-                <p>
+                {/* <p>
                     {user?.other_link_media_2} :
                     <a target='blank' href={user?.other_link_2}>{user?.other_link_2}</a>
-                </p>
+                </p> */}
 
             </div>
         </div >
