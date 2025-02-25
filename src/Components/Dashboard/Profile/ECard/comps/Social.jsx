@@ -21,11 +21,13 @@ const Social = () => {
             if (userId) {
                 setLoading(true);
                 try {
-                    const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`, {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`
-                        }
-                    });
+                    const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`
+                    // , {
+                    //     headers: {
+                    //         'Authorization': `Bearer ${accessToken}`
+                    //     }
+                    // }
+                    );
                     setUserData(response.data);
                 } catch (error) {
                     console.error("Failed to fetch user data:", error);
