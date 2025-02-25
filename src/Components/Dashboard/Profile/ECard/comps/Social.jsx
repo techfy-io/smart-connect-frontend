@@ -14,7 +14,7 @@ const Social = () => {
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const { userId } = useParams();
-    const accessToken = localStorage.getItem('accessToken'); // Example of getting access token
+    const accessToken = localStorage.getItem('accessToken'); 
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -37,7 +37,7 @@ const Social = () => {
             }
         };
         fetchUserData();
-    }, [userId, accessToken]);
+    }, [userId]);
 
     if (loading) return <Spin />;
 
