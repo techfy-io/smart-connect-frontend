@@ -127,7 +127,7 @@ const Leads = () => {
     Modal.confirm({
       title: t("Confirm"),
       content: t("Are you sure you want to delete this user?"),
-      okText: t("OK"), // Translate the OK button text
+      okText: t("OK"),
       cancelText: t("Cancel"), // Translate the Cancel button text
       onOk() {
         deleteExchangeUser(id);
