@@ -78,11 +78,11 @@ const ECard = (props) => {
         </div>
         <ProfileActions {...props} />
         <Social {...props} />
-        {user?.other_link_1 && (
+        {user?.other_link_2 && (
           <div style={{ textAlign: "center" }}>
             <a
               target="_blank"
-              href={user?.other_link_1}
+              href={user?.other_link_2}
               style={{
                 display: "block",
                 width: "100%",
@@ -98,7 +98,7 @@ const ECard = (props) => {
                 textAlign: "center",
               }}
             >
-              {user.other_link_media_1}
+              {user.other_link_media_2}
             </a>
           </div>
         )}
