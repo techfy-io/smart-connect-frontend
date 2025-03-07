@@ -367,8 +367,8 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
-      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} />
+      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal}  />
+      <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} fetchCompanies={fetchCompanies} />
       {/* Update company Modal */}
       <Modal
         title={t('Update Company')}

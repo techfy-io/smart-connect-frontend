@@ -1,158 +1,23 @@
-
-import React, { useState, useRef, forwardRef } from 'react';
+import React, { useState } from 'react';
 import { Button, Modal, Form, Input, message, Upload, Radio, Spin, Select } from 'antd';
 import axios from 'axios';
 import InputMask from "react-input-mask";
 import { UploadOutlined, PlusOutlined, CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import './Dashboard.scss';
-import 'font-awesome/css/font-awesome.min.css'; // Import Font Awesome CSS
+import 'font-awesome/css/font-awesome.min.css'; 
 import { useEffect } from 'react';
 import FormItem from 'antd/es/form/FormItem';
 import { useTranslation } from "react-i18next";
-import fb1Img from '../Dashboard/Facebook-Icons/facebook1.png'; // Import the image for fb1
-import fb2Img from '../Dashboard/Facebook-Icons/facebook2.png'; // Import the image for fb2
-import fb3Img from '../Dashboard/Facebook-Icons/facebook3.png';
-import insta1 from '../Dashboard/Instagram-Icons/instagram1.png'
-import insta2 from '../Dashboard/Instagram-Icons/instagram2.png'
-import insta3 from '../Dashboard/Instagram-Icons/instagram3.png'
-import linkedIn3 from '../Dashboard/LinkedIn-Icons/linkedin1.png'
-import linkedIn1 from '../Dashboard/LinkedIn-Icons/linkedin2.png'
-import linkedIn2 from '../Dashboard/LinkedIn-Icons/linkedin3.png'
-import web1 from '../Dashboard/Website-Icons/globe1.png'
-import web2 from '../Dashboard/Website-Icons/globe2.png'
-import web3 from '../Dashboard/Website-Icons/globe3.png'
-import SocialMediaIconSelector from './SocialMediaIconSelector';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
-
-import './CustomQuill.css'; 
-import './ColorPicker.css'
-import $ from 'jquery';
-import Quill from 'quill';
-window.jQuery = $;
-window.$ = $;
-require("jquery-ui-sortable");
-require("formBuilder");
-
-const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
+// add user 
+const AddUser = ({ isModalVisible, modalHideShow, CompaniesData ,getCompanyUser}) => {
     const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
     const [additionalPhones, setAdditionalPhones] = useState([]);
     const [additionalEmails, setAdditionalEmails] = useState([]);
-    const [SocialLinks, setSocialLinks] = useState([]);
+    const [socialLinks, setSocialLinks] = useState([]);
 
     const [currentCompany, setCurrentCompany] = useState('')
     const [loading, setLoading] = useState(false);
-
-    const [saveButtonColor, setSaveButtonColor] = useState('#F47122'); // Default color
-    const [exchangeButtonColor, setExchangeButtonColor] = useState('#616569'); // Default color
-    const [backgroundColor, setBackgroundColor] = useState('#FFFFFF')
-
-    const handleSaveButtonColorChange = (e) => {
-        setSaveButtonColor(e.target.value);
-    };
-
-    const handleExchangeButtonColorChange = (e) => {
-        setExchangeButtonColor(e.target.value);
-    };
-
-    const handleBackgroundColorChange = (e) => {
-        setBackgroundColor(e.target.value);
-    };
-
-    const Font = Quill.import('formats/font');
-    Font.whitelist = ['sans-serif', 'serif', 'monospace','times-new-roman'];
-    Quill.register(Font, true);
-
-    const { Option } = Select;
-
-    const [selectedFacebookIcon, setSelectedFacebookIcon] = useState(fb1Img); // Initialize selectedIcon state
-    const [selectedInstagramIcon, setSelectedInstagramIcon] = useState(insta3); // Initialize selectedIcon state
-    const [selectedLinkedInIcon, setSelectedLinkedInIcon] = useState(linkedIn2); // Initialize selectedIcon state
-
-    const [selectedWebsiteIcon, setSelectedWebsiteIcon] = useState(web3);
-
-
-    const facebookIcons = [fb1Img, fb2Img, fb3Img]; // Replace with your actual icon URLs
-    const instagramIcons = [insta1, insta2, insta3]; // Replace with your actual icon URLs
-    const linkedInIcons = [linkedIn1, linkedIn2, linkedIn3];
-
-    const websiteIcons = [web1, web2, web3]
-    
-
-      
-
-    const formBuilderRef = useRef(null);
-
-    const QuillInput = forwardRef((props, ref) => {
-        const { value, onChange, returnPlainText = false, ...rest } = props;
-    
-        const handleChange = (content, delta, source, editor) => {
-            if (returnPlainText) {
-                onChange(editor.getText());
-            } else {
-                onChange(content);
-            }
-        };
-    
-        return (
-            <div className="custom-quill-container">
-            <ReactQuill
-                value={value}
-                onChange={onChange}
-                modules={{
-                    toolbar: [
-                        [{ 'font': ['sans-serif', 'serif', 'monospace', 'times-new-roman'] }],
-                        
-                        ['bold', 'italic', 'underline'],
-                    ],
-                }}
-                formats={['font', 'bold', 'italic', 'underline']}
-                className="custom-quill-editor"
-                {...rest}
-            />
-        </div>
-        );
-    });
-    
-
-    useEffect(() => {
-        if (isModalVisible) {
-            if (formBuilderRef.current) {
-                $('#fb-editor').formBuilder('reset');
-                $('#fb-editor').formBuilder('setData', []);
-            } else {
-                const options = {
-                    disableFields: [
-                        'autocomplete', 'button', 'paragraph', 'date',
-                        'header', 'hidden', 'number', 'radio-group', 'textarea',
-                        'select', 'file'
-                    ],
-                    onOpenFieldEdit: () => {
-                        $(`
-                        .description-wrap,
-                        .toggle-wrap,
-                        .inline-wrap,
-                        .className-wrap,
-                        .name-wrap,
-                        .access-wrap,
-                        .other-wrap,
-                        .subtype-wrap,
-                        .maxlength-wrap,
-                        .rows-wrap,
-                        .multiple-wrap
-                        `).hide();
-                    },
-                    controlOrder: [
-                        'text', 'checkbox-group'
-                    ],
-                    showActionButtons: false
-                };
-                formBuilderRef.current = $('#fb-editor').formBuilder(options);
-            }
-        }
-    }, [isModalVisible]);
-
 
     const onFinish = async (values) => {
         const {
@@ -189,26 +54,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
         formData.append('other_link_media_3', other_link_media_3 || "");
         formData.append('other_link_media_4', other_link_media_4 || "");
         formData.append('other_link_media_5', other_link_media_5 || "");
-        SocialLinks.forEach((link, index) => {
+        socialLinks.forEach((link, index) => {
             formData.append(`other_link_${index + 1}`, link || "");
         });
         formData.append('company', currentCompany?.id || "");
         formData.append('profile_picture', profile_picture || "");
         formData.append('cover_image', cover_image || "");
-
-        formData.append('save_button_value', saveButtonColor);
-        formData.append('exchange_button_value', exchangeButtonColor);
-        formData.append('background_button_value', backgroundColor);
-
-         // Append the selected Facebook icon to the formData
-        formData.append('facebook_icon', selectedFacebookIcon || ""); 
-        formData.append('instagram_icon',selectedInstagramIcon || "");
-        formData.append('linkedin_icon',selectedLinkedInIcon || "");
-        formData.append('website_icon',selectedWebsiteIcon || "");
-        
-        const formBuilderData = $('#fb-editor').formBuilder('getData');
-        console.log('FormBuilder Data:', formBuilderData);
-        formData.append('formBuilderData', JSON.stringify(formBuilderData));
 
         try {
             const response = await axios.post(
@@ -221,13 +72,11 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                     }
                 }
             );
-            console.log("response", response);
             message.success(t("User Added Successfully"));
             setLoading(false)
             modalHideShow();
-            // setTimeout(() => {
-            //     window.location.reload();
-            // }, 2000);
+            getCompanyUser();
+            form.resetFields();
         } catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -285,13 +134,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
         setAdditionalEmails(updatedEmails);
     };
     const handleAddLink = () => {
-        if (SocialLinks.length < 2) {
-            setSocialLinks([...SocialLinks, '']);
+        if (socialLinks.length < 5) {
+            setSocialLinks([...socialLinks, '']);
         }
     };
 
     const handleRemoveLink = (index) => {
-        const newLinks = SocialLinks.filter((_, i) => i !== index);
+        const newLinks = socialLinks.filter((_, i) => i !== index);
         setSocialLinks(newLinks);
     };
 
@@ -335,6 +184,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete='off'
+                    initialValues={{
+                        company: currentCompany?.name || "", 
+                    }}
                 >
                     <Form.Item label={t("Profile Picture")} name="profile_picture">
                         <Upload
@@ -363,7 +215,7 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                         </Upload>
                     </Form.Item>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <Form.Item 
+                        <Form.Item
                             label={`${t("First Name")}*`}
                             name="first_name"
                             rules={[
@@ -373,9 +225,8 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                                 },
                             ]}
                         >
-                            
-                            <QuillInput />
-                    </Form.Item>
+                            <Input maxLength={30} />
+                        </Form.Item>
                         <Form.Item
                             label={`${t("Last Name")}*`}
                             name="last_name"
@@ -386,27 +237,27 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                                 },
                             ]}
                         >
-                            <QuillInput />
+                            <Input maxLength={30} />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item
                             label={`${t("Company")}*`}
                             name="company"
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: 'Please enter a company',
-                        //     }
-                        // ]}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please enter a company',
+                            }
+                        ]}
                         >
-                            <Input defaultValue={currentCompany?.name} disabled />
+                            <Input defaultValue={currentCompany?.name} />
                         </Form.Item>
                         <Form.Item
                             label={t("Job title")}
                             name="job_title"
                         >
-                            <QuillInput />
+                            <Input maxLength={100} />
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -438,73 +289,45 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                         </Form.Item>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <Form.Item
-                                label={
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <span>{t("Facebook")}</span>
-                                        <SocialMediaIconSelector
-                                            icons={facebookIcons}
-                                            selectedIcon={selectedFacebookIcon}
-                                            onIconSelect={setSelectedFacebookIcon}
-                                        />
-                                    </div>
-                                }
-                                name="facebook_url"
-                                rules={[
-                                    {
-                                        pattern: /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/,
-                                        message: t("Invalid URL format"),
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-
-                            <Form.Item
-                                label={
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <span>{t("Instagram")}</span>
-                                        <SocialMediaIconSelector
-                                            icons={instagramIcons}
-                                            selectedIcon={selectedInstagramIcon}
-                                            onIconSelect={setSelectedInstagramIcon}
-                                        />
-                                    </div>
-                                }
-                                name="instagram_url"
-                                rules={[
-                                    {
-                                        pattern: /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/,
-                                        message: t("Invalid URL format"),
-                                    },
-                                ]}
-                            >
-                                <Input />
-                            </Form.Item>
-                        </div>
-
                         <Form.Item
-                            label={
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <span>{t("LinkedIn")}</span>
-                                    <SocialMediaIconSelector
-                                        icons={linkedInIcons}
-                                        selectedIcon={selectedLinkedInIcon}
-                                        onIconSelect={setSelectedLinkedInIcon}
-                                    />
-                                </div>
-                            }
-                            name="linkedin_url"
+                            label={<>{t("Facebook")} < i className="fa fa-facebook   icon facebook-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i> </>}
+                            name="facebook_url"
                             rules={[
                                 {
-                                    pattern: /^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
-                                    message: t("Invalid URL format"),
+                                    pattern: /^(https?:\/\/)?(www\.)?facebook.com\/[a-zA-Z0-9(\.\?)?]/,
+                                    message: (t("Invalid URL format")),
                                 },
                             ]}
                         >
                             <Input />
                         </Form.Item>
-                        {SocialLinks.map((_, index) => (
+                        <Form.Item
+                            label={<>{t("Instagram")} <i className="fa fa-instagram  icon instagram-icon " style={{ fontSize: "24px", marginLeft: "5px" }}></i></>}
+                            name="instagram_url"
+                            rules={[
+                                {
+                                    pattern: /^(https?:\/\/)?(www\.)?instagram.com\/[a-zA-Z0-9(\.\?)?]/,
+                                    message: (t("Invalid URL format")),
+                                },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                    </div>
+                    <Form.Item
+                        label={<>{t("Linkedin")} <i className="fa fa-linkedin icon linkedin-icon" style={{ fontSize: "24px", marginLeft: "5px" }}></i>
+                        </>}
+                        name="linkedin_url"
+                        rules={[
+                            {
+                                pattern: /^(https?:\/\/)?(www\.)?linkedin.com\/[a-zA-Z0-9(\.\?)?]/,
+                                message: (t("Invalid URL format")),
+                            },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                    {socialLinks.map((_, index) => (
                         <>
                             <Form.Item
                                 label={`${t("Site internet type")} ${index + 1}`}
@@ -513,17 +336,15 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                                 <Input placeholder={`Siteweb ${index + 1}`} />
                             </Form.Item>
                             <Form.Item key={index}
-                               label={(
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <span>{t("Additional Site Internet")} {index + 1}</span>
-                                    <SocialMediaIconSelector
-                                        icons={websiteIcons}
-                                        selectedIcon={selectedWebsiteIcon}
-                                        onIconSelect={setSelectedWebsiteIcon}
-                                        style={{ marginLeft: '10px' }} // Add margin to separate the icon from the text
-                                    />
-                                </div>
-                            )}
+                                label={
+                                    <>
+                                        {`${t("Additional Site internet")} ${index + 1}`}
+                                        <i
+                                            className="fa fa-globe icon linkedin-icon"
+                                            style={{ fontSize: "24px", marginLeft: "5px" }}
+                                        ></i>
+                                    </>
+                                }
                                 name={`other_link_${index + 1}`}
                                 rules={[
                                     {
@@ -536,9 +357,9 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                                     <Input
                                         placeholder={t("Enter your site internet url")}
                                         style={{ width: '90%' }}
-                                        value={SocialLinks[index]}
+                                        value={socialLinks[index]}
                                         onChange={(e) => {
-                                            const newLinks = [...SocialLinks];
+                                            const newLinks = [...socialLinks];
                                             newLinks[index] = e.target.value;
                                             setSocialLinks(newLinks);
                                         }}
@@ -557,14 +378,13 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
 
                     ))}
 
-                    {SocialLinks.length < 5 && (
+                    {socialLinks.length < 5 && (
                         <Form.Item>
                             <Button type="dashed" onClick={handleAddLink} icon={<PlusOutlined />}>
                                 {t("Add Site internet")}
                             </Button>
                         </Form.Item>
                     )}
-
 
                     <Form.Item
                         label={`${t("Email")}*`}
@@ -706,45 +526,12 @@ const AddUser = ({ isModalVisible, modalHideShow, CompaniesData }) => {
                             </>
                         )
                     }
-                   <Form.Item
+                    <Form.Item
                         label={t("Biography")}
                         name="biography"
                     >
-                        <QuillInput style={{
-                            width: "396px",
-                            
-                        }}/>
+                        <Input />
                     </Form.Item>
-
-                    <Form.Item>
-                        <div className="color-picker-container">
-                            <div className="color-picker-item">
-                                <label>{t("Save Button Theme")}:</label>
-                                <input
-                                    type="color"
-                                    value={saveButtonColor}
-                                    onChange={handleSaveButtonColorChange}
-                                />
-                            </div>
-                            <div className="color-picker-item">
-                                <label>{t("Exchange Button Theme")}:</label>
-                                <input
-                                    type="color"
-                                    value={exchangeButtonColor}
-                                    onChange={handleExchangeButtonColorChange}
-                                />
-                            </div>
-                            <div className="color-picker-item">
-                                <label>{t("Background Theme")}:</label>
-                                <input
-                                    type="color"
-                                    value={backgroundColor}
-                                    onChange={handleBackgroundColorChange}
-                                />
-                            </div>
-                        </div>
-                    </Form.Item>
-                    <div id="fb-editor"></div>
                 </Form>
             </div>
         </Modal >

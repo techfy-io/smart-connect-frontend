@@ -15,3 +15,32 @@
     color: #555; // Slightly lighter text color
   }
   
+  .profile-name {
+    // Flex container for the name
+    .name-container {
+        display: flex; // Use flexbox for inline display
+        align-items: center; // Vertically center the text
+        font-size: 1.5em; // Font size similar to h3
+        font-weight: bold; // Make text bold
+        margin: 0; // Remove default margins
+
+        // Optional margin adjustments
+        .first-name {
+            margin-right: 5px; // Space between first and last name
+        }
+
+        .last-name {
+            margin-left: 5px; // Space after last name (optional)
+        }
+    }
+
+    // Job title styling (if needed)
+    .job-title {
+        font-size: 1.2em; // Adjust job title font size
+        color: #666; // Optional: Change job title color
+        display: block; // Ensure it's on a new line
+        margin-top: 5px; // Space above the job title
+    }
+    
+    // Add any other styles you need for the company name, bio, etc.
+}

@@ -95,7 +95,7 @@ const Leads = () => {
       );
       setIsModalVisible(false);
       message.success("User updated successfully");
-      getExchangeUser();
+      getExchangeUser(); // Refresh data after update
     } catch (error) {
       console.log("error", error);
       const responseData = error.response.data;
@@ -108,7 +108,7 @@ const Leads = () => {
       }
       message.error(errorMessage);
     } finally {
-      setUpdating(false);
+      setUpdating(false); // Hide loading indicator on update button
     }
   };
 
@@ -127,7 +127,7 @@ const Leads = () => {
     Modal.confirm({
       title: t("Confirm"),
       content: t("Are you sure you want to delete this user?"),
-      okText: t("OK"),
+      okText: t("OK"), // Translate the OK button text
       cancelText: t("Cancel"), // Translate the Cancel button text
       onOk() {
         deleteExchangeUser(id);
