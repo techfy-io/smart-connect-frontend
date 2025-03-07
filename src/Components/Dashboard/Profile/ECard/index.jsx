@@ -78,55 +78,53 @@ const ECard = (props) => {
         </div>
         <ProfileActions {...props} />
         <Social {...props} />
-        {user?.other_link_2 ||
-          user?.other_link_3 ||
-          (user.other_link_4 && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: user?.other_link_4
-                  ? "space-between"
-                  : user?.other_link_3
-                  ? "center"
-                  : "center",
-                gap: "10px",
-                padding: "10px",
-                textAlign: "center",
-              }}
-            >
-              {[
-                { url: user?.other_link_2, label: user?.other_link_media_2 },
-                { url: user?.other_link_3, label: user?.other_link_media_3 },
-                { url: user?.other_link_4, label: user?.other_link_media_4 },
-              ]
-                .filter((link) => link?.url)
-                .map((link, index, array) => (
-                  <a
-                    key={index}
-                    target="_blank"
-                    href={link?.url}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "15px",
-                      borderRadius: "20px",
-                      backgroundColor: "#fff",
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      textDecoration: "none",
-                      color: "#000",
-                      fontWeight: "bold",
-                      fontSize: "14px",
-                      minHeight: "50px",
-                      width: array.length === 1 ? "100%" : "auto",
-                      textAlign: "center",
-                    }}
-                  >
-                    {link?.label}
-                  </a>
-                ))}
-            </div>
-          ))}
+        {(user?.other_link_2 || user?.other_link_3 || user?.other_link_4) && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: user?.other_link_4
+                ? "space-between"
+                : user?.other_link_3
+                ? "center"
+                : "center",
+              gap: "10px",
+              padding: "10px",
+              textAlign: "center",
+            }}
+          >
+            {[
+              { url: user?.other_link_2, label: user?.other_link_media_2 },
+              { url: user?.other_link_3, label: user?.other_link_media_3 },
+              { url: user?.other_link_4, label: user?.other_link_media_4 },
+            ]
+              .filter((link) => link.url) // Remove empty links
+              .map((link, index, array) => (
+                <a
+                  key={index}
+                  target="_blank"
+                  href={link.url}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "15px",
+                    borderRadius: "20px",
+                    backgroundColor: "#fff",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    textDecoration: "none",
+                    color: "#000",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                    minHeight: "50px",
+                    width: array.length === 1 ? "100%" : "auto", // Center if only one link
+                    textAlign: "center",
+                  }}
+                >
+                  {link.label}
+                </a>
+              ))}
+          </div>
+        )}
 
         {user?.bio_graphy && (
           <div className="about-wrapper">
