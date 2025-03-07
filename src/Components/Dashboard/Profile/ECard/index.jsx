@@ -78,7 +78,7 @@ const ECard = (props) => {
         </div>
         <ProfileActions {...props} />
         <Social {...props} />
-        {(user?.other_link_2 || user?.other_link_3 || user?.other_link_4) && (
+        {/* {(user?.other_link_2 || user?.other_link_3 || user?.other_link_4) && (
           <div
             style={{
               display: "flex",
@@ -134,7 +134,7 @@ const ECard = (props) => {
                 </a>
               ))}
           </div>
-        )}
+        )} */}
 
         {user?.bio_graphy && (
           <div className="about-wrapper">
