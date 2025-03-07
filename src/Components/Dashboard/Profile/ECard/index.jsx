@@ -3,7 +3,7 @@ import Cover from "./comps/Cover";
 import ProfileActions from "./comps/ProfileActions";
 import placholder from "../../../../Inspect/Men1.png";
 import logo from "../../../../Inspect/icons/logo-smartconnect.png";
-import { Card } from "antd";
+import { Card } from "antd"; //card
 import "./ecard.scss";
 import Social from "./comps/Social";
 import { t } from "i18next";
