@@ -3,7 +3,7 @@ import Cover from "./comps/Cover";
 import ProfileActions from "./comps/ProfileActions";
 import placholder from "../../../../Inspect/Men1.png";
 import logo from "../../../../Inspect/icons/logo-smartconnect.png";
-import { Card } from "antd";
+import { Card } from "antd"; //card
 import "./ecard.scss";
 import Social from "./comps/Social";
 import { t } from "i18next";
@@ -82,23 +82,32 @@ const ECard = (props) => {
           <div
             style={{
               display: "flex",
-              justifyContent: user?.other_link_4
-                ? "space-between"
-                : user?.other_link_3
-                ? "center"
-                : "center",
+              flexDirection: "column",
+              alignItems: "center",
               gap: "10px",
               padding: "10px",
-              textAlign: "center",
+              width: "500px",
             }}
           >
             {[
-              { url: user?.other_link_2, label: user?.other_link_media_2 },
-              { url: user?.other_link_3, label: user?.other_link_media_3 },
-              { url: user?.other_link_4, label: user?.other_link_media_4 },
+              {
+                url: user?.other_link_2,
+                label: user?.other_link_media_2,
+                color: "#800080",
+              },
+              {
+                url: user?.other_link_3,
+                label: user?.other_link_media_3,
+                color: "#FF0000",
+              },
+              {
+                url: user?.other_link_4,
+                label: user?.other_link_media_4,
+                color: "#0000FF",
+              },
             ]
-              .filter((link) => link.url) // Remove empty links
-              .map((link, index, array) => (
+              .filter((link) => link.url)
+              .map((link, index) => (
                 <a
                   key={index}
                   target="_blank"
@@ -107,17 +116,18 @@ const ECard = (props) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: "15px",
-                    borderRadius: "20px",
+                    padding: "20px 20px",
+                    borderRadius: "25px",
                     backgroundColor: "#fff",
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                     textDecoration: "none",
-                    color: "#000",
-                    fontWeight: "bold",
-                    fontSize: "14px",
+                    color: "#800080",
+                    fontWeight: "600",
+                    fontSize: "18px",
+                    width: "80%",
                     minHeight: "50px",
-                    width: array.length === 1 ? "100%" : "auto", // Center if only one link
                     textAlign: "center",
+                    letterSpacing: "1px",
                   }}
                 >
                   {link.label}
