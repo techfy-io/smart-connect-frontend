@@ -108,10 +108,10 @@ const AddUser = ({
                 },
               ],
 
-              ["bold", "italic", "underline"],
+              ["underline"],
             ],
           }}
-          formats={["font", "bold", "italic", "underline"]}
+          formats={["underline"]}
           className="custom-quill-editor"
           {...rest}
         />

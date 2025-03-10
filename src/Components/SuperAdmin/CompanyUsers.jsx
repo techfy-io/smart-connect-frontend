@@ -63,10 +63,10 @@ const CompanyUsers = () => {
   }, []);
   const getCompanyUser = () => {
     const accessToken = localStorage.getItem("accessToken");
-    localStorage.setItem("userid", company.id);
+    localStorage.setItem("userid", company?.id);
     axios
       .get(
-        `${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${company.id}`,
+        `${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${company?.id}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -145,9 +145,9 @@ const CompanyUsers = () => {
           </button>
           <div className="content-company-name">
             {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
-            {company.name
-              ? company.name.length > 30
-                ? `${company.name.substring(0, 30)}...`
+            {company?.name
+              ? company?.name?.length > 30
+                ? `${company?.name.substring(0, 30)}...`
                 : company.name
               : ""}
           </div>
@@ -184,14 +184,14 @@ const CompanyUsers = () => {
                       <Spin />
                     </td>
                   </tr>
-                ) : companyUserList.length === 0 ? (
+                ) : companyUserList?.length === 0 ? (
                   <tr>
                     <td colSpan="6">
                       <Empty description={t("No users found")} />
                     </td>
                   </tr>
                 ) : (
-                  companyUserList.map((user, key) => {
+                  companyUserList?.map((user, key) => {
                     let formData = [];
 
                     // Try to parse the form_builder_data for each user
@@ -369,7 +369,7 @@ const CompanyUsers = () => {
         getCompanyUser={getCompanyUser}
       />
       <UpdateUser
-        Companyid={company.id}
+        Companyid={company?.id}
         openEditModal={openUserEditModal}
         user={selectedUser}
         UpdatemodalHideShow={toggleUpdateUserModal}

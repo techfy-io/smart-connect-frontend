@@ -116,10 +116,10 @@ const UpdateUser = ({
                 },
               ],
 
-              ["bold", "italic", "underline"],
+              ["underline"],
             ],
           }}
-          formats={["font", "bold", "italic", "underline"]}
+          formats={["font", "underline"]}
           className="custom-quill-editor"
           {...rest}
         />

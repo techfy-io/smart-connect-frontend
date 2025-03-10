@@ -108,7 +108,7 @@ const Leads = () => {
       }
       message.error(errorMessage);
     } finally {
-      setUpdating(false); // Hide loading indicator on update button
+      setUpdating(false);
     }
   };
 
