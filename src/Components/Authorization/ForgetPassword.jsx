@@ -21,7 +21,6 @@ const ForgetPassword = () => {
             await axios.post(`${process.env.REACT_APP_BASE_API_URL}/forgot-password/`, values);
             message.success("Email sent successfully");
         } catch (error) {
-            console.log("error", error);
             if (error.response) {
                 // The request was made and the server responded with a status code
                 if (error.response.status === 404 || error.response.status === 500) {

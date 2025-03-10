@@ -36,8 +36,6 @@ const Leads = () => {
   const [updating, setUpdating] = useState(false);
   const [checkboxOptions, setCheckboxOptions] = useState({});
 
-  // hello wirld
-
   useEffect(() => {
     getExchangeUser();
   }, []);
