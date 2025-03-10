@@ -3,9 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import i18n from 'i18next';
 import { I18nextProvider } from 'react-i18next';
-
 const root = createRoot(document.getElementById('root'));
-
 i18n.init({
   lng: 'fr',
   debug: true,
@@ -162,7 +160,7 @@ i18n.init({
       translation: {
         "Welcome": "Bienvenue",
         "Sign in to continue": "Connectez-vous pour continuer",
-        "Forgot Password": "Mot de passe oublié",
+        "Forgot Password": "Mot de passe oublié / Première connexion",
         "Password": "mot de passe",
         "Enter your email or username": "Entrez votre email ou votre nom d'utilisateur",
         "Login": "Se connecter",
@@ -253,7 +251,7 @@ i18n.init({
         "Additional Social link": "Lien social supplémentaire",
         "Additional Email": "E-mail supplémentaire",
         "Another Phone": "Autre téléphone",
-        "Are you the owner of the file? Click here to login?": "Vous êtes le propriétaire de la fiche ? Cliquez ici pour vous connecter?",
+        "Are you the owner of the file? Click here to login?": "Vous êtes le propriétaire de cette carte ? Connectez vous",
         "Biography": "Biographie",
         "No media available, please add one.": "Aucun média disponible, veuillez en ajouter un.",
         "Download QR Code": "Télécharger le code QR",
@@ -292,7 +290,7 @@ i18n.init({
         "Site internet": "Internet du site",
         "Site internet type": "Nom du lien",
         "Enter your site internet url": "Entrez le lien Internet de votre site",
-        "Additional Site internet": "Site Internet supplémentaire",
+        "Additional Site internet": "Lien supplémentaire",
         "Download QR Code": "Télécharger le code QR",
         "No media available please add one": "aucun média disponible veuillez en ajouter un",
         "Back now?": "En arrière maintenant?",
@@ -312,7 +310,6 @@ i18n.init({
     }
   }
 });
-
 root.render(
   <I18nextProvider i18n={i18n}>
     <React.StrictMode>

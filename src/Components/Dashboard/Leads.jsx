@@ -231,8 +231,8 @@ const Leads = () => {
                     <th>{t("Email")}</th>
                     <th>{t("Owner Name")}</th>
                     <th>{t("Date")}</th>
-                    <th>{t("Text Field")}</th>
-                    <th>{t("Checkboxes")}</th>
+                    {/* <th>{t("Text Field")}</th>
+                    <th>{t("Checkboxes")}</th> */}
                     <th>{t("Action")}</th>
                   </tr>
                 </thead>
@@ -356,7 +356,7 @@ const Leads = () => {
                                 ))}
                             </div>
                           </td>
-                          <td>
+                          {/* <td>
                             {checkboxGroups.map((group, i) => (
                               <div key={i}>
                                 <h5
@@ -380,7 +380,7 @@ const Leads = () => {
                                 ))}
                               </div>
                             ))}
-                          </td>
+                          </td> */}
 
                           <td>
                             <div className="Actions-btns">
