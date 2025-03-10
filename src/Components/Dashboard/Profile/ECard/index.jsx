@@ -3,7 +3,6 @@ import Cover from "./comps/Cover";
 import ProfileActions from "./comps/ProfileActions";
 import placholder from "../../../../Inspect/Men1.png";
 import logo from "../../../../Inspect/icons/logo-smartconnect.png";
-import { Card } from "antd"; //card
 import "./ecard.scss";
 import Social from "./comps/Social";
 import { t } from "i18next";
@@ -87,6 +86,7 @@ const ECard = (props) => {
               gap: "10px",
               padding: "10px",
               width: "500px",
+              fontFamily: "'Inter', sans-serif",
             }}
           >
             {[
@@ -122,15 +122,15 @@ const ECard = (props) => {
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                     textDecoration: "none",
                     color: "#800080",
-                    fontWeight: "600",
+                    fontWeight: "700",
                     fontSize: "18px",
                     width: "80%",
                     minHeight: "50px",
                     textAlign: "center",
-                    letterSpacing: "1px",
+                    fontFamily: "'Inter', sans-serif",
                   }}
                 >
-                  {link.label}
+                  {link.label.toUpperCase()}
                 </a>
               ))}
           </div>
