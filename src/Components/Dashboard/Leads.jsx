@@ -95,7 +95,7 @@ const Leads = () => {
       );
       setIsModalVisible(false);
       message.success("User updated successfully");
-      getExchangeUser(); // Refresh data after update
+      getExchangeUser();
     } catch (error) {
       console.log("error", error);
       const responseData = error.response.data;
