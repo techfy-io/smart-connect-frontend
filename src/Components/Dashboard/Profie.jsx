@@ -264,7 +264,7 @@ const Profile = () => {
                             <div className="profile-container">
                                 {/* <div style={{ position: 'absolute', top: '16px', right: '70px' }}>
                                     <Dropdown overlay={menu} trigger={['click']} >
-                                        <Button type="primary" style={{ width: "100px" }}>
+                                        <Button type="primary" style={{ width: "101px" }}>
                                             {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
                                         </Button>
                                     </Dropdown>
