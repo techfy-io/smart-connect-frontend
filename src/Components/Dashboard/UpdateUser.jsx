@@ -20,8 +20,8 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import fb1Img from "../Dashboard/Facebook-Icons/facebook1.png"; // Import the image for fb1
-import fb2Img from "../Dashboard/Facebook-Icons/facebook2.png"; // Import the image for fb2
+import fb1Img from "../Dashboard/Facebook-Icons/facebook1.png";
+import fb2Img from "../Dashboard/Facebook-Icons/facebook2.png";
 import fb3Img from "../Dashboard/Facebook-Icons/facebook3.png";
 import insta1 from "../Dashboard/Instagram-Icons/instagram1.png";
 import insta2 from "../Dashboard/Instagram-Icons/instagram2.png";
@@ -136,8 +136,12 @@ const UpdateUser = ({
       email: user?.email,
       email_1: user?.email_1,
       phone_number: user?.phone_number,
-      company: user?.company,
-      subcompany: user?.sub_company?.trim() ? user.sub_company : user?.company,
+      company: user?.sub_company?.trim()
+        ? user.sub_company
+        : user?.company || user?.companies?.[0]?.company_name,
+      subcompany: user?.sub_company?.trim()
+        ? user.sub_company
+        : user?.company || user?.companies?.[0]?.company_name,
       job_title: user?.job_title,
       zip_code: user?.zip_code,
       phone_number_type: user?.phone_number_type,
@@ -164,7 +168,6 @@ const UpdateUser = ({
       background_button_value: user?.background_button_value,
     });
 
-    // Set the initial icon states based on user data
     setSelectedFacebookIcon(user?.facebook_icon || "");
     setSelectedInstagramIcon(user?.instagram_icon || "");
     setSelectedLinkedInIcon(user?.linkedin_icon || "");
@@ -197,7 +200,6 @@ const UpdateUser = ({
   useEffect(() => {
     if (openEditModal && user) {
       if (formBuilderRef.current) {
-        // Use onRender callback to ensure the form builder is fully initialized
         setTimeout(() => {
           if (user.form_builder_data) {
             const formData = JSON.parse(user.form_builder_data);
@@ -366,9 +368,7 @@ const UpdateUser = ({
         message.success(t("User Update Successfully"));
         setLoading(false);
         UpdatemodalHideShow();
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        getCompanyUser();
       })
       .catch((error) => {
         console.log("error", error);
@@ -573,21 +573,21 @@ const UpdateUser = ({
             </Form.Item>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            {Companyid && Companyid == 307 ? (
-              <>
-                <Form.Item label={t("Company Name")} name="subcompany">
-                  <Input />
-                </Form.Item>
-              </>
+            {user?.sub_company?.trim() ? (
+              <Form.Item label={t("Company Name")} name="subcompany">
+                <Input defaultValue={user.sub_company} />
+              </Form.Item>
             ) : (
-              <>
-                <Form.Item label={t("Company Name")} name="company">
-                  <Input disabled />
-                </Form.Item>
-              </>
+              <Form.Item label={t("Company Name")} name="company">
+                <Input
+                  defaultValue={
+                    user?.company || user?.companies?.[0]?.company_name
+                  }
+                />
+              </Form.Item>
             )}
             <Form.Item label={t("Job title")} name="job_title">
-              <QuillInput />
+              <Input maxLength={100} />
             </Form.Item>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
