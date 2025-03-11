@@ -63,7 +63,9 @@ const AddUser = ({
   const [loading, setLoading] = useState(false);
   const [saveButtonColor, setSaveButtonColor] = useState("#F47122");
   const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569");
-  const [backgroundColor, setBackgroundColor] = useState("#D4D4D4");
+  const [backgroundColor, setBackgroundColor] = useState(
+    "rgba(243, 243, 243, 0.8)"
+  );
   const handleSaveButtonColorChange = (e) => {
     setSaveButtonColor(e.target.value);
   };

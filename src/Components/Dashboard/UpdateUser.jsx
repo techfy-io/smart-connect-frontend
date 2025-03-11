@@ -73,10 +73,11 @@ const UpdateUser = ({
   const linkedInIcons = [linkedIn1, linkedIn2, linkedIn3];
   const websiteIcons = [web1, web2, web3];
 
-  const [saveButtonColor, setSaveButtonColor] = useState("#F47122"); // Default color
-  const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569"); // Default color
-  const [backgroundColor, setBackgroundColor] = useState("#FFFFFF"); // Default color
-
+  const [saveButtonColor, setSaveButtonColor] = useState("#F47122");
+  const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569");
+  const [backgroundColor, setBackgroundColor] = useState(
+    "rgba(243, 243, 243, 0.8)"
+  );
   const handleSaveButtonColorChange = (e) => {
     setSaveButtonColor(e.target.value);
   };
