@@ -51,7 +51,6 @@ const Profile = () => {
       setbackgroundColor(response.data.background_button_value || "#FFFFFF");
       setpageloading(false);
     } catch (error) {
-      console.error("Failed to fetch user data:", error);
       setpageloading(false);
     }
   };
