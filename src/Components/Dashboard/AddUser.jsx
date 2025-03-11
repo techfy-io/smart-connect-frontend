@@ -319,7 +319,7 @@ const AddUser = ({
     setAdditionalEmails(updatedEmails);
   };
   const handleAddLink = () => {
-    if (SocialLinks.length < 2) {
+    if (SocialLinks.length < 5) {
       setSocialLinks([...SocialLinks, ""]);
     }
   };
