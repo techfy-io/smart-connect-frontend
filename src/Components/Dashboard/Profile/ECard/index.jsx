@@ -119,7 +119,9 @@ const ECard = (props) => {
                     padding: "20px 20px",
                     borderRadius: "25px",
                     backgroundColor: "#fff",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    boxShadow:
+                      "0px -4px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.1)",
+
                     textDecoration: "none",
                     color: "#800080",
                     fontWeight: "700",
