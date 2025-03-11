@@ -167,11 +167,13 @@ const Profile = () => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
-
+  console.log(backgroundColor, "nb");
   return (
     <div
-      className="profile-main-wrapper "
-      style={{ backgroundColor: backgroundColor || "#FFFFFF" }}
+      className="profile-main-wrapper"
+      style={{
+        backgroundColor: "rgba(212, 212, 212, 0.1803921569)",
+      }}
     >
       {pageloading ? (
         <Spin size="large" style={{ margin: "auto" }} />
