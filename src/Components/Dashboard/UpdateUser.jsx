@@ -75,8 +75,9 @@ const UpdateUser = ({
 
   const [saveButtonColor, setSaveButtonColor] = useState("#F47122"); // Default color
   const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569"); // Default color
-  const [backgroundColor, setBackgroundColor] = useState("#FFFFFF"); // Default color
-
+  const [backgroundColor, setBackgroundColor] = useState(
+    "rgba(243, 243, 243, 0.8)"
+  );
   const handleSaveButtonColorChange = (e) => {
     setSaveButtonColor(e.target.value);
   };
