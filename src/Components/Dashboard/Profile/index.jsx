@@ -106,7 +106,6 @@ const Profile = () => {
         console.error("No response received from the server:", error.request);
         message.error(t("Failed: No response received from the server."));
       } else {
-        console.error("Error setting up the request:", error.message);
         message.error(t("Failed: Error setting up the request."));
       }
     } finally {
@@ -166,12 +165,17 @@ const Profile = () => {
     const file = event.target.files[0];
     setSelectedImage(file);
   };
-  console.log(backgroundColor, "nb");
   return (
     <div
       className="profile-main-wrapper"
+      // style={{
+      //   backgroundColor:
+      //     backgroundColor === "#FFFFFF"
+      //       ? "rgba(212, 212, 212, 0.18)"
+      //       : backgroundColor || "rgba(212, 212, 212, 0.18)",
+      // }}
       style={{
-        backgroundColor: "rgba(212, 212, 212, 0.1803921569)",
+        backgroundColor: backgroundColor || "rgba(212, 212, 212, 0.18)",
       }}
     >
       {pageloading ? (
