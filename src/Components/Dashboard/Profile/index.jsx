@@ -168,14 +168,8 @@ const Profile = () => {
   return (
     <div
       className="profile-main-wrapper"
-      // style={{
-      //   backgroundColor:
-      //     backgroundColor === "#FFFFFF"
-      //       ? "rgba(212, 212, 212, 0.18)"
-      //       : backgroundColor || "rgba(212, 212, 212, 0.18)",
-      // }}
       style={{
-        backgroundColor: backgroundColor || "rgba(212, 212, 212, 0.18)",
+        backgroundColor: backgroundColor,
       }}
     >
       {pageloading ? (
