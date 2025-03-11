@@ -119,7 +119,8 @@ const ECard = (props) => {
                     padding: "20px 20px",
                     borderRadius: "25px",
                     backgroundColor: "#fff",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    // boxShadow:
+                    //   "0px -4px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.1)",
                     textDecoration: "none",
                     color: "#800080",
                     fontWeight: "700",
@@ -153,10 +154,6 @@ const ECard = (props) => {
         <div className="logo">
           <img src={logo} alt="Smart Connect logo" />
         </div>
-        {/* <p>
-                    {user?.other_link_media_2} :
-                    <a target='blank' href={user?.other_link_2}>{user?.other_link_2}</a>
-                </p> */}
       </div>
     </div>
   );
