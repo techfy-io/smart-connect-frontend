@@ -301,17 +301,20 @@ const UpdateUser = ({
     formData.append("city", city || "");
     formData.append(
       "facebook_icon",
-      selectedFacebookIcon || user.facebook_icon
+      selectedFacebookIcon || user.facebook_icon || fb1Img
     );
     formData.append(
       "instagram_icon",
-      selectedInstagramIcon || user.instagram_icon
+      selectedInstagramIcon || user.instagram_icon || insta1
     );
     formData.append(
       "linkedin_icon",
-      selectedLinkedInIcon || user.linkedin_icon
+      selectedLinkedInIcon || user.linkedin_icon || linkedIn1
     );
-    formData.append("website_icon", selectedWebsiteIcon || user.website_icon);
+    formData.append(
+      "website_icon",
+      selectedWebsiteIcon || user.website_icon || web1
+    );
     formData.append(
       "save_button_value",
       saveButtonColor || user.save_button_value
