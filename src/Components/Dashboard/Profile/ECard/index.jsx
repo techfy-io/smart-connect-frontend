@@ -46,7 +46,7 @@ const ECard = (props) => {
 
     return text.slice(0, max) + "...";
   };
-  console.log(user, "user data");
+
   return (
     <div className="ecard-wrapper">
       <Cover {...props} />
@@ -105,6 +105,11 @@ const ECard = (props) => {
                 label: user?.other_link_media_4,
                 color: "#0000FF",
               },
+              {
+                url: user?.other_link_5,
+                label: user?.other_link_media_5,
+                color: "#0000FF",
+              },
             ]
               .filter((link) => link.url)
               .map((link, index) => (
@@ -131,7 +136,9 @@ const ECard = (props) => {
                     fontFamily: "'Inter', sans-serif",
                   }}
                 >
-                  {link.label.toUpperCase()}
+                  {link.label
+                    ? link.label.toUpperCase()
+                    : t("Additional Site internet")}
                 </a>
               ))}
           </div>

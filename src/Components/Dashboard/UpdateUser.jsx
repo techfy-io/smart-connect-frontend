@@ -693,7 +693,7 @@ const UpdateUser = ({
                 label={
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <span>
-                      {t("Additional Site Internet")} {index + 1}
+                      {`${t("Additional Site internet")} ${index + 1}`}
                     </span>
                     <SocialMediaIconSelector
                       icons={websiteIcons}
