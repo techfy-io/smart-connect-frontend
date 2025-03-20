@@ -235,21 +235,21 @@ const Leads = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {exchangeData.length > 0 ? (
-                    exchangeData.map((user, index) => {
-                      const extraFieldContent = user.extra_fields
-                        .filter((field) => field.field_type === "text")
-                        .map((field) => `${field.label}: ${field.value}`)
-                        .join(", ");
+                  {exchangeData?.length > 0 ? (
+                    exchangeData?.map((user, index) => {
+                      const extraFieldContent = user?.extra_fields
+                        ?.filter((field) => field?.field_type === "text")
+                        ?.map((field) => `${field?.label}: ${field?.value}`)
+                        ?.join(", ");
 
-                      const checkboxGroups = user.extra_fields
-                        .filter(
-                          (field) => field.field_type === "checkbox-group"
+                      const checkboxGroups = user?.extra_fields
+                        ?.filter(
+                          (field) => field?.field_type === "checkbox-group"
                         )
-                        .map((field) => {
-                          const options = parseCheckboxGroup(field.value);
+                        ?.map((field) => {
+                          const options = parseCheckboxGroup(field?.value);
                           return {
-                            label: field.label,
+                            label: field?.label,
                             options: options,
                           };
                         });
@@ -280,14 +280,14 @@ const Leads = () => {
                               >
                                 {`${user.first_name
                                   .charAt(0)
-                                  .toUpperCase()}${user.last_name
+                                  .toUpperCase()}${user?.last_name
                                   .charAt(0)
                                   .toUpperCase()}`}
                               </Avatar>
                               <div
                                 style={{ fontSize: "14px", fontWeight: "bold" }}
                               >
-                                {`${user.first_name} ${user.last_name}`.slice(
+                                {`${user?.first_name} ${user?.last_name}`.slice(
                                   0,
                                   25
                                 )}
@@ -296,7 +296,7 @@ const Leads = () => {
                           </td>
 
                           <td>
-                            {user.company && user.company.length > 25
+                            {user?.company && user?.company.length > 25
                               ? user.company.substring(0, 25) + "..."
                               : user.company}
                           </td>
@@ -321,39 +321,41 @@ const Leads = () => {
                               return `${date.toLocaleDateString()}`;
                             })()}
                           </td>
-                          <td>
+                          {/* <td>
                             <div
                               className="extra-fields"
                               style={{ textAlign: "left" }}
                             >
-                              {user.extra_fields
-                                .filter((field) => field.field_type === "text")
-                                .map((field, i) => (
+                              {user?.extra_fields
+                                ?.filter(
+                                  (field) => field?.field_type === "text"
+                                )
+                                ?.map((field, index) => (
                                   <div
-                                    key={i}
+                                    key={index}
                                     className="field-item"
                                     style={{ marginBottom: "12px" }}
                                   >
                                     <div
+                                      className="field-label"
                                       style={{
                                         fontWeight: "bold",
                                         marginBottom: "4px",
                                       }}
-                                      className="field-label"
                                       dangerouslySetInnerHTML={{
                                         __html: field.label,
                                       }}
-                                    ></div>
+                                    />
                                     <div
                                       className="field-value"
                                       dangerouslySetInnerHTML={{
                                         __html: field.value,
                                       }}
-                                    ></div>
+                                    />
                                   </div>
                                 ))}
                             </div>
-                          </td>
+                          </td> */}
                           {/* <td>
                             {checkboxGroups.map((group, i) => (
                               <div key={i}>
