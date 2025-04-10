@@ -738,7 +738,7 @@ const UpdateUser = ({
                 onClick={handleAddLink}
                 icon={<PlusOutlined />}
               >
-                {t("Add Another Site internet")}
+                {t("Add Another Social Link")}
               </Button>
             </Form.Item>
           )}

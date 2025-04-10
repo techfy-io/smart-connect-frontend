@@ -602,7 +602,7 @@ const AddUser = ({
                 onClick={handleAddLink}
                 icon={<PlusOutlined />}
               >
-                {t("Add Site internet")}
+                {t("Add Another Social Link")}
               </Button>
             </Form.Item>
           )}
