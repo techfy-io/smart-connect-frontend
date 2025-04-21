@@ -237,9 +237,9 @@ const AddUser = ({
     formData.append("company", currentCompany?.id || "");
     formData.append("profile_picture", profile_picture || "");
     formData.append("cover_image", cover_image || "");
-    formData.append("save_button_value", saveButtonColor);
-    formData.append("exchange_button_value", exchangeButtonColor);
-    formData.append("background_button_value", backgroundColor);
+    // formData.append("save_button_value", saveButtonColor);
+    // formData.append("exchange_button_value", exchangeButtonColor);
+    // formData.append("background_button_value", backgroundColor);
     formData.append("facebook_icon", selectedFacebookIcon || "");
     formData.append("instagram_icon", selectedInstagramIcon || "");
     formData.append("linkedin_icon", selectedLinkedInIcon || "");
@@ -750,7 +750,7 @@ const AddUser = ({
             />
           </Form.Item>
 
-          <Form.Item>
+          {/* <Form.Item>
             <div className="color-picker-container">
               <div className="color-picker-item">
                 <label>{t("Save Button Theme")}:</label>
@@ -777,7 +777,7 @@ const AddUser = ({
                 />
               </div>
             </div>
-          </Form.Item>
+          </Form.Item> */}
           <div id="fb-editor"></div>
         </Form>
       </div>

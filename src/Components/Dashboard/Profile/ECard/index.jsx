@@ -9,7 +9,7 @@ import { t } from "i18next";
 import { Button } from "antd";
 // e card
 const ECard = (props) => {
-  const { user } = props;
+  const { user,companyId } = props;
   const [showmore, setShowmore] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 

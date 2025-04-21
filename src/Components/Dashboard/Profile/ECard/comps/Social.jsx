@@ -5,7 +5,7 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 import "./Social.scss";
 
-const Social = () => {
+const Social = (props) => {
   const { t } = useTranslation("translation");
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ const Social = () => {
         setLoading(true);
         try {
           const response = await axios.get(
-            `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`
+            `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=${props.companyId}`
             // , {
             //     headers: {
             //         'Authorization': `Bearer ${accessToken}`

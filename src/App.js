@@ -50,14 +50,14 @@ function App() {
         <Route path="/login" element={validUser ? <Navigate to="/dashboard" /> : <Login />} />
         <Route path="/forgetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ForgetPassword />} />
         <Route path="/resetpassword" element={validUser ? <Navigate to="/dashboard" /> : <ResetPassword />} />
-        <Route path="/profile/:userId" element={<Profie />} />
+        <Route path="/profile/:companyId/:userId" element={<Profie />} />
 
         {/* Protected routes */}
         <Route path="/dashboard" element={validUser ? <Dashboard /> : <Navigate to="/login" />} />
         <Route path="/usersetting" element={validUser ? <UserSetting /> : <Navigate to="/login" />} />
         <Route path="/companyuser" element={validUser ? <CompanyUsers /> : <Navigate to="/login" />} />
         <Route path="/leads" element={validUser ? <Leads /> : <Navigate to="/login" />} />
-        <Route path="/profile/:userId" element={validUser ? <Profie /> : <Navigate to="/login" />} />
+        <Route path="/profile/:companyId/:userId" element={validUser ? <Profie /> : <Navigate to="/login" />} />
 
         {/* Catch-all route */}
         <Route path="*" element={<Navigate to="/" />} />
