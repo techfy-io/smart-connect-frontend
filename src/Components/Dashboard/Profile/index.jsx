@@ -25,8 +25,8 @@ const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [openExchangeModal, setOpenExchangeModal] = useState(false);
-  const { userId } = useParams();
-  const qrCodeRef = useRef(null);
+  const { companyId, userId } = useParams(); 
+   const qrCodeRef = useRef(null);
   const [editingCover, setEditingCover] = useState(false);
   const [scale, setScale] = useState(1);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -45,8 +45,14 @@ const Profile = () => {
     try {
       setpageloading(true);
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`
+        `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}`,
+        {
+          params: {
+            company_id: companyId,
+          }
+        }
       );
+      
       setUserData(response.data);
       setbackgroundColor(response.data.background_button_value || "#FFFFFF");
       setpageloading(false);
@@ -178,6 +184,7 @@ const Profile = () => {
         <>
           <ECard
             user={userData}
+            companyId={companyId}
             fetchUserData={fetchUserData}
             handleOpenQRCode={() => setSidebarOpen(!sidebarOpen)}
             handleOpenExchangeModal={handleOpenExchangeModal}

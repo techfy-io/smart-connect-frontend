@@ -940,15 +940,15 @@ const UpdateUser = ({
           </Form.Item>
           <div className="color-picker-container">
             <div className="color-picker-item">
-              <label>Save Button Color:</label>
-              <input
+            <label>{t("Save Button Theme")}:</label>
+            <input
                 type="color"
                 value={saveButtonColor}
                 onChange={handleSaveButtonColorChange}
               />
             </div>
             <div className="color-picker-item">
-              <label>Exchange Button Color:</label>
+            <label>{t("Exchange Button Theme")}:</label>
               <input
                 type="color"
                 value={exchangeButtonColor}
@@ -956,7 +956,7 @@ const UpdateUser = ({
               />
             </div>
             <div className="color-picker-item">
-              <label>Background Theme:</label>
+            <label>{t("Background Theme")}:</label>
               <input
                 type="color"
                 value={backgroundColor}
