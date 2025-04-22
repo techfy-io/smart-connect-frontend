@@ -19,11 +19,6 @@ const Social = (props) => {
         try {
           const response = await axios.get(
             `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=${props.companyId}`
-            // , {
-            //     headers: {
-            //         'Authorization': `Bearer ${accessToken}`
-            //     }
-            // }
           );
           setUserData(response.data);
         } catch (error) {

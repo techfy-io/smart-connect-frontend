@@ -1,103 +1,220 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
 
-.setting-main-layout {
-    height: 100vh;
-    width: 100%;
-    // text-align: center;
+// .setting-main-layout {
+//     height: 100vh;
+//     width: 100%;
+//     // text-align: center;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: #1ba0b7;
+
+//     .setting-custom-card {
+//         width: 26.5rem;
+//         box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.10);
+//         height: auto;
+//         border-radius: 1.5rem;
+//         display: flex;
+//         flex-direction: column;
+//         align-items: center;
+//         margin: 0 auto;
+//         background-color: #ffffff;
+
+//         .setting-heading {
+//             color: #1e2226;
+//             font-family: 'Raleway', sans-serif;
+//             font-size: 32px;
+//             font-weight: 700;
+//             margin-top: 1.25rem;
+//             margin-bottom: 1.25rem;
+//         }
+
+//         .setting-tab-container {
+//             display: flex;
+//             align-items: center;
+//             justify-content: center;
+//             width: 85%;
+//             height: 44px;
+//             padding: 12px;
+//             gap: 8px;
+//             border-radius: 14px;
+//             background: #e0f3fa;
+//             margin-top: 1.25rem;
+//             margin-bottom: 1.25rem;
+
+//             @media only screen and (max-width: 768px) {
+//                 width: 85%;
+//                 height: 10%;
+//             }
+//         }
+
+//         .button-style {
+//             display: flex;
+//             width: 260px;
+//             height: 34px;
+//             font-size: 1rem;
+//             border-radius: 10px;
+//             justify-content: center;
+//             align-items: center;
+//             gap: 8px;
+//             flex-shrink: 0;
+//             background: transparent;
+//             border: none;
+//             color: #000;
+//             font-weight: bolder;
+
+//             &.active-button-style {
+//                 background: #24acdc;
+//                 color: white;
+//             }
+
+//             @media only screen and (max-width: 768px) {
+//                 width: 45%;
+//                 margin: 0 auto;
+//                 text-align: center;
+
+//                 &.active-button-style {
+//                     background: #24acdc;
+//                     color: white;
+//                 }
+//             }
+//         }
+
+//         .setting-tab-content {
+//             width: 100%;
+//             max-width: 24.25rem;
+
+//             .ant-form {
+//                 width: 98%;
+//             }
+
+//             .ant-form-item {
+//                 margin-bottom: 0.5rem;
+//             }
+
+//             .ant-form-item-label {
+//                 label {
+//                     font-family: 'Raleway', sans-serif;
+//                     font-size:0.9rem;
+//                     color: #1e2226;
+//                     font-weight: 600;
+//                 }
+//             }
+
+//             .ant-input {
+//                 height: 44px;
+//                 border-radius: 0.625rem;
+//             }
+//             .setting-form-enable-button {
+//                 display: flex;
+//                 width: 100%;
+//                 height: 3rem;
+//                 padding: 0.625rem 0.875rem;
+//                 justify-content: center;
+//                 align-items: center;
+//                 gap: 0.5rem;
+//                 border: none;
+//                 border-radius: 0.625rem;
+//                 background: #ffb011;
+//                 color: #1f2128;
+//                 text-align: center;
+//                 font-family: 'Raleway', sans-serif;
+//                 font-size: 1rem;
+//                 font-style: normal;
+//                 font-weight: 700;
+//                 line-height: normal;
+//                 margin-bottom: 1.25rem;
+//             }
+//             .setting-form-disable-button {
+//                 display: flex;
+//                 width: 100%;
+//                 height: 3rem;
+//                 padding: 0.625rem 0.875rem;
+//                 justify-content: center;
+//                 align-items: center;
+//                 gap: 0.5rem;
+//                 border: none;
+//                 border-radius: 0.625rem;
+//                 background: #e0e0e0; /* Lighter gray background */
+//                 color: #1f2128;
+//                 text-align: center;
+//                 font-family: 'Raleway', sans-serif;
+//                 font-size: 1rem;
+//                 font-style: normal;
+//                 font-weight: 700;
+//                 line-height: normal;
+//                 margin-bottom: 1.25rem;
+//             }
+//         }
+//         @media only screen and (max-width: 768px){
+//             width: 23.5rem;
+//         }
+//     }
+// }
+
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1ba0b7;
+    background-color: #00a7c5;
+    min-height: 100vh;
+    padding: 1rem;
 
-    .setting-custom-card {
-        width: 26.5rem;
-        box-shadow: 0px 4px 16px 0px rgba(0, 0, 0, 0.10);
-        height: auto;
-        border-radius: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 0 auto;
-        background-color: #ffffff;
+    .form-box {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 420px;
 
-        .setting-heading {
-            color: #1e2226;
-            font-family: 'Raleway', sans-serif;
-            font-size: 32px;
-            font-weight: 700;
-            margin-top: 1.25rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .setting-tab-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 85%;
-            height: 64px;
-            padding: 12px;
-            gap: 8px;
-            border-radius: 14px;
-            background: #e0f3fa;
-            margin-top: 1.25rem;
-            margin-bottom: 1.25rem;
-
-            @media only screen and (max-width: 768px) {
-                width: 85%;
-                height: 10%;
-            }
-        }
-
-        .button-style {
-            display: flex;
-            width: 260px;
-            height: 44px;
-            font-size: 1rem;
+        .title {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            background-color: #dff5fd;
             border-radius: 10px;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            flex-shrink: 0;
-            background: transparent;
-            border: none;
-            color: #000;
-            font-weight: bolder;
-
-            &.active-button-style {
-                background: #24acdc;
-                color: white;
-            }
-
-            @media only screen and (max-width: 768px) {
-                width: 45%;
-                margin: 0 auto;
-                text-align: center;
-
-                &.active-button-style {
-                    background: #24acdc;
-                    color: white;
-                }
+            padding: 10px 0;
+            font-weight: bold;
+        }
+        .ant-form-item-label {
+            label {
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.9rem;
+                color: #1e2226;
+                font-weight: 600;
             }
         }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
 
-        .setting-tab-content {
-            width: 100%;
-            max-width: 24.25rem;
+            .setting-form-label {
+                flex: 1;
+                font-family: 'Raleway', sans-serif;
+                font-size: 0.9rem;
+                color: #1e2226;
+                font-weight: 600;
+            }
 
-            .ant-form {
-                width: 98%;
+            input[type="color"] {
+                width: 40px;
+                height: 30px;
+                border: none;
+                margin-left: auto;
+                cursor: pointer;
             }
 
             .ant-form-item {
-                margin-bottom: 1.25rem;
+                margin-bottom: 0.5rem;
             }
 
             .ant-form-item-label {
                 label {
                     font-family: 'Raleway', sans-serif;
-                    font-size: 1rem;
+                    font-size: 0.9rem;
                     color: #1e2226;
-                    font-weight: 700;
+                    font-weight: 600;
                 }
             }
 
@@ -105,49 +222,40 @@
                 height: 44px;
                 border-radius: 0.625rem;
             }
-            .setting-form-enable-button {
-                display: flex;
-                width: 100%;
-                height: 3rem;
-                padding: 0.625rem 0.875rem;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                border: none;
-                border-radius: 0.625rem;
-                background: #ffb011;
-                color: #1f2128;
-                text-align: center;
-                font-family: 'Raleway', sans-serif;
-                font-size: 1rem;
-                font-style: normal;
-                font-weight: 700;
-                line-height: normal;
-                margin-bottom: 1.25rem;
-            }
-            .setting-form-disable-button {
-                display: flex;
-                width: 100%;
-                height: 3rem;
-                padding: 0.625rem 0.875rem;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                border: none;
-                border-radius: 0.625rem;
-                background: #e0e0e0; /* Lighter gray background */
-                color: #1f2128;
-                text-align: center;
-                font-family: 'Raleway', sans-serif;
-                font-size: 1rem;
-                font-style: normal;
-                font-weight: 700;
-                line-height: normal;
-                margin-bottom: 1.25rem;
-            }
         }
-        @media only screen and (max-width: 768px){
-            width: 23.5rem;
+
+        .save-button {
+            display: flex;
+            width: 100%;
+            height: 3rem;
+            padding: 0.625rem 0.875rem;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            border: none;
+            border-radius: 0.625rem;
+            background: #ffb011;
+            color: #1f2128;
+            text-align: center;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            font-style: normal;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 1.25rem;
         }
+
+        .back-link {
+            text-align: right;
+            margin-top: 0.5rem;
+            color: #0066cc;
+            cursor: pointer;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .form-box {
+        padding: 1rem;
     }
 }

@@ -68,8 +68,8 @@ const UpdateUser = ({
     user?.website_icon
   ); // Initialize selectedIcon state
 
-  const facebookIcons = [fb1Img, fb2Img, fb3Img]; // Replace with your actual icon URLs
-  const instagramIcons = [insta1, insta2, insta3]; // Replace with your actual icon URLs
+  const facebookIcons = [fb1Img, fb2Img, fb3Img]; 
+  const instagramIcons = [insta1, insta2, insta3]; 
   const linkedInIcons = [linkedIn1, linkedIn2, linkedIn3];
   const websiteIcons = [web1, web2, web3];
 
@@ -938,7 +938,7 @@ const UpdateUser = ({
               }}
             />
           </Form.Item>
-          <div className="color-picker-container">
+          {/* <div className="color-picker-container">
             <div className="color-picker-item">
             <label>{t("Save Button Theme")}:</label>
             <input
@@ -963,7 +963,7 @@ const UpdateUser = ({
                 onChange={handleBackgroundColorChange}
               />
             </div>
-          </div>
+          </div> */}
           <div id="fb-editor"></div>
         </Form>
       </div>

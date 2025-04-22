@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useTranslation } from "react-i18next";
 import { message, Button, Flex, Spin } from 'antd';
 import './ProfileActions.scss'
-const ProfileActions = ({  handleOpenExchangeModal,props }) => {
+const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
     const { t } = useTranslation('translation');
     const [loading, setLoading] = useState(false);
     const { userId } = useParams();
@@ -28,6 +28,7 @@ const ProfileActions = ({  handleOpenExchangeModal,props }) => {
             setpageloading(true);
             const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=${props.companyId}`);
             setUserData(response.data);
+            console.log(response.data.save_button_value ,"value")
             setSaveButtonColor(response.data.save_button_value || '#F47122');
             setExchangeButtonColor(response.data.exchange_button_value || '#616569');
             console.log(response.data);
