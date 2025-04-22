@@ -24,6 +24,7 @@ function Dashboard() {
   const [userType, setUserType] = useState("");
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [companyId, setCompanyId] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateCompanyloading, setupdateCompanyloading] = useState(false);
   const [qrModalVisible, setQRModalVisible] = useState(false);
@@ -72,7 +73,6 @@ function Dashboard() {
 
     const accessToken = localStorage.getItem('accessToken');
     axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
-      // params: { limit: 10, offset: 0 },
       headers: { 'Authorization': `Bearer ${accessToken}` }
     })
       .then((response) => {
@@ -94,8 +94,8 @@ function Dashboard() {
     })
       .then((response) => {
         setUserType("User")
-        // console.log(response.data.results);
-        setCompanyName(response.data.results[0].company);
+        setCompanyName(response.data.results[0].companies[0].company_name);
+        setCompanyId(response.data.results[0].companies[0].company_id);
         setUserData(response.data.results);
         setLoading(false);
       })
@@ -131,18 +131,29 @@ function Dashboard() {
   const openUpdateCompanyModal = (company) => {
     setCompanyInfo(company);
     form.setFieldsValue({
-      name: company.name,
-      email: company.email,
-      phone_number: company.phone_number,
+      name: company?.name,
+      email: company?.email,
+      phone_number: company?.phone_number,
     });
+    setBackgroundColor(company?.background_theme_color  ||"rgba(243, 243, 243, 0.8)" )
+    setExchangeButtonColor(company?.exchange_button_color ||"#616569")
+    setSaveButtonColor(company?.save_button_color || "#F47122")
     toggleUpdateCompanyModal();
   };
   const handleUpdateCompany = () => {
-    form.validateFields().then((values) => {
+    form.validateFields().then((formValues) => {
+      const payload = {
+        ...formValues,
+        save_button_color: saveButtonColor,
+        exchange_button_color: exchangeButtonColor,
+        background_theme_color: backgroundColor,
+      };
+  
       setupdateCompanyloading(true);
       const accessToken = localStorage.getItem('accessToken');
       const { id } = companyInfo;
-      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
+  
+      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, payload, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
         .then((response) => {
@@ -159,14 +170,14 @@ function Dashboard() {
             } else {
               const responseData = error.response.data;
               let errorMessage = '';
-
+  
               for (const prop in responseData) {
                 if (responseData.hasOwnProperty(prop)) {
                   errorMessage = responseData[prop][0];
                   break;
                 }
               }
-
+  
               message.error(errorMessage);
             }
           } else if (error.request) {
@@ -180,15 +191,16 @@ function Dashboard() {
         });
     });
   };
-
+  
   const handleCancel = () => {
     form.resetFields();
     toggleUpdateCompanyModal();
   };
 
   const GetUserProfile = (id) => {
-    navigate(`/profile/${id}`);
-  }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+    navigate(`/profile/${companyId}/${id}`);
+  };
+   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
   const handleDownloadClick = (user) => {
     setSelectedUser(user);
@@ -215,7 +227,7 @@ function Dashboard() {
             </>) : (
             <>
               <div className='content-company-name'>
-                {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName : ""}
+                {/* {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName : ""} */}
               </div>
               <div className='AddUser-action'>
                 <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
@@ -416,7 +428,7 @@ function Dashboard() {
               <label>{t("Save Button Theme")}:</label>
               <input
                 type="color"
-                value={saveButtonColor}
+                value={ saveButtonColor}
                 onChange={handleSaveButtonColorChange}
               />
             </div>
