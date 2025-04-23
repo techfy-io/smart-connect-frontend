@@ -132,12 +132,12 @@ const UserSetting = () => {
   
             <div className="color-picker">
               <label className='setting-form-label'>Bouton Enregistrer Thème:</label>
-              <input type="color" value={saveButtonColor} onChange={e => setSaveColor(e.target.value)} />
+              <input type="color" value={saveButtonColor} onChange={e => setSaveButtonColor(e.target.value)} />
             </div>
   
             <div className="color-picker">
               <label className='setting-form-label'>Thème du bouton d'échange:</label>
-              <input type="color" value={exchangeButtonColor} onChange={e => setExchangeColor(e.target.value)} />
+              <input type="color" value={exchangeButtonColor} onChange={e => setExchangeButtonColor(e.target.value)} />
             </div>
   
             <div className="color-picker">
