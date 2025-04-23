@@ -18,8 +18,6 @@ const UserSetting = () => {
     const [profileData, setProfileData] = useState();
     const [saveButtonColor, setSaveButtonColor] = useState("#F47122");
     const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569");
-    const [saveColor, setSaveColor] = useState('#28a745');
-    const [exchangeColor, setExchangeColor] = useState('#90ee90');
     const [backgroundColor, setBackgroundColor] = useState(
         "rgba(243, 243, 243, 0.8)"
     );
@@ -134,12 +132,12 @@ const UserSetting = () => {
   
             <div className="color-picker">
               <label className='setting-form-label'>Bouton Enregistrer Thème:</label>
-              <input type="color" value={saveColor} onChange={e => setSaveColor(e.target.value)} />
+              <input type="color" value={saveButtonColor} onChange={e => setSaveColor(e.target.value)} />
             </div>
   
             <div className="color-picker">
               <label className='setting-form-label'>Thème du bouton d'échange:</label>
-              <input type="color" value={exchangeColor} onChange={e => setExchangeColor(e.target.value)} />
+              <input type="color" value={exchangeButtonColor} onChange={e => setExchangeColor(e.target.value)} />
             </div>
   
             <div className="color-picker">
