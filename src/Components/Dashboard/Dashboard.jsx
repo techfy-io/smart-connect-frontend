@@ -454,7 +454,7 @@ function Dashboard() {
       <QRCodeModal
         visible={qrModalVisible}
         onClose={closeModal}
-        qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${selectedUser.id}` : ''}
+        qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${companyId}/${selectedUser.id}` : ''}
         firstName={selectedUser ? selectedUser.first_name : ''}
       />
     </div >
