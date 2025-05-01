@@ -144,7 +144,6 @@ const CompanyUsers = () => {
             {isSidebarCollapsed ? <MenuOutlined /> : <MenuFoldOutlined />}
           </button>
           <div className="content-company-name">
-            {/* {<Avatar icon={<UserOutlined />} style={{ padding: "25px" }} />} */}
             {company?.name
               ? company?.name?.length > 30
                 ? `${company?.name.substring(0, 30)}...`
@@ -156,11 +155,6 @@ const CompanyUsers = () => {
             <Button className="Add-company-btn" onClick={modalHideShow}>
               {t("Add User")}
             </Button>
-            {/* <Dropdown overlay={menu} trigger={['click']} >
-                            <Button type="primary" style={{ marginLeft: "4px" }}>
-                                {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                            </Button>
-                        </Dropdown> */}
           </div>
         </div>
         <div className="scrollable-wrapper">
@@ -380,7 +374,7 @@ const CompanyUsers = () => {
         onClose={closeModal}
         qrCodeValue={
           selectedUser
-            ? `https://app.smartconnect.cards/profile/${selectedUser.id}`
+            ? `https://app.smartconnect.cards/profile/${company?.id}/${selectedUser.id}`
             : ""
         }
         firstName={selectedUser ? selectedUser.first_name : ""}
