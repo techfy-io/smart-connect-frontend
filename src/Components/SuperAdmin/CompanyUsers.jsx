@@ -374,7 +374,7 @@ const CompanyUsers = () => {
         onClose={closeModal}
         qrCodeValue={
           selectedUser
-            ? `https://app.smartconnect.cards/profile/${company?.id}/${selectedUser.id}`
+            ? `https://dev.smartconnect.cards/profile/${company?.id}/${selectedUser.id}`
             : ""
         }
         firstName={selectedUser ? selectedUser.first_name : ""}
