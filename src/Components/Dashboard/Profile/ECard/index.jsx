@@ -9,7 +9,7 @@ import { t } from "i18next";
 import { Button } from "antd";
 // e card
 const ECard = (props) => {
-  const { user } = props;
+  const { user,companyId } = props;
   const [showmore, setShowmore] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -46,7 +46,7 @@ const ECard = (props) => {
 
     return text.slice(0, max) + "...";
   };
-  console.log(user, "user data");
+
   return (
     <div className="ecard-wrapper">
       <Cover {...props} />
@@ -105,6 +105,11 @@ const ECard = (props) => {
                 label: user?.other_link_media_4,
                 color: "#0000FF",
               },
+              {
+                url: user?.other_link_5,
+                label: user?.other_link_media_5,
+                color: "#0000FF",
+              },
             ]
               .filter((link) => link.url)
               .map((link, index) => (
@@ -119,7 +124,8 @@ const ECard = (props) => {
                     padding: "20px 20px",
                     borderRadius: "25px",
                     backgroundColor: "#fff",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    // boxShadow:
+                    //   "0px -4px 6px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.1)",
                     textDecoration: "none",
                     color: "#800080",
                     fontWeight: "700",
@@ -130,7 +136,9 @@ const ECard = (props) => {
                     fontFamily: "'Inter', sans-serif",
                   }}
                 >
-                  {link.label.toUpperCase()}
+                  {link.label
+                    ? link.label.toUpperCase()
+                    : t("Additional Site internet")}
                 </a>
               ))}
           </div>
@@ -153,10 +161,6 @@ const ECard = (props) => {
         <div className="logo">
           <img src={logo} alt="Smart Connect logo" />
         </div>
-        {/* <p>
-                    {user?.other_link_media_2} :
-                    <a target='blank' href={user?.other_link_2}>{user?.other_link_2}</a>
-                </p> */}
       </div>
     </div>
   );

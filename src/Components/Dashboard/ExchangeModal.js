@@ -4,7 +4,6 @@ import { Modal, Form, Input, Button } from 'antd';
 import { useTranslation } from "react-i18next";
 import $ from 'jquery';
 
-// Make jQuery available globally for formBuilder
 window.jQuery = $;
 window.$ = $;
 require("jquery-ui-sortable");
@@ -14,73 +13,17 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
     const { t } = useTranslation('translation');
     const [form] = Form.useForm();
     const formBuilderRef = useRef(null);
-
-    // Initialize formBuilder when the modal opens
-    // useEffect(() => {
-    //     if (open) {
-    //         if (formBuilderRef.current) {
-    //             // Reset the formBuilder when modal is reopened
-    //             $('#form-builder').formBuilder('reset');
-    //             $('#form-builder').formBuilder('setData', []);
-    //         } else {
-    //             const options = {
-    //                 disableFields: [
-    //                     'autocomplete', 'button', 'paragraph', 'date',
-    //                     'header', 'hidden', 'number', 'radio-group', 'textarea',
-    //                     'select', 'file'
-    //                 ],
-
-    //                 onOpenFieldEdit: () => {
-    //                     $(`.description-wrap, .toggle-wrap, .inline-wrap, .className-wrap, 
-    //                       .name-wrap, .access-wrap, .other-wrap, .subtype-wrap, .maxlength-wrap,
-    //                       .rows-wrap, .multiple-wrap`).hide();
-    //                 },
-    //                 controlOrder: ['text', 'checkbox-group'],
-    //                 showActionButtons: false
-    //             };
-    //             formBuilderRef.current = $('#form-builder').formBuilder(options);
-    //         }
-    //     }
-    // }, [open]);
-
-    // Handle form cancellation
     const handleCancel = () => {
         onClose();
         form.resetFields();
     };
-
-    // Handle form submission
     const onFinish = async (values) => {
-        // const formBuilderData = $('#form-builder').formBuilder('getData');
-        // const formattedExtraFields = formBuilderData.map(field => {
-        //     if (field.type === 'checkbox-group') {
-        //         const options = field.values.map(option => ({
-        //             label: option.label,
-        //             value: option.value,
-        //             selected: option.selected,
-        //         }));
-        //         return {
-        //             field_type: field.type,
-        //             label: field.label,
-        //             name: field.name,
-        //             value: options,
-        //         };
-        //     } else {
-        //         return {
-        //             field_type: field.type,
-        //             label: field.label,
-        //             name: field.name,
-        //             value: values[field.name] || field.value || "",
-        //         };
-        //     }
-        // });
-
+      
         const requestData = {
             ...values,
-            // extra_fields: formattedExtraFields,
         };
 
-        onSubmit(requestData); // or directly handle it here
+        onSubmit(requestData); 
     };
 
     return (
@@ -155,9 +98,6 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
                         autoComplete="tel"
                     />
                 </Form.Item>
-
-                {/* FormBuilder Component */}
-                {/* <div id="form-builder"></div> */}
             </Form>
         </Modal>
     );

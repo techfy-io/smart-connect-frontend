@@ -1,7 +1,9 @@
-*{
+0*{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
+    /* background-color : #dg4ydde h!important; */
+
 }
 body{
     font-family: "Inter", sans-serif;

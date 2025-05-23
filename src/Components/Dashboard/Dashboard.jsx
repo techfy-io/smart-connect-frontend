@@ -13,9 +13,9 @@ import CompanyUsers from '../SuperAdmin/CompanyUsers';
 import InputMask from "react-input-mask";
 import 'font-awesome/css/font-awesome.min.css';
 import { useTranslation } from "react-i18next";
-import html2canvas from 'html2canvas';
 import QRCodeModal from "../Common/QRCodeModals";
-
+import "./CustomQuill.css";
+import "./ColorPicker.css";
 function Dashboard() {
   const { t, i18n } = useTranslation('translation');
   const [form] = Form.useForm();
@@ -24,6 +24,7 @@ function Dashboard() {
   const [userType, setUserType] = useState("");
   const [companiesData, setCompaniesData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [companyId, setCompanyId] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateCompanyloading, setupdateCompanyloading] = useState(false);
   const [qrModalVisible, setQRModalVisible] = useState(false);
@@ -33,7 +34,21 @@ function Dashboard() {
   const [updateCompanyModalVisible, setUpdateCompanyModalVisible] = useState(false);
   const [companyName, setCompanyName] = useState('')
   const [companyInfo, setCompanyInfo] = useState({});
+  const [saveButtonColor, setSaveButtonColor] = useState("#F47122");
+  const [exchangeButtonColor, setExchangeButtonColor] = useState("#616569");
+  const [backgroundColor, setBackgroundColor] = useState(
+    "rgba(243, 243, 243, 0.8)"
+  );
+  const handleSaveButtonColorChange = (e) => {
+    setSaveButtonColor(e.target.value);
+  };
 
+  const handleExchangeButtonColorChange = (e) => {
+    setExchangeButtonColor(e.target.value);
+  };
+  const handleBackgroundColorChange = (e) => {
+    setBackgroundColor(e.target.value);
+  };
   const updateUser = (user) => {
     setSelectedUser(user);
     toggleUpdateUserModal();
@@ -58,7 +73,6 @@ function Dashboard() {
 
     const accessToken = localStorage.getItem('accessToken');
     axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
-      // params: { limit: 10, offset: 0 },
       headers: { 'Authorization': `Bearer ${accessToken}` }
     })
       .then((response) => {
@@ -80,8 +94,8 @@ function Dashboard() {
     })
       .then((response) => {
         setUserType("User")
-        // console.log(response.data.results);
-        setCompanyName(response.data.results[0].company);
+        setCompanyName(response.data.results[0].companies[0].company_name);
+        setCompanyId(response.data.results[0].companies[0].company_id);
         setUserData(response.data.results);
         setLoading(false);
       })
@@ -117,18 +131,29 @@ function Dashboard() {
   const openUpdateCompanyModal = (company) => {
     setCompanyInfo(company);
     form.setFieldsValue({
-      name: company.name,
-      email: company.email,
-      phone_number: company.phone_number,
+      name: company?.name,
+      email: company?.email,
+      phone_number: company?.phone_number,
     });
+    setBackgroundColor(company?.background_theme_color  ||"rgba(243, 243, 243, 0.8)" )
+    setExchangeButtonColor(company?.exchange_button_color ||"#616569")
+    setSaveButtonColor(company?.save_button_color || "#F47122")
     toggleUpdateCompanyModal();
   };
   const handleUpdateCompany = () => {
-    form.validateFields().then((values) => {
+    form.validateFields().then((formValues) => {
+      const payload = {
+        ...formValues,
+        save_button_color: saveButtonColor,
+        exchange_button_color: exchangeButtonColor,
+        background_theme_color: backgroundColor,
+      };
+  
       setupdateCompanyloading(true);
       const accessToken = localStorage.getItem('accessToken');
       const { id } = companyInfo;
-      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, values, {
+  
+      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, payload, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
         .then((response) => {
@@ -145,14 +170,14 @@ function Dashboard() {
             } else {
               const responseData = error.response.data;
               let errorMessage = '';
-
+  
               for (const prop in responseData) {
                 if (responseData.hasOwnProperty(prop)) {
                   errorMessage = responseData[prop][0];
                   break;
                 }
               }
-
+  
               message.error(errorMessage);
             }
           } else if (error.request) {
@@ -166,15 +191,16 @@ function Dashboard() {
         });
     });
   };
-
+  
   const handleCancel = () => {
     form.resetFields();
     toggleUpdateCompanyModal();
   };
 
   const GetUserProfile = (id) => {
-    navigate(`/profile/${id}`);
-  }; const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+    navigate(`/profile/${companyId}/${id}`);
+  };
+   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
   const handleDownloadClick = (user) => {
     setSelectedUser(user);
@@ -184,19 +210,6 @@ function Dashboard() {
   const closeModal = () => {
     setQRModalVisible(false);
   };
-  // const changeLanguage = (lng) => {
-  //   i18n.changeLanguage(lng);
-  // };
-  // const menu = (
-  //   <Menu>
-  //     <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-  //       French
-  //     </Menu.Item>
-  //     <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-  //       English
-  //     </Menu.Item>
-  //   </Menu>
-  // );
   return (
     <div className="dashboard">
       <Sidebar isSidebarCollapsed={isSidebarCollapsed} setIsSidebarCollapsed={setIsSidebarCollapsed} />
@@ -207,38 +220,18 @@ function Dashboard() {
           </button>
           {userType === "SuperAdmin" ? (
             <>
-              {/* <div style={{ display: "flex", justifyContent: "space-between" }}> */}
-              {/* <img className='content-header-logo' src={CompanyLogo} alt="" /> */}
-              {/* <div className='content-header-companyName'> */}
               <i class="fa fa-building-o content-header-logo" aria-hidden="true" style={{ color: "white", fontSize: "50px" }}></i>
-              {/* </div> */}
               <div className='AddUser-action'>
                 <Button className='Add-user-btn' onClick={toggleAddCompanyModal}>{t('Add Company')}</Button>
-                {/* <Dropdown overlay={menu} trigger={['click']} >
-                  <Button className='language-change-btn' type="primary" style={{ marginLeft: "4px" }}>
-                    {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                  </Button>
-                </Dropdown> */}
-
-
-                {/* </div> */}
               </div>
-              {/* </div> */}
             </>) : (
             <>
-              {/* <div className='content-company-header'> */}
               <div className='content-company-name'>
-                {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName : ""}
+                {/* {companyName ? companyName.length > 30 ? `${companyName.substring(0, 30)}...` : companyName : ""} */}
               </div>
               <div className='AddUser-action'>
                 <a href="https://smartconnect.cards/completer-mon-parc-smartconnect/" target='_blank' style={{ textDecoration: "none" }}> <Button className='Add-user-btn'>{t('Purchase New Card')}</Button></a>
-                {/* <Dropdown overlay={menu} trigger={['click']} >
-                  <Button type="primary" style={{ marginLeft: "4px" }}>
-                    {i18n.language === 'fr' ? t('French') : t('English')} <DownOutlined />
-                  </Button>
-                </Dropdown> */}
               </div>
-              {/* </div> */}
             </>
           )
           }
@@ -287,7 +280,7 @@ function Dashboard() {
                                     <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
                                     <button
                                       className="download-button"
-                                      onClick={() => openUpdateCompanyModal(company)} // Pass company info here
+                                      onClick={() => openUpdateCompanyModal(company)} 
                                     >
                                       <EditOutlined />
                                     </button>
@@ -322,9 +315,6 @@ function Dashboard() {
                                   }
                                 </td>
                                 <td className='Actions-btns'>
-                                  {/* <a href={`/profile/${user.id}`}>
-                                  <button className="view-eye-btn" onClick={() => GetUserProfile(user.id)}><EyeOutlined /></button>
-                                </a> */}
 
                                   <a
                                     href={`/profile/${user.id}`}
@@ -336,15 +326,9 @@ function Dashboard() {
                                   >
                                     <EyeOutlined />
                                   </a>
-                                  {/* <button className='view-eye-btn' onClick={() => GetUserProfile(user.id)}>
-                                  <EyeOutlined />
-                                </button> */}
                                   <button className="Edit-button" onClick={() => updateUser(user)}>
                                     <EditOutlined />
                                   </button>
-                                  {/* <button className="Delete-button" onClick={() => deleteUser(user.id)}>
-                                  <DeleteOutlined />
-                                </button> */}
                                   <button className="Edit-button" onClick={() => handleDownloadClick(user)}>
                                     <DownloadOutlined />
                                   </button>
@@ -369,7 +353,6 @@ function Dashboard() {
       </div>
       <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal}  />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} fetchCompanies={fetchCompanies} />
-      {/* Update company Modal */}
       <Modal
         title={t('Update Company')}
         open={updateCompanyModalVisible}
@@ -440,13 +423,38 @@ function Dashboard() {
               placeholder="+33 1 23 45 67 89"
             />
           </Form.Item>
-
+          <div className="color-picker-container">
+            <div className="color-picker-item">
+              <label>{t("Save Button Theme")}:</label>
+              <input
+                type="color"
+                value={ saveButtonColor}
+                onChange={handleSaveButtonColorChange}
+              />
+            </div>
+            <div className="color-picker-item">
+            <label>{t("Exchange Button Theme")}:</label>
+            <input
+                type="color"
+                value={exchangeButtonColor}
+                onChange={handleExchangeButtonColorChange}
+              />
+            </div>
+            <div className="color-picker-item">
+            <label>{t("Background Theme")}:</label>
+            <input
+                type="color"
+                value={backgroundColor}
+                onChange={handleBackgroundColorChange}
+              />
+            </div>
+          </div>
         </Form>
       </Modal>
       <QRCodeModal
         visible={qrModalVisible}
         onClose={closeModal}
-        qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${selectedUser.id}` : ''}
+        qrCodeValue={selectedUser ? `https://app.smartconnect.cards/profile/${companyId}/${selectedUser.id}` : ''}
         firstName={selectedUser ? selectedUser.first_name : ''}
       />
     </div >
