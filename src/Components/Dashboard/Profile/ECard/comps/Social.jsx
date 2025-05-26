@@ -18,7 +18,7 @@ const Social = (props) => {
         setLoading(true);
         try {
           const response = await axios.get(
-            `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=${props.companyId}`
+            `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`
           );
           setUserData(response.data);
         } catch (error) {
