@@ -198,7 +198,7 @@ function Dashboard() {
   };
 
   const GetUserProfile = (id) => {
-    navigate(`/profile/${companyId}/${id}`);
+    navigate(`/profile/${id}`);
   };
    const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 

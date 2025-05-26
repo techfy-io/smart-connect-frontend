@@ -47,7 +47,7 @@ const Profile = () => {
     const fetchUserData = async () => {
         try {
             setpageloading(true);
-            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=498`);
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
             setUserData(response.data);
             setpageloading(false);
         } catch (error) {

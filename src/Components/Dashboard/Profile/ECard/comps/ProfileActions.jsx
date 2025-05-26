@@ -26,7 +26,7 @@ const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
     const fetchUserData = async () => {
         try {
             setpageloading(true);
-            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/?company_id=${props.companyId}`);
+            const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
             setUserData(response.data);
             console.log(response.data.save_button_value ,"value")
             setSaveButtonColor(response.data.save_button_value || '#F47122');

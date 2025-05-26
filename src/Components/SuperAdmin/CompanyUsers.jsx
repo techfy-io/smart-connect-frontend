@@ -55,7 +55,7 @@ const CompanyUsers = () => {
   const toggleUpdateUserModal = () => setOpenUserEditModal((prev) => !prev);
 
   const GetUserProfile = (id) => {
-    navigate(`/profile/${company?.id}/${id}`);
+    navigate(`/profile/${id}`);
   };
 
   useEffect(() => {
@@ -98,7 +98,6 @@ const CompanyUsers = () => {
           })
           .then((response) => {
             message.success(t("User Deleted Successfully"));
-            // setTimeout(() => window.location.reload(), 1000);
             getCompanyUser();
           })
           .catch((error) => console.log("error", error));
@@ -116,19 +115,7 @@ const CompanyUsers = () => {
   const closeModal = () => {
     setQRModalVisible(false);
   };
-  // const changeLanguage = (lng) => {
-  //     i18n.changeLanguage(lng);
-  // };
-  // const menu = (
-  //     <Menu>
-  //         <Menu.Item key="fr" onClick={() => changeLanguage('fr')}>
-  //             French
-  //         </Menu.Item>
-  //         <Menu.Item key="en" onClick={() => changeLanguage('en')}>
-  //             English
-  //         </Menu.Item>
-  //     </Menu>
-  // );
+
   return (
     <div className="companyusers-container">
       <Sidebar
