@@ -41,32 +41,32 @@ function App() {
         .catch(error => {
           if (error.response) {
             if (error.response.status === 404 || error.response.status === 500) {
-                message.error(t("Failed: Something went wrong with the server."));
+              message.error(t("Failed: Something went wrong with the server."));
             } else {
-                const responseData = error.response.data;
-                let errorMessage = '';
+              const responseData = error.response.data;
+              let errorMessage = '';
 
-                for (const prop in responseData) {
-                    if (responseData.hasOwnProperty(prop)) {
-                        errorMessage = responseData[prop][0];
-                        break;
-                    }
+              for (const prop in responseData) {
+                if (responseData.hasOwnProperty(prop)) {
+                  errorMessage = responseData[prop][0];
+                  break;
                 }
+              }
 
-                message.error(errorMessage);
+              message.error(errorMessage);
             }
-        } else if (error.request) {
+          } else if (error.request) {
             console.error("No response received from the server:", error.request);
             message.error(t("Failed: No response received from the server."));
-        } else {
+          } else {
             console.error("Error setting up the request:", error.message);
             message.error(t("Failed: Error setting up the request."))
-        }
-        setLoading(false)
+          }
+          setLoading(false)
         })
     }
   };
-  
+
   return (
     <Layout className='main-layout' style={{ width: '100%', height: '100vh' }}>
       {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
