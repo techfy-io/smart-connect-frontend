@@ -1,22 +1,27 @@
 .color-picker-container {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* Add space between items */
-    margin: 20px 0; /* Add some space above and below the container */
+    gap: 15px;
+    /* Add space between items */
+    margin: 20px 0;
+    /* Add some space above and below the container */
 }
 
 .color-picker-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0; /* Padding for spacing between label and input */
-    border-bottom: 1px solid #e0e0e0; /* Optional separator line */
+    padding: 10px 0;
+    /* Padding for spacing between label and input */
+    border-bottom: 1px solid #e0e0e0;
+    /* Optional separator line */
 }
 
 .color-picker-item label {
     font-size: 16px;
     font-weight: 500;
-    margin-right: 5px; /* Space between label and input */
+    margin-right: 5px;
+    /* Space between label and input */
     color: #333;
 }
 

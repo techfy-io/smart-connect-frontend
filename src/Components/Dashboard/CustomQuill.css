@@ -1,22 +1,22 @@
 .custom-quill-container {
-    width: 190px; /* Set the desired width */
+  width: 190px;
+  /* Set the desired width */
 }
 
 
 /* Hide the toolbar line */
-.ql-toolbar.ql-snow {
-  
-}
+.ql-toolbar.ql-snow {}
 
-.ql-container.ql-snow{
+.ql-container.ql-snow {
 
-    border-radius: 0px; 
-    box-shadow: none;
-    
+  border-radius: 0px;
+  box-shadow: none;
+
 }
 
 .ql-italic {
-    font-size: 2px; /* Set the desired smaller font size */
+  font-size: 2px;
+  /* Set the desired smaller font size */
 }
 
 
@@ -28,12 +28,15 @@
 .ql-font span[data-label="Sans Serif"]::before {
   font-family: 'Helvetica', 'Arial', sans-serif;
 }
+
 .ql-font span[data-label="Serif"]::before {
   font-family: 'Georgia', 'Times New Roman', serif;
 }
+
 .ql-font span[data-label="Monospace"]::before {
   font-family: 'Monaco', 'Courier New', monospace;
 }
+
 .ql-font span[data-label="times-new-roman"]::before {
   font-family: 'Times New Roman', Times, serif;
   content: 'Times New Roman';
@@ -43,9 +46,11 @@
 .ql-font-serif {
   font-family: 'Georgia', 'Times New Roman', serif;
 }
+
 .ql-font-monospace {
   font-family: 'Monaco', 'Courier New', monospace;
 }
+
 .ql-font-times-new-roman {
   font-family: 'Times New Roman', Times, serif;
 }

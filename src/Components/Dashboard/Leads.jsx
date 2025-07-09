@@ -281,8 +281,8 @@ const Leads = () => {
                                 {`${user.first_name
                                   .charAt(0)
                                   .toUpperCase()}${user?.last_name
-                                  .charAt(0)
-                                  .toUpperCase()}`}
+                                    .charAt(0)
+                                    .toUpperCase()}`}
                               </Avatar>
                               <div
                                 style={{ fontSize: "14px", fontWeight: "bold" }}

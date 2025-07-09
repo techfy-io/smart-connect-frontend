@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Input, Button, Form, message, Spin, Result, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './ResetPassword.scss';
-import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined , DownOutlined} from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined, DownOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
-import  {Link}  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 const { Header } = Layout;
+
 const ResetPassword = () => {
     const { t, i18n } = useTranslation('translation')
     const [form] = Form.useForm();
@@ -17,7 +18,7 @@ const ResetPassword = () => {
     const searchParams = new URLSearchParams(location.search);
     const uidb64 = searchParams.get('uid');
     const token = searchParams.get('token');
-// token validation
+    // token validation
     useEffect(() => {
         const validateToken = async () => {
             try {
@@ -44,11 +45,13 @@ const ResetPassword = () => {
     const handleSubmit = async (values) => {
         setupdateloading(true);
         try {
-            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/reset-password/${uidb64}/${token}/`, { ...values ,uidb64
-            ,token});
+            await axios.post(`${process.env.REACT_APP_BASE_API_URL}/reset-password/${uidb64}/${token}/`, {
+                ...values, uidb64
+                , token
+            });
             setupdateloading(false);
             message.success("Password Update successfully");
-            window.location.href = '/'; 
+            window.location.href = '/';
         } catch (error) {
             console.log("error", error);
             if (error.response) {
@@ -57,14 +60,14 @@ const ResetPassword = () => {
                 } else {
                     const responseData = error.response.data;
                     let errorMessage = '';
-    
+
                     for (const prop in responseData) {
                         if (responseData.hasOwnProperty(prop)) {
                             errorMessage = responseData[prop][0];
                             break;
                         }
                     }
-    
+
                     message.error(errorMessage);
                 }
             } else if (error.request) {
@@ -94,7 +97,7 @@ const ResetPassword = () => {
     // );
     return (
         <div className='reset-password-main-layout'>
-             {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            {/* <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
                 <Dropdown overlay={menu} trigger={['click']} >
                     <Button type="primary" style={{ width: "100px" }}>
                         {i18n.language === 'fr' ? 'French' : 'English'} <DownOutlined />
@@ -150,7 +153,7 @@ const ResetPassword = () => {
                                         required: true,
                                         message: (t('Please confirm your password')),
                                     },
-                                    ({getFieldValue}) => ({
+                                    ({ getFieldValue }) => ({
                                         validator(_, value) {
                                             if (!value || getFieldValue('new_password') === value) {
                                                 return Promise.resolve();

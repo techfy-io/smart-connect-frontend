@@ -1,10 +1,11 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
     /* background-color : #dg564yhge h!important; */
 
 }
-body{
+
+body {
     font-family: "Inter", sans-serif;
 }

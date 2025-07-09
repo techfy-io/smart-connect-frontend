@@ -22,31 +22,31 @@ const QRCodeModal = ({ visible, onClose, qrCodeValue, firstName }) => {
     });
   };
 
-  const cancelDownload=()=>{
+  const cancelDownload = () => {
     setDownloading(false);
     onClose();
   }
   return (
     <Modal
-    width={400}
-    title={t("QR Code")}
-    open={visible}
-    onCancel={cancelDownload}
-    footer={null} 
-  >
-    <div id="qrCodeContainer" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-      <QRCode style={{ height: "300px" }} value={qrCodeValue} />
-    </div>
-    <div className='download-qr-code-action-btn' > {/* Centered buttons */}
-      <Button className='qr-code-cancle-btn' key="close" onClick={cancelDownload} style={{ marginBottom: '10px' }}>
-        {t("Cancel")}
-      </Button>
-      <Button className='qr-code-download-btn'  key="download" type="primary" onClick={downloadQRCode} disabled={downloading} loading={downloading}>
-        {t('Download QR Code')}
-      </Button>
-    </div>
-  </Modal>
-  
+      width={400}
+      title={t("QR Code")}
+      open={visible}
+      onCancel={cancelDownload}
+      footer={null}
+    >
+      <div id="qrCodeContainer" style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+        <QRCode style={{ height: "300px" }} value={qrCodeValue} />
+      </div>
+      <div className='download-qr-code-action-btn' > {/* Centered buttons */}
+        <Button className='qr-code-cancle-btn' key="close" onClick={cancelDownload} style={{ marginBottom: '10px' }}>
+          {t("Cancel")}
+        </Button>
+        <Button className='qr-code-download-btn' key="download" type="primary" onClick={downloadQRCode} disabled={downloading} loading={downloading}>
+          {t('Download QR Code')}
+        </Button>
+      </div>
+    </Modal>
+
   );
 };
 

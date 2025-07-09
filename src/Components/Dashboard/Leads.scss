@@ -15,8 +15,8 @@
     background-color: #100739;
     position: sticky;
     top: 0;
-    
-    .sidebar-toggler{
+
+    .sidebar-toggler {
         padding: 6px 16px 6px 4px;
         margin-right: 10px;
         cursor: pointer;
@@ -25,21 +25,25 @@
         font-size: 18px;
         background-color: transparent;
         border-right: 1px solid rgba(#f0f2f5, 0.3);
-      }
-    .language-translate-btn{
+    }
+
+    .language-translate-btn {
         padding: 18px;
     }
 }
+
 .leads-content {
     width: 100%;
     overflow: hidden;
     /* Hide overflow from the content beneath the header */
 }
-.scrollable-wrapper{
+
+.scrollable-wrapper {
     height: 100%;
 }
 
 .table-container {
+
     /* Adjust max-height based on fixed header height */
     /* Customizing scrollbar */
     &::-webkit-scrollbar {

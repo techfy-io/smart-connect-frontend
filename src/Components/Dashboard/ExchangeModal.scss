@@ -1,12 +1,13 @@
 .exchange-form {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Adjust spacing between form items */
+    gap: 16px;
+    /* Adjust spacing between form items */
 }
 
 .form-item {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
 
 .form-input {
@@ -20,6 +21,8 @@
 }
 
 .form-input:focus {
-    border-color: #65b6df; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+    border-color: #65b6df;
+    /* Change border color on focus */
+    outline: none;
+    /* Remove default outline */
 }
