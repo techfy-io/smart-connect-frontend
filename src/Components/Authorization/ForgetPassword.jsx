@@ -82,7 +82,7 @@ const ForgetPassword = () => {
             <div className='ResetPassword-custom-card'>
                 <div className='ResetPassword-tab-container'>
                     <button type='primary' className={'button-style active-button-style'}>
-                       {t("Forgot Password")}
+                        {t("Forgot Password")}
                     </button>
                 </div>
                 <div className="ResetPassword-tab-content">

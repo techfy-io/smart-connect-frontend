@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Nunito Sans");
+
 .scrollable-wrapper {
   width: 100%;
   height: auto;
@@ -11,7 +12,7 @@
 
   .content {
     flex: 1;
-  width: 100%;
+    width: 100%;
 
     .content-header {
       display: flex;
@@ -23,7 +24,8 @@
       position: sticky;
       align-items: center;
       top: 0;
-      .sidebar-toggler{
+
+      .sidebar-toggler {
         padding: 6px 16px 6px 4px;
         margin-right: 10px;
         cursor: pointer;
@@ -51,8 +53,9 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+
         @media only screen and (max-width: 768px) {
-          width:100px;
+          width: 100px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -108,37 +111,40 @@
 
       .Actions-btns {
         min-width: 143px;
+
         .view-eye-btn,
         .Delete-button,
-        .Edit-button,.download-button {
+        .Edit-button,
+        .download-button {
           font-size: 20px;
           border: none;
           background-color: transparent;
           cursor: pointer;
           text-decoration: underline;
           margin-left: 14px;
-      
+
           &:hover {
             color: #40a9ff;
           }
         }
-      
+
         .view-eye-btn {
           color: #2d8ed4;
         }
-      
+
         .Delete-button {
           color: #ff8000;
         }
-      
+
         .Edit-button {
           color: #19acc0;
         }
-        .download-button{
-            color: #073907;
+
+        .download-button {
+          color: #073907;
         }
       }
-      
+
     }
   }
 }

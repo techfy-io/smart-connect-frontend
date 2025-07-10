@@ -1,4 +1,4 @@
- export const formatPhoneNumber = (phoneNumber) => {
+export const formatPhoneNumber = (phoneNumber) => {
     // Remove any non-digit characters from the phone number
     const cleanedPhoneNumber = phoneNumber.replace(/\D/g, '');
 

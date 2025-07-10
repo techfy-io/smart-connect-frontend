@@ -18,12 +18,12 @@ const ExchangeModal = ({ open, onClose, onSubmit, loading }) => {
         form.resetFields();
     };
     const onFinish = async (values) => {
-      
+
         const requestData = {
             ...values,
         };
 
-        onSubmit(requestData); 
+        onSubmit(requestData);
     };
 
     return (

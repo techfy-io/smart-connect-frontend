@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import QRCodeModal from "../Common/QRCodeModals";
 import "./CustomQuill.css";
 import "./ColorPicker.css";
+
 function Dashboard() {
   const { t, i18n } = useTranslation('translation');
   const [form] = Form.useForm();
@@ -135,8 +136,8 @@ function Dashboard() {
       email: company?.email,
       phone_number: company?.phone_number,
     });
-    setBackgroundColor(company?.background_theme_color  ||"rgba(243, 243, 243, 0.8)" )
-    setExchangeButtonColor(company?.exchange_button_color ||"#616569")
+    setBackgroundColor(company?.background_theme_color || "rgba(243, 243, 243, 0.8)")
+    setExchangeButtonColor(company?.exchange_button_color || "#616569")
     setSaveButtonColor(company?.save_button_color || "#F47122")
     toggleUpdateCompanyModal();
   };
@@ -148,11 +149,11 @@ function Dashboard() {
         exchange_button_color: exchangeButtonColor,
         background_theme_color: backgroundColor,
       };
-  
+
       setupdateCompanyloading(true);
       const accessToken = localStorage.getItem('accessToken');
       const { id } = companyInfo;
-  
+
       axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, payload, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
@@ -170,14 +171,14 @@ function Dashboard() {
             } else {
               const responseData = error.response.data;
               let errorMessage = '';
-  
+
               for (const prop in responseData) {
                 if (responseData.hasOwnProperty(prop)) {
                   errorMessage = responseData[prop][0];
                   break;
                 }
               }
-  
+
               message.error(errorMessage);
             }
           } else if (error.request) {
@@ -191,7 +192,7 @@ function Dashboard() {
         });
     });
   };
-  
+
   const handleCancel = () => {
     form.resetFields();
     toggleUpdateCompanyModal();
@@ -200,7 +201,7 @@ function Dashboard() {
   const GetUserProfile = (id) => {
     navigate(`/profile/${id}`);
   };
-   const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
+  const getCompanyUsers = (company) => navigate('/companyuser', { state: { company } });
 
   const handleDownloadClick = (user) => {
     setSelectedUser(user);
@@ -280,7 +281,7 @@ function Dashboard() {
                                     <button className="Delete-button" onClick={() => deleteCompany(company.id)}><DeleteOutlined /></button>
                                     <button
                                       className="download-button"
-                                      onClick={() => openUpdateCompanyModal(company)} 
+                                      onClick={() => openUpdateCompanyModal(company)}
                                     >
                                       <EditOutlined />
                                     </button>
@@ -351,7 +352,7 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal}  />
+      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} fetchCompanies={fetchCompanies} />
       <Modal
         title={t('Update Company')}
@@ -428,21 +429,21 @@ function Dashboard() {
               <label>{t("Save Button Theme")}:</label>
               <input
                 type="color"
-                value={ saveButtonColor}
+                value={saveButtonColor}
                 onChange={handleSaveButtonColorChange}
               />
             </div>
             <div className="color-picker-item">
-            <label>{t("Exchange Button Theme")}:</label>
-            <input
+              <label>{t("Exchange Button Theme")}:</label>
+              <input
                 type="color"
                 value={exchangeButtonColor}
                 onChange={handleExchangeButtonColorChange}
               />
             </div>
             <div className="color-picker-item">
-            <label>{t("Background Theme")}:</label>
-            <input
+              <label>{t("Background Theme")}:</label>
+              <input
                 type="color"
                 value={backgroundColor}
                 onChange={handleBackgroundColorChange}
