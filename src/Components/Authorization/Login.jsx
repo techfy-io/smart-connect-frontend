@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Card, Button, Input, message, Spin } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Smartlogo from "../../Inspect/Smart-logo.png";
 import './Login.scss'
 import axios from 'axios';

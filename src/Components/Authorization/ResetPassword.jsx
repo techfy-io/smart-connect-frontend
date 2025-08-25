@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, Input, Button, Form, message, Spin, Result, Menu, Dropdown } from 'antd';
+import { Input, Button, Form, message, Spin, Result, Menu, Dropdown } from 'antd';
 import axios from 'axios';
 import './ResetPassword.scss';
 import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined, DownOutlined } from '@ant-design/icons';
