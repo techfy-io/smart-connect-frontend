@@ -6,7 +6,6 @@ import { EyeInvisibleOutlined, EyeTwoTone, LoadingOutlined, CloseCircleOutlined,
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-const { Header } = Layout;
 
 const ResetPassword = () => {
     const { t, i18n } = useTranslation('translation')
