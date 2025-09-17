@@ -5,8 +5,6 @@ import './ForgetPassword.scss';
 import { DownOutlined } from '@ant-design/icons';
 import { useTranslation } from "react-i18next";
 
-const { Header } = Layout;
-
 const ForgetPassword = () => {
     const { t, i18n } = useTranslation('translation')
 
