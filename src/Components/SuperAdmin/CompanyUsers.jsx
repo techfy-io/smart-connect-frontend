@@ -311,7 +311,7 @@ const CompanyUsers = () => {
                         <td className="Actions-btns">
                           <button
                             className="view-eye-btn"
-                            onClick={() => GetUserProfile(user.id)}
+                            onClick={() => GetUserProfile(user.public_id)}
                           >
                             <EyeOutlined />
                           </button>
@@ -361,7 +361,7 @@ const CompanyUsers = () => {
         onClose={closeModal}
         qrCodeValue={
           selectedUser
-            ? `https://dev.smartconnect.cards/profile/${company?.id}/${selectedUser.id}`
+            ? `https://dev.smartconnect.cards/profile/${company?.id}/${selectedUser?.public_id}`
             : ""
         }
         firstName={selectedUser ? selectedUser.first_name : ""}
