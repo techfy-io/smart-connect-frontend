@@ -251,7 +251,7 @@ const UpdateUser = ({
     }
   }, [openEditModal, user]);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
     const {
       firstname,
@@ -356,7 +356,7 @@ const UpdateUser = ({
 
     formData.append("bio_graphy", biography || "");
     const accessToken = localStorage.getItem("accessToken");
-    axios
+    await axios
       .patch(
         `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
         formData,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { Spin } from 'antd'; // Assuming you're using Ant Design for the spinner
+import { Spin } from 'antd';
 
 const ProtectedRoute = ({ element }) => {
   const [loading, setLoading] = useState(true);
