@@ -1,6 +1,6 @@
 
 
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom';
 import { MenuOutlined, SaveOutlined, SyncOutlined, EditOutlined, ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
 import axios from 'axios';
@@ -12,8 +12,14 @@ const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
     const [loading, setLoading] = useState(false);
     const { userId } = useParams();
     const [pageloading, setpageloading] = useState(false);
+    const mountedRef = useRef(true);
+
+    useEffect(() => {
+        mountedRef.current = true;
+        return () => { mountedRef.current = false; };
+    }, []);
     const [userData, setUserData] = useState(null);
-    const [saveButtonColor, setSaveButtonColor] = useState(''); 
+    const [saveButtonColor, setSaveButtonColor] = useState('');
     const [exchangeButtonColor, setExchangeButtonColor] = useState('');
 
     useEffect(() => {
@@ -28,7 +34,7 @@ const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
             setpageloading(true);
             const response = await axios.get(`${process.env.REACT_APP_BASE_API_URL}/usercontacts/${userId}/`);
             setUserData(response.data);
-            console.log(response.data.save_button_value ,"value")
+            console.log(response.data.save_button_value, "value")
             setSaveButtonColor(response.data.save_button_value || '#F47122');
             setExchangeButtonColor(response.data.exchange_button_value || '#616569');
             console.log(response.data);
@@ -54,12 +60,15 @@ const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
             const link = document.createElement('a');
             link.href = url;
             link.download = `${userData.first_name}_${userData.last_name}.vcf`;
+            link.style.display = 'none';
             document.body.appendChild(link);
             link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-            message.success("Download Successful");
-            
+            requestAnimationFrame(() => {
+                if (document.body.contains(link)) document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+            });
+            if (mountedRef.current) message.success("Download Successful");
+
         } catch (error) {
             if (error.response && error.response.status === 404) {
                 console.error("Photo URL not found:", error);
@@ -75,30 +84,30 @@ const ProfileActions = ({ handleOpenExchangeModal, ...props }) => {
 
     return (
         <div className="profile-actions ant-flex ant-flex-align-center">
-        <Button
-            className="left"
-            type="primary"
-            size="large"
-            icon={loading ? <Spin indicator={<SyncOutlined spin />} /> : <SaveOutlined />}
-            onClick={() => downloadUserData(userData)}
-            disabled={loading}
-            style={{ backgroundColor: saveButtonColor }}
-            title={t('Save Contact')}
-        >
-            {t('Save Contact')}
-        </Button>
-        <Button
-            className="right"
-            type="primary"
-            size="large"
-            icon={<SyncOutlined />}
-            onClick={handleOpenExchangeModal}
-            style={{ backgroundColor: exchangeButtonColor }}
-            title={t('Exchange')}
-        >
-            {t('Exchange')}
-        </Button>
-    </div>
+            <Button
+                className="left"
+                type="primary"
+                size="large"
+                icon={loading ? <Spin indicator={<SyncOutlined spin />} /> : <SaveOutlined />}
+                onClick={() => downloadUserData(userData)}
+                disabled={loading}
+                style={{ backgroundColor: saveButtonColor }}
+                title={t('Save Contact')}
+            >
+                {t('Save Contact')}
+            </Button>
+            <Button
+                className="right"
+                type="primary"
+                size="large"
+                icon={<SyncOutlined />}
+                onClick={handleOpenExchangeModal}
+                style={{ backgroundColor: exchangeButtonColor }}
+                title={t('Exchange')}
+            >
+                {t('Exchange')}
+            </Button>
+        </div>
     )
 }
 export default ProfileActions

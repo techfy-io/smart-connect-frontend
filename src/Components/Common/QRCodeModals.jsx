@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Modal, Button, Spin } from 'antd';
 import QRCode from 'react-qr-code';
 import html2canvas from 'html2canvas';
@@ -6,19 +6,33 @@ import { useTranslation } from "react-i18next";
 import './QRcode.scss'
 const QRCodeModal = ({ visible, onClose, qrCodeValue, firstName }) => {
   const [downloading, setDownloading] = useState(false);
-  const { t, i18n } = useTranslation('translation');
+  const { t } = useTranslation('translation');
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
 
   const downloadQRCode = () => {
     setDownloading(true);
     const qrCodeElement = document.getElementById('qrCodeContainer');
+    if (!qrCodeElement) {
+      setDownloading(false);
+      return;
+    }
     html2canvas(qrCodeElement).then(canvas => {
+      if (!mountedRef.current) return;
       const link = document.createElement('a');
       link.download = `${firstName}.png`;
       link.href = canvas.toDataURL();
+      link.style.display = 'none';
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-      setDownloading(false);
+      requestAnimationFrame(() => {
+        if (document.body.contains(link)) document.body.removeChild(link);
+      });
+      if (mountedRef.current) setDownloading(false);
     });
   };
 

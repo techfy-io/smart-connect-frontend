@@ -122,6 +122,18 @@ const AddUser = ({
   });
 
   useEffect(() => {
+    if (!isModalVisible) {
+      // Destroy formBuilder when modal closes so jQuery DOM nodes
+      // don't conflict with React's reconciliation on next open
+      if (formBuilderRef.current) {
+        try {
+          const $fb = $("#fb-editor");
+          if ($fb.length) $fb.empty();
+        } catch (e) { }
+        formBuilderRef.current = null;
+      }
+      return;
+    }
     if (isModalVisible) {
       if (formBuilderRef.current) {
         $("#fb-editor").formBuilder("reset");
@@ -544,7 +556,7 @@ const AddUser = ({
             <Input />
           </Form.Item>
           {SocialLinks.map((_, index) => (
-            <>
+            <React.Fragment key={`social_link_${index}`}>
               <Form.Item
                 label={`${t("Site internet type")} ${index + 1}`}
                 name={`other_link_media_${index + 1}`}
@@ -552,7 +564,6 @@ const AddUser = ({
                 <Input placeholder={`Siteweb ${index + 1}`} />
               </Form.Item>
               <Form.Item
-                key={index}
                 label={
                   <div style={{ display: "flex", alignItems: "center" }}>
                     <span>
@@ -592,7 +603,7 @@ const AddUser = ({
                   />
                 </div>
               </Form.Item>
-            </>
+            </React.Fragment>
           ))}
 
           {SocialLinks.length < 5 && (

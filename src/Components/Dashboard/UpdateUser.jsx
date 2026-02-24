@@ -199,6 +199,18 @@ const UpdateUser = ({
   const [form] = Form.useForm();
 
   useEffect(() => {
+    if (!openEditModal) {
+      // Destroy formBuilder when modal closes so jQuery DOM nodes
+      // don't conflict with React's reconciliation on next open
+      if (formBuilderRef.current) {
+        try {
+          const $fb = $("#fb-editor");
+          if ($fb.length) $fb.empty();
+        } catch (e) { }
+        formBuilderRef.current = null;
+      }
+      return;
+    }
     if (openEditModal && user) {
       if (formBuilderRef.current) {
         setTimeout(() => {
@@ -680,8 +692,7 @@ const UpdateUser = ({
             <Input />
           </Form.Item>
           {socialLinks.map((_, index) => (
-            // <div key={`social_link_${index}`}>
-            <>
+            <React.Fragment key={`social_link_${index}`}>
               <Form.Item
                 label={`${t("Site internet type")} ${index + 1}`}
                 name={`other_link_media_${index + 1}`}
@@ -728,8 +739,7 @@ const UpdateUser = ({
                   />
                 </div>
               </Form.Item>
-            </>
-            // </div>
+            </React.Fragment>
           ))}
           {socialLinks.length < 5 && (
             <Form.Item>
