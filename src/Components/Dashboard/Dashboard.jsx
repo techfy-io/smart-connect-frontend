@@ -69,11 +69,11 @@ function Dashboard() {
     }
   }, []);
 
-  const fetchCompanies = () => {
+  const fetchCompanies = async () => {
     setUserType("SuperAdmin")
 
     const accessToken = localStorage.getItem('accessToken');
-    axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
+    await axios.get(`${process.env.REACT_APP_BASE_API_URL}/companies/`, {
       headers: { 'Authorization': `Bearer ${accessToken}` }
     })
       .then((response) => {
@@ -88,7 +88,7 @@ function Dashboard() {
   };
 
   // const fetchUsers = () => {
-    // const fetchUsers = () => {
+  // const fetchUsers = () => {
   //   const accessToken = localStorage.getItem('accessToken');
   // testing deployment
   //   const userId = localStorage.getItem('userid');
@@ -110,43 +110,43 @@ function Dashboard() {
   // };
 
 
-  const fetchUsers = () => {
-  const accessToken = localStorage.getItem('accessToken');
-  const userId = localStorage.getItem('userid');
+  const fetchUsers = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userid');
 
-  axios
-    .get(`${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${userId}`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    })
-    .then((response) => {
-      const results = response?.data?.results ?? [];
-      setUserType('User');
+    await axios
+      .get(`${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${userId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      })
+      .then((response) => {
+        const results = response?.data?.results ?? [];
+        setUserType('User');
 
-      const first = results?.[0];
-      const firstCompany = first?.companies?.[0];
+        const first = results?.[0];
+        const firstCompany = first?.companies?.[0];
 
-      setCompanyName(firstCompany?.company_name ?? '');
-      setCompanyId(firstCompany?.company_id ?? '');
+        setCompanyName(firstCompany?.company_name ?? '');
+        setCompanyId(firstCompany?.company_id ?? '');
 
-      setUserData(results);
-      setLoading(false);
-    })
-    .catch((error) => {
-      console.error('Error fetching users:', error);
-      setLoading(false);
-    });
-};
+        setUserData(results);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+        setLoading(false);
+      });
+  };
 
 
-  const deleteCompany = (id) => {
+  const deleteCompany = async (id) => {
     Modal.confirm({
       title: t('Confirm'),
       content: t('Are you sure you want to delete this Company?'),
       okText: t('OK'),
       cancelText: t('Cancel'),
-      onOk() {
+      async onOk() {
         const accessToken = localStorage.getItem('accessToken');
-        axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
+        await axios.delete(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, {
           headers: { 'Authorization': `Bearer ${accessToken}` }
         })
           .then(response => {
@@ -173,8 +173,8 @@ function Dashboard() {
     setSaveButtonColor(company?.save_button_color || "#F47122")
     toggleUpdateCompanyModal();
   };
-  const handleUpdateCompany = () => {
-    form.validateFields().then((formValues) => {
+  const handleUpdateCompany = async () => {
+    form.validateFields().then(async (formValues) => {
       const payload = {
         ...formValues,
         save_button_color: saveButtonColor,
@@ -186,7 +186,7 @@ function Dashboard() {
       const accessToken = localStorage.getItem('accessToken');
       const { id } = companyInfo;
 
-      axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, payload, {
+      await axios.patch(`${process.env.REACT_APP_BASE_API_URL}/companies/${id}/`, payload, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
       })
         .then((response) => {
@@ -322,11 +322,11 @@ function Dashboard() {
                               ))}
                             </>
                           ) : (
-                            <>
+                            <tr>
                               <td colSpan="4">
                                 <Empty description={t('No Company found')} />
                               </td>
-                            </>
+                            </tr>
                           )}
                         </tbody>
                       </>
@@ -370,9 +370,11 @@ function Dashboard() {
                               </tr>
                             ))
                           ) : (
-                            <td colSpan="4">
-                              <Empty description={t('No users found')} />
-                            </td>
+                            <tr>
+                              <td colSpan="4">
+                                <Empty description={t('No users found')} />
+                              </td>
+                            </tr>
                           )}
                         </tbody>
                       </>
@@ -384,7 +386,13 @@ function Dashboard() {
           </table>
         </div>
       </div>
-      <UpdateUser openEditModal={openUserEditModal} user={selectedUser} UpdatemodalHideShow={toggleUpdateUserModal} />
+      <UpdateUser
+        openEditModal={openUserEditModal}
+        user={selectedUser}
+        UpdatemodalHideShow={toggleUpdateUserModal}
+        getCompanyUser={fetchUsers}
+        Companyid={companyId}
+      />
       <AddCompany openAddcompanymodal={addCompanyModalVisible} toggleAddCompanyModal={toggleAddCompanyModal} fetchCompanies={fetchCompanies} />
       <Modal
         title={t('Update Company')}

@@ -68,8 +68,8 @@ const UpdateUser = ({
     user?.website_icon
   ); // Initialize selectedIcon state
 
-  const facebookIcons = [fb1Img, fb2Img, fb3Img]; 
-  const instagramIcons = [insta1, insta2, insta3]; 
+  const facebookIcons = [fb1Img, fb2Img, fb3Img];
+  const instagramIcons = [insta1, insta2, insta3];
   const linkedInIcons = [linkedIn1, linkedIn2, linkedIn3];
   const websiteIcons = [web1, web2, web3];
 
@@ -251,7 +251,7 @@ const UpdateUser = ({
     }
   }, [openEditModal, user]);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
     const {
       firstname,
@@ -356,7 +356,7 @@ const UpdateUser = ({
 
     formData.append("bio_graphy", biography || "");
     const accessToken = localStorage.getItem("accessToken");
-    axios
+    await axios
       .patch(
         `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
         formData,
@@ -492,13 +492,13 @@ const UpdateUser = ({
               defaultFileList={
                 user?.profile_picture
                   ? [
-                      {
-                        uid: "-1",
-                        name: "profile_picture",
-                        status: "done",
-                        url: user?.profile_picture,
-                      },
-                    ]
+                    {
+                      uid: "-1",
+                      name: "profile_picture",
+                      status: "done",
+                      url: user?.profile_picture,
+                    },
+                  ]
                   : null
               }
             >
@@ -529,13 +529,13 @@ const UpdateUser = ({
               defaultFileList={
                 user && user.cover_image
                   ? [
-                      {
-                        uid: "-1",
-                        name: "cover_image",
-                        status: "done",
-                        url: user.cover_image,
-                      },
-                    ]
+                    {
+                      uid: "-1",
+                      name: "cover_image",
+                      status: "done",
+                      url: user.cover_image,
+                    },
+                  ]
                   : []
               }
             >

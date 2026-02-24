@@ -61,10 +61,10 @@ const CompanyUsers = () => {
   useEffect(() => {
     getCompanyUser();
   }, []);
-  const getCompanyUser = () => {
+  const getCompanyUser = async () => {
     const accessToken = localStorage.getItem("accessToken");
     localStorage.setItem("userid", company?.id);
-    axios
+    await axios
       .get(
         `${process.env.REACT_APP_BASE_API_URL}/user/?company_id=${company?.id}`,
         {
@@ -90,9 +90,9 @@ const CompanyUsers = () => {
       content: t("Are you sure you want to delete this user?"),
       okText: t("OK"),
       cancelText: t("Cancel"),
-      onOk() {
+      async onOk() {
         const accessToken = localStorage.getItem("accessToken");
-        axios
+        await axios
           .delete(`${process.env.REACT_APP_BASE_API_URL}/user/${id}/`, {
             headers: { Authorization: `Bearer ${accessToken}` },
           })
@@ -205,9 +205,8 @@ const CompanyUsers = () => {
                           />
                         </td>
                         {/* <td>{`${user.first_name?.slice(0, 30)} ${user.last_name?.slice(0, 10)}${user.last_name?.length > 10 ? '...' : ''}`}</td> */}
-                        <td>{`${user.email?.slice(0, 30)}${
-                          user.email?.length > 30 ? "..." : ""
-                        }`}</td>
+                        <td>{`${user.email?.slice(0, 30)}${user.email?.length > 30 ? "..." : ""
+                          }`}</td>
                         {/* <td>{`${user?.job_title ? (user.job_title.length > 30 ? user.job_title.slice(0, 30) + '...' : user.job_title) : ''}`}</td> */}
                         <td>
                           {user?.job_title && (
