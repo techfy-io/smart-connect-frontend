@@ -177,90 +177,94 @@ const AddUser = ({
   }, [isModalVisible]);
   // on finish
   const onFinish = async (values) => {
-    const {
-      first_name,
-      last_name,
-      email,
-      email_1,
-      phone_number,
-      phone_number_1,
-      phone_number_2,
-      phone_number_personal,
-      phone_number_professional,
-      job_title,
-      biography,
-      postal_code,
-      zip_code,
-      country,
-      city,
-      facebook_url,
-      instagram_url,
-      linkedin_url,
-      company,
-      profile_picture,
-      cover_image,
-      user_id,
-      other_link_media_1,
-      other_link_media_2,
-      other_link_media_3,
-      other_link_media_4,
-      other_link_media_5,
-      other_link_1,
-      other_link_2,
-      other_link_3,
-      other_link_4,
-      other_link_5,
-    } = values;
-    const accessToken = localStorage.getItem("accessToken");
-    const formData = new FormData();
-    formData.append("first_name", first_name || "");
-    formData.append("last_name", last_name || "");
-    formData.append("email", email || "");
-    if (email_1) {
-      formData.append("email_1", email_1 || "");
-    }
-    formData.append("phone_number", phone_number || "");
-    if (phone_number_1) {
-      formData.append("phone_number_1", phone_number_1 || "");
-    }
-    formData.append("phone_number_2", phone_number_2 || "");
-    formData.append("phone_number_personal", phone_number_personal || "");
-    formData.append(
-      "phone_number_professional",
-      phone_number_professional || ""
-    );
-    formData.append("job_title", job_title || "");
-    formData.append("bio_graphy", biography || "");
-    formData.append("postal_code", postal_code || "");
-    formData.append("zip_code", zip_code || "");
-    formData.append("country", country || "");
-    formData.append("city", city || "");
-    formData.append("facebook_url", facebook_url || "");
-    formData.append("instagram_url", instagram_url || "");
-    formData.append("linkedin_url", linkedin_url || "");
-    formData.append("other_link_media_1", other_link_media_1 || "");
-    formData.append("other_link_media_2", other_link_media_2 || "");
-    formData.append("other_link_media_3", other_link_media_3 || "");
-    formData.append("other_link_media_4", other_link_media_4 || "");
-    formData.append("other_link_media_5", other_link_media_5 || "");
-    SocialLinks.forEach((link, index) => {
-      formData.append(`other_link_${index + 1}`, link || "");
-    });
-    formData.append("company", currentCompany?.id || "");
-    formData.append("profile_picture", profile_picture || "");
-    formData.append("cover_image", cover_image || "");
-    // formData.append("save_button_value", saveButtonColor);
-    // formData.append("exchange_button_value", exchangeButtonColor);
-    // formData.append("background_button_value", backgroundColor);
-    formData.append("facebook_icon", selectedFacebookIcon || "");
-    formData.append("instagram_icon", selectedInstagramIcon || "");
-    formData.append("linkedin_icon", selectedLinkedInIcon || "");
-    formData.append("website_icon", selectedWebsiteIcon || "");
-
-    const formBuilderData = $("#fb-editor").formBuilder("getData");
-    console.log("FormBuilder Data:", formBuilderData);
-    formData.append("formBuilderData", JSON.stringify(formBuilderData));
+    setLoading(true);
     try {
+      const {
+        first_name,
+        last_name,
+        email,
+        email_1,
+        phone_number,
+        phone_number_1,
+        phone_number_2,
+        phone_number_personal,
+        phone_number_professional,
+        job_title,
+        biography,
+        postal_code,
+        zip_code,
+        country,
+        city,
+        facebook_url,
+        instagram_url,
+        linkedin_url,
+        company,
+        profile_picture,
+        cover_image,
+        user_id,
+        other_link_media_1,
+        other_link_media_2,
+        other_link_media_3,
+        other_link_media_4,
+        other_link_media_5,
+        other_link_1,
+        other_link_2,
+        other_link_3,
+        other_link_4,
+        other_link_5,
+      } = values;
+      const accessToken = localStorage.getItem("accessToken");
+      const formData = new FormData();
+      formData.append("first_name", first_name || "");
+      formData.append("last_name", last_name || "");
+      formData.append("email", email || "");
+      if (email_1) {
+        formData.append("email_1", email_1 || "");
+      }
+      formData.append("phone_number", phone_number || "");
+      if (phone_number_1) {
+        formData.append("phone_number_1", phone_number_1 || "");
+      }
+      formData.append("phone_number_2", phone_number_2 || "");
+      formData.append("phone_number_personal", phone_number_personal || "");
+      formData.append(
+        "phone_number_professional",
+        phone_number_professional || ""
+      );
+      formData.append("job_title", job_title || "");
+      formData.append("bio_graphy", biography || "");
+      formData.append("postal_code", postal_code || "");
+      formData.append("zip_code", zip_code || "");
+      formData.append("country", country || "");
+      formData.append("city", city || "");
+      formData.append("facebook_url", facebook_url || "");
+      formData.append("instagram_url", instagram_url || "");
+      formData.append("linkedin_url", linkedin_url || "");
+      formData.append("other_link_media_1", other_link_media_1 || "");
+      formData.append("other_link_media_2", other_link_media_2 || "");
+      formData.append("other_link_media_3", other_link_media_3 || "");
+      formData.append("other_link_media_4", other_link_media_4 || "");
+      formData.append("other_link_media_5", other_link_media_5 || "");
+      SocialLinks.forEach((link, index) => {
+        formData.append(`other_link_${index + 1}`, link || "");
+      });
+      formData.append("company", currentCompany?.id || "");
+      formData.append("profile_picture", profile_picture || "");
+      formData.append("cover_image", cover_image || "");
+      // formData.append("save_button_value", saveButtonColor);
+      // formData.append("exchange_button_value", exchangeButtonColor);
+      // formData.append("background_button_value", backgroundColor);
+      formData.append("facebook_icon", selectedFacebookIcon || "");
+      formData.append("instagram_icon", selectedInstagramIcon || "");
+      formData.append("linkedin_icon", selectedLinkedInIcon || "");
+      formData.append("website_icon", selectedWebsiteIcon || "");
+
+      if (formBuilderRef.current) {
+        const formBuilderData = $("#fb-editor").formBuilder("getData");
+        console.log("FormBuilder Data:", formBuilderData);
+        formData.append("formBuilderData", JSON.stringify(formBuilderData));
+      }
+
       const response = await axios.post(
         `${process.env.REACT_APP_BASE_API_URL}/superadmin/create_user/`,
         formData,

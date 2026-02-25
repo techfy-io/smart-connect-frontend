@@ -265,111 +265,111 @@ const UpdateUser = ({
 
   const onFinish = async (values) => {
     setLoading(true);
-    const {
-      firstname,
-      lastname,
-      email,
-      email_1,
-      phone_number_1,
-      phone_number_type,
-      phone_number,
-      company,
-      subcompany,
-      job_title,
-      zip_code,
-      postal_code,
-      country,
-      city,
-      facebook_url,
-      instagram_url,
-      linkedin_url,
-      profile_picture,
-      cover_image,
-      biography,
-      other_link_media_1,
-      other_link_media_2,
-      other_link_media_3,
-      other_link_media_4,
-      other_link_media_5,
-      other_link_1,
-      other_link_2,
-      other_link_3,
-      other_link_4,
-      other_link_5,
-    } = values;
-    const formData = new FormData();
-    formData.append("first_name", firstname);
-    formData.append("last_name", lastname);
-    formData.append("email", email);
-    formData.append("phone_number", phone_number);
-    formData.append("phone_number_1", phone_number_1 || "");
-    formData.append("phone_number_type", phone_number_type || "");
-    formData.append("company", Companyid || "");
-    formData.append("sub_company", subcompany || "");
-    formData.append("job_title", job_title || "");
-    formData.append("zip_code", zip_code || "");
-    formData.append("postal_code", postal_code || "");
-    formData.append("country", country || "");
-    formData.append("city", city || "");
-    formData.append(
-      "facebook_icon",
-      selectedFacebookIcon || user.facebook_icon || fb1Img
-    );
-    formData.append(
-      "instagram_icon",
-      selectedInstagramIcon || user.instagram_icon || insta1
-    );
-    formData.append(
-      "linkedin_icon",
-      selectedLinkedInIcon || user.linkedin_icon || linkedIn1
-    );
-    formData.append(
-      "website_icon",
-      selectedWebsiteIcon || user.website_icon || web1
-    );
-    formData.append(
-      "save_button_value",
-      saveButtonColor || user.save_button_value
-    );
-    formData.append(
-      "exchange_button_value",
-      exchangeButtonColor || user.exchange_button_value
-    );
-    formData.append(
-      "background_button_value",
-      backgroundColor || user.exchange_button_value
-    );
-    formData.append("other_link_media_1", other_link_media_1 || "");
-    formData.append("other_link_media_2", other_link_media_2 || "");
-    formData.append("other_link_media_3", other_link_media_3 || "");
-    formData.append("other_link_media_4", other_link_media_4 || "");
-    formData.append("other_link_media_5", other_link_media_5 || "");
-    socialLinks.forEach((link, index) => {
-      formData.append(`other_link_${index + 1}`, link || "");
-    });
-    formData.append("email_1", email_1 || "");
-    formData.append("facebook_url", facebook_url || "");
-    formData.append("instagram_url", instagram_url || "");
-    formData.append("linkedin_url", linkedin_url || "");
-    formData.append("user", user.id);
+    try {
+      const {
+        firstname,
+        lastname,
+        email,
+        email_1,
+        phone_number_1,
+        phone_number_type,
+        phone_number,
+        company,
+        subcompany,
+        job_title,
+        zip_code,
+        postal_code,
+        country,
+        city,
+        facebook_url,
+        instagram_url,
+        linkedin_url,
+        profile_picture,
+        cover_image,
+        biography,
+        other_link_media_1,
+        other_link_media_2,
+        other_link_media_3,
+        other_link_media_4,
+        other_link_media_5,
+        other_link_1,
+        other_link_2,
+        other_link_3,
+        other_link_4,
+        other_link_5,
+      } = values;
+      const formData = new FormData();
+      formData.append("first_name", firstname);
+      formData.append("last_name", lastname);
+      formData.append("email", email);
+      formData.append("phone_number", phone_number);
+      formData.append("phone_number_1", phone_number_1 || "");
+      formData.append("phone_number_type", phone_number_type || "");
+      formData.append("company", Companyid || "");
+      formData.append("sub_company", subcompany || "");
+      formData.append("job_title", job_title || "");
+      formData.append("zip_code", zip_code || "");
+      formData.append("postal_code", postal_code || "");
+      formData.append("country", country || "");
+      formData.append("city", city || "");
+      formData.append(
+        "facebook_icon",
+        selectedFacebookIcon || user.facebook_icon || fb1Img
+      );
+      formData.append(
+        "instagram_icon",
+        selectedInstagramIcon || user.instagram_icon || insta1
+      );
+      formData.append(
+        "linkedin_icon",
+        selectedLinkedInIcon || user.linkedin_icon || linkedIn1
+      );
+      formData.append(
+        "website_icon",
+        selectedWebsiteIcon || user.website_icon || web1
+      );
+      formData.append(
+        "save_button_value",
+        saveButtonColor || user.save_button_value
+      );
+      formData.append(
+        "exchange_button_value",
+        exchangeButtonColor || user.exchange_button_value
+      );
+      formData.append(
+        "background_button_value",
+        backgroundColor || user.exchange_button_value
+      );
+      formData.append("other_link_media_1", other_link_media_1 || "");
+      formData.append("other_link_media_2", other_link_media_2 || "");
+      formData.append("other_link_media_3", other_link_media_3 || "");
+      formData.append("other_link_media_4", other_link_media_4 || "");
+      formData.append("other_link_media_5", other_link_media_5 || "");
+      socialLinks.forEach((link, index) => {
+        formData.append(`other_link_${index + 1}`, link || "");
+      });
+      formData.append("email_1", email_1 || "");
+      formData.append("facebook_url", facebook_url || "");
+      formData.append("instagram_url", instagram_url || "");
+      formData.append("linkedin_url", linkedin_url || "");
+      formData.append("user", user.id);
 
-    if (formBuilderRef.current) {
-      const formBuilderData = formBuilderRef.current.actions.getData("json");
-      formData.append("form_builder_data", formBuilderData);
-    }
+      if (formBuilderRef.current) {
+        const formBuilderData = formBuilderRef.current.actions.getData("json");
+        formData.append("form_builder_data", formBuilderData);
+      }
 
-    if (profile_picture !== user.profile_picture) {
-      formData.append("profile_picture", profile_picture);
-      console.log("profile_picture", profile_picture);
-    }
-    if (cover_image !== user.cover_image) {
-      formData.append("cover_image", cover_image);
-    }
+      if (profile_picture !== user.profile_picture) {
+        formData.append("profile_picture", profile_picture);
+        console.log("profile_picture", profile_picture);
+      }
+      if (cover_image !== user.cover_image) {
+        formData.append("cover_image", cover_image);
+      }
 
-    formData.append("bio_graphy", biography || "");
-    const accessToken = localStorage.getItem("accessToken");
-    await axios
-      .patch(
+      formData.append("bio_graphy", biography || "");
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.patch(
         `${process.env.REACT_APP_BASE_API_URL}/usercontacts/${user.id}/`,
         formData,
         {
@@ -378,41 +378,40 @@ const UpdateUser = ({
             "Content-Type": "multipart/form-data",
           },
         }
-      )
-      .then((response) => {
-        console.log("response", response);
-        message.success(t("User Update Successfully"));
-        setLoading(false);
-        UpdatemodalHideShow();
-        getCompanyUser();
-      })
-      .catch((error) => {
-        console.log("error", error);
-        if (error.response) {
-          if (error.response.status === 404 || error.response.status === 500) {
-            message.error(t("Failed: Something went wrong with the server."));
-          } else {
-            const responseData = error.response.data;
-            let errorMessage = "";
+      );
 
-            for (const prop in responseData) {
-              if (responseData.hasOwnProperty(prop)) {
-                errorMessage = responseData[prop][0];
-                break;
-              }
-            }
-
-            message.error(errorMessage);
-          }
-        } else if (error.request) {
-          console.error("No response received from the server:", error.request);
-          message.error(t("Failed: No response received from the server."));
+      console.log("response", response);
+      message.success(t("User Update Successfully"));
+      setLoading(false);
+      UpdatemodalHideShow();
+      getCompanyUser();
+    } catch (error) {
+      console.log("error", error);
+      if (error.response) {
+        if (error.response.status === 404 || error.response.status === 500) {
+          message.error(t("Failed: Something went wrong with the server."));
         } else {
-          console.error("Error setting up the request:", error.message);
-          message.error(t("Failed: Error setting up the request."));
+          const responseData = error.response.data;
+          let errorMessage = "";
+
+          for (const prop in responseData) {
+            if (responseData.hasOwnProperty(prop)) {
+              errorMessage = responseData[prop][0];
+              break;
+            }
+          }
+
+          message.error(errorMessage);
         }
-        setLoading(false);
-      });
+      } else if (error.request) {
+        console.error("No response received from the server:", error.request);
+        message.error(t("Failed: No response received from the server."));
+      } else {
+        console.error("Error setting up the request:", error.message);
+        message.error(t("Failed: Error setting up the request."));
+      }
+      setLoading(false);
+    }
   };
   const handleCancel = () => {
     UpdatemodalHideShow();
