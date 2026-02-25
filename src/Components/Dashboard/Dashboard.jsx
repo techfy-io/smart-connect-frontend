@@ -222,6 +222,8 @@ function Dashboard() {
           }
           setupdateCompanyloading(false);
         });
+    }).catch((err) => {
+      setupdateCompanyloading(false);
     });
   };
 

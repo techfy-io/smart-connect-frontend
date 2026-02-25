@@ -33,6 +33,9 @@ const QRCodeModal = ({ visible, onClose, qrCodeValue, firstName }) => {
         if (document.body.contains(link)) document.body.removeChild(link);
       });
       if (mountedRef.current) setDownloading(false);
+    }).catch(err => {
+      console.error("Error generating QR code:", err);
+      if (mountedRef.current) setDownloading(false);
     });
   };
 

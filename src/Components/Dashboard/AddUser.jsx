@@ -260,9 +260,9 @@ const AddUser = ({
       formData.append("website_icon", selectedWebsiteIcon || "");
 
       if (formBuilderRef.current) {
-        const formBuilderData = $("#fb-editor").formBuilder("getData");
+        const formBuilderData = formBuilderRef.current.actions.getData("json");
         console.log("FormBuilder Data:", formBuilderData);
-        formData.append("formBuilderData", JSON.stringify(formBuilderData));
+        formData.append("form_builder_data", formBuilderData);
       }
 
       const response = await axios.post(
